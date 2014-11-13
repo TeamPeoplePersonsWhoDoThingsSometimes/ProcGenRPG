@@ -156,8 +156,8 @@ public class MapGenerator {
 	protected bool TileExists(float x, float z) {
 		//see if tiles are at coordinates by checking an absolute value difference of the two components
 		foreach(Tile t in spawnedTiles) {
-//			Debug.Log("XDiff: " + (Mathf.Abps((t.X + t.size/2) - x)) + "ZDiff: " + Mathf.Abs((t.Z + t.size/2) - z));
-			if((Mathf.Abs((t.X + t.size/2) - x) < t.size/2 && Mathf.Abs((t.Z + t.size/2) - z) < t.size/2) || (t.X == x && t.Z == z)) {
+			//Debug.Log("XDiff: " + (Mathf.Abs((t.X + t.size/2) - x)) + "ZDiff: " + Mathf.Abs((t.Z + t.size/2) - z));
+			if((Mathf.Abs(t.X - x) < t.size/2 && Mathf.Abs(t.Z - z) < t.size/2) || (t.X == x && t.Z == z)) {
 				return true;
 			}
 		}
@@ -171,33 +171,59 @@ public class MapGenerator {
 	}
 
 	/**
-	 * spawn a tile of the given type at the given coordinates
+	 * spawn a tile of the given type at the given coordinates in the default direction of Vector2.up
 	 * 
 	 * note: this method does perform a check of TileExists(x,z), and returns true or false
 	 * based on this method.  Use ForceTile if you need the tile to be placed regardless of the precence
 	 * of a previously placed tile.
 	 */
 	protected bool SpawnTile(float x, float z, int type) {
-		foreach(Tile t in spawnedTiles) {
-			t.Init();
-		}
-		foreach(Tile t in spawnedWalls) {
-			t.Init();
-		}
-		if(!TileExists(x, z)) {
-			if (tileSet.tiles[type].ground) {
-				spawnedTiles.Add((Tile)GameObject.Instantiate(tileSet.tiles[type], new Vector3(x, 0, z), Quaternion.identity));
-			}  else { //non-ground tiles should be spawned higher up
-				spawnedWalls.Add((Tile)GameObject.Instantiate(tileSet.tiles[type], new Vector3(x, 3.4f, z), Quaternion.identity));
-			}
-		}  else {
-			return false;	
-		}
-		return true;
+		return SpawnTileInDirection (x, z, type, Vector2.up);
 		
 	}
 
 	/**
+	 * spawn a tile of the given type at the given coordinates in the given direction
+	 * 
+	 * note: this method does perform a check of TileExists(x,z), and returns true or false
+	 * based on this method.  Use ForceTile if you need the tile to be placed regardless of the precence
+	 * of a previously placed tile.
+	 */
+	protected bool SpawnTileInDirection(float x, float z, int type, Vector2 dir) {
+		return SpawnTileInDirection(x,z,type, new Vector3(dir.x, 0, dir.y));
+	}
+
+	/**
+	 * spawn a tile of the given type at the given coordinates in the given direction
+	 * 
+	 * note: this method does perform a check of TileExists(x,z), and returns true or false
+	 * based on this method.  Use ForceTile if you need the tile to be placed regardless of the precence
+	 * of a previously placed tile.
+	 */
+	protected bool SpawnTileInDirection(float x, float z, int type, Vector3 dir) {
+		foreach (Tile t in spawnedTiles) {
+				t.Init ();
+		}
+		foreach (Tile t in spawnedWalls) {
+				t.Init ();
+		}
+		if (!TileExists (x, z)) {
+			Tile tile = (Tile)GameObject.Instantiate (tileSet.tiles [type], new Vector3 (x, 0, z), Quaternion.identity);
+			tile.transform.rotation = Quaternion.LookRotation(dir);
+			if (tileSet.tiles [type].ground) {
+				spawnedTiles.Add (tile);
+			} else { //non-ground tiles should be spawned higher up
+				tile.transform.position.Set(tile.transform.position.x, 3.4f, tile.transform.position.z);
+				spawnedWalls.Add (tile);
+			}
+			return true;
+		} else {
+			return false;	
+		}
+	}
+
+		
+		/**
 	 * Force spawn a tile at the given location, in other words, after you call this method,
 	 * a tile will be at the given coordinates independent of anything else in the game world
 	 */

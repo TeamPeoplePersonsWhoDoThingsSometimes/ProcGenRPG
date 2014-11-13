@@ -38,8 +38,8 @@ public class CityGenerator : MapGenerator {
 		Vector2 bottomVertical = Vector2.zero, topVertical = Vector2.zero, leftHorizontal = Vector2.zero, rightHorizontal = Vector2.zero;//extrema of main roads in city limits
 		int mainTileCount = WIDTH / (int)tileSet.tiles[1].size;
 		for (int i = 0; i <= mainTileCount; i++) {
-			SpawnTile(WIDTH/2,i*tileSet.tiles[1].size,1);
-			SpawnTile(i*tileSet.tiles[1].size,WIDTH/2,1);
+			placeRoad(new Vector2(WIDTH/2, i*tileSet.tiles[1].size));
+			placeRoad(new Vector2(i*tileSet.tiles[1].size, WIDTH/2));
 			if (mainTileCount/2 + BLOCK_RADIUS == i) {
 				topVertical = new Vector2(WIDTH/2,i*tileSet.tiles[1].size);
 				rightHorizontal = new Vector2(i*tileSet.tiles[1].size,WIDTH/2);
@@ -89,10 +89,10 @@ public class CityGenerator : MapGenerator {
 			Vector2 lVec = left (vec, Vector2.right);
 			Vector2 down = left (vec, Vector2.up);
 
-			tryPlaceBlock(up, Vector2.right);
+			tryPlaceBlock(up, Vector2.up);
 			tryPlaceBlock(rVec, Vector2.right);
-			tryPlaceBlock(lVec, Vector2.right);
-			tryPlaceBlock(down, Vector2.right);
+			tryPlaceBlock(lVec, -Vector2.right);
+			tryPlaceBlock(down, -Vector2.up);
 
 		}
 
@@ -223,7 +223,7 @@ public class CityGenerator : MapGenerator {
 	 */
 	private void tryPlaceBlock(Vector2 pos, Vector2 front) {
 		if(!TileExists(pos.x, pos.y)) {
-			SpawnTile (pos.x, pos.y, 2);
+			SpawnTileInDirection (pos.x, pos.y, 2, front);
 			blocks.Add (pos);
 		}
 	}
