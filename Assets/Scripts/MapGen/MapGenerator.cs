@@ -52,6 +52,8 @@ public class MapGenerator {
 			return new GrassyPathGenerator (a, tiles);
 		case GeneratorTypes.DUNGEON:
 			return new DungeonGenerator(a, tiles);
+		case GeneratorTypes.CITY:
+			return new CityGenerator(a, tiles);
 		default:
 			return new GrassyPathGenerator(a,tiles);
 		}
@@ -139,13 +141,14 @@ public class MapGenerator {
 	protected bool TileExists(float x, float z) {
 		//see if tiles are at coordinates by checking an absolute value difference of the two components
 		foreach(Tile t in spawnedTiles) {
-			if(Mathf.Abs(t.X - x) < 2 && Mathf.Abs(t.Z - z) < 2) {
+			Debug.Log("XDiff: " + (Mathf.Abs((t.X + t.size/2) - x)) + "ZDiff: " + Mathf.Abs((t.Z + t.size/2) - z));
+			if((Mathf.Abs((t.X + t.size/2) - x) < t.size/2 && Mathf.Abs((t.Z + t.size/2) - z) < t.size/2) || (t.X == x && t.Z == z)) {
 				return true;
 			}
 		}
 		//see if walls are at coordinates by the same method
 		foreach(Tile t in spawnedWalls) {
-			if(Mathf.Abs(t.X - x) < 2 && Mathf.Abs(t.Z - z) < 2) {
+			if(Mathf.Abs((t.X + t.size/2) - x) < t.size/2 && Mathf.Abs((t.Z + t.size/2) - z) < t.size/2) {
 				return true;
 			}
 		}
@@ -167,12 +170,10 @@ public class MapGenerator {
 			t.Init();
 		}
 		if(!TileExists(x, z)) {
-			if(type == 0) {
+			if (tileSet.tiles[type].ground) {
 				spawnedTiles.Add((Tile)GameObject.Instantiate(tileSet.tiles[type], new Vector3(x, 0, z), Quaternion.identity));
-			}  else if (type == 1) {
+			}  else { //non-ground tiles should be spawned higher up
 				spawnedWalls.Add((Tile)GameObject.Instantiate(tileSet.tiles[type], new Vector3(x, 3.4f, z), Quaternion.identity));
-			}  else {
-				spawnedWalls.Add((Tile)GameObject.Instantiate(tileSet.tiles[type], new Vector3(x, 0, z), Quaternion.identity));
 			}
 		}  else {
 			return false;	
