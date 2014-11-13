@@ -3,23 +3,16 @@ using System.Collections;
 
 public class Attack : MonoBehaviour {
 
-	public float damage;
-	protected float thisDamage;
-
+	private float thisDamage;
+	private float knockback;
 	private float critChance;
-	private bool isCrit;
 	
 	public float duration;
 	public bool destroyOnImpact;
-	public float knockback;
 
 	// Use this for initialization
 	protected void Start () {
 
-	}
-
-	void OnEnable() {
-		thisDamage = damage;
 	}
 	
 	// Update is called once per frame
@@ -29,7 +22,11 @@ public class Attack : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other) {
 		if(other.GetComponent<Enemy>() != null) {
-			other.GetComponent<Enemy>().GetDamaged(thisDamage, Random.value <= critChance);
+			if(Random.value < 0.5f) {
+				other.GetComponent<Enemy>().GetDamaged(Mathf.CeilToInt(thisDamage), Random.value <= critChance); 
+			} else {
+				other.GetComponent<Enemy>().GetDamaged(Mathf.FloorToInt(thisDamage), Random.value <= critChance); 
+			}
 			other.GetComponent<Enemy>().DoKnockback(this.transform.position, knockback);
 			if(destroyOnImpact) {
 				Destroy(this.gameObject);
@@ -37,12 +34,20 @@ public class Attack : MonoBehaviour {
 		}
 	}
 
-	public void MultiplyDamage(int damageMod) {
-		thisDamage = damageMod*damage;
+//	public void MultiplyDamage(int damageMod) {
+//		thisDamage = damageMod*damage;
+//	}
+
+	public void SetDamage(int damage) {
+		thisDamage = damage;
 	}
 
 	public void SetCrit(float critVal) {
 		critChance = critVal;
+	}
+
+	public void SetDamage(float val) {
+		thisDamage = val;
 	}
 
 }

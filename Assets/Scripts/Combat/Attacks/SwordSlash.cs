@@ -15,6 +15,5 @@ public class SwordSlash : Attack {
 		if(duration < 0) {
 			Destroy(this.gameObject);
 		}
-		Debug.DrawRay(transform.position, Vector3.up*10f);
 	}
 }

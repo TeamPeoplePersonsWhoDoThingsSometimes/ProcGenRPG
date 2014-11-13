@@ -6,27 +6,51 @@ public class Enemy : MonoBehaviour {
 	public float maxHP;
 	public string name;
 	public string version;
-	private float hp;
+	public float badassChance;
 
 	protected bool detectedPlayer;
+	protected bool isBadass;
 
 	private float knockbackVal;
 	private float knockbackTime;
 	private Vector3 knockbackPos;
+	private float hp;
 
 	private static GameObject hitInfo;
+	private static GameObject byteObject;
 
 	// Use this for initialization
 	protected void Start () {
+		if(Random.value < badassChance) {
+			isBadass = true;
+			this.transform.localScale *= 2;
+			this.maxHP *= 2;
+			this.name = "Badass " + name;
+		} else {
+			this.name = "Basic " + name;
+		}
+
 		hp = maxHP;
 		if(hitInfo == null) {
 			hitInfo = Resources.Load<GameObject>("Info/HitInfo");
+		}
+		if(byteObject == null) {
+			byteObject = Resources.Load<GameObject>("Info/Byte");
 		}
 	}
 	
 	// Update is called once per frame
 	protected void Update () {
 		if (hp < 0) {
+			int tempByteVal = (int)maxHP*1000;
+			int curByteVal = 0;
+			int byteVal = Mathf.Max(tempByteVal/5, 5000);
+			while (curByteVal < tempByteVal) {
+				GameObject tmp = (GameObject)Instantiate(byteObject, transform.position, Quaternion.identity);
+				tmp.GetComponent<Byte>().val = byteVal;
+				curByteVal += byteVal;
+			}
+
 			Destroy(this.gameObject);
 		}
 		if(knockbackTime > 0) {
@@ -70,4 +94,5 @@ public class Enemy : MonoBehaviour {
 	public float GetHealthPercentage() {
 		return hp/maxHP;
 	}
+
 }
