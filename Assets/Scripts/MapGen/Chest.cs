@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -23,7 +24,12 @@ public class Chest : Interactable {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if (this.CanInteract()) {
+			transform.GetChild(0).gameObject.SetActive(true);
+			transform.GetChild(0).GetChild(0).GetComponent<Text>().text = "Press " + Player.useKey + " to open";
+		} else {
+			transform.GetChild(0).gameObject.SetActive(false);
+		}
 	}
 
 	// KARTIK do the thing!

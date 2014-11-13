@@ -26,6 +26,12 @@ public abstract class Interactable : MonoBehaviour {
 		}
 	}
 
+	protected void OnTriggerExit(Collider other) {
+		if (other.gameObject.GetComponent<Player>() != null) {
+			canInteract = false;
+		}
+	}
+
 	/**
 	 * This method will occur when the player interacts with this object.
 	 * What should happen when the player hits the use key on this object?

@@ -59,6 +59,8 @@ public class PlayerCanvas : MonoBehaviour {
 	}
 
 	void Update () {
+		playerName.text = playerRef.GetName();
+
 		byteText.text = "Bytes: " + Utility.ByteToString(playerRef.GetBytes());
 
 		byteXP.rectTransform.localScale = new Vector3(playerRef.XPPercentage(), 1f, 1f);
