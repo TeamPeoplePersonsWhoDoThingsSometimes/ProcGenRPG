@@ -52,6 +52,9 @@ public class Chest : Interactable {
 		return items.Remove(i);
 	}
 
+	/**
+	 * Gets the Collections.Generic.List of items in the chest
+	 */
 	public List<Item> GetList() {
 		return items;
 	}

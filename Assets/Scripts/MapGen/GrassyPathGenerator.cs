@@ -108,12 +108,6 @@ public class GrassyPathGenerator : MapGenerator {
 		}
 	}
 	
-	private void spawnOffShoot(int distance, int localX, int localZ) {
-		for(int i = 0; i < distance; i++) {
-			SpawnTile(localX, localZ, 0);
-		}
-	}
-	
 	protected override void generateStructures(List<Tile> ground, bool up, bool down, bool right, bool left) {
 		bool hasDoneUp = !up;
 		bool hasDoneDown = !down;
