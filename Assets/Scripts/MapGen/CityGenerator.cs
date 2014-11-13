@@ -61,9 +61,9 @@ public class CityGenerator : MapGenerator {
 
 	private void branchFromRoad(Vector2 end1, Vector2 end2) {
 		Vector2 dir = (end1 - end2).normalized;
-		/*for (Vector2 branchPoint = end1; branchPoint != end2; branchPoint += dir * tileSet.tiles[1].size ) {
+		for (Vector2 branchPoint = end1; branchPoint != end2; i += dir * tileSet.tiles[1].size ) {
 
-		}*/
+		}
 	}
 
 }
