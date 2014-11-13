@@ -3,6 +3,8 @@ using System.Collections;
 
 public class FollowPlayer : MonoBehaviour {
 
+	public static float rotate;
+
 	private Vector3 offset;
 	// Use this for initialization
 	void Start () {
@@ -14,6 +16,8 @@ public class FollowPlayer : MonoBehaviour {
 	void FixedUpdate () {
 //		transform.parent.rotation = Quaternion.RotateTowards(transform.parent.rotation, Quaternion.Euler(new Vector3(0f, transform.parent.eulerAngles.y + Input.GetAxis("Mouse X"), 0f)), 200*Time.deltaTime);
 //		transform.parent.rotation = Quaternion.RotateTowards(transform.parent.rotation, Quaternion.Euler(new Vector3(0f, Player.playerPos.eulerAngles.y, 0f)), 2000*Time.deltaTime);
+
+		rotate = transform.parent.eulerAngles.y;
 
 //		this.transform.position = Vector3.MoveTowards(this.transform.position, Player.playerPos.position + offset, Time.deltaTime*10f);
 		if (Input.GetKey(KeyCode.Q)) {

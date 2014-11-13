@@ -18,6 +18,7 @@ public class PlayerCanvas : MonoBehaviour {
 
 	private RectTransform weaponXPGroup;
 	private Text curWeapon;
+	private Text weaponXPPercentage;
 	private Image weaponXPImg;
 	private float weaponXPTimeOffset;
 	private int tempWeaponXPVal;
@@ -40,10 +41,11 @@ public class PlayerCanvas : MonoBehaviour {
 		playerName.text = playerRef.GetName();
 		byteXP = transform.GetChild(0).GetChild(6).GetChild(0).GetComponent<Image>();
 		weaponXPGroup = transform.GetChild(0).GetChild(7).GetComponent<RectTransform>();
-		curWeapon = transform.GetChild(0).GetChild(7).GetChild(0).GetComponent<Text>();
-		weaponXPImg = transform.GetChild(0).GetChild(7).GetChild(1).GetChild(0).GetComponent<Image>();
+		curWeapon = transform.GetChild(0).GetChild(7).GetChild(1).GetComponent<Text>();
+		weaponXPImg = transform.GetChild(0).GetChild(7).GetChild(2).GetChild(0).GetComponent<Image>();
 		tempWeaponXPVal = playerRef.GetWeapon().GetBytes();
 		curWeapon.text = playerRef.GetWeapon().GetName();
+		weaponXPPercentage = transform.GetChild(0).GetChild(7).GetChild(3).GetComponent<Text>();
 	}
 	
 	// Update is called once per frame
@@ -92,6 +94,8 @@ public class PlayerCanvas : MonoBehaviour {
 		playerName.text = playerRef.GetName();
 
 		byteText.text = "Bytes: " + Utility.ByteToString(playerRef.GetBytes());
+
+		weaponXPPercentage.text = (playerRef.GetWeapon().GetVersionPercent()*100).ToString("F2") + "%";
 
 		byteXP.rectTransform.localScale = new Vector3(playerRef.XPPercentage(), 1f, 1f);
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class Player : MonoBehaviour {
 
-	public static KeyCode forwardKey, backKey, useKey;
+	public static KeyCode forwardKey = KeyCode.W, backKey = KeyCode.S, useKey = KeyCode.F;
 
 	public List<Item> inventory = new List<Item>();
 	private Weapon activeWeapon;
