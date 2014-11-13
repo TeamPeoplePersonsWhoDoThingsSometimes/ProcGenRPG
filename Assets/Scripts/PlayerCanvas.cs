@@ -61,7 +61,7 @@ public class PlayerCanvas : MonoBehaviour {
 	void Update () {
 		byteText.text = "Bytes: " + Utility.ByteToString(playerRef.GetBytes());
 
-		byteXP.rectTransform.anchorMax = new Vector2(12 - (12*playerRef.XPPercentage()), 0f);
+		byteXP.rectTransform.localScale = new Vector3(playerRef.XPPercentage(), 1f, 1f);
 
 		consoleText.text = playerRef.ToString();
 

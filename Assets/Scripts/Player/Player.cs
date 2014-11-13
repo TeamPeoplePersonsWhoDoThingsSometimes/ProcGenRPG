@@ -11,6 +11,8 @@ public class Player : MonoBehaviour {
 	private int bytes;
 	private int bytesToNextVersion;
 
+	private int levelUpSpeedScale = 10000;
+
 	private string version = "1.0.0";
 	private string name = "NotSkyrim";
 
@@ -18,6 +20,7 @@ public class Player : MonoBehaviour {
 	void Start () {
 		activeWeapon = (Weapon)inventory[0];
 		playerPos = transform;
+		bytesToNextVersion = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*levelUpSpeedScale;
 	}
 	
 	// Update is called once per frame
@@ -42,7 +45,8 @@ public class Player : MonoBehaviour {
 	}
 
 	public float XPPercentage() {
-		return bytes/bytesToNextVersion;
+		Debug.Log((float)bytes/bytesToNextVersion);
+		return (float)bytes/bytesToNextVersion;
 	}
 
 	public void StopAttack() {
@@ -52,9 +56,10 @@ public class Player : MonoBehaviour {
 	public void AddBytes(int val) {
 		bytes += val;
 		activeWeapon.AddBytes(val);
-		bytesToNextVersion = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*1000000;
+		bytesToNextVersion = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*levelUpSpeedScale;
+		Debug.Log(bytes + " " + bytesToNextVersion);
 		while (bytes > bytesToNextVersion) {
-
+			LevelUp();
 		}
 	}
 
@@ -68,7 +73,7 @@ public class Player : MonoBehaviour {
 		} else {
 			version = (int.Parse(version.Split('.')[0])*1 + 1) + ".0.0";
 		}
-		bytesToNextVersion = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*1000000;
+		bytesToNextVersion = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*levelUpSpeedScale;
 	}
 
 	public int GetBytes() {
