@@ -4,21 +4,21 @@ using System.Collections.Generic;
 public class GrassyPathGenerator : MapGenerator {
 	float cursorX = 0;
 	float cursorZ = 0;
-
+	
 	public int maxPathSize = 30;
 	public int minPathSize = 0;
-
+	
 	public int maxFieldSize = 6;
 	public int minFieldSize = 4;
-
+	
 	public GrassyPathGenerator(Area a, TileSet tiles) : base(a,tiles) {
 	}
-
+	
 	protected override void generateGround(int length) {
 		int tempLength = (length % 4) + 3;
 		bool left;
 		bool up;
-
+		
 		bool justDidPath = false;
 		bool justDidField = false;
 		bool wasLeft = false;
@@ -41,7 +41,7 @@ public class GrassyPathGenerator : MapGenerator {
 			}
 		}
 	}
-
+	
 	private void spawnPath(int distance, bool left, bool up) {
 		// determines whether the path is going to move to the side or up
 		bool direction = true;
@@ -70,7 +70,7 @@ public class GrassyPathGenerator : MapGenerator {
 			distance--;
 		}
 	}
-
+	
 	private void spawnField(int size, bool left, bool up) {
 		float localX = cursorX;
 		float localZ = cursorZ;
@@ -98,13 +98,13 @@ public class GrassyPathGenerator : MapGenerator {
 			cursorZ = localZ;
 		}
 	}
-
+	
 	private void spawnOffShoot(int distance, int localX, int localZ) {
 		for(int i = 0; i < distance; i++) {
 			SpawnTile(localX, localZ, 0);
 		}
 	}
-
+	
 	protected override void generateStructures(List<Tile> ground, bool up, bool down, bool right, bool left) {
 		bool hasDoneUp = !up;
 		bool hasDoneDown = !down;
@@ -120,7 +120,7 @@ public class GrassyPathGenerator : MapGenerator {
 			SpawnTile(t.X + t.size, t.Z, 1);
 			SpawnTile(t.X - t.size, t.Z, 1);
 		}
-
+		
 		//Portal Generation Code
 		foreach(Tile t in ground) {
 			if(!hasDoneUp && ground.IndexOf(t) > ground.Count / Random.Range(2,5) && !TileExists(t.X, t.Z + t.size*2)){

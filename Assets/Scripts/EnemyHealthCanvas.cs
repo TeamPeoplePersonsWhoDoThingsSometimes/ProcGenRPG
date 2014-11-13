@@ -24,5 +24,6 @@ public class EnemyHealthCanvas : MonoBehaviour {
 	void Update () {
 		transform.eulerAngles = camRot.eulerAngles;
 		healthBar.rectTransform.localScale = new Vector3(0.03f*enemy.GetHealthPercentage() + 0.001f, 0.004f, 1f);
+		GetComponent<CanvasGroup>().alpha = Mathf.Min(1, Mathf.Max((20 - Mathf.Min(20, Vector3.Distance(this.transform.position, Player.playerPos.position)))/20f + 0.1f, 0));
 	}
 }

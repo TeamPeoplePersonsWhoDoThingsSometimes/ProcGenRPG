@@ -39,6 +39,10 @@ public class PlayerControl : MonoBehaviour {
 //			playerAnim.SetTrigger("Roll");
 //		}
 
+		if(Input.GetKeyDown(KeyCode.Space)) {
+			playerAnim.SetTrigger("Jump");
+		}
+
 		if(playerAnim.GetFloat("Speed") > 0.5 && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))) {
 			if(playerAnim.speed < 1.5f) {
 				playerAnim.speed += Time.deltaTime;
@@ -62,7 +66,6 @@ public class PlayerControl : MonoBehaviour {
 			GetComponent<Player>().StopAttack();
 		}
 
-		Debug.Log(comboTime);
 
 		if (Input.GetMouseButtonDown(0) && comboTime && !attack1 && attack2) {
 			playerAnim.SetBool("Attack3", true);

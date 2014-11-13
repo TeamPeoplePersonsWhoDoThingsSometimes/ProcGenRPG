@@ -141,7 +141,7 @@ public class MapGenerator {
 	protected bool TileExists(float x, float z) {
 		//see if tiles are at coordinates by checking an absolute value difference of the two components
 		foreach(Tile t in spawnedTiles) {
-			Debug.Log("XDiff: " + (Mathf.Abs((t.X + t.size/2) - x)) + "ZDiff: " + Mathf.Abs((t.Z + t.size/2) - z));
+//			Debug.Log("XDiff: " + (Mathf.Abps((t.X + t.size/2) - x)) + "ZDiff: " + Mathf.Abs((t.Z + t.size/2) - z));
 			if((Mathf.Abs((t.X + t.size/2) - x) < t.size/2 && Mathf.Abs((t.Z + t.size/2) - z) < t.size/2) || (t.X == x && t.Z == z)) {
 				return true;
 			}
