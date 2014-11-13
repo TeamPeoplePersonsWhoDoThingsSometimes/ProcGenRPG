@@ -178,9 +178,9 @@ public class MapGenerator {
 	 * of a previously placed tile.
 	 */
 	protected bool SpawnTile(float x, float z, int type) {
-		/*foreach(Tile t in spawnedTiles) {
+		foreach(Tile t in spawnedTiles) {
 			t.Init();
-		}*/
+		}
 		foreach(Tile t in spawnedWalls) {
 			t.Init();
 		}
