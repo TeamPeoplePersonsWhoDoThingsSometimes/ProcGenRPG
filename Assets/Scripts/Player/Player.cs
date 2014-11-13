@@ -3,10 +3,13 @@ using System.Collections.Generic;
 
 public class Player : MonoBehaviour {
 
+	public static KeyCode forwardKey, backKey, useKey;
+
 	public List<Item> inventory = new List<Item>();
 	private Weapon activeWeapon;
 	public static Transform playerPos;
 	private int bytes;
+	private int bytesToNextVersion;
 
 	private string version = "1.0.0";
 	private string name = "NotSkyrim";
@@ -34,6 +37,14 @@ public class Player : MonoBehaviour {
 		activeWeapon.StartAttack();
 	}
 
+	public string GetName() {
+		return name + "_" + version;
+	}
+
+	public float XPPercentage() {
+		return bytes/bytesToNextVersion;
+	}
+
 	public void StopAttack() {
 		activeWeapon.StopAttack();
 	}
@@ -41,6 +52,23 @@ public class Player : MonoBehaviour {
 	public void AddBytes(int val) {
 		bytes += val;
 		activeWeapon.AddBytes(val);
+		bytesToNextVersion = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*1000000;
+		while (bytes > bytesToNextVersion) {
+
+		}
+	}
+
+	private void LevelUp() {
+		bytes -= bytesToNextVersion;
+		//INCREASE PLAYER STATS
+		if(int.Parse(version.Split('.')[2]) + 1 < 10) {
+			version = ((int.Parse(version.Split('.')[0]))*1) + "." + ((int.Parse(version.Split('.')[1]))*1) + "." + ((int.Parse(version.Split('.')[2])) + 1);
+		} else if(int.Parse(version.Split('.')[1]) + 1 < 10) {
+			version = ((int.Parse(version.Split('.')[0]))*1) + "." + ((int.Parse(version.Split('.')[1])*1) + 1) + ".0";
+		} else {
+			version = (int.Parse(version.Split('.')[0])*1 + 1) + ".0.0";
+		}
+		bytesToNextVersion = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*1000000;
 	}
 
 	public int GetBytes() {

@@ -10,7 +10,8 @@ public class PlayerCanvas : MonoBehaviour {
 
 	private CanvasGroup inGameGUI;
 	private Image bg, a1, a2, cursor;
-	private Text byteText;
+	private Image byteXP;
+	private Text byteText, playerName;
 
 	private CanvasGroup consoleGUI;
 	private Text consoleText;
@@ -29,6 +30,9 @@ public class PlayerCanvas : MonoBehaviour {
 		bg = transform.GetChild(0).GetChild(0).GetComponent<Image>();
 		cursor = transform.GetChild(0).GetChild(3).GetComponent<Image>();
 		byteText = transform.GetChild(0).GetChild(4).GetComponent<Text>();
+		playerName = transform.GetChild(0).GetChild(5).GetComponent<Text>();
+		playerName.text = playerRef.GetName();
+		byteXP = transform.GetChild(0).GetChild(6).GetChild(0).GetComponent<Image>();
 	}
 	
 	// Update is called once per frame
@@ -56,6 +60,8 @@ public class PlayerCanvas : MonoBehaviour {
 
 	void Update () {
 		byteText.text = "Bytes: " + Utility.ByteToString(playerRef.GetBytes());
+
+		byteXP.rectTransform.anchorMax = new Vector2(12 - (12*playerRef.XPPercentage()), 0f);
 
 		consoleText.text = playerRef.ToString();
 
