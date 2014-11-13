@@ -4,7 +4,9 @@ using System.Collections;
 public class Tile : MonoBehaviour {
 	
 	public float x, z;
-	
+
+	public float y;//height to place the tile at
+
 	public float size;
 	
 	public string name;

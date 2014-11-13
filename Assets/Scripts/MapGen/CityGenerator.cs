@@ -8,8 +8,8 @@ using System.Collections.Generic;
  * 0-grass
  * 1-road
  * 2-block (for houses proabably, or parks)
- * 3-townCenter
- * 
+ * 3-townCenter plot
+ * 4-town center
  */
 public class CityGenerator : MapGenerator {
 
@@ -19,12 +19,13 @@ public class CityGenerator : MapGenerator {
 	private static int MAX_DEPTH = 5;
 
 	private Vector2 townCenterPlot; // tile identified by its top left corner
-	private List<Vector2> blocks; //tiles (by top left corner) on top of which houses or parks can go
+	private Vector2 townCenterDirection; //direction the town center should face
+	private Dictionary<Vector2, Vector2> blocks; //tiles on top of which houses or parks can go, maps position and direction
 	private List<Vector2> roads; // roads (by top left corner)
 	private float minX, minY, maxX, maxY; //extrema for city roads
 
 	public CityGenerator(Area a, TileSet tiles) : base(a,tiles) {
-		blocks = new List<Vector2> ();
+		blocks = new Dictionary<Vector2, Vector2> ();
 		roads = new List<Vector2> ();
 	}
 
@@ -63,7 +64,12 @@ public class CityGenerator : MapGenerator {
 		//TODO handle dead ends (after handling not having exits on all sides
 		int corner = Random.Range (1, 4);
 		//if (corner == 1) { // top right
-			SpawnTile (((float)WIDTH) / 2.0f + ((float)(tileSet.tiles [3].size + tileSet.tiles [1].size)) * .5f, WIDTH / 2 + (tileSet.tiles [3].size + tileSet.tiles [1].size) * .5f, 3);
+
+		//big formula, but simple, it just cuts the width in half and adds back half a road to put the town center on the edge of a road at the center of the map
+			townCenterPlot = new Vector2 (((float)WIDTH) / 2.0f + ((float)(tileSet.tiles [3].size + tileSet.tiles [1].size)) * .5f, WIDTH / 2 + (tileSet.tiles [3].size + tileSet.tiles [1].size) * .5f);
+			townCenterDirection = -Vector2.up;
+			//SpawnTile (townCenterPlot.x, townCenterPlot.y, 3);
+			
 		/*} else if (corner == 2) {
 			SpawnTile (((float)WIDTH) / 2.0f + ((float)(tileSet.tiles [3].size + tileSet.tiles [1].size)) * .5f, WIDTH / 2 + (tileSet.tiles [3].size + tileSet.tiles [1].size) * .5f, 3);		
 		}*/
@@ -96,6 +102,24 @@ public class CityGenerator : MapGenerator {
 
 		}
 
+		//step 6: determine plazas
+		//TODO change the roads list to a dictionary mapping ints to lists
+		// in order to do this effeciently
+		/*foreach (Vector2 vec in roads) {
+			int check = 0;
+		}*/
+
+	}
+
+	protected override void generateStructures (List<Tile> ground, bool up, bool down, bool right, bool left)
+	{
+		//place town center
+		SpawnTileInDirection (townCenterPlot.x, townCenterPlot.y, 3, townCenterDirection);
+
+		//place houses
+		foreach (KeyValuePair<Vector2, Vector2> plot in blocks) {
+			SpawnTileInDirection(plot.Key.x, plot.Key.y, 2, plot.Value);
+		}
 	}
 
 	/**
@@ -222,9 +246,9 @@ public class CityGenerator : MapGenerator {
 	 * if possible
 	 */
 	private void tryPlaceBlock(Vector2 pos, Vector2 front) {
-		if(!TileExists(pos.x, pos.y)) {
-			SpawnTileInDirection (pos.x, pos.y, 2, front);
-			blocks.Add (pos);
+		if(!TileExists(pos.x, pos.y) && !blocks.ContainsKey(pos)) {
+			//SpawnTileInDirection (pos.x, pos.y, 2, front);
+			blocks.Add (pos, front);
 		}
 	}
 

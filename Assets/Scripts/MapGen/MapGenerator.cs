@@ -163,7 +163,7 @@ public class MapGenerator {
 		}
 		//see if walls are at coordinates by the same method
 		foreach(Tile t in spawnedWalls) {
-			if(Mathf.Abs((t.X + t.size/2) - x) < t.size/2 && Mathf.Abs((t.Z + t.size/2) - z) < t.size/2 || (t.X == x && t.Z == z)) {
+			if(Mathf.Abs(t.X - x) < t.size/2 && Mathf.Abs(t.Z - z) < t.size/2 || (t.X == x && t.Z == z)) {
 				return true;
 			}
 		}
@@ -201,6 +201,10 @@ public class MapGenerator {
 	 * of a previously placed tile.
 	 */
 	protected bool SpawnTileInDirection(float x, float z, int type, Vector3 dir) {
+		if (type >= tileSet.tiles.Count) {
+			Debug.LogError("Invalid type");
+		}
+
 		foreach (Tile t in spawnedTiles) {
 				t.Init ();
 		}
@@ -208,12 +212,11 @@ public class MapGenerator {
 				t.Init ();
 		}
 		if (!TileExists (x, z)) {
-			Tile tile = (Tile)GameObject.Instantiate (tileSet.tiles [type], new Vector3 (x, 0, z), Quaternion.identity);
+			Tile tile = (Tile)GameObject.Instantiate (tileSet.tiles [type], new Vector3 (x, tileSet.tiles [type].y, z), Quaternion.identity);
 			tile.transform.rotation = Quaternion.LookRotation(dir);
 			if (tileSet.tiles [type].ground) {
 				spawnedTiles.Add (tile);
 			} else { //non-ground tiles should be spawned higher up
-				tile.transform.position.Set(tile.transform.position.x, 3.4f, tile.transform.position.z);
 				spawnedWalls.Add (tile);
 			}
 			return true;
@@ -222,8 +225,40 @@ public class MapGenerator {
 		}
 	}
 
+	/**
+	 * remove a tile at the given coordinates, must be specific
+	 */
+	protected void removeTile(float x, float z) {
+		//remove ground
+		List<Tile> remove = new List<Tile> ();
+		foreach (Tile t in spawnedTiles) {
+			if(t.x == x && t.z == z) {
+				remove.Add(t);
+			}
+		}
+
+		//no native remove all
+		foreach (Tile t in remove) {
+			spawnedTiles.Remove (t);
+			GameObject.Destroy(t.gameObject);
+		}
+
+		//remove walls
+		remove = new List<Tile> ();
+		foreach (Tile t in spawnedWalls) {
+			if(t.x == x && t.z == z) {
+				remove.Add(t);
+			}
+		}
+
+		//no native remove all
+		foreach (Tile t in remove) {
+			spawnedWalls.Remove (t);
+			GameObject.Destroy(t.gameObject);
+		}
+	}
 		
-		/**
+	/**
 	 * Force spawn a tile at the given location, in other words, after you call this method,
 	 * a tile will be at the given coordinates independent of anything else in the game world
 	 */
