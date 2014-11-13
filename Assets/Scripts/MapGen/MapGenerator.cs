@@ -77,8 +77,6 @@ public class MapGenerator {
 	
 	public TileSet tileSet;
 
-	private static Chest chest;
-
 	protected List<Tile> spawnedTiles;
 
 	protected List<Tile> spawnedWalls;
@@ -97,16 +95,6 @@ public class MapGenerator {
 	 */
 	protected void SpawnEnemy(int enemyType, float x, float y) {
 		GameObject.Instantiate(tileSet.enemyTypes[enemyType], new Vector3(x, 0.5f, y), Quaternion.identity);
-	}
-
-	protected void SpawnChest(List<Item> items, float x, float z) {
-		if (chest == null) {
-			chest = Resources.Load<Chest>("Chest");
-		}
-		Chest temp = (Chest) (GameObject.Instantiate(chest, new Vector3(x, 0.5f, z), Quaternion.identity));
-		foreach (Item item in items) {
-			temp.addToChest(item);
-		}
 	}
 
 	public void InitWithData(AreaData data) {

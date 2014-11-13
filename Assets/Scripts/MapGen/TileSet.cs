@@ -8,6 +8,4 @@ public class TileSet : MonoBehaviour {
 	public GeneratorTypes generatorType;
 	public List<Tile> tiles;
 	public List<Enemy> enemyTypes;
-	public List<Item> chestItems;
-	public float chestSpawnChance;
 }
