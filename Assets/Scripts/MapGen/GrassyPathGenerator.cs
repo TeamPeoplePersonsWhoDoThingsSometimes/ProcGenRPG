@@ -79,11 +79,11 @@ public class GrassyPathGenerator : MapGenerator {
 			for(int i = 0; i < size; i++) {
 				for(int j = 0; j < size; j++) {
 					SpawnTile(localX, localZ, 0);
-					localX += tileSet.tiles[0].size;
 					spawnedChest = Random.value < tileSet.chestSpawnChance;
 					if(spawnedChest) {
 						SpawnChest(new List<Item>(), localX, localZ);
 					}
+					localX += tileSet.tiles[0].size;
 				}
 				localZ += tileSet.tiles[0].size;
 				localX = cursorX;
@@ -94,23 +94,17 @@ public class GrassyPathGenerator : MapGenerator {
 			for(int i = 0; i < size; i++) {
 				for(int j = 0; j < size; j++) {
 					SpawnTile(localX, localZ, 0);
-					localX -= tileSet.tiles[0].size;
 					spawnedChest = Random.value < tileSet.chestSpawnChance;
 					if(spawnedChest) {
 						SpawnChest(new List<Item>(), localX, localZ);
 					}
+					localX -= tileSet.tiles[0].size;
 				}
 				localZ -= tileSet.tiles[0].size;
 				localX = cursorX;
 			}
 			cursorX -= (size - 1) * tileSet.tiles[0].size;
 			cursorZ = localZ;
-		}
-	}
-	
-	private void spawnOffShoot(int distance, int localX, int localZ) {
-		for(int i = 0; i < distance; i++) {
-			SpawnTile(localX, localZ, 0);
 		}
 	}
 	
