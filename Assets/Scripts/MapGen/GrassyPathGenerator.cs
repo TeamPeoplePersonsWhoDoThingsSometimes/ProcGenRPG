@@ -66,7 +66,7 @@ public class GrassyPathGenerator : MapGenerator {
 				cursorZ += tileSet.tiles[0].size;
 			}
 			direction = Random.value < 0.5f;
-			spawnedEnemy = Random.value < 0.25f;
+			spawnedEnemy = Random.value < tileSet.enemySpawnChance;
 			distance--;
 		}
 	}

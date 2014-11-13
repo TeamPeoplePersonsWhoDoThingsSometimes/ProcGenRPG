@@ -93,19 +93,22 @@ public class MapGenerator {
 	}
 
 	/**
-	 * Spawn an enemy of the given type at the given coordinates (x,y) converted to (x,z)
+	 * Spawn an enemy of the given type at the given coordinates (x,z)
 	 */
-	protected void SpawnEnemy(int enemyType, float x, float y) {
-		GameObject.Instantiate(tileSet.enemyTypes[enemyType], new Vector3(x, 0.5f, y), Quaternion.identity);
+	protected void SpawnEnemy(int enemyType, float x, float z) {
+		GameObject.Instantiate(tileSet.enemyTypes[enemyType], new Vector3(x, 0.5f, z), Quaternion.identity);
 	}
 
+	/**
+	 * Spawns a chest at the given location in the (x, z) plane
+	 */
 	protected void SpawnChest(List<Item> items, float x, float z) {
 		if (chest == null) {
 			chest = Resources.Load<Chest>("Chest");
 		}
 		Chest temp = (Chest) (GameObject.Instantiate(chest, new Vector3(x, 0.5f, z), Quaternion.identity));
 		foreach (Item item in items) {
-			temp.addToChest(item);
+			temp.AddToChest(item);
 		}
 	}
 
