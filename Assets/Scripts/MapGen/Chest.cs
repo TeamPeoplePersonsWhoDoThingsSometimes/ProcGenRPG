@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Chest : MonoBehaviour {
+public class Chest : Interactable {
 
 	private static readonly int SLOTS = 4;
 	private List<Item> items;
