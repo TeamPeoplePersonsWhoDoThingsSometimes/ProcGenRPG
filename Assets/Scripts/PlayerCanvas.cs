@@ -16,6 +16,12 @@ public class PlayerCanvas : MonoBehaviour {
 	private CanvasGroup consoleGUI;
 	private Text consoleText;
 
+	private RectTransform weaponXPGroup;
+	private Text curWeapon;
+	private Image weaponXPImg;
+	private float weaponXPTimeOffset;
+	private int tempWeaponXPVal;
+
 	private bool inConsole = false;
 
 	// Use this for initialization
@@ -33,6 +39,11 @@ public class PlayerCanvas : MonoBehaviour {
 		playerName = transform.GetChild(0).GetChild(5).GetComponent<Text>();
 		playerName.text = playerRef.GetName();
 		byteXP = transform.GetChild(0).GetChild(6).GetChild(0).GetComponent<Image>();
+		weaponXPGroup = transform.GetChild(0).GetChild(7).GetComponent<RectTransform>();
+		curWeapon = transform.GetChild(0).GetChild(7).GetChild(0).GetComponent<Text>();
+		weaponXPImg = transform.GetChild(0).GetChild(7).GetChild(1).GetChild(0).GetComponent<Image>();
+		tempWeaponXPVal = playerRef.GetWeapon().GetBytes();
+		curWeapon.text = playerRef.GetWeapon().GetName();
 	}
 	
 	// Update is called once per frame
@@ -59,6 +70,25 @@ public class PlayerCanvas : MonoBehaviour {
 	}
 
 	void Update () {
+		if(tempWeaponXPVal != playerRef.GetWeapon().GetBytes()) {
+			curWeapon.text = playerRef.GetWeapon().GetName();
+			weaponXPTimeOffset = 4f;
+			tempWeaponXPVal = playerRef.GetWeapon().GetBytes();
+		}
+
+		if (weaponXPTimeOffset > 0) {
+			weaponXPTimeOffset -= Time.deltaTime;
+			if(weaponXPGroup.localPosition.x < -5.75f) {
+				weaponXPGroup.Translate(Time.deltaTime*20f, 0f,0f, Space.Self);
+			}
+		} else {
+			if(weaponXPGroup.localPosition.x > -9) {
+				weaponXPGroup.Translate(-Time.deltaTime*20f, 0f,0f, Space.Self);
+			}
+		}
+
+		weaponXPImg.rectTransform.localScale = new Vector3(playerRef.GetWeapon().GetVersionPercent(), 1, 1);
+
 		playerName.text = playerRef.GetName();
 
 		byteText.text = "Bytes: " + Utility.ByteToString(playerRef.GetBytes());
@@ -80,6 +110,6 @@ public class PlayerCanvas : MonoBehaviour {
 			transform.parent.GetChild(1).camera.enabled = true;
 			consoleGUI.alpha = 0f;
 		}
-	} 
+	}
 }
  

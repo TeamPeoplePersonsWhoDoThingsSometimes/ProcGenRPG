@@ -56,6 +56,14 @@ public class Weapon : Item {
 		return critChance;
 	}
 
+	public string GetName() {
+		return name + "_" + version;
+	}
+
+	public float GetVersionPercent() {
+		return (float)bytes/bytesToLevelUp;
+	}
+
 	public void StartAttack() {
 		isAttacking = true;
 	}
@@ -66,6 +74,10 @@ public class Weapon : Item {
 
 	public float GetDamage() {
 		return thisDamage;
+	}
+
+	public int GetBytes() {
+		return bytes;
 	}
 
 	public string ToString() {
