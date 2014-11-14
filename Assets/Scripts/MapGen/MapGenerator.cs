@@ -83,6 +83,8 @@ public class MapGenerator {
 
 	protected List<Tile> spawnedWalls;
 
+	protected List<Tile> spawnedPortals;
+
 	public MapGenerator(Area a, TileSet tiles) {
 		this.a = a;
 		tileSet = tiles;
@@ -124,6 +126,7 @@ public class MapGenerator {
 
 		spawnedTiles = new List<Tile>();
 		spawnedWalls = new List<Tile>();
+		spawnedPortals = new List<Tile>();
 		generateGround(length);
 		foreach(Tile t in spawnedTiles) {
 			t.Init();
@@ -281,7 +284,9 @@ public class MapGenerator {
 					GameObject.Destroy(items[i]);
 				}
 			}
-			spawnedWalls.Add((Tile)GameObject.Instantiate(tileSet.tiles[type], new Vector3(x, 3.4f, z), Quaternion.identity));
+			Tile t = (Tile) GameObject.Instantiate(tileSet.tiles[type], new Vector3(x, 3.4f, z), Quaternion.identity);
+			spawnedWalls.Add(t);
+			spawnedPortals.Add(t);
 		}
 	}
 

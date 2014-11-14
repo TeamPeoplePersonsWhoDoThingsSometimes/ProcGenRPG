@@ -123,9 +123,64 @@ public class GrassyPathGenerator : MapGenerator {
 			SpawnTile(t.X + t.size, t.Z, 1);
 			SpawnTile(t.X - t.size, t.Z, 1);
 		}
-		
-		//Portal Generation Code
+
+		List<Tile> highestGround = new List<Tile> {spawnedTiles[0]} ;
+		List<Tile> lowestGround = new List<Tile> {spawnedTiles[0]} ;
+		List<Tile> rightmostGround = new List<Tile> {spawnedTiles[0]} ;
+		List<Tile> leftmostGround = new List<Tile> {spawnedTiles[0]} ;
+
 		foreach(Tile t in ground) {
+			if (t.z > highestGround[0].z) {
+				highestGround = new List<Tile>() {t} ;
+			} else if (t.z == highestGround[0].z) {
+				highestGround.Add(t);
+			}
+
+			if (t.z < lowestGround[0].z) {
+				lowestGround = new List<Tile>() {t} ;
+			} else if (t.z == lowestGround[0].z) {
+				lowestGround.Add(t);
+			}
+
+			if (t.x > rightmostGround[0].x) {
+				rightmostGround = new List<Tile>() {t} ;
+			}  else if (t.x == rightmostGround[0].x) {
+				rightmostGround.Add(t);
+			}
+
+			if (t.x < leftmostGround[0].x) {
+				leftmostGround = new List<Tile>() {t} ;
+			} else if (t.x == leftmostGround[0].x) {
+				leftmostGround.Add(t);
+			}
+		}
+
+		if (!hasDoneUp) {
+			Tile tile = highestGround[Random.Range(0, highestGround.Count)];
+			ForceTile(tile.x, tile.z + tile.size, 2);
+			spawnedPortals[spawnedPortals.Count - 1].gameObject.GetComponent<Tile>().name = "UpPortal";
+		}
+
+		if (!hasDoneDown) {
+			Tile tile = lowestGround[Random.Range(0, lowestGround.Count)];
+			ForceTile(tile.x, tile.z - tile.size, 2);
+			spawnedPortals[spawnedPortals.Count - 1].gameObject.GetComponent<Tile>().name = "DownPortal";
+		}
+
+		if (!hasDoneRight) {
+			Tile tile = rightmostGround[Random.Range(0, rightmostGround.Count)];
+			ForceTile(tile.x + tile.size, tile.z, 2);
+			spawnedPortals[spawnedPortals.Count - 1].gameObject.GetComponent<Tile>().name = "RightPortal";
+		}
+
+		if (!hasDoneLeft) {
+			Tile tile = leftmostGround[Random.Range(0, leftmostGround.Count)];
+			ForceTile(tile.x - tile.size, tile.z, 2);
+			spawnedPortals[spawnedPortals.Count - 1].gameObject.GetComponent<Tile>().name = "LeftPortal";
+		}
+
+		//Portal Generation Code
+		/*foreach(Tile t in ground) {
 			if(!hasDoneUp && ground.IndexOf(t) > ground.Count / Random.Range(2,5) && !TileExists(t.X, t.Z + t.size*2)){
 				ForceTile(t.X, t.Z + t.size, 2);
 				GameObject[] items = GameObject.FindGameObjectsWithTag("Portal");
@@ -170,6 +225,6 @@ public class GrassyPathGenerator : MapGenerator {
 				}
 				hasDoneLeft = true;
 			}
-		}
+		}*/
 	}
 }

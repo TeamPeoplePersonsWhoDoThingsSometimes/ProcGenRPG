@@ -111,12 +111,13 @@ public class World : MonoBehaviour {
 		currentArea = currentArea.getUp();
 		currentArea.Init();
 		GameObject[] items = GameObject.FindGameObjectsWithTag("Portal");
-		GameObject player = GameObject.Find("Player");
+		GameObject player = GameObject.FindGameObjectWithTag("Player");
 		player.transform.position = new Vector3(0, 0, 0);
 		foreach(GameObject g in items) {
 			Tile t = g.GetComponent<Tile>();
 			if(t.name.Equals("DownPortal")) {
-				player.transform.position = new Vector3(g.transform.position.x, 0.5f, g.transform.position.z + 6f);
+				player.transform.position = new Vector3(g.transform.position.x, 0.5f, g.transform.position.z + 7f);
+				GameObject.Find("Main Camera").GetComponent<FollowPlayer>().SetToPlayer();
 			}
 		}
 	}
@@ -126,12 +127,13 @@ public class World : MonoBehaviour {
 		currentArea = currentArea.getDown();
 		currentArea.Init();
 		GameObject[] items = GameObject.FindGameObjectsWithTag("Portal");
-		GameObject player = GameObject.Find("Player");
+		GameObject player = GameObject.FindGameObjectWithTag("Player");
 		player.transform.position = new Vector3(0, 0, 0);
 		foreach(GameObject g in items) {
 			Tile t = g.GetComponent<Tile>();
 			if(t.name.Equals("UpPortal")) {
-				player.transform.position = new Vector3(g.transform.position.x, 0.5f, g.transform.position.z - 6f);
+				player.transform.position = new Vector3(g.transform.position.x, 0.5f, g.transform.position.z - 7f);
+				GameObject.Find("Main Camera").GetComponent<FollowPlayer>().SetToPlayer();
 			}
 		}
 	}
@@ -141,12 +143,13 @@ public class World : MonoBehaviour {
 		currentArea = currentArea.getRight();
 		currentArea.Init();
 		GameObject[] items = GameObject.FindGameObjectsWithTag("Portal");
-		GameObject player = GameObject.Find("Player");
+		GameObject player = GameObject.FindGameObjectWithTag("Player");
 		player.transform.position = new Vector3(0, 0, 0);
 		foreach(GameObject g in items) {
 			Tile t = g.GetComponent<Tile>();
 			if(t.name.Equals("LeftPortal")) {
 				player.transform.position = new Vector3(g.transform.position.x, 0.5f, g.transform.position.z);
+				GameObject.Find("Main Camera").GetComponent<FollowPlayer>().SetToPlayer();
 			}
 		}
 	}
@@ -156,12 +159,13 @@ public class World : MonoBehaviour {
 		currentArea = currentArea.getLeft();
 		currentArea.Init();
 		GameObject[] items = GameObject.FindGameObjectsWithTag("Portal");
-		GameObject player = GameObject.Find("Player");
+		GameObject player = GameObject.FindGameObjectWithTag("Player");
 		player.transform.position = new Vector3(0, 0, 0);
 		foreach(GameObject g in items) {
 			Tile t = g.GetComponent<Tile>();
 			if(t.name.Equals("RightPortal")) {
 				player.transform.position = new Vector3(g.transform.position.x, 0.5f, g.transform.position.z);
+				GameObject.Find("Main Camera").GetComponent<FollowPlayer>().SetToPlayer();
 			}
 		}
 	}

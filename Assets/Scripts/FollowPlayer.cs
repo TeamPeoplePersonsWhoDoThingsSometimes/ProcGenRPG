@@ -33,4 +33,11 @@ public class FollowPlayer : MonoBehaviour {
 
 //		this.transform.LookAt(Player.playerPos);
 	}
+
+	/**
+	 * Sets the MainCamera's position to that of the player
+	 */
+	public void SetToPlayer() {
+		transform.parent.position = Player.playerPos.position;
+	}
 }
