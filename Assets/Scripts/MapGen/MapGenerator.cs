@@ -181,7 +181,19 @@ public class MapGenerator {
 	 * of a previously placed tile.
 	 */
 	protected bool SpawnTile(float x, float z, int type) {
-		return SpawnTileInDirection (x, z, type, Vector2.up);
+		if (!TileExists (x, z)) {
+			Tile tile = (Tile)GameObject.Instantiate (tileSet.tiles [type], new Vector3 (x, tileSet.tiles [type].y, z), Quaternion.identity);
+			tile.x = x;
+			tile.z = z;
+			if (tileSet.tiles [type].ground) {
+				spawnedTiles.Add (tile);
+			} else { //non-ground tiles should be spawned higher up
+				spawnedWalls.Add (tile);
+			}
+			return true;
+		} else {
+			return false;	
+		}
 		
 	}
 
@@ -208,15 +220,11 @@ public class MapGenerator {
 			Debug.LogError("Invalid type");
 		}
 
-		foreach (Tile t in spawnedTiles) {
-				t.Init ();
-		}
-		foreach (Tile t in spawnedWalls) {
-				t.Init ();
-		}
 		if (!TileExists (x, z)) {
 			Tile tile = (Tile)GameObject.Instantiate (tileSet.tiles [type], new Vector3 (x, tileSet.tiles [type].y, z), Quaternion.identity);
 			tile.transform.rotation = Quaternion.LookRotation(dir);
+			tile.x = x;
+			tile.z = z;
 			if (tileSet.tiles [type].ground) {
 				spawnedTiles.Add (tile);
 			} else { //non-ground tiles should be spawned higher up

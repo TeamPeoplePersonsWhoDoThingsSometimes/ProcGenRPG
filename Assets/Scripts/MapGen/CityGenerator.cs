@@ -13,7 +13,7 @@ using System.Collections.Generic;
  */
 public class CityGenerator : MapGenerator {
 
-	private static int WIDTH = 800;//both width and height of the area
+	private static int WIDTH = 1600;//both width and height of the area
 	private static float BRANCH_CHANCE = 0.5f;
 	private static int BLOCK_RADIUS = 20;
 	private static int MAX_DEPTH = 5;
@@ -23,6 +23,8 @@ public class CityGenerator : MapGenerator {
 	private Dictionary<Vector2, Vector2> blocks; //tiles on top of which houses or parks can go, maps position and direction
 	private List<Vector2> roads; // roads (by top left corner)
 	private float minX, minY, maxX, maxY; //extrema for city roads
+	private Vector2 center;
+	private float radius;
 
 	public CityGenerator(Area a, TileSet tiles) : base(a,tiles) {
 		blocks = new Dictionary<Vector2, Vector2> ();
@@ -34,6 +36,8 @@ public class CityGenerator : MapGenerator {
 	 */
 	protected override void generateGround (int length)
 	{
+		center = new Vector2 (WIDTH / 2, WIDTH / 2);
+
 		//step 1: generate main entrance and exit area roads
 		//TODO handle not having exits on all sides
 		Vector2 bottomVertical = Vector2.zero, topVertical = Vector2.zero, leftHorizontal = Vector2.zero, rightHorizontal = Vector2.zero;//extrema of main roads in city limits
@@ -56,23 +60,28 @@ public class CityGenerator : MapGenerator {
 		minY = minX;
 		
 		//step 2: generate city radius
-		int radius = Random.Range (50, WIDTH - 50);
+		radius = Random.Range (50, WIDTH/2 - 50);
 
 		//step 3: place town center area
 		//town center will always be on one of the four corners of the intersection
 		//of the two primary roads or at the end of either road that dead-ends at the center of town
 		//TODO handle dead ends (after handling not having exits on all sides
 		int corner = Random.Range (1, 4);
-		//if (corner == 1) { // top right
-
-		//big formula, but simple, it just cuts the width in half and adds back half a road to put the town center on the edge of a road at the center of the map
+		corner = 4;
+		if (corner == 1) { // top right
+			//big formula, but simple, it just cuts the width in half and adds back half a road to put the town center on the edge of a road at the center of the map
 			townCenterPlot = new Vector2 (((float)WIDTH) / 2.0f + ((float)(tileSet.tiles [3].size + tileSet.tiles [1].size)) * .5f, WIDTH / 2 + (tileSet.tiles [3].size + tileSet.tiles [1].size) * .5f);
 			townCenterDirection = -Vector2.up;
-			//SpawnTile (townCenterPlot.x, townCenterPlot.y, 3);
-			
-		/*} else if (corner == 2) {
-			SpawnTile (((float)WIDTH) / 2.0f + ((float)(tileSet.tiles [3].size + tileSet.tiles [1].size)) * .5f, WIDTH / 2 + (tileSet.tiles [3].size + tileSet.tiles [1].size) * .5f, 3);		
-		}*/
+		} else if (corner == 2) { //bottom right
+			townCenterPlot = new Vector2 (((float)WIDTH) / 2.0f + ((float)(tileSet.tiles [3].size + tileSet.tiles [1].size)) * .5f, WIDTH / 2 - (tileSet.tiles [3].size + tileSet.tiles [1].size) * .5f);
+			townCenterDirection = -Vector2.right;
+		} else if (corner == 3) { //bottom left
+			townCenterPlot = new Vector2 (((float)WIDTH) / 2.0f - ((float)(tileSet.tiles [3].size + tileSet.tiles [1].size)) * .5f, WIDTH / 2 - (tileSet.tiles [3].size + tileSet.tiles [1].size) * .5f);
+			townCenterDirection = Vector2.up;
+		} else if (corner == 4) { //top left
+			townCenterPlot = new Vector2 (((float)WIDTH) / 2.0f - ((float)(tileSet.tiles [3].size + tileSet.tiles [1].size)) * .5f, WIDTH / 2 + (tileSet.tiles [3].size + tileSet.tiles [1].size) * .5f);
+			townCenterDirection = Vector2.right;
+		}
 
 		//step 4: recursive city radius fill step
 		//randomly place roads along the main roads in
@@ -89,20 +98,39 @@ public class CityGenerator : MapGenerator {
 		//step 5: place base tiles for buildings
 		//basically just go through the list of roads and place blockss where possible
 		foreach (Vector2 vec in roads) {
-			//try to place block on any side of the road
-			Vector2 up = right (vec, Vector2.up);
-			Vector2 rVec = right (vec, Vector2.right);
-			Vector2 lVec = left (vec, Vector2.right);
-			Vector2 down = left (vec, Vector2.up);
+			if((vec-center).magnitude <= radius && Random.value > 0.5) { // only place in radius
+				//try to place block on any side of the road
 
-			tryPlaceBlock(up, Vector2.up);
-			tryPlaceBlock(rVec, Vector2.right);
-			tryPlaceBlock(lVec, -Vector2.right);
-			tryPlaceBlock(down, -Vector2.up);
+				Vector2 up = right (vec, Vector2.up);
+				Vector2 rVec = right (vec, Vector2.right);
+				Vector2 lVec = left (vec, Vector2.right);
+				Vector2 down = left (vec, Vector2.up);
+
+				tryPlaceBlock(up, Vector2.up);
+				tryPlaceBlock(rVec, Vector2.right);
+				tryPlaceBlock(lVec, -Vector2.right);
+				tryPlaceBlock(down, -Vector2.up);
+			}
 
 		}
 
-		//step 6: determine plazas
+		//step 6: City outskirt generation
+		// just go through all the area outside the city limits
+		// and randomly place grass tiles PLACE OUTSKIRTS BUILDING HERE
+		
+		for (float i = 0; i < WIDTH; i += tileSet.tiles[0].size) {
+			bool inCityWide = false;
+			
+			for(float j = 0; j < WIDTH; j += tileSet.tiles[0].size) {
+				//if(inCityWide && j > WIDTH/2 - radius && j < WIDTH/2 + radius) continue;//skip when in the city
+				if(!blocks.ContainsKey(new Vector2(i,j))) {
+					SpawnTile(i,j,0);
+				}
+			}
+		}
+
+
+		//step 7: determine plazas
 		//TODO change the roads list to a dictionary mapping ints to lists
 		// in order to do this effeciently
 		/*foreach (Vector2 vec in roads) {
@@ -188,6 +216,7 @@ public class CityGenerator : MapGenerator {
 		Vector2 leftLeft = left (lVec, pDir);
 		Vector2 rVec = right (start, pDir);
 		Vector2 rightRight = right (rVec, pDir);
+		Vector2 frontFront = start + 2 * dir * tileSet.tiles [1].size;
 		if (TileExists (lVec.x, lVec.y) || TileExists (leftLeft.x, leftLeft.y) || TileExists (rVec.x, rVec.y) || TileExists (rightRight.x, rightRight.y)) {
 			return init;
 		}
@@ -199,8 +228,8 @@ public class CityGenerator : MapGenerator {
 			leftLeft = left (lVec, pDir);
 			rVec = right (start, pDir);
 			rightRight = right (rVec, pDir);
-			if (TileExists(start.x, start.y) || TileExists(lVec.x, lVec.y) || TileExists (rVec.x, rVec.y) ||
-			    start.y < minY || start.y > maxY || start.x < minX || start.x > maxX) { //okay, we hit a road, so now we need to return our target
+			frontFront = start + 2 * dir * tileSet.tiles [1].size;
+			if (TileExists(start.x, start.y) || TileExists(lVec.x, lVec.y) || TileExists (rVec.x, rVec.y) || (start - center).magnitude > radius) { //okay, we hit a boundary , so now we need to return our target
 				if (i < 2) {//if within 2, don't branch, because it is wierd if we have a road length 1 that was forced to length 1
 					return init;
 				}
@@ -218,6 +247,13 @@ public class CityGenerator : MapGenerator {
 
 				if(TileExists(rightRight.x, rightRight.y)) {
 					for (Vector2 dVec = start; (dVec - start).magnitude < (start - rightRight).magnitude; dVec += pDir * tileSet.tiles[1].size) {
+						placeRoad(dVec);
+					}
+					returnFromGlue = true;
+				}
+
+				if(TileExists(frontFront.x, frontFront.y)) {
+					for (Vector2 dVec = start; (dVec - start).magnitude < (start - frontFront).magnitude; dVec += dir * tileSet.tiles[1].size) {
 						placeRoad(dVec);
 					}
 					returnFromGlue = true;
