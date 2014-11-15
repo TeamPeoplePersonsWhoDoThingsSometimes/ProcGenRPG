@@ -66,20 +66,21 @@ public class PlayerControl : MonoBehaviour {
 			GetComponent<Player>().StopAttack();
 		}
 
+		if(!PlayerCanvas.inConsole) {
+			if (Input.GetMouseButtonDown(0) && comboTime && !attack1 && attack2) {
+				playerAnim.SetBool("Attack3", true);
+				comboTime = false;
+			}
 
-		if (Input.GetMouseButtonDown(0) && comboTime && !attack1 && attack2) {
-			playerAnim.SetBool("Attack3", true);
-			comboTime = false;
-		}
+			if (Input.GetMouseButtonDown(0) && comboTime && attack1 && !attack2) {
+				playerAnim.SetBool("Attack2", true);
+				comboTime = false;
+			}
 
-		if (Input.GetMouseButtonDown(0) && comboTime && attack1 && !attack2) {
-			playerAnim.SetBool("Attack2", true);
-			comboTime = false;
-		}
-
-		if (Input.GetMouseButtonDown(0) && !attack2 && !attack3) {
-			playerAnim.SetBool("Attack1", true);
-			comboTime = false;
+			if (Input.GetMouseButtonDown(0) && !attack2 && !attack3) {
+				playerAnim.SetBool("Attack1", true);
+				comboTime = false;
+			}
 		}
 
 		float mousePosX = Input.mousePosition.x;

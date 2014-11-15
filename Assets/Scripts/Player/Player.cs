@@ -9,12 +9,18 @@ public class Player : MonoBehaviour {
 	private Weapon activeWeapon;
 	public static Transform playerPos;
 	private int bytes;
+	private int xpBytes;
 	private int bytesToNextVersion;
 
 	private int levelUpSpeedScale = 10000;
 
 	private string version = "1.0.0";
 	private string name = "TheKiniMan";
+
+
+	public static int strength, defense, efficiency, encryption, security;
+	public static int algorithmPoints;
+	private float integrity, rma;
 
 	// Use this for initialization
 	void Start () {
@@ -30,7 +36,7 @@ public class Player : MonoBehaviour {
 
 	public void Attack (int combo) {
 		GameObject temp = (GameObject)Instantiate(activeWeapon.GetAttack(), transform.position + new Vector3(0,1f,0), transform.localRotation);
-		temp.GetComponent<Attack>().SetDamage(activeWeapon.GetDamage() * combo);
+		temp.GetComponent<Attack>().SetDamage(strength + (activeWeapon.GetDamage() * combo));
 		temp.GetComponent<Attack>().SetCrit(activeWeapon.GetCrit());
 //		temp.GetComponent<SwordSlash>().thisDamage = 200;
 //		Debug.Log(temp.GetComponent<SwordSlash>().thisDamage + " " + temp.name);
@@ -45,7 +51,7 @@ public class Player : MonoBehaviour {
 	}
 
 	public float XPPercentage() {
-		return (float)bytes/bytesToNextVersion;
+		return (float)xpBytes/bytesToNextVersion;
 	}
 
 	public void StopAttack() {
@@ -54,16 +60,18 @@ public class Player : MonoBehaviour {
 
 	public void AddBytes(int val) {
 		bytes += val;
+		xpBytes += val;
 		activeWeapon.AddBytes(val);
 		bytesToNextVersion = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*levelUpSpeedScale;
-		while (bytes > bytesToNextVersion) {
+		while (xpBytes >= bytesToNextVersion) {
 			LevelUp();
 		}
 	}
 
 	private void LevelUp() {
-		bytes -= bytesToNextVersion;
+		xpBytes -= bytesToNextVersion;
 		//INCREASE PLAYER STATS
+		algorithmPoints += 2;
 		if(int.Parse(version.Split('.')[2]) + 1 < 10) {
 			version = ((int.Parse(version.Split('.')[0]))*1) + "." + ((int.Parse(version.Split('.')[1]))*1) + "." + ((int.Parse(version.Split('.')[2])) + 1);
 		} else if(int.Parse(version.Split('.')[1]) + 1 < 10) {
@@ -78,12 +86,21 @@ public class Player : MonoBehaviour {
 		return bytes;
 	}
 
+	public int GetXPBytes() {
+		return xpBytes;
+	}
+
 	public Weapon GetWeapon() {
 		return activeWeapon;
 	}
 
 	public string ToString() {
 		return name + "_" + version +
+			"\nStrength: " + strength +
+			"\nDefense: " + defense +
+			"\nEfficiency: " + efficiency +
+			"\nSecurity: " + security +
+			"\nEncryption: " + encryption +
 			"\n\nWeapon: " + activeWeapon.ToString();
 	}
 

@@ -23,29 +23,57 @@ public class PlayerCanvas : MonoBehaviour {
 	private float weaponXPTimeOffset;
 	private int tempWeaponXPVal;
 
-	private bool inConsole = false;
+	private Button strengthButton, defenseButton, efficiencyButton, securityButton, encryptionButton;
+	private Text playerStrengthText, playerDefenseText, playerEfficiencyText, playerSecurityText, playerEncryptionText, algorithmPointsText;
+
+	public static bool inConsole = false;
+
+	private Camera minimap;
+	private Vector3 playerCanvasOffset;
 
 	// Use this for initialization
 	void Start () {
-		playerAnim = transform.parent.parent.GetChild(0).GetComponent<Animator>();
-		playerRef = transform.parent.parent.GetChild(0).GetComponent<Player>();
+		playerCanvasOffset = this.transform.position - Player.playerPos.position;
+
+		minimap = GameObject.Find("MiniMapCam").camera;
+
+		playerAnim = GameObject.Find("PlayerObj").GetComponent<Animator>();
+		playerRef = GameObject.Find("PlayerObj").GetComponent<Player>();
+
 		inGameGUI = transform.GetChild(0).GetComponent<CanvasGroup>();
 		consoleGUI = transform.GetChild(1).GetComponent<CanvasGroup>();
-		consoleText = transform.GetChild(1).GetChild(2).GetComponent<Text>();
-		a1 = transform.GetChild(0).GetChild(1).GetComponent<Image>();
-		a2 = transform.GetChild(0).GetChild(2).GetComponent<Image>();
-		bg = transform.GetChild(0).GetChild(0).GetComponent<Image>();
-		cursor = transform.GetChild(0).GetChild(3).GetComponent<Image>();
-		byteText = transform.GetChild(0).GetChild(4).GetComponent<Text>();
-		playerName = transform.GetChild(0).GetChild(5).GetComponent<Text>();
+
+		consoleText = GameObject.Find("ConsoleText").GetComponent<Text>();
+	
+		a1 = GameObject.Find("Attack1").GetComponent<Image>();
+		a2 = GameObject.Find("Attack2").GetComponent<Image>();
+		bg = GameObject.Find("AttackBG").GetComponent<Image>();
+		cursor = GameObject.Find("AttackPointer").GetComponent<Image>();
+
+		byteText = GameObject.Find("ByteText").GetComponent<Text>();
+		playerName = GameObject.Find("PlayerName").GetComponent<Text>();
 		playerName.text = playerRef.GetName();
-		byteXP = transform.GetChild(0).GetChild(6).GetChild(0).GetComponent<Image>();
-		weaponXPGroup = transform.GetChild(0).GetChild(7).GetComponent<RectTransform>();
-		curWeapon = transform.GetChild(0).GetChild(7).GetChild(1).GetComponent<Text>();
-		weaponXPImg = transform.GetChild(0).GetChild(7).GetChild(2).GetChild(0).GetComponent<Image>();
+		byteXP = GameObject.Find("ByteXP").GetComponent<Image>();
+
+		weaponXPGroup = GameObject.Find("WeaponXP").GetComponent<RectTransform>();
+		curWeapon = GameObject.Find("WeaponName").GetComponent<Text>();
+		weaponXPImg = GameObject.Find("WeaponByteXP").GetComponent<Image>();
 		tempWeaponXPVal = playerRef.GetWeapon().GetBytes();
 		curWeapon.text = playerRef.GetWeapon().GetName();
-		weaponXPPercentage = transform.GetChild(0).GetChild(7).GetChild(3).GetComponent<Text>();
+		weaponXPPercentage = GameObject.Find("WeaponXPPercentage").GetComponent<Text>();
+
+		strengthButton = GameObject.Find("StrengthButton").GetComponent<Button>();
+		defenseButton = GameObject.Find("DefenseButton").GetComponent<Button>();
+		efficiencyButton = GameObject.Find("EfficiencyButton").GetComponent<Button>();
+		securityButton = GameObject.Find("SecurityButton").GetComponent<Button>();
+		encryptionButton = GameObject.Find("EncryptionButton").GetComponent<Button>();
+
+		playerStrengthText = GameObject.Find("PlayerStrengthText").GetComponent<Text>();
+		playerDefenseText= GameObject.Find("PlayerDefenseText").GetComponent<Text>();
+		playerEfficiencyText = GameObject.Find("PlayerEfficiencyText").GetComponent<Text>();
+		playerSecurityText = GameObject.Find("PlayerSecurityText").GetComponent<Text>();
+		playerEncryptionText = GameObject.Find("PlayerEncryptionText").GetComponent<Text>();
+		algorithmPointsText = GameObject.Find("AlgorithmPointsText").GetComponent<Text>();
 	}
 	
 	// Update is called once per frame
@@ -72,6 +100,7 @@ public class PlayerCanvas : MonoBehaviour {
 	}
 
 	void Update () {
+
 		if(tempWeaponXPVal != playerRef.GetWeapon().GetBytes()) {
 			curWeapon.text = playerRef.GetWeapon().GetName();
 			weaponXPTimeOffset = 4f;
@@ -99,7 +128,7 @@ public class PlayerCanvas : MonoBehaviour {
 
 		byteXP.rectTransform.localScale = new Vector3(playerRef.XPPercentage(), 1f, 1f);
 
-		consoleText.text = playerRef.ToString();
+		consoleText.text = playerRef.GetName();
 
 		if(Input.GetKeyDown(KeyCode.BackQuote)) {
 			inConsole = !inConsole;
@@ -107,13 +136,60 @@ public class PlayerCanvas : MonoBehaviour {
 
 		if(inConsole) {
 			inGameGUI.alpha = 0f;
-			transform.parent.GetChild(1).camera.enabled = false;
+			minimap.enabled = false;
 			consoleGUI.alpha = 1f;
+			if (Player.algorithmPoints > 0) {
+				algorithmPointsText.text = "Algorithm Points Available: " + Player.algorithmPoints;
+				defenseButton.interactable = true;
+				strengthButton.interactable = true;
+				efficiencyButton.interactable = true;
+				encryptionButton.interactable = true;
+				securityButton.interactable = true;
+			} else {
+				algorithmPointsText.text = Utility.ByteToString((int)(playerRef.GetXPBytes()/playerRef.XPPercentage()) - playerRef.GetXPBytes()) + " To Level Up"; 
+				defenseButton.interactable = false;
+				strengthButton.interactable = false;
+				efficiencyButton.interactable = false;
+				encryptionButton.interactable = false;
+				securityButton.interactable = false;
+			}
+			playerDefenseText.text = "Defense: " + Player.defense;
+			playerStrengthText.text = "Strength: " + Player.strength;
+			playerEfficiencyText.text = "Efficiency: " + Player.efficiency;
+			playerEncryptionText.text = "Encryption: " + Player.encryption;
+			playerSecurityText.text = "Security: " + Player.security;
+
 		} else {
 			inGameGUI.alpha = 1f;
-			transform.parent.GetChild(1).camera.enabled = true;
+			minimap.enabled = true;
 			consoleGUI.alpha = 0f;
 		}
 	}
+
+	public void HandleDefenseClick() {
+		Player.algorithmPoints--;
+		Player.defense++;
+	}
+
+	public void HandleStrengthClick() {
+		Player.algorithmPoints--;
+		Player.strength++;
+	}
+
+	public void HandleEfficiencyClick() {
+		Player.algorithmPoints--;
+		Player.efficiency++;
+	}
+
+	public void HandleEncryptionClick() {
+		Player.algorithmPoints--;
+		Player.encryption++;
+	}
+
+	public void HandleSecurityClick() {
+		Player.algorithmPoints--;
+		Player.security++;
+	}
+
 }
  
