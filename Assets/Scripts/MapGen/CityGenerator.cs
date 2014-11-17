@@ -42,9 +42,20 @@ public class CityGenerator : MapGenerator {
 		//TODO handle not having exits on all sides
 		Vector2 bottomVertical = Vector2.zero, topVertical = Vector2.zero, leftHorizontal = Vector2.zero, rightHorizontal = Vector2.zero;//extrema of main roads in city limits
 		int mainTileCount = WIDTH / (int)tileSet.tiles[1].size;
-		for (int i = 0; i <= mainTileCount; i++) {
+
+		//spawn travel points first
+
+		//spawn portals
+		spawnPortalInDirection(1, WIDTH/2, mainTileCount * tileSet.tiles[1].size, 1, Vector2.right);
+		spawnPortalInDirection(4, WIDTH/2, 0, 1, Vector2.right);
+		spawnPortalInDirection(2, 0, WIDTH/2, 1, Vector2.right);
+		spawnPortalInDirection(3, mainTileCount * tileSet.tiles[1].size, WIDTH/2, 1, Vector2.right);
+
+		for (int i = 1; i < mainTileCount; i++) {
 			placeRoad(new Vector2(WIDTH/2, i*tileSet.tiles[1].size));
 			placeRoad(new Vector2(i*tileSet.tiles[1].size, WIDTH/2));
+
+			//set city bounds
 			if (mainTileCount/2 + BLOCK_RADIUS == i) {
 				topVertical = new Vector2(WIDTH/2,i*tileSet.tiles[1].size);
 				rightHorizontal = new Vector2(i*tileSet.tiles[1].size,WIDTH/2);

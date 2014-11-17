@@ -174,17 +174,40 @@ public class MapGenerator {
 	}
 
 	/**
-	 * spawn a tile of the given type at the given coordinates in the default direction of Vector2.up
-	 * 
-	 * note: this method does perform a check of TileExists(x,z), and returns true or false
-	 * based on this method.  Use ForceTile if you need the tile to be placed regardless of the precence
-	 * of a previously placed tile.
+	 * Set a tile to be a portal in hte given direction
+	 * 1- up
+	 * 2- left
+	 * 3- right
+	 * 4- down
 	 */
-	protected bool SpawnTile(float x, float z, int type) {
+	protected bool spawnPortalInDirection(int portalDir, float x, float z, int type, Vector2 dir) {
+		if (type >= tileSet.tiles.Count) {
+			Debug.LogError("Invalid type");
+		}
+		
 		if (!TileExists (x, z)) {
 			Tile tile = (Tile)GameObject.Instantiate (tileSet.tiles [type], new Vector3 (x, tileSet.tiles [type].y, z), Quaternion.identity);
+			tile.transform.rotation = Quaternion.LookRotation(dir);
 			tile.x = x;
 			tile.z = z;
+
+			tile.gameObject.tag = "Portal";
+
+			switch(portalDir) {
+				case 1:
+					tile.name = "UpPortal";
+					break;
+				case 4:
+					tile.name = "DownPortal";
+					break;
+				case 3:
+					tile.name = "RightPortal";
+					break;
+				case 2:
+					tile.name = "LeftPortal";
+					break;
+			}
+			
 			if (tileSet.tiles [type].ground) {
 				spawnedTiles.Add (tile);
 			} else { //non-ground tiles should be spawned higher up
@@ -195,6 +218,17 @@ public class MapGenerator {
 			return false;	
 		}
 		
+	}
+
+	/**
+	 * spawn a tile of the given type at the given coordinates in the default direction of Vector2.up
+	 * 
+	 * note: this method does perform a check of TileExists(x,z), and returns true or false
+	 * based on this method.  Use ForceTile if you need the tile to be placed regardless of the precence
+	 * of a previously placed tile.
+	 */
+	protected bool SpawnTile(float x, float z, int type) {
+		return SpawnTileInDirection (x, z, type, Vector2.up);
 	}
 
 	/**
