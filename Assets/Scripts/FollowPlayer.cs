@@ -20,11 +20,11 @@ public class FollowPlayer : MonoBehaviour {
 		rotate = transform.parent.eulerAngles.y;
 
 //		this.transform.position = Vector3.MoveTowards(this.transform.position, Player.playerPos.position + offset, Time.deltaTime*10f);
-		if (Input.GetKey(KeyCode.Q)) {
+		if (Input.GetKey(KeyCode.D)) {
 //			transform.parent.Rotate(Vector3.up, 100*Time.deltaTime, Space.World);
 			transform.parent.RotateAround(Player.playerPos.position, Player.playerPos.up, 100*Time.deltaTime);
 		}
-		if (Input.GetKey(KeyCode.E)) {
+		if (Input.GetKey(KeyCode.A)) {
 //			transform.parent.Rotate(Vector3.up, -100*Time.deltaTime, Space.World);
 			transform.parent.RotateAround(Player.playerPos.position, Player.playerPos.up, -100*Time.deltaTime);
 		}

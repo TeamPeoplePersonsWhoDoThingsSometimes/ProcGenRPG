@@ -138,6 +138,7 @@ public class PlayerCanvas : MonoBehaviour {
 			inGameGUI.alpha = 0f;
 			minimap.enabled = false;
 			consoleGUI.alpha = 1f;
+
 			if (Player.algorithmPoints > 0) {
 				algorithmPointsText.text = "Algorithm Points Available: " + Player.algorithmPoints;
 				defenseButton.interactable = true;
