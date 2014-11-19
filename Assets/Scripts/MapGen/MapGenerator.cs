@@ -166,7 +166,7 @@ public class MapGenerator {
 		}
 		//see if walls are at coordinates by the same method
 		foreach(Tile t in spawnedWalls) {
-			if(Mathf.Abs(t.X - x) < t.size/2 && Mathf.Abs(t.Z - z) < t.size/2 || (t.X == x && t.Z == z)) {
+			if((Mathf.Abs(t.X - x) < t.size/2 && Mathf.Abs(t.Z - z) < t.size/2) || (t.X == x && t.Z == z)) {
 				return true;
 			}
 		}
