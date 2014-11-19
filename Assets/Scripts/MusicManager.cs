@@ -32,7 +32,6 @@ public class MusicManager : MonoBehaviour {
 		combat.volume = Mathf.MoveTowards(combat.volume, Mathf.Min(1, Mathf.Max(0.1f,1 - tempDist/35f)), 0.01f);
 
 		if(Time.frameCount % 500 == 0) {
-			Debug.Log("HERE" + Time.frameCount);
 			FindEnemies();
 		}
 	}

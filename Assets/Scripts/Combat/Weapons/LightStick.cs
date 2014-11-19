@@ -8,6 +8,7 @@ public class LightStick : Weapon {
 	// Use this for initialization
 	new void Start () {
 		base.Start();
+		isMelee = true;
 	}
 	
 	// Update is called once per frame

@@ -13,6 +13,7 @@ public class Weapon : Item {
 	public float knockback;
 	protected float thisDamage;
 	protected float thisKnockback;
+	protected bool isMelee;
 
 	protected bool isAttacking = false;
 	protected int bytes;
@@ -33,6 +34,10 @@ public class Weapon : Item {
 		while (bytes > bytesToLevelUp) {
 			LevelUp();
 		}
+	}
+
+	public bool IsMelee() {
+		return isMelee;
 	}
 
 	public GameObject GetAttack() {

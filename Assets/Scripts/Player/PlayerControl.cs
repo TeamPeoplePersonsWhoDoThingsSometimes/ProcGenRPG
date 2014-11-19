@@ -5,17 +5,20 @@ public class PlayerControl : MonoBehaviour {
 	
 	public float speed;
 
-	private Animator playerAnim;
+	private static Animator playerAnim;
 
 	private bool comboTime = false;
 
 	private bool attack1, attack2, attack3;
 
-	private Transform camTransform;
+	private static Transform camTransform;
+
+	private static Player playerref;
 
 	// Use this for initialization
 	void Start () {
 		playerAnim = this.GetComponent<Animator>();
+		playerref = this.GetComponent<Player>();
 		camTransform = transform.parent.GetChild(1).transform;
 	}
 	
@@ -67,19 +70,23 @@ public class PlayerControl : MonoBehaviour {
 		}
 
 		if(!PlayerCanvas.inConsole) {
-			if (Input.GetMouseButtonDown(0) && comboTime && !attack1 && attack2) {
-				playerAnim.SetBool("Attack3", true);
-				comboTime = false;
-			}
+			if (playerref.GetWeapon().IsMelee()) {
+				if (Input.GetMouseButtonDown(0) && comboTime && !attack1 && attack2) {
+					playerAnim.SetBool("Attack3", true);
+					comboTime = false;
+				}
 
-			if (Input.GetMouseButtonDown(0) && comboTime && attack1 && !attack2) {
-				playerAnim.SetBool("Attack2", true);
-				comboTime = false;
-			}
+				if (Input.GetMouseButtonDown(0) && comboTime && attack1 && !attack2) {
+					playerAnim.SetBool("Attack2", true);
+					comboTime = false;
+				}
 
-			if (Input.GetMouseButtonDown(0) && !attack2 && !attack3) {
-				playerAnim.SetBool("Attack1", true);
-				comboTime = false;
+				if (Input.GetMouseButtonDown(0) && !attack2 && !attack3) {
+					playerAnim.SetBool("Attack1", true);
+					comboTime = false;
+				}
+			} else {
+
 			}
 		}
 
