@@ -24,6 +24,8 @@ public class Enemy : MonoBehaviour {
 		if(Random.value < badassChance) {
 			isBadass = true;
 			this.transform.localScale *= 2;
+			this.transform.GetChild(2).localScale /= 1.5f;
+			this.transform.GetChild(2).localPosition += new Vector3(0f, 1f);
 			this.maxHP *= 2;
 			this.name = "Badass " + name;
 		} else {

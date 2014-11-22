@@ -15,8 +15,8 @@ public class EnemyHealthCanvas : MonoBehaviour {
 			camRot = GameObject.Find("CamRotate").transform;
 		}
 		enemy = transform.parent.GetComponent<Enemy>();
-		textName = transform.GetChild(2).GetComponent<Text>();
-		healthBar = transform.GetChild(1).GetComponent<Image>();
+		textName = transform.GetChild(3).GetComponent<Text>();
+		healthBar = transform.GetChild(2).GetComponent<Image>();
 		textName.text = enemy.name + "\nv" + enemy.version;
 	}
 	

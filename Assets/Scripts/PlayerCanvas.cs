@@ -109,12 +109,10 @@ public class PlayerCanvas : MonoBehaviour {
 
 		if (weaponXPTimeOffset > 0) {
 			weaponXPTimeOffset -= Time.deltaTime;
-			if(weaponXPGroup.localPosition.x < -5.75f) {
-				weaponXPGroup.Translate(Time.deltaTime*20f, 0f,0f, Space.Self);
-			}
+			weaponXPGroup.animation.Play("weaponXPAnim");
 		} else {
-			if(weaponXPGroup.localPosition.x > -9) {
-				weaponXPGroup.Translate(-Time.deltaTime*20f, 0f,0f, Space.Self);
+			if(Time.time > 2) {
+				weaponXPGroup.animation.Play("weaponXPAnimClose");
 			}
 		}
 
@@ -138,7 +136,7 @@ public class PlayerCanvas : MonoBehaviour {
 			inGameGUI.alpha = 0f;
 			minimap.enabled = false;
 			consoleGUI.alpha = 1f;
-
+			consoleGUI.interactable = true;
 			if (Player.algorithmPoints > 0) {
 				algorithmPointsText.text = "Algorithm Points Available: " + Player.algorithmPoints;
 				defenseButton.interactable = true;
@@ -159,8 +157,8 @@ public class PlayerCanvas : MonoBehaviour {
 			playerEfficiencyText.text = "Efficiency: " + Player.efficiency;
 			playerEncryptionText.text = "Encryption: " + Player.encryption;
 			playerSecurityText.text = "Security: " + Player.security;
-
 		} else {
+			consoleGUI.interactable = false;
 			inGameGUI.alpha = 1f;
 			minimap.enabled = true;
 			consoleGUI.alpha = 0f;
