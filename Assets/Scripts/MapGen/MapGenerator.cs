@@ -228,7 +228,11 @@ public class MapGenerator {
 	 * of a previously placed tile.
 	 */
 	protected bool SpawnTile(float x, float z, int type) {
-		return SpawnTileInDirection (x, z, type, Vector2.up);
+		if(tileSet.tiles [type].ground) {
+			return SpawnTileInDirection (x, z, type, Vector2.up);
+		} else {
+			return SpawnTileInDirection (x, z, type, new Vector2(Vector2.up.x + ((int)(Random.value*3))*90, Vector2.up.y));
+		}
 	}
 
 	/**
