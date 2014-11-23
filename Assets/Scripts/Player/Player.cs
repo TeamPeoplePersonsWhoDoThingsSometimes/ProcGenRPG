@@ -6,7 +6,11 @@ public class Player : MonoBehaviour {
 	public static KeyCode forwardKey = KeyCode.W, backKey = KeyCode.S, useKey = KeyCode.F;
 
 	public List<Item> inventory = new List<Item>();
+	private List<Item> quickAccessItems = new List<Item>();
 	private Weapon activeWeapon;
+	private Hack activeHack;
+	private GameObject weaponRef;
+	private GameObject playerInventoryRef;
 	public static Transform playerPos;
 	private int bytes;
 	private int xpBytes;
@@ -25,6 +29,11 @@ public class Player : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		activeWeapon = (Weapon)inventory[0];
+		activeHack = (Hack)inventory[1];
+		playerInventoryRef = GameObject.Find("PlayerInventory");
+		weaponRef = GameObject.Find("PlayerWeaponObj");
+		quickAccessItems.Add(activeWeapon);
+		quickAccessItems.Add(activeHack);
 		playerPos = transform;
 		bytesToNextVersion = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*levelUpSpeedScale;
 	}
@@ -38,8 +47,38 @@ public class Player : MonoBehaviour {
 		GameObject temp = (GameObject)Instantiate(activeWeapon.GetAttack(), transform.position + new Vector3(0,1f,0), transform.localRotation);
 		temp.GetComponent<Attack>().SetDamage(strength + (activeWeapon.GetDamage() * combo));
 		temp.GetComponent<Attack>().SetCrit(activeWeapon.GetCrit());
-//		temp.GetComponent<SwordSlash>().thisDamage = 200;
-//		Debug.Log(temp.GetComponent<SwordSlash>().thisDamage + " " + temp.name);
+	}
+
+	public void SetActiveItem (int val) {
+//		Debug.Log(inventory[val].GetType());
+		if(inventory[val].GetType().IsSubclassOf(typeof(Weapon))) { 
+			activeWeapon = (Weapon)inventory[val];
+			activeHack = null;
+			for(int i = 0; i < playerInventoryRef.transform.childCount; i++) {
+				if(playerInventoryRef.transform.GetChild(i).GetComponent<Weapon>() != null
+				   && playerInventoryRef.transform.GetChild(i).GetComponent<Weapon>().GetName().Equals(activeWeapon.GetName())) {
+					if (weaponRef.transform.childCount > 0) {
+						weaponRef.transform.GetChild(0).gameObject.SetActive(false);
+						weaponRef.transform.GetChild(0).transform.parent = playerInventoryRef.transform;
+					}
+					playerInventoryRef.transform.GetChild(i).parent = weaponRef.transform;
+					weaponRef.transform.GetChild(0).gameObject.SetActive(true);
+				}
+			}
+		} else {
+			if (weaponRef.transform.childCount > 0) {
+				weaponRef.transform.GetChild(0).gameObject.SetActive(false);
+				weaponRef.transform.GetChild(0).transform.parent = playerInventoryRef.transform;
+			}
+			activeWeapon = null;
+			activeHack = (Hack)inventory[val];
+		}
+	}
+
+	public void Hack () {
+		if(activeHack != null) {
+			activeHack.Call(this);
+		}
 	}
 
 	public void StartAttack() {
@@ -55,13 +94,17 @@ public class Player : MonoBehaviour {
 	}
 
 	public void StopAttack() {
-		activeWeapon.StopAttack();
+		if(activeWeapon != null) {
+			activeWeapon.StopAttack();
+		}
 	}
 
 	public void AddBytes(int val) {
 		bytes += val;
 		xpBytes += val;
-		activeWeapon.AddBytes(val);
+		if (activeWeapon != null) {
+			activeWeapon.AddBytes(val);
+		}
 		bytesToNextVersion = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*levelUpSpeedScale;
 		while (xpBytes >= bytesToNextVersion) {
 			LevelUp();
@@ -94,14 +137,21 @@ public class Player : MonoBehaviour {
 		return activeWeapon;
 	}
 
+	public Hack GetHack() {
+		return activeHack;
+	}
+
 	public string ToString() {
 		return name + "_" + version +
 			"\nStrength: " + strength +
 			"\nDefense: " + defense +
 			"\nEfficiency: " + efficiency +
 			"\nSecurity: " + security +
-			"\nEncryption: " + encryption +
-			"\n\nWeapon: " + activeWeapon.ToString();
+			"\nEncryption: " + encryption;
+	}
+
+	public void ExpendRMA(float amount) {
+		rma -= amount;
 	}
 
 }

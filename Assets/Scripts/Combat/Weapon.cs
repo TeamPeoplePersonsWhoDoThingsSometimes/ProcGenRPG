@@ -21,7 +21,6 @@ public class Weapon : Item {
 
 	// Use this for initialization
 	protected void Start () {
-		base.Start();
 		attack = attackOBJ.GetComponent<Attack>();
 		attackOBJ.GetComponent<Attack>().SetCrit(critChance);
 		thisDamage = damage;
@@ -29,7 +28,6 @@ public class Weapon : Item {
 	
 	// Update is called once per frame
 	protected void Update () {
-		base.Update();
 		bytesToLevelUp = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*levelUpSpeedScale*10000;
 		while (bytes > bytesToLevelUp) {
 			LevelUp();

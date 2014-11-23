@@ -101,28 +101,28 @@ public class PlayerCanvas : MonoBehaviour {
 
 	void Update () {
 
-		if(tempWeaponXPVal != playerRef.GetWeapon().GetBytes()) {
-			curWeapon.text = playerRef.GetWeapon().GetName();
-			weaponXPTimeOffset = 4f;
-			tempWeaponXPVal = playerRef.GetWeapon().GetBytes();
-		}
-
-		if (weaponXPTimeOffset > 0) {
-			weaponXPTimeOffset -= Time.deltaTime;
-			weaponXPGroup.animation.Play("weaponXPAnim");
-		} else {
-			if(Time.time > 2) {
-				weaponXPGroup.animation.Play("weaponXPAnimClose");
+		if(playerRef.GetWeapon() != null) {
+			if(tempWeaponXPVal != playerRef.GetWeapon().GetBytes()) {
+				curWeapon.text = playerRef.GetWeapon().GetName();
+				weaponXPTimeOffset = 4f;
+				tempWeaponXPVal = playerRef.GetWeapon().GetBytes();
 			}
-		}
 
-		weaponXPImg.rectTransform.localScale = new Vector3(playerRef.GetWeapon().GetVersionPercent(), 1, 1);
+			if (weaponXPTimeOffset > 0) {
+				weaponXPTimeOffset -= Time.deltaTime;
+				weaponXPGroup.animation.Play("weaponXPAnim");
+			} else {
+				if(Time.time > 2) {
+					weaponXPGroup.animation.Play("weaponXPAnimClose");
+				}
+			}
+			weaponXPImg.rectTransform.localScale = new Vector3(playerRef.GetWeapon().GetVersionPercent(), 1, 1);
+			weaponXPPercentage.text = (playerRef.GetWeapon().GetVersionPercent()*100).ToString("F2") + "%";
+		}
 
 		playerName.text = playerRef.GetName();
 
 		byteText.text = "Bytes: " + Utility.ByteToString(playerRef.GetBytes());
-
-		weaponXPPercentage.text = (playerRef.GetWeapon().GetVersionPercent()*100).ToString("F2") + "%";
 
 		byteXP.rectTransform.localScale = new Vector3(playerRef.XPPercentage(), 1f, 1f);
 
