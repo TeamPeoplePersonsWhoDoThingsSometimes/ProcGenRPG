@@ -59,7 +59,6 @@ public class PlayerControl : MonoBehaviour {
 		if(playerAnim.GetFloat("Speed") > 0.5) {
 			RaycastHit info = new RaycastHit();
 			if(Physics.Raycast(new Ray(this.transform.position + new Vector3(0f, 1f, 0f), this.transform.forward), out info, playerAnim.GetFloat("Speed")*1.5f)) {
-				Debug.Log(info.collider.gameObject.name);
 				if(!info.collider.gameObject.name.Equals("Byte")) {
 					playerAnim.SetFloat("Speed",Mathf.Min(Input.GetAxis("Vertical"),0));
 				}
@@ -78,6 +77,7 @@ public class PlayerControl : MonoBehaviour {
 			} else if (Input.GetKeyDown(KeyCode.Alpha2)) {
 				playerref.SetActiveItem(1);
 			}
+
 			if (playerref.GetWeapon() != null && playerref.GetWeapon().IsMelee()) {
 				if (Input.GetMouseButtonDown(0) && comboTime && !attack1 && attack2) {
 					playerAnim.SetBool("Attack3", true);
@@ -93,7 +93,9 @@ public class PlayerControl : MonoBehaviour {
 					playerAnim.SetBool("Attack1", true);
 					comboTime = false;
 				}
-			} else if (playerref.GetWeapon() == null && playerref.GetHack() != null && Input.GetMouseButton(0)) {
+			}
+
+			if (playerref.GetHack() != null && Input.GetMouseButton(1)) {
 				playerref.Hack();
 			}
 		}

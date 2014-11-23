@@ -24,12 +24,16 @@ public class Player : MonoBehaviour {
 
 	public static int strength, defense, efficiency, encryption, security;
 	public static int algorithmPoints;
-	private float integrity, rma;
+	private float integrity, rma, maxIntegrity = 20f, maxrma = 20f;
 
 	// Use this for initialization
 	void Start () {
+		integrity = maxIntegrity;
+		rma = maxrma;
+
 		activeWeapon = (Weapon)inventory[0];
 		activeHack = (Hack)inventory[1];
+
 		playerInventoryRef = GameObject.Find("PlayerInventory");
 		weaponRef = GameObject.Find("PlayerWeaponObj");
 		quickAccessItems.Add(activeWeapon);
@@ -41,6 +45,14 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		playerPos = transform;
+		rma += Time.deltaTime * (encryption + 1);
+		if (rma > maxrma) {
+			rma = maxrma;
+		} else if (rma < 0) {
+			rma = 0;
+		}
+
+		maxrma = (encryption + 1)*20f;
 	}
 
 	public void Attack (int combo) {
@@ -50,10 +62,8 @@ public class Player : MonoBehaviour {
 	}
 
 	public void SetActiveItem (int val) {
-//		Debug.Log(inventory[val].GetType());
 		if(inventory[val].GetType().IsSubclassOf(typeof(Weapon))) { 
 			activeWeapon = (Weapon)inventory[val];
-			activeHack = null;
 			for(int i = 0; i < playerInventoryRef.transform.childCount; i++) {
 				if(playerInventoryRef.transform.GetChild(i).GetComponent<Weapon>() != null
 				   && playerInventoryRef.transform.GetChild(i).GetComponent<Weapon>().GetName().Equals(activeWeapon.GetName())) {
@@ -63,14 +73,11 @@ public class Player : MonoBehaviour {
 					}
 					playerInventoryRef.transform.GetChild(i).parent = weaponRef.transform;
 					weaponRef.transform.GetChild(0).gameObject.SetActive(true);
+					weaponRef.transform.GetChild(0).position = Vector3.zero;
+					weaponRef.transform.GetChild(0).eulerAngles = Vector3.zero;
 				}
 			}
 		} else {
-			if (weaponRef.transform.childCount > 0) {
-				weaponRef.transform.GetChild(0).gameObject.SetActive(false);
-				weaponRef.transform.GetChild(0).transform.parent = playerInventoryRef.transform;
-			}
-			activeWeapon = null;
 			activeHack = (Hack)inventory[val];
 		}
 	}
@@ -79,6 +86,14 @@ public class Player : MonoBehaviour {
 		if(activeHack != null) {
 			activeHack.Call(this);
 		}
+	}
+
+	public float GetRMAPercentage() {
+		return rma/maxrma;
+	}
+
+	public float GetIntegrityPercentage() {
+		return integrity/maxIntegrity;
 	}
 
 	public void StartAttack() {
@@ -150,8 +165,13 @@ public class Player : MonoBehaviour {
 			"\nEncryption: " + encryption;
 	}
 
-	public void ExpendRMA(float amount) {
-		rma -= amount;
+	public bool ExpendRMA(float amount) {
+		if(rma - amount >= 0) {
+			rma -= amount;
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

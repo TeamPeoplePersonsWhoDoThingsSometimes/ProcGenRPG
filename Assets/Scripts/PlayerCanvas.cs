@@ -26,6 +26,9 @@ public class PlayerCanvas : MonoBehaviour {
 	private Button strengthButton, defenseButton, efficiencyButton, securityButton, encryptionButton;
 	private Text playerStrengthText, playerDefenseText, playerEfficiencyText, playerSecurityText, playerEncryptionText, algorithmPointsText;
 
+	private Text integrityPercentage, RMAPercentage;
+	private Image integrityBar, RMABar;
+
 	public static bool inConsole = false;
 
 	private Camera minimap;
@@ -74,6 +77,11 @@ public class PlayerCanvas : MonoBehaviour {
 		playerSecurityText = GameObject.Find("PlayerSecurityText").GetComponent<Text>();
 		playerEncryptionText = GameObject.Find("PlayerEncryptionText").GetComponent<Text>();
 		algorithmPointsText = GameObject.Find("AlgorithmPointsText").GetComponent<Text>();
+
+		integrityBar = GameObject.Find("IntegrityBar").GetComponent<Image>();
+		integrityPercentage = GameObject.Find("IntegrityPercentText").GetComponent<Text>();
+		RMABar = GameObject.Find("RMABar").GetComponent<Image>();
+		RMAPercentage = GameObject.Find("RMAPercentText").GetComponent<Text>();
 	}
 	
 	// Update is called once per frame
@@ -119,6 +127,9 @@ public class PlayerCanvas : MonoBehaviour {
 			weaponXPImg.rectTransform.localScale = new Vector3(playerRef.GetWeapon().GetVersionPercent(), 1, 1);
 			weaponXPPercentage.text = (playerRef.GetWeapon().GetVersionPercent()*100).ToString("F2") + "%";
 		}
+
+		RMABar.rectTransform.localScale = new Vector3(playerRef.GetRMAPercentage(), 1f);
+		integrityBar.rectTransform.localScale = new Vector3(playerRef.GetIntegrityPercentage(),1f);
 
 		playerName.text = playerRef.GetName();
 

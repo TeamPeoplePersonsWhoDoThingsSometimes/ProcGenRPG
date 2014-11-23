@@ -38,8 +38,9 @@ public class Hack : Item {
 			}
 
 			if (tempFiringRate <= 0 && oneShot) {
-				playerref.ExpendRMA(RMACost);
-				OneShotActivated();
+				if (playerref.ExpendRMA(RMACost)) {
+					OneShotActivated();
+				}
 			}
 			isCalled = false;
 		}
