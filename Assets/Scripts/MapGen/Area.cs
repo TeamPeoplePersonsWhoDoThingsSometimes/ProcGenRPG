@@ -8,12 +8,17 @@ public class Area {
 	//private TileSet tileSet;
 	private MapGenerator generator;
 
-	private Area left, right, up, down;
+	//private Area left, right, up, down;
+	private bool visited;
+	private int xPos, yPos;
 
-	public Area(TileSet tiles) {
+	public Area(TileSet tiles, int x, int y) {
 		Data = new AreaData(-1, "Landy Land", tiles.generatorType.ToString(), -1);
 		this.generator = MapGenerator.getMapGenerator(this,tiles);
 		this.generator.SetArea(this);
+		visited = false;
+		xPos = x;
+		yPos = y;
 	}
 
 	public Area(AreaData data) {
@@ -37,7 +42,11 @@ public class Area {
 		generator.Clear();
 	}
 
-	public void setLeft(Area left) {
+	public void SetVisited() {
+		visited = true;
+	}
+
+	/*public void setLeft(Area left) {
 		this.left = left;
 		this.left.right = this;
 	}
@@ -55,49 +64,56 @@ public class Area {
 	public void setDown(Area down) {
 		this.down = down;
 		this.down.up = this;
-	}
+	}*/
 
 	public Area getLeft() {
-		return this.left;
+		return Map.Get(xPos - 1, yPos);
 	}
 
 	public Area getRight() {
-		return this.right;
+		return Map.Get(xPos + 1, yPos);
 	}
 
 	public Area getUp() {
-		return this.up;
+		return Map.Get(xPos, yPos + 1);
 	}
 
 	public Area getDown() {
-		return this.down;
+		return Map.Get(xPos, yPos - 1);
 	}
 
 	public bool IsDeadEnd() {
-		return (up == null && left == null && right == null && down != null)
-			|| (up == null && left == null && right != null && down == null)
-				|| (up == null && left != null && right == null && down == null)
-				|| (up != null && left == null && right == null && down == null);
+		return (getUp() == null && getLeft() == null && getRight() == null && getDown() != null)
+			|| (getUp() == null && getLeft() == null && getRight() != null && getDown() == null)
+				|| (getUp() == null && getLeft() != null && getRight() == null && getDown() == null)
+				|| (getUp() != null && getLeft() == null && getRight() == null && getDown() == null);
 	}
 
 	public bool IsIsland() {
-		return up == null && left == null && right == null && down == null;
+		return getUp() == null && getLeft() == null && getRight() == null && getDown() == null;
 	}
 
 	public bool HasUp() {
-		return up != null;
+		return getUp() != null;
 	}
 
 	public bool HasDown() {
-		return down != null;
+		return getDown() != null;
 	}
 
 	public bool HasRight() {
-		return right != null;
+		return getRight() != null;
 	}
 
 	public bool HasLeft() {
-		return left != null;
+		return getLeft() != null;
 	}
 
+	public int getX() {
+		return xPos;
+	}
+
+	public int getY() {
+		return yPos;
+	}
 }

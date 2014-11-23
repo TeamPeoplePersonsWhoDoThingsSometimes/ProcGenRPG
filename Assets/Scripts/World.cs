@@ -1,5 +1,6 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 
 public class World : MonoBehaviour {
@@ -13,7 +14,7 @@ public class World : MonoBehaviour {
 
 	private static DataStorage data;
 	private static Area currentArea;
-	
+
 
 
 	/*********************************
@@ -57,13 +58,41 @@ public class World : MonoBehaviour {
 		}
 		return null;
 	}*/
-	
-	private static void generateNewArea(TileSet tiles) {
-		Area area = new Area(tiles);
-		area.setUp(new Area(tiles));
-		area.Init();
-		currentArea = area;
-		data.SetArea(currentArea.Data);
+
+	/**
+	 * direction: 0 is up, 1 is down, 2 right, 3 is left
+	 */
+	private static Area generateNewArea(TileSet tiles, Area from, int direction) {
+		Area a = null;
+		if (from == null) {
+			a = new Area(tiles, 0, 0);
+			Map.Add(a);
+			currentArea = a;
+			data.SetArea(currentArea.Data);
+		} else {
+			switch(direction) {
+				case 0:
+					a = new Area(tiles, from.getX(), from.getY() + 1);
+					Map.Add(a);
+					break;
+				case 1:
+					a = new Area(tiles, from.getX(), from.getY() - 1);
+					Map.Add(a);
+					break;
+				case 2:
+					a = new Area(tiles, from.getX() + 1, from.getY());
+					Map.Add(a);
+					break;
+				case 3:
+					a = new Area(tiles, from.getX() - 1, from.getY());
+					Map.Add(a);
+					break;
+				default:
+					Debug.LogError("invalid direction");
+					break;
+			}
+		}
+		return a;
 	}
 	
 	//load area assumes that adata is already in data
@@ -87,14 +116,62 @@ public class World : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		Map.Init();
 		data = new DataStorage();
 		TileSets = tileSets;
 
 		//generate starting area
-		if(loadData)
+		if(loadData) {
 			load();
-		else
-			generateNewArea(TileSets[1]);
+		}
+		else {
+			generateNewArea(TileSets[1], null, -1);
+			currentArea.SetVisited();
+			generateAreas(TileSets[1], currentArea);
+			currentArea.Init();
+			//Map.PrintMap();
+		}
+	}
+
+	private void generateAreas(TileSet tiles, Area from) {
+		int randRange = 0;
+		if (from.HasUp())
+			randRange++;
+		if (from.HasDown())
+			randRange++;
+		if (from.HasRight())
+			randRange++;
+		if (from.HasLeft())
+			randRange++;
+		int numAreas = Random.Range(1, randRange);
+		while (numAreas > 0) {
+			int newArea = Random.Range(0, 3);
+			if (newArea == 0 && !from.HasUp()) {
+				if (Map.GetMostY() < 10) {
+					Area a = generateNewArea(tiles, from, 0);
+					generateAreas(tiles, a);
+				}
+				numAreas--;
+			} else if (newArea == 1 && !from.HasDown()) {
+				if (Map.GetLeastY() < 10) {
+					Area a = generateNewArea(tiles, from, 1);
+					generateAreas(tiles, a);
+				}
+				numAreas--;
+			} else if (newArea == 2 && !from.HasRight()) {
+				if (Map.GetMostX() < 10) {
+					Area a = generateNewArea(tiles, from, 2);
+					generateAreas(tiles, a);
+				}
+				numAreas--;
+			} else if (newArea == 3 && !from.HasLeft()) {
+				if (Map.GetLeastX() < 10) {
+					Area a = generateNewArea(tiles, from, 3);
+					generateAreas(tiles, a);
+				}
+				numAreas--;
+			}
+		}
 	}
 	
 	// Update is called once per frame
@@ -148,7 +225,7 @@ public class World : MonoBehaviour {
 		foreach(GameObject g in items) {
 			Tile t = g.GetComponent<Tile>();
 			if(t.name.Equals("LeftPortal")) {
-				player.transform.position = new Vector3(g.transform.position.x, 0.5f, g.transform.position.z);
+				player.transform.position = new Vector3(g.transform.position.x + 7f, 0.5f, g.transform.position.z);
 				GameObject.Find("Main Camera").GetComponent<FollowPlayer>().SetToPlayer();
 			}
 		}
@@ -164,7 +241,7 @@ public class World : MonoBehaviour {
 		foreach(GameObject g in items) {
 			Tile t = g.GetComponent<Tile>();
 			if(t.name.Equals("RightPortal")) {
-				player.transform.position = new Vector3(g.transform.position.x, 0.5f, g.transform.position.z);
+				player.transform.position = new Vector3(g.transform.position.x - 7f, 0.5f, g.transform.position.z);
 				GameObject.Find("Main Camera").GetComponent<FollowPlayer>().SetToPlayer();
 			}
 		}
