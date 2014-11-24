@@ -25,15 +25,24 @@ public class Map {
 	}
 
 	/**
-	 * Add an area to a position on the map.  Returns false if spot is already filled
+	 * Add an area to a position on the map.
+	 * Returns false if spot is already filled or neighbors of possible new area have already been visited.
 	 */
 	public static bool Add(Area a) {
-		while (a.getX() >= q1.GetLength(0) || a.getY() >= q1.GetLength(0)) {
+		int x = Mathf.Abs(a.getX());
+		int y = Mathf.Abs(a.getY());
+		while (x >= q1.GetLength(0) || y >= q1.GetLength(0)) {
 			Resize();
 		}
+
+		if (a.getUp() != null && a.getUp().GetVisited()
+		    || a.getDown() != null && a.getDown().GetVisited()
+		    || a.getLeft() != null && a.getLeft().GetVisited()
+		    || a.getRight() != null && a.getRight().GetVisited()) {
+			return false;
+		}
+
 		if (Get(a.getX(), a.getY()) == null) {
-			int x = Mathf.Abs(a.getX());
-			int y = Mathf.Abs(a.getY());
 			if (a.getX() >= 0) {
 				if (a.getY() >= 0) {
 					q1[x,y] = a;
@@ -148,8 +157,8 @@ public class Map {
 
 	public static void PrintMap() {
 		string map = "";
-		for (int x = -10; x < q1.GetLength(0); x++) {
-			for (int y = -10; y < q1.GetLength(0); y++) {
+		for (int x = -1 * q1.GetLength(0) + 1; x < q1.GetLength(0); x++) {
+			for (int y = -1 * q1.GetLength(0) + 1; y < q1.GetLength(0); y++) {
 				if (x == 0 && y == 0) {
 					map += "2 ";
 				} else if (Get(x, y) != null) {

@@ -46,6 +46,10 @@ public class Area {
 		visited = true;
 	}
 
+	public bool GetVisited() {
+		return visited;
+	}
+
 	/*public void setLeft(Area left) {
 		this.left = left;
 		this.left.right = this;

@@ -66,31 +66,30 @@ public class World : MonoBehaviour {
 		Area a = null;
 		if (from == null) {
 			a = new Area(tiles, 0, 0);
-			Map.Add(a);
 			currentArea = a;
 			data.SetArea(currentArea.Data);
 		} else {
 			switch(direction) {
 				case 0:
 					a = new Area(tiles, from.getX(), from.getY() + 1);
-					Map.Add(a);
 					break;
 				case 1:
 					a = new Area(tiles, from.getX(), from.getY() - 1);
-					Map.Add(a);
 					break;
 				case 2:
 					a = new Area(tiles, from.getX() + 1, from.getY());
-					Map.Add(a);
 					break;
 				case 3:
 					a = new Area(tiles, from.getX() - 1, from.getY());
-					Map.Add(a);
 					break;
 				default:
 					Debug.LogError("invalid direction");
 					break;
 			}
+		}
+		bool added = Map.Add(a);
+		if (!added) {
+			a = null;
 		}
 		return a;
 	}
@@ -126,50 +125,78 @@ public class World : MonoBehaviour {
 		}
 		else {
 			generateNewArea(TileSets[1], null, -1);
+			generateAreas(TileSets[1], currentArea, 0);
 			currentArea.SetVisited();
-			generateAreas(TileSets[1], currentArea);
 			currentArea.Init();
 			//Map.PrintMap();
 		}
 	}
 
-	private void generateAreas(TileSet tiles, Area from) {
-		int randRange = 0;
+	private static void generateAreas(TileSet tiles, Area from, int depth) {
+		int directions = 0;
 		if (from.HasUp())
-			randRange++;
+			directions++;
 		if (from.HasDown())
-			randRange++;
+			directions++;
 		if (from.HasRight())
-			randRange++;
+			directions++;
 		if (from.HasLeft())
-			randRange++;
-		int numAreas = Random.Range(1, randRange);
-		while (numAreas > 0) {
-			int newArea = Random.Range(0, 3);
-			if (newArea == 0 && !from.HasUp()) {
-				if (Map.GetMostY() < 10) {
-					Area a = generateNewArea(tiles, from, 0);
-					generateAreas(tiles, a);
-				}
+			directions++;
+		float randFloat = Random.value * 4 - directions;
+		//Debug.Log(randFloat);
+		int numAreas = 0;
+		if (randFloat < 2) {
+			numAreas = 1;
+		} else if (randFloat < 2.8) {
+			numAreas = 2;
+		} else if (randFloat < 3) {
+			numAreas = 3;
+		}
+		//int numAreas = Random.Range(1, 5 - directions);
+		if (directions == 0) {
+			numAreas = 4;
+		} else if (directions == 4) {
+			numAreas = 0;
+		}
+		while (numAreas > 0 && depth < 1) {
+			int randDir = Random.Range(0, 4);
+			bool triedUp, triedDown, triedRight, triedLeft;
+			triedUp = triedDown = triedRight = triedLeft = false;
+			Area a = generateNewArea(tiles, from, randDir);
+			if (a != null) {
+				generateAreas(tiles, a, depth + 1);
 				numAreas--;
-			} else if (newArea == 1 && !from.HasDown()) {
-				if (Map.GetLeastY() < 10) {
-					Area a = generateNewArea(tiles, from, 1);
-					generateAreas(tiles, a);
-				}
-				numAreas--;
-			} else if (newArea == 2 && !from.HasRight()) {
-				if (Map.GetMostX() < 10) {
-					Area a = generateNewArea(tiles, from, 2);
-					generateAreas(tiles, a);
-				}
-				numAreas--;
-			} else if (newArea == 3 && !from.HasLeft()) {
-				if (Map.GetLeastX() < 10) {
-					Area a = generateNewArea(tiles, from, 3);
-					generateAreas(tiles, a);
-				}
-				numAreas--;
+			}
+
+			switch (randDir) {
+				case 0:
+					triedUp = true;
+					break;
+				case 1:
+					triedDown = true;
+					break;
+				case 2:
+					triedRight = true;
+					break;
+				case 3:
+					triedLeft = true;
+					break;
+				default:
+					Debug.LogError("Something impossible happened");
+					break;
+			}
+
+			directions = 0;
+			if (from.HasUp())
+				directions++;
+			if (from.HasDown())
+				directions++;
+			if (from.HasRight())
+				directions++;
+			if (from.HasLeft())
+				directions++;
+			if (directions == 4 || triedUp && triedDown && triedRight && triedLeft) {
+				numAreas = 0;
 			}
 		}
 	}
@@ -186,6 +213,11 @@ public class World : MonoBehaviour {
 	public static void TravelUp() {
 		currentArea.Clear();
 		currentArea = currentArea.getUp();
+		if (!currentArea.GetVisited()) {
+			generateAreas(TileSets[1], currentArea, 0);
+		}
+		currentArea.SetVisited();
+		//Map.PrintMap();
 		currentArea.Init();
 		GameObject[] items = GameObject.FindGameObjectsWithTag("Portal");
 		GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -202,6 +234,11 @@ public class World : MonoBehaviour {
 	public static void TravelDown() {
 		currentArea.Clear();
 		currentArea = currentArea.getDown();
+		if (!currentArea.GetVisited()) {
+			generateAreas(TileSets[1], currentArea, 0);
+		}
+		currentArea.SetVisited();
+		//Map.PrintMap();
 		currentArea.Init();
 		GameObject[] items = GameObject.FindGameObjectsWithTag("Portal");
 		GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -218,6 +255,11 @@ public class World : MonoBehaviour {
 	public static void TravelRight() {
 		currentArea.Clear();
 		currentArea = currentArea.getRight();
+		if (!currentArea.GetVisited()) {
+			generateAreas(TileSets[1], currentArea, 0);
+		}
+		currentArea.SetVisited();
+		//Map.PrintMap();
 		currentArea.Init();
 		GameObject[] items = GameObject.FindGameObjectsWithTag("Portal");
 		GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -234,6 +276,11 @@ public class World : MonoBehaviour {
 	public static void TravelLeft() {
 		currentArea.Clear();
 		currentArea = currentArea.getLeft();
+		if (!currentArea.GetVisited()) {
+			generateAreas(TileSets[1], currentArea, 0);
+		}
+		currentArea.SetVisited();
+		//Map.PrintMap();
 		currentArea.Init();
 		GameObject[] items = GameObject.FindGameObjectsWithTag("Portal");
 		GameObject player = GameObject.FindGameObjectWithTag("Player");
