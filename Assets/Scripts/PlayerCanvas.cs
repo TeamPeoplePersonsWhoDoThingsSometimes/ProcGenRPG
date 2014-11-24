@@ -26,6 +26,9 @@ public class PlayerCanvas : MonoBehaviour {
 	private Button strengthButton, defenseButton, efficiencyButton, securityButton, encryptionButton;
 	private Text playerStrengthText, playerDefenseText, playerEfficiencyText, playerSecurityText, playerEncryptionText, algorithmPointsText;
 
+	private Text integrityPercentage, RMAPercentage;
+	private Image integrityBar, RMABar;
+
 	public static bool inConsole = false;
 
 	private Camera minimap;
@@ -74,6 +77,11 @@ public class PlayerCanvas : MonoBehaviour {
 		playerSecurityText = GameObject.Find("PlayerSecurityText").GetComponent<Text>();
 		playerEncryptionText = GameObject.Find("PlayerEncryptionText").GetComponent<Text>();
 		algorithmPointsText = GameObject.Find("AlgorithmPointsText").GetComponent<Text>();
+
+		integrityBar = GameObject.Find("IntegrityBar").GetComponent<Image>();
+		integrityPercentage = GameObject.Find("IntegrityPercentText").GetComponent<Text>();
+		RMABar = GameObject.Find("RMABar").GetComponent<Image>();
+		RMAPercentage = GameObject.Find("RMAPercentText").GetComponent<Text>();
 	}
 	
 	// Update is called once per frame
@@ -101,30 +109,32 @@ public class PlayerCanvas : MonoBehaviour {
 
 	void Update () {
 
-		if(tempWeaponXPVal != playerRef.GetWeapon().GetBytes()) {
-			curWeapon.text = playerRef.GetWeapon().GetName();
-			weaponXPTimeOffset = 4f;
-			tempWeaponXPVal = playerRef.GetWeapon().GetBytes();
+		if(playerRef.GetWeapon() != null) {
+			if(tempWeaponXPVal != playerRef.GetWeapon().GetBytes()) {
+				curWeapon.text = playerRef.GetWeapon().GetName();
+				weaponXPTimeOffset = 4f;
+				tempWeaponXPVal = playerRef.GetWeapon().GetBytes();
+			}
+
+			if (weaponXPTimeOffset > 0) {
+				weaponXPTimeOffset -= Time.deltaTime;
+				weaponXPGroup.animation.Play("weaponXPAnim");
+			} else {
+				if(Time.time > 2) {
+					weaponXPGroup.animation.Play("weaponXPAnimClose");
+				}
+			}
+			weaponXPImg.rectTransform.localScale = new Vector3(playerRef.GetWeapon().GetVersionPercent(), 1, 1);
+			weaponXPPercentage.text = (playerRef.GetWeapon().GetVersionPercent()*100).ToString("F2") + "%";
 		}
 
-		if (weaponXPTimeOffset > 0) {
-			weaponXPTimeOffset -= Time.deltaTime;
-			if(weaponXPGroup.localPosition.x < -5.75f) {
-				weaponXPGroup.Translate(Time.deltaTime*20f, 0f,0f, Space.Self);
-			}
-		} else {
-			if(weaponXPGroup.localPosition.x > -9) {
-				weaponXPGroup.Translate(-Time.deltaTime*20f, 0f,0f, Space.Self);
-			}
-		}
-
-		weaponXPImg.rectTransform.localScale = new Vector3(playerRef.GetWeapon().GetVersionPercent(), 1, 1);
+		RMABar.rectTransform.localScale = new Vector3(playerRef.GetRMAPercentage(), 1f);
+		RMAPercentage.text = (playerRef.GetRMAPercentage()*100).ToString("F2") + "%";
+		integrityBar.rectTransform.localScale = new Vector3(playerRef.GetIntegrityPercentage(),1f);
 
 		playerName.text = playerRef.GetName();
 
 		byteText.text = "Bytes: " + Utility.ByteToString(playerRef.GetBytes());
-
-		weaponXPPercentage.text = (playerRef.GetWeapon().GetVersionPercent()*100).ToString("F2") + "%";
 
 		byteXP.rectTransform.localScale = new Vector3(playerRef.XPPercentage(), 1f, 1f);
 
@@ -138,7 +148,7 @@ public class PlayerCanvas : MonoBehaviour {
 			inGameGUI.alpha = 0f;
 			minimap.enabled = false;
 			consoleGUI.alpha = 1f;
-
+			consoleGUI.interactable = true;
 			if (Player.algorithmPoints > 0) {
 				algorithmPointsText.text = "Algorithm Points Available: " + Player.algorithmPoints;
 				defenseButton.interactable = true;
@@ -159,8 +169,8 @@ public class PlayerCanvas : MonoBehaviour {
 			playerEfficiencyText.text = "Efficiency: " + Player.efficiency;
 			playerEncryptionText.text = "Encryption: " + Player.encryption;
 			playerSecurityText.text = "Security: " + Player.security;
-
 		} else {
+			consoleGUI.interactable = false;
 			inGameGUI.alpha = 1f;
 			minimap.enabled = true;
 			consoleGUI.alpha = 0f;

@@ -59,7 +59,9 @@ public class PlayerControl : MonoBehaviour {
 		if(playerAnim.GetFloat("Speed") > 0.5) {
 			RaycastHit info = new RaycastHit();
 			if(Physics.Raycast(new Ray(this.transform.position + new Vector3(0f, 1f, 0f), this.transform.forward), out info, playerAnim.GetFloat("Speed")*1.5f)) {
-				playerAnim.SetFloat("Speed",Mathf.Min(Input.GetAxis("Vertical"),0));
+				if(!info.collider.gameObject.name.Equals("Byte")) {
+					playerAnim.SetFloat("Speed",Mathf.Min(Input.GetAxis("Vertical"),0));
+				}
 			}
 		}
 
@@ -70,7 +72,13 @@ public class PlayerControl : MonoBehaviour {
 		}
 
 		if(!PlayerCanvas.inConsole) {
-			if (playerref.GetWeapon().IsMelee()) {
+			if(Input.GetKeyDown(KeyCode.Alpha1)) {
+				playerref.SetActiveItem(0);
+			} else if (Input.GetKeyDown(KeyCode.Alpha2)) {
+				playerref.SetActiveItem(1);
+			}
+
+			if (playerref.GetWeapon() != null && playerref.GetWeapon().IsMelee()) {
 				if (Input.GetMouseButtonDown(0) && comboTime && !attack1 && attack2) {
 					playerAnim.SetBool("Attack3", true);
 					comboTime = false;
@@ -85,18 +93,20 @@ public class PlayerControl : MonoBehaviour {
 					playerAnim.SetBool("Attack1", true);
 					comboTime = false;
 				}
-			} else {
+			}
 
+			if (playerref.GetHack() != null && Input.GetMouseButton(1)) {
+				playerref.Hack();
 			}
 		}
 
 		float mousePosX = Input.mousePosition.x;
-		float mousePosY = Input.mousePosition.y;
+		float mousePosY = Input.mousePosition.y + Screen.height/20f;
 		float screenX = Screen.width;
 		float screenY = Screen.height;
 		float angle;
 		if (mousePosY < screenY/2) {
-			angle = Mathf.Rad2Deg * Mathf.Atan(((mousePosX/screenX*2) - 1)/((mousePosY/screenY*2) - 1))+ 180;
+			angle = Mathf.Rad2Deg * Mathf.Atan(((mousePosX/screenX*2) - 1)/((mousePosY/screenY*2) - 1)) + 180;
 		} else {
 			angle = Mathf.Rad2Deg * Mathf.Atan(((mousePosX/screenX*2) - 1)/((mousePosY/screenY*2) - 1));
 		}
