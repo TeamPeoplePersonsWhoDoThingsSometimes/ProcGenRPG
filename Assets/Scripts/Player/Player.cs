@@ -20,14 +20,16 @@ public class Player : MonoBehaviour {
 
 	private string version = "1.0.0";
 	private string name = "TheKiniMan";
-
-
+	
 	public static int strength, defense, efficiency, encryption, security;
 	public static int algorithmPoints;
 	private float integrity, rma, maxIntegrity = 20f, maxrma = 20f;
 
+	private static GameObject hitInfo;
 	// Use this for initialization
 	void Start () {
+		hitInfo = Resources.Load<GameObject>("Info/HitInfo");
+
 		integrity = maxIntegrity;
 		rma = maxrma;
 
@@ -154,6 +156,18 @@ public class Player : MonoBehaviour {
 
 	public Hack GetHack() {
 		return activeHack;
+	}
+
+	public void GetDamaged(float damage, bool crit) {
+		GameObject temp = (GameObject)Instantiate(hitInfo,this.transform.position, hitInfo.transform.rotation);
+		if (crit) {
+			integrity -= damage*2;
+			temp.GetComponent<TextMesh>().renderer.material.color = Color.yellow;
+			temp.GetComponent<TextMesh>().text = "" + damage*2 + "!";
+		} else {
+			integrity -= damage;
+			temp.GetComponent<TextMesh>().text = "" + damage;
+		}
 	}
 
 	public string ToString() {

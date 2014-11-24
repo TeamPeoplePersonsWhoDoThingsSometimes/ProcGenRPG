@@ -129,6 +129,7 @@ public class PlayerCanvas : MonoBehaviour {
 		}
 
 		RMABar.rectTransform.localScale = new Vector3(playerRef.GetRMAPercentage(), 1f);
+		RMAPercentage.text = (playerRef.GetRMAPercentage()*100).ToString("F2") + "%";
 		integrityBar.rectTransform.localScale = new Vector3(playerRef.GetIntegrityPercentage(),1f);
 
 		playerName.text = playerRef.GetName();

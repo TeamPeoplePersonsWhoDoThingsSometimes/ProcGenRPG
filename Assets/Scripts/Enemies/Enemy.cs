@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour {
 	public string name;
 	public string version;
 	public float badassChance;
+	public GameObject enemyAttack;
 
 	protected bool detectedPlayer;
 	protected bool isBadass;
@@ -55,11 +56,29 @@ public class Enemy : MonoBehaviour {
 
 			Destroy(this.gameObject);
 		}
-		if(knockbackTime > 0) {
+		if (knockbackTime > 0) {
 			knockbackTime -= Time.deltaTime;
 			Vector3 dir = transform.position - knockbackPos;
 			dir.y = 0f;
 			rigidbody.AddForceAtPosition(dir*knockbackVal,knockbackPos, ForceMode.Impulse);
+		}
+
+		RaycastHit hitinfo = new RaycastHit();
+		Debug.DrawRay(transform.position, transform.forward * 5f);
+		if(Physics.Raycast(transform.position, transform.forward,out hitinfo, 10f)) {
+			if(hitinfo.collider.gameObject.tag.Equals("Player")) {
+				detectedPlayer = true;
+			}
+		} else {
+			detectedPlayer = false;
+		}
+
+		if (detectedPlayer) {
+			GetComponent<Animator>().SetTrigger("PlayerSpotted");
+			GetComponent<Animator>().SetFloat("Speed", Mathf.Abs(rigidbody.velocity.magnitude));
+			transform.position = Vector3.MoveTowards(transform.position, Player.playerPos.position + new Vector3(0,1,0), 0.1f);
+		} else {
+			transform.Rotate(0,20*Time.deltaTime,0);
 		}
 	}
 
@@ -79,7 +98,7 @@ public class Enemy : MonoBehaviour {
 		GameObject temp = (GameObject)Instantiate(hitInfo,this.transform.position, hitInfo.transform.rotation);
 		if (crit) {
 			hp -= damage*2;
-			temp.GetComponent<TextMesh>().renderer.material.color = Color.red;
+			temp.GetComponent<TextMesh>().renderer.material.color = Color.yellow;
 			temp.GetComponent<TextMesh>().text = "" + damage*2 + "!";
 		} else {
 			hp -= damage;
@@ -90,6 +109,7 @@ public class Enemy : MonoBehaviour {
 	void OnTriggerEnter(Collider other){
 		if(other.gameObject.tag.Equals("PlayerAttack")) {
 			Attack attack = other.gameObject.GetComponent<Attack>();
+			GetComponent<Animator>().SetTrigger("Hurt");
 		}
 	}
 

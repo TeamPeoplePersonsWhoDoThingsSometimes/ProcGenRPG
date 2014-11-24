@@ -6,7 +6,8 @@ public class Attack : MonoBehaviour {
 	private float thisDamage;
 	private float knockback;
 	private float critChance;
-	
+
+	public bool damagePlayer;
 	public float duration;
 	public bool destroyOnImpact;
 
@@ -21,8 +22,8 @@ public class Attack : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other) {
-		if(other.GetComponent<Enemy>() != null) {
-			if(Random.value < 0.5f) {
+		if (other.GetComponent<Enemy>() != null) {
+			if(Random.value < thisDamage - (int)thisDamage) {
 				other.GetComponent<Enemy>().GetDamaged(Mathf.CeilToInt(thisDamage), Random.value <= critChance); 
 			} else {
 				other.GetComponent<Enemy>().GetDamaged(Mathf.FloorToInt(thisDamage), Random.value <= critChance); 
@@ -30,6 +31,12 @@ public class Attack : MonoBehaviour {
 			other.GetComponent<Enemy>().DoKnockback(this.transform.position, knockback);
 			if(destroyOnImpact) {
 				Destroy(this.gameObject);
+			}
+		} else if (damagePlayer && other.GetComponent<Player>() != null) {
+			if(Random.value < thisDamage - (int)thisDamage) {
+				other.GetComponent<Player>().GetDamaged(Mathf.CeilToInt(thisDamage), Random.value <= critChance); 
+			} else {
+				other.GetComponent<Enemy>().GetDamaged(Mathf.FloorToInt(thisDamage), Random.value <= critChance); 
 			}
 		}
 	}
