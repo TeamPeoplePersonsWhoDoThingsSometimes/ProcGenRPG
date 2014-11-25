@@ -191,6 +191,8 @@ public class MapGenerator {
 			tile.x = x;
 			tile.z = z;
 
+			tile.gameObject.collider.isTrigger = true;
+
 			tile.gameObject.tag = "Portal";
 
 			switch(portalDir) {

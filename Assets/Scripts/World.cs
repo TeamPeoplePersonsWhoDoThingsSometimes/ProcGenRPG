@@ -124,11 +124,11 @@ public class World : MonoBehaviour {
 			load();
 		}
 		else {
-			generateNewArea(TileSets[1], null, -1);
+			generateNewArea(TileSets[0], null, -1);
 			generateAreas(TileSets[1], currentArea, 0);
 			currentArea.SetVisited();
 			currentArea.Init();
-			//Map.PrintMap();
+			Map.PrintMap();
 		}
 	}
 
@@ -143,7 +143,6 @@ public class World : MonoBehaviour {
 		if (from.HasLeft())
 			directions++;
 		float randFloat = Random.value * 4 - directions;
-		//Debug.Log(randFloat);
 		int numAreas = 0;
 		if (randFloat < 2) {
 			numAreas = 1;
@@ -217,7 +216,7 @@ public class World : MonoBehaviour {
 			generateAreas(TileSets[1], currentArea, 0);
 		}
 		currentArea.SetVisited();
-		//Map.PrintMap();
+		Map.PrintMap();
 		currentArea.Init();
 		GameObject[] items = GameObject.FindGameObjectsWithTag("Portal");
 		GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -225,7 +224,7 @@ public class World : MonoBehaviour {
 		foreach(GameObject g in items) {
 			Tile t = g.GetComponent<Tile>();
 			if(t.name.Equals("DownPortal")) {
-				player.transform.position = new Vector3(g.transform.position.x, 0.5f, g.transform.position.z + 7f);
+				player.transform.position = new Vector3(g.transform.position.x, 0.5f, g.transform.position.z + t.size / 1.5f);
 				GameObject.Find("Main Camera").GetComponent<FollowPlayer>().SetToPlayer();
 			}
 		}
@@ -238,7 +237,7 @@ public class World : MonoBehaviour {
 			generateAreas(TileSets[1], currentArea, 0);
 		}
 		currentArea.SetVisited();
-		//Map.PrintMap();
+		Map.PrintMap();
 		currentArea.Init();
 		GameObject[] items = GameObject.FindGameObjectsWithTag("Portal");
 		GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -246,7 +245,7 @@ public class World : MonoBehaviour {
 		foreach(GameObject g in items) {
 			Tile t = g.GetComponent<Tile>();
 			if(t.name.Equals("UpPortal")) {
-				player.transform.position = new Vector3(g.transform.position.x, 0.5f, g.transform.position.z - 7f);
+				player.transform.position = new Vector3(g.transform.position.x, 0.5f, g.transform.position.z - t.size / 1.5f);
 				GameObject.Find("Main Camera").GetComponent<FollowPlayer>().SetToPlayer();
 			}
 		}
@@ -259,7 +258,7 @@ public class World : MonoBehaviour {
 			generateAreas(TileSets[1], currentArea, 0);
 		}
 		currentArea.SetVisited();
-		//Map.PrintMap();
+		Map.PrintMap();
 		currentArea.Init();
 		GameObject[] items = GameObject.FindGameObjectsWithTag("Portal");
 		GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -267,7 +266,7 @@ public class World : MonoBehaviour {
 		foreach(GameObject g in items) {
 			Tile t = g.GetComponent<Tile>();
 			if(t.name.Equals("LeftPortal")) {
-				player.transform.position = new Vector3(g.transform.position.x + 7f, 0.5f, g.transform.position.z);
+				player.transform.position = new Vector3(g.transform.position.x + t.size / 1.5f, 0.5f, g.transform.position.z);
 				GameObject.Find("Main Camera").GetComponent<FollowPlayer>().SetToPlayer();
 			}
 		}
@@ -280,7 +279,7 @@ public class World : MonoBehaviour {
 			generateAreas(TileSets[1], currentArea, 0);
 		}
 		currentArea.SetVisited();
-		//Map.PrintMap();
+		Map.PrintMap();
 		currentArea.Init();
 		GameObject[] items = GameObject.FindGameObjectsWithTag("Portal");
 		GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -288,7 +287,7 @@ public class World : MonoBehaviour {
 		foreach(GameObject g in items) {
 			Tile t = g.GetComponent<Tile>();
 			if(t.name.Equals("RightPortal")) {
-				player.transform.position = new Vector3(g.transform.position.x - 7f, 0.5f, g.transform.position.z);
+				player.transform.position = new Vector3(g.transform.position.x - t.size / 1.5f, 0.5f, g.transform.position.z);
 				GameObject.Find("Main Camera").GetComponent<FollowPlayer>().SetToPlayer();
 			}
 		}
