@@ -8,7 +8,9 @@ public class Enemy : MonoBehaviour {
 	public string version;
 	public float badassChance;
 	public GameObject enemyAttack;
+	public float attackSpeed;
 
+	protected float tempAttackSpeed;
 	protected bool detectedPlayer;
 	protected bool isBadass;
 
@@ -19,6 +21,8 @@ public class Enemy : MonoBehaviour {
 
 	private static GameObject hitInfo;
 	private static GameObject byteObject;
+
+	private Vector3 lastPos;
 
 	// Use this for initialization
 	protected void Start () {
@@ -56,11 +60,13 @@ public class Enemy : MonoBehaviour {
 
 			Destroy(this.gameObject);
 		}
+
 		if (knockbackTime > 0) {
 			knockbackTime -= Time.deltaTime;
 			Vector3 dir = transform.position - knockbackPos;
 			dir.y = 0f;
-			rigidbody.AddForceAtPosition(dir*knockbackVal,knockbackPos, ForceMode.Impulse);
+//			rigidbody.AddForceAtPosition(dir*knockbackVal,knockbackPos, ForceMode.Impulse);
+			rigidbody.velocity = -transform.forward*knockbackVal;
 		}
 
 		RaycastHit hitinfo = new RaycastHit();
@@ -70,15 +76,26 @@ public class Enemy : MonoBehaviour {
 				detectedPlayer = true;
 			}
 		} else {
-			detectedPlayer = false;
+
 		}
 
-		if (detectedPlayer) {
+		GetComponent<Animator>().SetFloat("Speed", Vector3.Distance(transform.position, lastPos));
+
+		lastPos = transform.position;
+
+		if (detectedPlayer && Vector3.Distance(Player.playerPos.position, transform.position) > 3f) {
 			GetComponent<Animator>().SetTrigger("PlayerSpotted");
-			GetComponent<Animator>().SetFloat("Speed", Mathf.Abs(rigidbody.velocity.magnitude));
-			transform.position = Vector3.MoveTowards(transform.position, Player.playerPos.position + new Vector3(0,1,0), 0.1f);
+			rigidbody.MovePosition(Vector3.MoveTowards(transform.position, Player.playerPos.position + new Vector3(0,1,0), 0.1f));
+			transform.LookAt(Player.playerPos.position + new Vector3(0,1,0));
+		} else if (Vector3.Distance(Player.playerPos.position, transform.position) <= 3f) {
+			tempAttackSpeed -= Time.deltaTime;
+			Debug.Log(tempAttackSpeed);
+			if(tempAttackSpeed <= 0) {
+				GetComponent<Animator>().SetTrigger("Attack");
+				tempAttackSpeed = attackSpeed;
+			}
 		} else {
-			transform.Rotate(0,20*Time.deltaTime,0);
+			tempAttackSpeed = attackSpeed;
 		}
 	}
 
@@ -95,6 +112,7 @@ public class Enemy : MonoBehaviour {
 	}
 
 	public void GetDamaged(float damage, bool crit) {
+		detectedPlayer = true;
 		GameObject temp = (GameObject)Instantiate(hitInfo,this.transform.position, hitInfo.transform.rotation);
 		if (crit) {
 			hp -= damage*2;
@@ -109,7 +127,9 @@ public class Enemy : MonoBehaviour {
 	void OnTriggerEnter(Collider other){
 		if(other.gameObject.tag.Equals("PlayerAttack")) {
 			Attack attack = other.gameObject.GetComponent<Attack>();
-			GetComponent<Animator>().SetTrigger("Hurt");
+			if(attack.damageEnemy) {
+				GetComponent<Animator>().SetTrigger("Hurt");
+			}
 		}
 	}
 
