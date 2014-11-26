@@ -76,7 +76,7 @@ public class Enemy : MonoBehaviour {
 				detectedPlayer = true;
 			}
 		} else {
-
+			DoIdle();
 		}
 
 		GetComponent<Animator>().SetFloat("Speed", Vector3.Distance(transform.position, lastPos));
@@ -105,6 +105,10 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
+	protected void DoIdle() {
+		rigidbody.MoveRotation(Quaternion.Euler(transform.eulerAngles + new Vector3(0,10*Time.deltaTime,0f)));
+	}
+
 	public void DoKnockback(Vector3 pos, float knockback) {
 		knockbackTime = 0.2f;
 		knockbackVal = knockback;
@@ -112,6 +116,7 @@ public class Enemy : MonoBehaviour {
 	}
 
 	public void GetDamaged(float damage, bool crit) {
+		GetComponent<Animator>().SetTrigger("Hurt");
 		detectedPlayer = true;
 		GameObject temp = (GameObject)Instantiate(hitInfo,this.transform.position, hitInfo.transform.rotation);
 		if (crit) {
@@ -128,7 +133,7 @@ public class Enemy : MonoBehaviour {
 		if(other.gameObject.tag.Equals("PlayerAttack")) {
 			Attack attack = other.gameObject.GetComponent<Attack>();
 			if(attack.damageEnemy) {
-				GetComponent<Animator>().SetTrigger("Hurt");
+
 			}
 		}
 	}

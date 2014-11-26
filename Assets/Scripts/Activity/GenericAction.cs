@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public interface Action {
+public interface GenericAction {
 
 	/**
 	 * Gets the type of this action
