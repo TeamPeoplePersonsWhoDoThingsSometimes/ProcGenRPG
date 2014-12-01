@@ -16,4 +16,14 @@ public class Utility : MonoBehaviour {
 		return ((float)bytes/1000f).ToString("F2") + "kb";
 	}
 
+	public static int VersionToInt(string version) {
+		return ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])));
+	}
+
+	public static string IntToVersion(int version) {
+		string versionString = version.ToString();
+		string forreturn = versionString.Substring(0, 1) + "." + versionString.Substring(1, 1) + "." + versionString.Substring(2, 1);
+		return forreturn;
+	}
+
 }

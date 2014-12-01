@@ -11,6 +11,7 @@ public class Attack : MonoBehaviour {
 	public float knockback;
 	public float duration;
 	public bool destroyOnImpact;
+	public GameObject hitObject;
 
 	// Use this for initialization
 	protected void Start () {
@@ -30,6 +31,9 @@ public class Attack : MonoBehaviour {
 				other.GetComponent<Enemy>().GetDamaged(Mathf.FloorToInt(thisDamage), Random.value <= critChance); 
 			}
 			other.GetComponent<Enemy>().DoKnockback(this.transform.position, knockback);
+			if(hitObject != null) {
+				GameObject.Instantiate(hitObject, other.gameObject.transform.position + new Vector3(0,1,0), Quaternion.Euler(new Vector3(0,FollowPlayer.rotate,0f)));
+			}
 		}
 
 		if (damagePlayer && other.GetComponent<Player>() != null) {
@@ -37,6 +41,9 @@ public class Attack : MonoBehaviour {
 				other.GetComponent<Player>().GetDamaged(Mathf.CeilToInt(thisDamage), Random.value <= critChance); 
 			} else {
 				other.GetComponent<Player>().GetDamaged(Mathf.FloorToInt(thisDamage), Random.value <= critChance); 
+			}
+			if(hitObject != null) {
+				GameObject.Instantiate(hitObject, other.gameObject.transform.position + new Vector3(0,1,0), Quaternion.Euler(new Vector3(0,FollowPlayer.rotate,0f)));
 			}
 		}
 		if(destroyOnImpact) {

@@ -11,11 +11,12 @@ public class EmberFox : Enemy {
 	// Update is called once per frame
 	void Update () {
 		base.Update();
+
 	}
 
 	public void Attack() {
 		GameObject temp = (GameObject)Instantiate(enemyAttack, transform.position + new Vector3(0,1f,0), transform.localRotation);
-		temp.GetComponent<Attack>().SetDamage(2);
+		temp.GetComponent<Attack>().SetDamage(baseAttackDamage);
 		temp.GetComponent<Attack>().SetCrit(0.1f);
 	}
 }

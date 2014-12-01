@@ -10,7 +10,7 @@ public class PlayerCanvas : MonoBehaviour {
 
 	private CanvasGroup inGameGUI;
 	private Image bg, a1, a2, cursor;
-	private Image byteXP;
+	private Image byteXP, byteXPSmooth;
 	private Text byteText, playerName;
 
 	private CanvasGroup consoleGUI;
@@ -31,14 +31,16 @@ public class PlayerCanvas : MonoBehaviour {
 
 	public static bool inConsole = false;
 
-	private Camera minimap;
+	private GameObject minimap;
 	private Vector3 playerCanvasOffset;
+
+	private GameObject VRCursor;
 
 	// Use this for initialization
 	void Start () {
 		playerCanvasOffset = this.transform.position - Player.playerPos.position;
 
-		minimap = GameObject.Find("MiniMapCam").camera;
+		minimap = GameObject.Find("MiniMapCam");
 
 		playerAnim = GameObject.Find("PlayerObj").GetComponent<Animator>();
 		playerRef = GameObject.Find("PlayerObj").GetComponent<Player>();
@@ -57,6 +59,7 @@ public class PlayerCanvas : MonoBehaviour {
 		playerName = GameObject.Find("PlayerName").GetComponent<Text>();
 		playerName.text = playerRef.GetName();
 		byteXP = GameObject.Find("ByteXP").GetComponent<Image>();
+		byteXPSmooth = GameObject.Find("ByteXPSmooth").GetComponent<Image>();
 
 		weaponXPGroup = GameObject.Find("WeaponXP").GetComponent<RectTransform>();
 		curWeapon = GameObject.Find("WeaponName").GetComponent<Text>();
@@ -82,6 +85,8 @@ public class PlayerCanvas : MonoBehaviour {
 		integrityPercentage = GameObject.Find("IntegrityPercentText").GetComponent<Text>();
 		RMABar = GameObject.Find("RMABar").GetComponent<Image>();
 		RMAPercentage = GameObject.Find("RMAPercentText").GetComponent<Text>();
+
+		VRCursor = GameObject.Find("VRCursor");
 	}
 	
 	// Update is called once per frame
@@ -108,6 +113,10 @@ public class PlayerCanvas : MonoBehaviour {
 	}
 
 	void Update () {
+
+		if(VRCursor != null) {
+			VRCursor.GetComponent<Image>().rectTransform.anchoredPosition = new Vector2(Input.mousePosition.x/Screen.width*11.612f,Input.mousePosition.y/Screen.height*6.53f - 6.53f);
+		}
 
 		if(playerRef.GetWeapon() != null) {
 			if(tempWeaponXPVal != playerRef.GetWeapon().GetBytes()) {
@@ -137,6 +146,11 @@ public class PlayerCanvas : MonoBehaviour {
 		byteText.text = "Bytes: " + Utility.ByteToString(playerRef.GetBytes());
 
 		byteXP.rectTransform.localScale = new Vector3(playerRef.XPPercentage(), 1f, 1f);
+		if(byteXPSmooth.rectTransform.localScale.x < playerRef.XPPercentage()) {
+			byteXPSmooth.rectTransform.localScale = new Vector3(Mathf.MoveTowards(byteXPSmooth.rectTransform.localScale.x,playerRef.XPPercentage(),Time.deltaTime/10f), 1f, 1f);
+		} else {
+			byteXPSmooth.rectTransform.localScale = new Vector3(playerRef.XPPercentage(), 1f, 1f);
+		}
 
 		consoleText.text = playerRef.GetName();
 
@@ -144,9 +158,14 @@ public class PlayerCanvas : MonoBehaviour {
 			inConsole = !inConsole;
 		}
 
+		if(PlayerControl.PLAYINGWITHOCULUS) {
+			Screen.showCursor = false;
+			Screen.lockCursor = true;
+		}
+
 		if(inConsole) {
 			inGameGUI.alpha = 0f;
-			minimap.enabled = false;
+			minimap.SetActive(false);
 			consoleGUI.alpha = 1f;
 			consoleGUI.interactable = true;
 			if (Player.algorithmPoints > 0) {
@@ -172,7 +191,7 @@ public class PlayerCanvas : MonoBehaviour {
 		} else {
 			consoleGUI.interactable = false;
 			inGameGUI.alpha = 1f;
-			minimap.enabled = true;
+			minimap.SetActive(true);
 			consoleGUI.alpha = 0f;
 		}
 	}

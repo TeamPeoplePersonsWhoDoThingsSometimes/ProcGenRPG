@@ -15,11 +15,14 @@ public class PlayerControl : MonoBehaviour {
 
 	private static Player playerref;
 
+	public static bool PLAYINGWITHOCULUS;
+
 	// Use this for initialization
 	void Start () {
 		playerAnim = this.GetComponent<Animator>();
 		playerref = this.GetComponent<Player>();
 		camTransform = transform.parent.GetChild(1).transform;
+		PLAYINGWITHOCULUS = transform.parent.gameObject.name.Equals("OculusPlayer");
 	}
 	
 	// Update is called once per frame
@@ -38,9 +41,11 @@ public class PlayerControl : MonoBehaviour {
 			playerAnim.transform.Rotate(new Vector3(0f, playerAnim.GetFloat("Direction"), 0f));
 		}
 
-//		if(playerAnim.GetFloat("Speed") > 0.5 && Input.GetKey(KeyCode.Q)) {
-//			playerAnim.SetTrigger("Roll");
-//		}
+		if(Input.GetKey(KeyCode.Q)) {
+			playerAnim.SetBool("Roll", true);
+		} else {
+			playerAnim.SetBool("Roll", false);
+		}
 
 		if(Input.GetKeyDown(KeyCode.Space)) {
 			playerAnim.SetTrigger("Jump");
@@ -110,7 +115,12 @@ public class PlayerControl : MonoBehaviour {
 		} else {
 			angle = Mathf.Rad2Deg * Mathf.Atan(((mousePosX/screenX*2) - 1)/((mousePosY/screenY*2) - 1));
 		}
-		transform.eulerAngles = new Vector3(0f, angle + camTransform.eulerAngles.y, 0f);
+
+		if(!PLAYINGWITHOCULUS) {
+			transform.eulerAngles = new Vector3(0f, angle + camTransform.eulerAngles.y, 0f);
+		} else {
+			transform.eulerAngles = new Vector3(0f, camTransform.eulerAngles.y, 0f);
+		}
 
 //		transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new Vector3(0f, transform.eulerAngles.y + Input.GetAxis("Mouse X")*(2-playerAnim.GetFloat("Speed")), 0f)), 2000*Time.deltaTime);
 

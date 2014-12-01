@@ -5,14 +5,20 @@ public class Enemy : MonoBehaviour {
 
 	public float maxHP;
 	public string name;
-	public string version;
 	public float badassChance;
 	public GameObject enemyAttack;
-	public float attackSpeed;
+	public float baseAttackSpeed;
+	public float baseAttackDamage;
+	public string maxVersion;
+	public string minVersion;
+	public float healthScale = 1f;
+	public float attackScale = 1f;
+	public float attackSpeedScale = 1f;
 
 	protected float tempAttackSpeed;
 	protected bool detectedPlayer;
 	protected bool isBadass;
+	protected string version;
 
 	private float knockbackVal;
 	private float knockbackTime;
@@ -37,18 +43,35 @@ public class Enemy : MonoBehaviour {
 			this.name = "Basic " + name;
 		}
 
-		hp = maxHP;
 		if(hitInfo == null) {
 			hitInfo = Resources.Load<GameObject>("Info/HitInfo");
 		}
 		if(byteObject == null) {
 			byteObject = Resources.Load<GameObject>("Info/Byte");
 		}
+
+		int minversionInt = Utility.VersionToInt(minVersion);
+		int maxversionInt = Utility.VersionToInt(maxVersion);
+
+		int versionInt = Random.Range(Mathf.Min(Mathf.Max(minversionInt, Utility.VersionToInt(Player.version) - 5), maxversionInt),Mathf.Min(Utility.VersionToInt(Player.version) + 5, maxversionInt));
+		this.maxHP *= (int)((versionInt/100f)*(healthScale+1));
+		this.baseAttackDamage *= (versionInt/100f)*(attackScale+1);
+		this.baseAttackSpeed /= (versionInt/100f)*(attackSpeedScale+1);
+		this.version = Utility.IntToVersion(versionInt);
+		hp = maxHP;
+	}
+
+	public string GetVersion() {
+		return version;
+	}
+
+	public string HealthString() {
+		return hp + "/" + maxHP;
 	}
 	
 	// Update is called once per frame
 	protected void Update () {
-		if (hp < 0) {
+		if (hp <= 0) {
 			int tempByteVal = (int)maxHP*1000;
 			int curByteVal = 0;
 			int byteVal = Mathf.Max(tempByteVal/5, 5000);
@@ -89,13 +112,12 @@ public class Enemy : MonoBehaviour {
 			transform.LookAt(Player.playerPos.position + new Vector3(0,1,0));
 		} else if (Vector3.Distance(Player.playerPos.position, transform.position) <= 3f) {
 			tempAttackSpeed -= Time.deltaTime;
-			Debug.Log(tempAttackSpeed);
 			if(tempAttackSpeed <= 0) {
 				GetComponent<Animator>().SetTrigger("Attack");
-				tempAttackSpeed = attackSpeed;
+				tempAttackSpeed = baseAttackSpeed;
 			}
 		} else {
-			tempAttackSpeed = attackSpeed;
+			tempAttackSpeed = baseAttackSpeed;
 		}
 	}
 
@@ -133,7 +155,7 @@ public class Enemy : MonoBehaviour {
 		if(other.gameObject.tag.Equals("PlayerAttack")) {
 			Attack attack = other.gameObject.GetComponent<Attack>();
 			if(attack.damageEnemy) {
-
+//				Time.timeScale = 0f;
 			}
 		}
 	}

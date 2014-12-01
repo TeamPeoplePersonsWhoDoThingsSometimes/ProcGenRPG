@@ -18,14 +18,16 @@ public class Player : MonoBehaviour {
 
 	private int levelUpSpeedScale = 10000;
 
-	private string version = "1.0.0";
+	public static string version = "1.0.0";
 	private string name = "TheKiniMan";
 	
 	public static int strength, defense, efficiency, encryption, security;
 	public static int algorithmPoints;
-	private float integrity, rma, maxIntegrity = 20f, maxrma = 20f;
+	private float integrity, rma, maxIntegrity = 100f, maxrma = 20f;
 
 	private static GameObject hitInfo;
+
+	private float meleeTimeFreeze = 1f;
 	// Use this for initialization
 	void Start () {
 		hitInfo = Resources.Load<GameObject>("Info/HitInfo");
@@ -47,14 +49,34 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		playerPos = transform;
-		rma += Time.deltaTime * (encryption + 1);
+		rma += Time.deltaTime/2f * (encryption + 1);
+		integrity += Time.deltaTime/2f * (security + 1);
 		if (rma > maxrma) {
 			rma = maxrma;
 		} else if (rma < 0) {
 			rma = 0;
 		}
 
-		maxrma = (encryption + 1)*20f;
+		if(integrity > maxIntegrity) {
+			integrity = maxIntegrity;
+		} else if (integrity < 0) {
+			integrity = 0;
+		}
+
+		maxrma = (encryption/2f + 1)*20f;
+		maxIntegrity = (security/5f + 1)*100f;
+//		if (Time.timeScale == 0f) {
+//			Debug.Log(meleeTimeFreeze);
+//			meleeTimeFreeze -= 0.5f;
+//		} else if(Time.timeScale < 1) {
+//			Time.timeScale = 1f;
+//			meleeTimeFreeze = 1f;
+//		}
+//
+//		if(meleeTimeFreeze <= 0) {
+//			Time.timeScale = 0.001f;
+//		}
+
 	}
 
 	public void Attack (int combo) {
@@ -159,10 +181,11 @@ public class Player : MonoBehaviour {
 	}
 
 	public void GetDamaged(float damage, bool crit) {
-		GameObject temp = (GameObject)Instantiate(hitInfo,this.transform.position, hitInfo.transform.rotation);
+		GameObject temp = (GameObject)Instantiate(hitInfo,this.transform.position + new Vector3(0,1,0), hitInfo.transform.rotation);
+		temp.GetComponent<TextMesh>().renderer.material.color = Color.red;
 		if (crit) {
 			integrity -= damage*2;
-			temp.GetComponent<TextMesh>().renderer.material.color = Color.yellow;
+			temp.GetComponent<TextMesh>().renderer.material.color = Color.black;
 			temp.GetComponent<TextMesh>().text = "" + damage*2 + "!";
 		} else {
 			integrity -= damage;
