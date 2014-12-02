@@ -14,6 +14,7 @@ public class World : MonoBehaviour {
 
 	private static DataStorage data;
 	private static Area currentArea;
+	private static List<Area> notParents;
 
 
 
@@ -65,22 +66,22 @@ public class World : MonoBehaviour {
 	private static Area generateNewArea(TileSet tiles, Area from, int direction) {
 		Area a = null;
 		if (from == null) {
-			a = new Area(tiles, 0, 0);
+			a = new Area(tiles, null, 0, 0);
 			currentArea = a;
 			data.SetArea(currentArea.Data);
 		} else {
 			switch(direction) {
 				case 0:
-					a = new Area(tiles, from.getX(), from.getY() + 1);
+					a = new Area(tiles, from, from.getX(), from.getY() + 1);
 					break;
 				case 1:
-					a = new Area(tiles, from.getX(), from.getY() - 1);
+					a = new Area(tiles, from, from.getX(), from.getY() - 1);
 					break;
 				case 2:
-					a = new Area(tiles, from.getX() + 1, from.getY());
+					a = new Area(tiles, from, from.getX() + 1, from.getY());
 					break;
 				case 3:
-					a = new Area(tiles, from.getX() - 1, from.getY());
+					a = new Area(tiles, from, from.getX() - 1, from.getY());
 					break;
 				default:
 					Debug.LogError("invalid direction");
@@ -90,6 +91,12 @@ public class World : MonoBehaviour {
 		bool added = Map.Add(a);
 		if (!added) {
 			a = null;
+		} else {
+			notParents.Add(a);
+		}
+		if (from != null) {
+			from.SetIsParent();
+			notParents.Remove(from);
 		}
 		return a;
 	}
@@ -116,6 +123,7 @@ public class World : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		Map.Init();
+		notParents = new List<Area>();
 		data = new DataStorage();
 		TileSets = tileSets;
 
@@ -124,79 +132,87 @@ public class World : MonoBehaviour {
 			load();
 		}
 		else {
-			generateNewArea(TileSets[0], null, -1);
-			generateAreas(TileSets[1], currentArea, 0);
+			generateNewArea(TileSets[1], null, -1);
+			generateAreas(TileSets[1], currentArea);
 			currentArea.SetVisited();
 			currentArea.Init();
 			Map.PrintMap();
 		}
 	}
 
-	private static void generateAreas(TileSet tiles, Area from, int depth) {
-		int directions = 0;
-		if (from.HasUp())
-			directions++;
-		if (from.HasDown())
-			directions++;
-		if (from.HasRight())
-			directions++;
-		if (from.HasLeft())
-			directions++;
-		float randFloat = Random.value * 4 - directions;
-		int numAreas = 0;
-		if (randFloat < 2) {
-			numAreas = 1;
-		} else if (randFloat < 2.8) {
-			numAreas = 2;
-		} else if (randFloat < 3) {
-			numAreas = 3;
-		}
-		//int numAreas = Random.Range(1, 5 - directions);
-		if (directions == 0) {
-			numAreas = 4;
-		} else if (directions == 4) {
-			numAreas = 0;
-		}
-		while (numAreas > 0 && depth < 1) {
-			int randDir = Random.Range(0, 4);
-			bool triedUp, triedDown, triedRight, triedLeft;
-			triedUp = triedDown = triedRight = triedLeft = false;
-			Area a = generateNewArea(tiles, from, randDir);
-			if (a != null) {
-				generateAreas(tiles, a, depth + 1);
-				numAreas--;
-			}
+	/**
+	 * Picks a random direction excluding the direction to the parent and the oposite of the given direction int
+	 */
+	private static int ChooseRandomDirectionFrom(Area from, int direction) {
+		int wrongDir;
+		switch (direction) {
+			case 0:
+				wrongDir = 1;
+				break;
+			case 1:
+				wrongDir = 0;
+				break;
+			case 2:
+				wrongDir = 3;
+				break;
+			case 3:
+				wrongDir = 2;
+				break;
+			default:
+				wrongDir = 0;
+				Debug.LogError("wat? Impossible");
+				break;
 
-			switch (randDir) {
-				case 0:
-					triedUp = true;
-					break;
-				case 1:
-					triedDown = true;
-					break;
-				case 2:
-					triedRight = true;
-					break;
-				case 3:
-					triedLeft = true;
-					break;
-				default:
-					Debug.LogError("Something impossible happened");
-					break;
-			}
+		}
+		int randDir;
+		do {
+			randDir = Random.Range(0, 4);
+		} while (randDir == from.ParentDirection() || randDir == wrongDir);
+		return randDir;
+	}
 
-			directions = 0;
-			if (from.HasUp())
-				directions++;
-			if (from.HasDown())
-				directions++;
-			if (from.HasRight())
-				directions++;
-			if (from.HasLeft())
-				directions++;
-			if (directions == 4 || triedUp && triedDown && triedRight && triedLeft) {
-				numAreas = 0;
+	/**
+	 * Generates a path of areas in the given direction at most 5 spots away from the initial area
+	 * The "initial" and "from" area variables are the same because "from" is updated in the recursion.
+	 */
+	private static void generateAreasInDirection(TileSet tiles, Area initial, Area from, int direction) {
+		if (from != null && Mathf.Abs(from.getX() - initial.getX()) <= 5 && Mathf.Abs(from.getY() - initial.getY()) <= 5) {
+			if (Mathf.Abs(from.getX() - initial.getX()) < 1 && Mathf.Abs(from.getY() - initial.getY()) < 1) {
+				Area a = generateNewArea(tiles, from, direction);
+				generateAreasInDirection(tiles, initial, a, direction);
+			} else {
+				int newDir = ChooseRandomDirectionFrom(from, direction);
+				Area a = generateNewArea(tiles, from, newDir);
+				generateAreasInDirection(tiles, initial, a, direction);
+				int branchChance = Random.Range(0, 5);
+				if (branchChance == 0) {
+					if (direction == 0 || direction == 1) {
+						if (Random.Range(0, 2) == 0) {
+							direction = 2;
+						} else {
+							direction = 3;
+						}
+					} else {
+						if (Random.Range(0, 2) == 0) {
+							direction = 0;
+						} else {
+							direction = 1;
+						}
+					}
+					a = generateNewArea(tiles, from, direction);
+					generateAreasInDirection(tiles, initial, a, direction);
+				}
 			}
+		}
+	}
+
+	/**
+	 * Generates a path in every direction from the given tile
+	 */
+	private static void generateAreas(TileSet tiles, Area from) {
+		for (int direction = 0; direction < 4; direction++) {
+			Area a = generateNewArea(tiles, from, direction);
+			generateAreasInDirection(tiles, a, a, direction);
 		}
 	}
 	
@@ -212,8 +228,11 @@ public class World : MonoBehaviour {
 	public static void TravelUp() {
 		currentArea.Clear();
 		currentArea = currentArea.getUp();
-		if (!currentArea.GetVisited()) {
-			generateAreas(TileSets[1], currentArea, 0);
+		Area[] edgeAreas = notParents.ToArray();
+		foreach (Area area in edgeAreas) {
+			if (Mathf.Abs(area.getX() - currentArea.getX()) <= 5 && Mathf.Abs(area.getY() - currentArea.getY()) <= 5) {
+				generateAreas(TileSets[1], area);
+			}
 		}
 		currentArea.SetVisited();
 		Map.PrintMap();
@@ -233,8 +252,11 @@ public class World : MonoBehaviour {
 	public static void TravelDown() {
 		currentArea.Clear();
 		currentArea = currentArea.getDown();
-		if (!currentArea.GetVisited()) {
-			generateAreas(TileSets[1], currentArea, 0);
+		Area[] edgeAreas = notParents.ToArray();
+		foreach (Area area in edgeAreas) {
+			if (Mathf.Abs(area.getX() - currentArea.getX()) <= 5 && Mathf.Abs(area.getY() - currentArea.getY()) <= 5) {
+				generateAreas(TileSets[1], area);
+			}
 		}
 		currentArea.SetVisited();
 		Map.PrintMap();
@@ -254,8 +276,11 @@ public class World : MonoBehaviour {
 	public static void TravelRight() {
 		currentArea.Clear();
 		currentArea = currentArea.getRight();
-		if (!currentArea.GetVisited()) {
-			generateAreas(TileSets[1], currentArea, 0);
+		Area[] edgeAreas = notParents.ToArray();
+		foreach (Area area in edgeAreas) {
+			if (Mathf.Abs(area.getX() - currentArea.getX()) <= 5 && Mathf.Abs(area.getY() - currentArea.getY()) <= 5) {
+				generateAreas(TileSets[1], area);
+			}
 		}
 		currentArea.SetVisited();
 		Map.PrintMap();
@@ -275,8 +300,11 @@ public class World : MonoBehaviour {
 	public static void TravelLeft() {
 		currentArea.Clear();
 		currentArea = currentArea.getLeft();
-		if (!currentArea.GetVisited()) {
-			generateAreas(TileSets[1], currentArea, 0);
+		Area[] edgeAreas = notParents.ToArray();
+		foreach (Area area in edgeAreas) {
+			if (Mathf.Abs(area.getX() - currentArea.getX()) <= 5 && Mathf.Abs(area.getY() - currentArea.getY()) <= 5) {
+				generateAreas(TileSets[1], area);
+			}
 		}
 		currentArea.SetVisited();
 		Map.PrintMap();

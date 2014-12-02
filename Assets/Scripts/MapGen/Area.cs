@@ -5,18 +5,24 @@ public class Area {
 
 	public AreaData Data;
 
-	//private TileSet tileSet;
 	private MapGenerator generator;
 
-	//private Area left, right, up, down;
 	private bool visited;
+
+	/**
+	 * true if new areas from this area have been ATTEMPTED to be made
+	 */
+	private bool isParent;
+
+	private Area parent;
 	private int xPos, yPos;
 
-	public Area(TileSet tiles, int x, int y) {
+	public Area(TileSet tiles, Area parent, int x, int y) {
 		Data = new AreaData(-1, "Landy Land", tiles.generatorType.ToString(), -1);
 		this.generator = MapGenerator.getMapGenerator(this,tiles);
 		this.generator.SetArea(this);
 		visited = false;
+		this.parent = parent;
 		xPos = x;
 		yPos = y;
 	}
@@ -119,5 +125,39 @@ public class Area {
 
 	public int getY() {
 		return yPos;
+	}
+
+	public void SetParent(Area parent) {
+		this.parent = parent;
+	}
+
+	public Area GetParent() {
+		return parent;
+	}
+
+	/**
+	 * 0 is up, 1 is down, 2 is right, 3 is left
+	 * returns -1 if no parent
+	 */
+	public int ParentDirection() {
+		int direction = -1;
+		if (parent.getY() > this.getY()) {
+			direction = 0;
+		} else if (parent.getY() < this.getY()) {
+			direction = 1;
+		} else if (parent.getX() > this.getX()) {
+			direction = 2;
+		} else if (parent.getX() < this.getX()) {
+			direction = 3;
+		}
+		return direction;
+	}
+
+	public bool IsParent() {
+		return isParent;
+	}
+
+	public void SetIsParent() {
+		isParent = true;
 	}
 }

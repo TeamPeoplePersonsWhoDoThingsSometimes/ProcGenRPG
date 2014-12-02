@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 /**
  * Used for storing Area object positions and getting them easily
@@ -157,15 +158,24 @@ public class Map {
 
 	public static void PrintMap() {
 		string map = "";
-		for (int x = -1 * q1.GetLength(0) + 1; x < q1.GetLength(0); x++) {
-			for (int y = -1 * q1.GetLength(0) + 1; y < q1.GetLength(0); y++) {
+		for (int x = GetLeastX() - 1; x <= GetMostX() + 1; x++) {
+			for (int y = GetLeastY() - 1; y <= GetMostY() + 1; y++) {
 				if (x == 0 && y == 0) {
 					map += "2 ";
+				} else if (x == World.CurrentArea.getX() && y == World.CurrentArea.getY()) {
+					map += "3 ";
 				} else if (Get(x, y) != null) {
 					map += "1 ";
 				} else {
 					map += "0 ";
 				}
+				/*if (Get(x, y) == null) {
+					map += "0 ";
+				} else if (Get(x, y).IsParent()) {
+					map += "P ";
+				} else {
+					map += "N ";
+				}*/
 			}
 			map += "\n";
 		}
