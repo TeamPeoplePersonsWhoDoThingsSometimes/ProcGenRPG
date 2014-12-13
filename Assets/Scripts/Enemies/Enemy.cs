@@ -81,6 +81,13 @@ public class Enemy : MonoBehaviour {
 				curByteVal += byteVal;
 			}
 
+			//We should figure out how to handle death in a way that more closely ties player attacks to the death of the enemy
+			//to provide for more complex action tracking capailities, also, I'll move this into the backend
+			//when I move everything else that should be in the model as well
+			DirectObject obj = new DirectObject("N/A", name);
+			PlayerAction action = new PlayerAction(obj, ActionType.KILL);
+			ActionEventInvoker.primaryInvoker.invokeAction(action);
+
 			Destroy(this.gameObject);
 		}
 

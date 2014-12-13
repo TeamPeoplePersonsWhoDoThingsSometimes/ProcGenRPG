@@ -122,6 +122,19 @@ public class World : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		//INITIALIZE DUMMY QUEST, REMOVE NEXT LINES UP TO, BUT NOT INCLUDING, Map.Init() IF YOU ARE READING THIS
+		DirectObject obj = new DirectObject("N/A", "Basic EmberFox");
+		PlayerAction action = new PlayerAction(obj, ActionType.KILL);
+		ActionCheckable killEnemyStatus = new ActionCheckable(action);
+		Dictionary<StatusCheckable, bool>[] steps = new Dictionary<StatusCheckable, bool>[3];
+		steps[0] = new Dictionary<StatusCheckable, bool> ();
+		steps[1] = new Dictionary<StatusCheckable, bool> ();
+		steps[2] = new Dictionary<StatusCheckable, bool> ();
+		steps [0].Add (killEnemyStatus, false);
+		steps [1].Add (killEnemyStatus, false);
+		steps [2].Add (killEnemyStatus, false);
+		Quest q = new Quest (steps);
+
 		Map.Init();
 		notParents = new List<Area>();
 		data = new DataStorage();

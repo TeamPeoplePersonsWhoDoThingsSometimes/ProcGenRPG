@@ -1,15 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerAction {
+public class PlayerAction : Action {
 
-	// Use this for initialization
-	void Start () {
-	
+	DirectObject obj;
+	ActionType action;
+
+	public PlayerAction(DirectObject obj, ActionType action) {
+		this.obj = obj;
+		this.action = action;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+	public ActionType getActionType() {
+		return action;
+	}
+
+	public DirectObject getDirectObject() {
+		return obj;
 	}
 }
