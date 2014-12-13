@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Utility : MonoBehaviour {
 
+	private static GameObject hitInfo, byteObject, commonItemDrop, uncommonItemDrop, rareItemDrop;
 
 	public static string ByteToString(int bytes) {
 		if(bytes > (1000*1000*500)) {
@@ -24,6 +25,13 @@ public class Utility : MonoBehaviour {
 		string versionString = version.ToString();
 		string forreturn = versionString.Substring(0, 1) + "." + versionString.Substring(1, 1) + "." + versionString.Substring(2, 1);
 		return forreturn;
+	}
+
+	public static GameObject GetCommonItemDrop() {
+		if(commonItemDrop == null) {
+			commonItemDrop = (GameObject) Resources.Load("ItemDrops/CommonItemDrop");
+		}
+		return commonItemDrop;
 	}
 
 }

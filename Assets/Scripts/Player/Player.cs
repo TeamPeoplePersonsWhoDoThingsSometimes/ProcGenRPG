@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 public class Player : MonoBehaviour {
 
-	public static KeyCode forwardKey = KeyCode.W, backKey = KeyCode.S, useKey = KeyCode.F;
+	public static KeyCode forwardKey = KeyCode.W, backKey = KeyCode.S, useKey = KeyCode.F, rollKey = KeyCode.Space;
 
 	public List<Item> inventory = new List<Item>();
-	private List<Item> quickAccessItems = new List<Item>();
+	public List<Item> quickAccessItems = new List<Item>();
 	private Weapon activeWeapon;
 	private Hack activeHack;
 	private GameObject weaponRef;
@@ -40,8 +40,6 @@ public class Player : MonoBehaviour {
 
 		playerInventoryRef = GameObject.Find("PlayerInventory");
 		weaponRef = GameObject.Find("PlayerWeaponObj");
-		quickAccessItems.Add(activeWeapon);
-		quickAccessItems.Add(activeHack);
 		playerPos = transform;
 		bytesToNextVersion = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*levelUpSpeedScale;
 	}
@@ -86,23 +84,24 @@ public class Player : MonoBehaviour {
 	}
 
 	public void SetActiveItem (int val) {
-		if(inventory[val].GetType().IsSubclassOf(typeof(Weapon))) { 
-			activeWeapon = (Weapon)inventory[val];
+		if(quickAccessItems[val].GetType().IsSubclassOf(typeof(Weapon))) { 
+			activeWeapon = (Weapon)quickAccessItems[val];
 			for(int i = 0; i < playerInventoryRef.transform.childCount; i++) {
 				if(playerInventoryRef.transform.GetChild(i).GetComponent<Weapon>() != null
-				   && playerInventoryRef.transform.GetChild(i).GetComponent<Weapon>().GetName().Equals(activeWeapon.GetName())) {
+				   && playerInventoryRef.transform.GetChild(i).GetComponent<Weapon>().Equals(activeWeapon)) {
 					if (weaponRef.transform.childCount > 0) {
 						weaponRef.transform.GetChild(0).gameObject.SetActive(false);
 						weaponRef.transform.GetChild(0).transform.parent = playerInventoryRef.transform;
 					}
 					playerInventoryRef.transform.GetChild(i).parent = weaponRef.transform;
 					weaponRef.transform.GetChild(0).gameObject.SetActive(true);
-					weaponRef.transform.GetChild(0).position = Vector3.zero;
-					weaponRef.transform.GetChild(0).eulerAngles = Vector3.zero;
+					weaponRef.transform.GetChild(0).localPosition = Vector3.zero;
+					weaponRef.transform.GetChild(0).localEulerAngles = Vector3.zero;
+					weaponRef.transform.GetChild(0).localScale = new Vector3(1,1,1);
 				}
 			}
 		} else {
-			activeHack = (Hack)inventory[val];
+			activeHack = (Hack)quickAccessItems[val];
 		}
 	}
 
@@ -209,6 +208,16 @@ public class Player : MonoBehaviour {
 		} else {
 			return false;
 		}
+	}
+
+	public void PickUpItem(GameObject item) {
+		GameObject temp = (GameObject) Instantiate(item, Vector3.zero, Quaternion.identity);
+		inventory.Add(temp.GetComponent<Item>());
+		temp.transform.parent = playerInventoryRef.transform;
+		if(quickAccessItems.Count < 10) {
+			quickAccessItems.Add(temp.GetComponent<Item>());
+		}
+		temp.SetActive(false);
 	}
 
 }
