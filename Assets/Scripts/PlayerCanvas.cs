@@ -4,6 +4,8 @@ using System.Collections;
 
 public class PlayerCanvas : MonoBehaviour {
 
+	public Sprite common, uncommon, rare, anomaly;
+
 	private Animator playerAnim;
 
 	private Player playerRef;
@@ -14,7 +16,6 @@ public class PlayerCanvas : MonoBehaviour {
 	private Text byteText, playerName;
 
 	private CanvasGroup consoleGUI;
-	private Text consoleText;
 
 	private RectTransform weaponXPGroup;
 	private Text curWeapon;
@@ -24,15 +25,17 @@ public class PlayerCanvas : MonoBehaviour {
 	private int tempWeaponXPVal;
 
 	private Button strengthButton, defenseButton, efficiencyButton, securityButton, encryptionButton;
-	private Text playerStrengthText, playerDefenseText, playerEfficiencyText, playerSecurityText, playerEncryptionText, algorithmPointsText;
+	private Text playerStrengthText, playerDefenseText, playerEfficiencyText, playerSecurityText, playerEncryptionText, algorithmPointsText, weaponStatsInfo;
 
 	private Text integrityPercentage, RMAPercentage;
 	private Image integrityBar, RMABar;
 
 	public static bool inConsole = false;
 
-	private GameObject minimap;
+	private GameObject minimap, mainCam, mainCamWithEffects;
 	private Vector3 playerCanvasOffset;
+
+	private RectTransform quickAccessBar, activeWeaponIcon, activeHackIcon;
 
 	private GameObject VRCursor;
 
@@ -41,14 +44,14 @@ public class PlayerCanvas : MonoBehaviour {
 		playerCanvasOffset = this.transform.position - Player.playerPos.position;
 
 		minimap = GameObject.Find("MiniMapCam");
+		mainCam = GameObject.Find("Main Camera");
+		mainCamWithEffects = GameObject.Find("Main Camera With Effects");
 
 		playerAnim = GameObject.Find("PlayerObj").GetComponent<Animator>();
 		playerRef = GameObject.Find("PlayerObj").GetComponent<Player>();
 
 		inGameGUI = transform.GetChild(0).GetComponent<CanvasGroup>();
 		consoleGUI = transform.GetChild(1).GetComponent<CanvasGroup>();
-
-		consoleText = GameObject.Find("ConsoleText").GetComponent<Text>();
 	
 		a1 = GameObject.Find("Attack1").GetComponent<Image>();
 		a2 = GameObject.Find("Attack2").GetComponent<Image>();
@@ -80,11 +83,16 @@ public class PlayerCanvas : MonoBehaviour {
 		playerSecurityText = GameObject.Find("PlayerSecurityText").GetComponent<Text>();
 		playerEncryptionText = GameObject.Find("PlayerEncryptionText").GetComponent<Text>();
 		algorithmPointsText = GameObject.Find("AlgorithmPointsText").GetComponent<Text>();
+		weaponStatsInfo = GameObject.Find("WeaponStatInfo").GetComponent<Text>();
 
 		integrityBar = GameObject.Find("IntegrityBar").GetComponent<Image>();
 		integrityPercentage = GameObject.Find("IntegrityPercentText").GetComponent<Text>();
 		RMABar = GameObject.Find("RMABar").GetComponent<Image>();
 		RMAPercentage = GameObject.Find("RMAPercentText").GetComponent<Text>();
+
+		quickAccessBar = GameObject.Find("QuickAccessBar").GetComponent<RectTransform>();
+		activeWeaponIcon = GameObject.Find("ActiveWeaponIcon").GetComponent<RectTransform>();
+		activeHackIcon = GameObject.Find("ActiveHackIcon").GetComponent<RectTransform>();
 
 		VRCursor = GameObject.Find("VRCursor");
 	}
@@ -113,6 +121,33 @@ public class PlayerCanvas : MonoBehaviour {
 	}
 
 	void Update () {
+		for(int i = 0; i < playerRef.quickAccessItems.Count; i++) {
+			if(playerRef.quickAccessItems[i] != null) {
+				switch(playerRef.quickAccessItems[i].RarityVal) {
+					case Rarity.Common:
+						quickAccessBar.transform.GetChild(i).GetComponent<Image>().sprite = common;
+						break;
+					case Rarity.Uncommon:
+						quickAccessBar.transform.GetChild(i).GetComponent<Image>().overrideSprite = uncommon;
+						break;
+					case Rarity.Rare:
+						quickAccessBar.transform.GetChild(i).GetComponent<Image>().overrideSprite = rare;
+						break;
+					case Rarity.Anomaly:
+						quickAccessBar.transform.GetChild(i).GetComponent<Image>().overrideSprite = anomaly;
+						break;
+				}
+				if(playerRef.GetWeapon().Equals(playerRef.quickAccessItems[i])) {
+					activeWeaponIcon.SetParent(quickAccessBar.GetChild(i), false);
+//					activeWeaponIcon.GetComponent<RectTransform>().anchoredPosition = new Vector2();
+				}
+				if(playerRef.GetHack().Equals(playerRef.quickAccessItems[i])) {
+					activeHackIcon.SetParent(quickAccessBar.GetChild(i), false);
+				}
+				quickAccessBar.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = playerRef.quickAccessItems[i].icon;
+			}
+		}
+
 
 		if(VRCursor != null) {
 			VRCursor.GetComponent<Image>().rectTransform.anchoredPosition = new Vector2(Input.mousePosition.x/Screen.width*11.612f,Input.mousePosition.y/Screen.height*6.53f - 6.53f);
@@ -121,17 +156,10 @@ public class PlayerCanvas : MonoBehaviour {
 		if(playerRef.GetWeapon() != null) {
 			if(tempWeaponXPVal != playerRef.GetWeapon().GetBytes()) {
 				curWeapon.text = playerRef.GetWeapon().GetName();
-				weaponXPTimeOffset = 4f;
+				GetComponent<Animator>().SetTrigger("ShowWeaponXP");
 				tempWeaponXPVal = playerRef.GetWeapon().GetBytes();
-			}
-
-			if (weaponXPTimeOffset > 0) {
-				weaponXPTimeOffset -= Time.deltaTime;
-				weaponXPGroup.animation.Play("weaponXPAnim");
 			} else {
-				if(Time.time > 2) {
-					weaponXPGroup.animation.Play("weaponXPAnimClose");
-				}
+				GetComponent<Animator>().ResetTrigger("ShowWeaponXP");
 			}
 			weaponXPImg.rectTransform.localScale = new Vector3(playerRef.GetWeapon().GetVersionPercent(), 1, 1);
 			weaponXPPercentage.text = (playerRef.GetWeapon().GetVersionPercent()*100).ToString("F2") + "%";
@@ -152,11 +180,11 @@ public class PlayerCanvas : MonoBehaviour {
 			byteXPSmooth.rectTransform.localScale = new Vector3(playerRef.XPPercentage(), 1f, 1f);
 		}
 
-		consoleText.text = playerRef.GetName();
-
 		if(Input.GetKeyDown(KeyCode.BackQuote)) {
 			inConsole = !inConsole;
 		}
+
+		GetComponent<Animator>().SetBool("ShowingConsole", inConsole);
 
 		if(PlayerControl.PLAYINGWITHOCULUS) {
 			Screen.showCursor = false;
@@ -164,9 +192,7 @@ public class PlayerCanvas : MonoBehaviour {
 		}
 
 		if(inConsole) {
-			inGameGUI.alpha = 0f;
 			minimap.SetActive(false);
-			consoleGUI.alpha = 1f;
 			consoleGUI.interactable = true;
 			if (Player.algorithmPoints > 0) {
 				algorithmPointsText.text = "Algorithm Points Available: " + Player.algorithmPoints;
@@ -188,11 +214,22 @@ public class PlayerCanvas : MonoBehaviour {
 			playerEfficiencyText.text = "Efficiency: " + Player.efficiency;
 			playerEncryptionText.text = "Encryption: " + Player.encryption;
 			playerSecurityText.text = "Security: " + Player.security;
+			weaponStatsInfo.text = playerRef.GetWeapon().InfoString();
+
+			mainCam.camera.enabled = false;
+			mainCamWithEffects.camera.enabled = true;
+			mainCamWithEffects.GetComponent<Blur>().blur = Mathf.MoveTowards(mainCamWithEffects.GetComponent<Blur>().blur, 5, Time.deltaTime*5f);
+
 		} else {
 			consoleGUI.interactable = false;
-			inGameGUI.alpha = 1f;
 			minimap.SetActive(true);
-			consoleGUI.alpha = 0f;
+
+			mainCamWithEffects.GetComponent<Blur>().blur = Mathf.MoveTowards(mainCamWithEffects.GetComponent<Blur>().blur, 0, Time.deltaTime*5f);
+			if(mainCamWithEffects.GetComponent<Blur>().blur == 0) {
+				mainCam.camera.enabled = true;
+				mainCamWithEffects.camera.enabled = false;
+			}
+
 		}
 	}
 

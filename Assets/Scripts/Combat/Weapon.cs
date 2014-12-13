@@ -84,13 +84,18 @@ public class Weapon : Item {
 	}
 
 	public string ToString() {
-		return name + "_" + version +
-			"\n   Base Damage: " + thisDamage.ToString("F2") +
-				"\n   Knockback: " + knockback.ToString("F2") +
-				"\n   Crit Chance: " + critChance.ToString("F2");
+		return name + "_" + version;
 	}
 
 	public void AddBytes(int val) {
 		bytes += val;
+	}
+
+	public string InfoString() {
+		return "Type: " + (isMelee ? "Melee" : "Ranged") +
+		"\nRarity: " + this.RarityVal +
+		"\nBase Damage: " + thisDamage.ToString("F2") +
+		"\nKnockback: " + knockback.ToString("F2") +
+		"\nCrit Chance: " + critChance.ToString("F2");
 	}
 }

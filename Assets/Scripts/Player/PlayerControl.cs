@@ -41,14 +41,10 @@ public class PlayerControl : MonoBehaviour {
 			playerAnim.transform.Rotate(new Vector3(0f, playerAnim.GetFloat("Direction"), 0f));
 		}
 
-		if(Input.GetKey(KeyCode.Q)) {
+		if(Input.GetKey(KeyCode.Space)) {
 			playerAnim.SetBool("Roll", true);
 		} else {
 			playerAnim.SetBool("Roll", false);
-		}
-
-		if(Input.GetKeyDown(KeyCode.Space)) {
-			playerAnim.SetTrigger("Jump");
 		}
 
 		if(playerAnim.GetFloat("Speed") > 0.5 && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))) {
@@ -81,6 +77,10 @@ public class PlayerControl : MonoBehaviour {
 				playerref.SetActiveItem(0);
 			} else if (Input.GetKeyDown(KeyCode.Alpha2)) {
 				playerref.SetActiveItem(1);
+			} else if(Input.GetKeyDown(KeyCode.Alpha3)) {
+				playerref.SetActiveItem(2);
+			} else if (Input.GetKeyDown(KeyCode.Alpha4)) {
+				playerref.SetActiveItem(3);
 			}
 
 			if (playerref.GetWeapon() != null && playerref.GetWeapon().IsMelee()) {

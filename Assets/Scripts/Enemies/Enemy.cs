@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Enemy : MonoBehaviour {
 
@@ -24,6 +25,9 @@ public class Enemy : MonoBehaviour {
 	private float knockbackTime;
 	private Vector3 knockbackPos;
 	private float hp;
+	private Dictionary<GameObject, float> itemDrops = new Dictionary<GameObject, float>();
+	public List<GameObject> possibleItemDrops;
+	public List<float> possibleItemDropsChance;
 
 	private static GameObject hitInfo;
 	private static GameObject byteObject;
@@ -59,6 +63,14 @@ public class Enemy : MonoBehaviour {
 		this.baseAttackSpeed /= (versionInt/100f)*(attackSpeedScale+1);
 		this.version = Utility.IntToVersion(versionInt);
 		hp = maxHP;
+
+		if(possibleItemDrops.Count != possibleItemDropsChance.Count) {
+			Debug.LogWarning("Hey dummy! You need to have equal number of item drops and item drop chances!");
+		} else {
+			for(int i = 0; i < possibleItemDrops.Count; i++) {
+				itemDrops.Add(possibleItemDrops[i], possibleItemDropsChance[i]);
+			}
+		}
 	}
 
 	public string GetVersion() {
@@ -79,6 +91,21 @@ public class Enemy : MonoBehaviour {
 				GameObject tmp = (GameObject)Instantiate(byteObject, transform.position, Quaternion.identity);
 				tmp.GetComponent<Byte>().val = byteVal;
 				curByteVal += byteVal;
+			}
+
+			foreach(KeyValuePair<GameObject, float> kvp in itemDrops) {
+				if(Random.value < kvp.Value) {
+					GameObject temp = null;
+					switch(kvp.Key.GetComponent<Item>().RarityVal) {
+					case Rarity.Common:
+						temp = (GameObject)Instantiate(Utility.GetCommonItemDrop(), this.transform.position, Quaternion.identity);
+						break;
+					}
+					if (temp != null) {
+						temp.GetComponent<ItemDropObject>().item = kvp.Key;
+					}
+					break;
+				}
 			}
 
 			//We should figure out how to handle death in a way that more closely ties player attacks to the death of the enemy
@@ -132,6 +159,7 @@ public class Enemy : MonoBehaviour {
 		if(rigidbody.IsSleeping()) {
 			rigidbody.WakeUp();
 		}
+
 	}
 
 	protected void DoIdle() {
