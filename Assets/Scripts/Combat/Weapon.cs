@@ -8,9 +8,10 @@ public class Weapon : Item {
 	public string version = "1.0.0";
 	public float critChance;
 	public float levelUpScale;
-	public int levelUpSpeedScale;
+	public float levelUpSpeedScale;
 	public float damage;
 	public float knockback;
+	public float attackSpeed;
 	protected float thisDamage;
 	protected float thisKnockback;
 	protected bool isMelee;
@@ -28,7 +29,7 @@ public class Weapon : Item {
 	
 	// Update is called once per frame
 	protected void Update () {
-		bytesToLevelUp = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*levelUpSpeedScale*10000;
+		bytesToLevelUp = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*(int)(levelUpSpeedScale*10000);
 		while (bytes > bytesToLevelUp) {
 			LevelUp();
 		}
@@ -52,7 +53,7 @@ public class Weapon : Item {
 		} else {
 			version = (int.Parse(version.Split('.')[0])*1 + 1) + ".0.0";
 		}
-		bytesToLevelUp = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*levelUpSpeedScale*10000;
+		bytesToLevelUp = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*(int)(levelUpSpeedScale*10000);
 	}
 
 	public float GetCrit() {

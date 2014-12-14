@@ -27,29 +27,35 @@ public class PlayerControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		playerAnim.SetBool("Attack1", false);
-		playerAnim.SetBool("Attack2", false);
-		playerAnim.SetBool("Attack3", false);
+		/****** Resetting animation booleans to false ****/
+		playerAnim.SetBool("Slash1", false);
+		playerAnim.SetBool("Slash2", false);
+		playerAnim.SetBool("Slash3", false);
+		playerAnim.SetBool("ShootBow", false);
 
+		/***** Updates booleans to check what attack player is in *****/
 		attack1 = playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Base.Slash1") || playerAnim.GetCurrentAnimatorStateInfo(1).IsName("SlashWalking.SlashWalking");
 		attack2 = playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Base.Slash2");
 		attack3 = playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Base.Slash3");
 
+		/****** Set movement variables *****/
 		playerAnim.SetFloat("Speed",Input.GetAxis("Vertical"));
 //		playerAnim.SetFloat("Direction",Input.GetAxis("Horizontal"));
 		if(playerAnim.GetFloat("Speed") == 0) {
 			playerAnim.transform.Rotate(new Vector3(0f, playerAnim.GetFloat("Direction"), 0f));
 		}
 
+		/***** Rolling functionality ****/
 		if(Input.GetKey(KeyCode.Space)) {
 			playerAnim.SetBool("Roll", true);
 		} else {
 			playerAnim.SetBool("Roll", false);
 		}
 
+		/***** Running functionality ****/
 		if(playerAnim.GetFloat("Speed") > 0.5 && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))) {
 			if(playerAnim.speed < 1.5f) {
-				playerAnim.speed += Time.deltaTime;
+				playerAnim.speed += Time.deltaTime/2f;
 			}
 		} else {
 			playerAnim.speed = 1;
@@ -57,6 +63,8 @@ public class PlayerControl : MonoBehaviour {
 		GetComponent<CapsuleCollider>().height = 0.1787377f - 0.1f*playerAnim.GetFloat("ColliderHeight");
 		GetComponent<CapsuleCollider>().center = new Vector3(0,0.09f - 0.09f*playerAnim.GetFloat("ColliderY"), 0f);
 
+
+		/**** Simple front collision handler *****/
 		if(playerAnim.GetFloat("Speed") > 0.5) {
 			RaycastHit info = new RaycastHit();
 			if(Physics.Raycast(new Ray(this.transform.position + new Vector3(0f, 1f, 0f), this.transform.forward), out info, playerAnim.GetFloat("Speed")*1.5f)) {
@@ -66,37 +74,51 @@ public class PlayerControl : MonoBehaviour {
 			}
 		}
 
+		/**** Messy way of handling LightStick's green trail ****/
 		if(attack3) {
 			GetComponent<Player>().StartAttack();
 		} else {
 			GetComponent<Player>().StopAttack();
 		}
 
-		if(!PlayerCanvas.inConsole) {
-			if(Input.GetKeyDown(KeyCode.Alpha1)) {
-				playerref.SetActiveItem(0);
-			} else if (Input.GetKeyDown(KeyCode.Alpha2)) {
-				playerref.SetActiveItem(1);
-			} else if(Input.GetKeyDown(KeyCode.Alpha3)) {
-				playerref.SetActiveItem(2);
-			} else if (Input.GetKeyDown(KeyCode.Alpha4)) {
-				playerref.SetActiveItem(3);
-			}
+		/***** Kinda messy way of binding numbers to quick access items ****/
+		if(Input.GetKeyDown(KeyCode.Alpha1)) {
+			playerref.SetActiveItem(0);
+		} else if (Input.GetKeyDown(KeyCode.Alpha2)) {
+			playerref.SetActiveItem(1);
+		} else if(Input.GetKeyDown(KeyCode.Alpha3)) {
+			playerref.SetActiveItem(2);
+		} else if (Input.GetKeyDown(KeyCode.Alpha4)) {
+			playerref.SetActiveItem(3);
+		}
 
+		/**** Handling attacking ****/
+		if(!PlayerCanvas.inConsole) {
 			if (playerref.GetWeapon() != null && playerref.GetWeapon().IsMelee()) {
 				if (Input.GetMouseButtonDown(0) && comboTime && !attack1 && attack2) {
-					playerAnim.SetBool("Attack3", true);
+					playerAnim.SetBool("Slash3", true);
 					comboTime = false;
 				}
 
 				if (Input.GetMouseButtonDown(0) && comboTime && attack1 && !attack2) {
-					playerAnim.SetBool("Attack2", true);
+					playerAnim.SetBool("Slash2", true);
 					comboTime = false;
 				}
 
 				if (Input.GetMouseButtonDown(0) && !attack2 && !attack3) {
-					playerAnim.SetBool("Attack1", true);
+					playerAnim.SetBool("Slash1", true);
 					comboTime = false;
+				}
+			} else if (playerref.GetWeapon() != null && !playerref.GetWeapon().IsMelee()) {
+				if (Input.GetMouseButtonDown(0)) {
+					playerAnim.SetBool("DrawArrow", true);
+				} else if (Input.GetMouseButtonUp(0)) {
+					playerAnim.SetBool("DrawArrow", false);
+					playerAnim.SetBool("ShootBow", true);
+				}
+
+				if(!Input.GetMouseButton(0)) {
+					playerAnim.SetBool("DrawArrow", false);
 				}
 			}
 
@@ -105,8 +127,9 @@ public class PlayerControl : MonoBehaviour {
 			}
 		}
 
+		/****** Making the player look at the mouse *******/
 		float mousePosX = Input.mousePosition.x;
-		float mousePosY = Input.mousePosition.y + Screen.height/20f;
+		float mousePosY = Input.mousePosition.y + Screen.height/10f;
 		float screenX = Screen.width;
 		float screenY = Screen.height;
 		float angle;
@@ -122,11 +145,14 @@ public class PlayerControl : MonoBehaviour {
 			transform.eulerAngles = new Vector3(0f, camTransform.eulerAngles.y, 0f);
 		}
 
-//		transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new Vector3(0f, transform.eulerAngles.y + Input.GetAxis("Mouse X")*(2-playerAnim.GetFloat("Speed")), 0f)), 2000*Time.deltaTime);
-
-//		playerAnim.SetFloat("Direction",(mousePosX - screenX/2f)/(screenX/2f));
+		/** Other ways of handling looking **/
+		//transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new Vector3(0f, transform.eulerAngles.y + Input.GetAxis("Mouse X")*(2-playerAnim.GetFloat("Speed")), 0f)), 2000*Time.deltaTime);
+		//playerAnim.SetFloat("Direction",(mousePosX - screenX/2f)/(screenX/2f));
 	}
 
+	/**
+	 * Called by Mecanim to set when combo attacks can and can't occur
+	 */
 	void SetComboTime() {
 		comboTime = !comboTime;
 	}

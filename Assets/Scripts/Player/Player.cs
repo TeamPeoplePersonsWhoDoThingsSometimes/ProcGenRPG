@@ -84,24 +84,26 @@ public class Player : MonoBehaviour {
 	}
 
 	public void SetActiveItem (int val) {
-		if(quickAccessItems[val].GetType().IsSubclassOf(typeof(Weapon))) { 
-			activeWeapon = (Weapon)quickAccessItems[val];
-			for(int i = 0; i < playerInventoryRef.transform.childCount; i++) {
-				if(playerInventoryRef.transform.GetChild(i).GetComponent<Weapon>() != null
-				   && playerInventoryRef.transform.GetChild(i).GetComponent<Weapon>().Equals(activeWeapon)) {
-					if (weaponRef.transform.childCount > 0) {
-						weaponRef.transform.GetChild(0).gameObject.SetActive(false);
-						weaponRef.transform.GetChild(0).transform.parent = playerInventoryRef.transform;
+		if(quickAccessItems.Count >= val + 1) {
+			if(quickAccessItems[val].GetType().IsSubclassOf(typeof(Weapon))) { 
+				activeWeapon = (Weapon)quickAccessItems[val];
+				for(int i = 0; i < playerInventoryRef.transform.childCount; i++) {
+					if(playerInventoryRef.transform.GetChild(i).GetComponent<Weapon>() != null
+					   && playerInventoryRef.transform.GetChild(i).GetComponent<Weapon>().Equals(activeWeapon)) {
+						if (weaponRef.transform.childCount > 0) {
+							weaponRef.transform.GetChild(0).gameObject.SetActive(false);
+							weaponRef.transform.GetChild(0).transform.parent = playerInventoryRef.transform;
+						}
+						playerInventoryRef.transform.GetChild(i).parent = weaponRef.transform;
+						weaponRef.transform.GetChild(0).gameObject.SetActive(true);
+						weaponRef.transform.GetChild(0).localPosition = Vector3.zero;
+						weaponRef.transform.GetChild(0).localEulerAngles = Vector3.zero;
+						weaponRef.transform.GetChild(0).localScale = new Vector3(1,1,1);
 					}
-					playerInventoryRef.transform.GetChild(i).parent = weaponRef.transform;
-					weaponRef.transform.GetChild(0).gameObject.SetActive(true);
-					weaponRef.transform.GetChild(0).localPosition = Vector3.zero;
-					weaponRef.transform.GetChild(0).localEulerAngles = Vector3.zero;
-					weaponRef.transform.GetChild(0).localScale = new Vector3(1,1,1);
 				}
+			} else {
+				activeHack = (Hack)quickAccessItems[val];
 			}
-		} else {
-			activeHack = (Hack)quickAccessItems[val];
 		}
 	}
 

@@ -34,6 +34,9 @@ public class Attack : MonoBehaviour {
 			if(hitObject != null) {
 				GameObject.Instantiate(hitObject, other.gameObject.transform.position + new Vector3(0,1,0), Quaternion.Euler(new Vector3(0,FollowPlayer.rotate,0f)));
 			}
+			if(destroyOnImpact) {
+				Destroy(this.gameObject);
+			}
 		}
 
 		if (damagePlayer && other.GetComponent<Player>() != null) {
@@ -45,9 +48,9 @@ public class Attack : MonoBehaviour {
 			if(hitObject != null) {
 				GameObject.Instantiate(hitObject, other.gameObject.transform.position + new Vector3(0,1,0), Quaternion.Euler(new Vector3(0,FollowPlayer.rotate,0f)));
 			}
-		}
-		if(destroyOnImpact) {
-			Destroy(this.gameObject);
+			if(destroyOnImpact) {
+				Destroy(this.gameObject);
+			}
 		}
 	}
 

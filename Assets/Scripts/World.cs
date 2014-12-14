@@ -257,7 +257,7 @@ public class World : MonoBehaviour {
 			Tile t = g.GetComponent<Tile>();
 			if(t.name.Equals("DownPortal")) {
 				player.transform.position = new Vector3(g.transform.position.x, 0.5f, g.transform.position.z + t.size / 1.5f);
-				GameObject.Find("Main Camera").GetComponent<FollowPlayer>().SetToPlayer();
+				GameObject.Find("CamGroup").GetComponent<FollowPlayer>().SetToPlayer();
 			}
 		}
 	}
@@ -281,7 +281,7 @@ public class World : MonoBehaviour {
 			Tile t = g.GetComponent<Tile>();
 			if(t.name.Equals("UpPortal")) {
 				player.transform.position = new Vector3(g.transform.position.x, 0.5f, g.transform.position.z - t.size / 1.5f);
-				GameObject.Find("Main Camera").GetComponent<FollowPlayer>().SetToPlayer();
+				GameObject.Find("CamGroup").GetComponent<FollowPlayer>().SetToPlayer();
 			}
 		}
 	}
@@ -305,7 +305,7 @@ public class World : MonoBehaviour {
 			Tile t = g.GetComponent<Tile>();
 			if(t.name.Equals("LeftPortal")) {
 				player.transform.position = new Vector3(g.transform.position.x + t.size / 1.5f, 0.5f, g.transform.position.z);
-				GameObject.Find("Main Camera").GetComponent<FollowPlayer>().SetToPlayer();
+				GameObject.Find("CamGroup").GetComponent<FollowPlayer>().SetToPlayer();
 			}
 		}
 	}
@@ -329,7 +329,7 @@ public class World : MonoBehaviour {
 			Tile t = g.GetComponent<Tile>();
 			if(t.name.Equals("RightPortal")) {
 				player.transform.position = new Vector3(g.transform.position.x - t.size / 1.5f, 0.5f, g.transform.position.z);
-				GameObject.Find("Main Camera").GetComponent<FollowPlayer>().SetToPlayer();
+				GameObject.Find("CamGroup").GetComponent<FollowPlayer>().SetToPlayer();
 			}
 		}
 	}
