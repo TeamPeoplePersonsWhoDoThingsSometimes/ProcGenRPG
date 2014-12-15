@@ -3,11 +3,11 @@ using System.Collections;
 
 public class ActionCheckable : StatusCheckable {
 
-	public ActionCheckable(Action act) {
+	public ActionCheckable(IAction act) {
 		action = act;
 	}
 
-	private Action action;
+	private IAction action;
 
 	public bool isStatusMet() {
 		return Status.playerStatus.recentActionOccured (action);

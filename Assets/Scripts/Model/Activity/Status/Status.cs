@@ -28,7 +28,7 @@ public class Status : ActionEventListener {
 	 * A queue of the most recent actions, with the most distant
 	 * actions on the front of the queue
 	 */
-	private Queue<Action> recentActions;
+	private Queue<IAction> recentActions;
 
 	/**
 	 * A dictionary mapping the player's total statistics of how many
@@ -47,7 +47,7 @@ public class Status : ActionEventListener {
 	 * implementation
 	 */
 	private Status() : base() {
-		recentActions = new Queue<Action> ();
+		recentActions = new Queue<IAction> ();
 		enemiesKilled = new Dictionary<string, int> ();
 		visitedAreas = new List<string> ();
 	}
@@ -56,7 +56,7 @@ public class Status : ActionEventListener {
 	 * Handles processing of actions into modifying the player's
 	 * status
 	 */
-	public override void onAction(Action action) {
+	public override void onAction(IAction action) {
 		Debug.Log ("Register action: " + action.getActionType () + " on " + action.getDirectObject ().getIdentifier () + " of type " + action.getDirectObject ().getTypeIdentifier ());
 		recentActions.Enqueue (action);
 		if (recentActions.Count > ACTION_STORAGE) {
@@ -83,9 +83,9 @@ public class Status : ActionEventListener {
 	/**
 	 * Returns true if the given action occured recently
 	 */
-	public bool recentActionOccured(Action action) {
+	public bool recentActionOccured(IAction action) {
 		for (int i = 0; i < recentActions.Count; i++) {
-			Action recentAction = recentActions.Dequeue();
+			IAction recentAction = recentActions.Dequeue();
 			if(recentAction.getActionType().Equals(action.getActionType()) &&
 			   recentAction.getDirectObject().getIdentifier().Equals(action.getDirectObject().getIdentifier()) &&
 			   recentAction.getDirectObject().getTypeIdentifier().Equals(action.getDirectObject().getTypeIdentifier()))

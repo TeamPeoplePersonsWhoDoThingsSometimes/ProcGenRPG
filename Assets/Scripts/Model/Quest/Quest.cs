@@ -31,7 +31,7 @@ public class Quest : ActionEventListener {
 	 * Steps and modifies the quest steps based on the action,
 	 * note: may simply reference the state
 	 */
-	public override void onAction (Action action)
+	public override void onAction (IAction action)
 	{
 		Debug.Log ("Action registered");
 		Dictionary<StatusCheckable, bool> curr = steps [currentStep];

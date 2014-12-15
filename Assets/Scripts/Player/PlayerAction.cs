@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerAction : Action {
+public class PlayerAction : IAction {
 
 	DirectObject obj;
 	ActionType action;
