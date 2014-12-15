@@ -13,7 +13,7 @@ public class ItemDropObject : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		for(int i = 0; i < this.transform.childCount; i++) {
-			this.transform.GetChild(i).localScale = new Vector3(Mathf.Sin(Time.time) + 1, Mathf.Sin(Time.time) + 1, Mathf.Sin(Time.time) + 1);
+			this.transform.GetChild(i).localEulerAngles = new Vector3(Mathf.Sin(Time.time)*180 + i*45f, Mathf.Sin(Time.time)*180 + i*45f, Mathf.Sin(Time.time)*180 + i*45f);
 		}
 	}
 
