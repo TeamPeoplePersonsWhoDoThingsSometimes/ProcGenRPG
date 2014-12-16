@@ -34,4 +34,11 @@ public class Utility : MonoBehaviour {
 		return commonItemDrop;
 	}
 
+	public static GameObject GetUncommonItemDrop() {
+		if(uncommonItemDrop == null) {
+			uncommonItemDrop = (GameObject) Resources.Load("ItemDrops/UncommonItemDrop");
+		}
+		return uncommonItemDrop;
+	}
+
 }

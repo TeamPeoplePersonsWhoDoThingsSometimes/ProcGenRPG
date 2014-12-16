@@ -7,6 +7,7 @@ public class Player : MonoBehaviour {
 
 	public List<Item> inventory = new List<Item>();
 	public List<Item> quickAccessItems = new List<Item>();
+	public List<Enemy> attackedEnemies = new List<Enemy>();
 	private Weapon activeWeapon;
 	private Hack activeHack;
 	private GameObject weaponRef;

@@ -100,9 +100,16 @@ public class Enemy : MonoBehaviour {
 					case Rarity.Common:
 						temp = (GameObject)Instantiate(Utility.GetCommonItemDrop(), this.transform.position, Quaternion.identity);
 						break;
+					case Rarity.Uncommon:
+						temp = (GameObject)Instantiate(Utility.GetUncommonItemDrop(), this.transform.position, Quaternion.identity);
+						break;
 					}
 					if (temp != null) {
 						temp.GetComponent<ItemDropObject>().item = kvp.Key;
+						Weapon tempweapon = temp.GetComponent<ItemDropObject>().item.GetComponent<Weapon>();
+						if (tempweapon != null) {
+							tempweapon.version = version;
+						}
 					}
 					break;
 				}
@@ -184,6 +191,7 @@ public class Enemy : MonoBehaviour {
 			hp -= damage;
 			temp.GetComponent<TextMesh>().text = "" + damage;
 		}
+		PlayerCanvas.RegisterEnemyHealthBar(this.gameObject);
 	}
 
 	void OnTriggerEnter(Collider other){

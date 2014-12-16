@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerCanvas : MonoBehaviour {
 
 	public Sprite common, uncommon, rare, anomaly;
+
+	public static List<GameObject> enemieswithhealthbars;
 
 	private Animator playerAnim;
 
@@ -38,6 +41,14 @@ public class PlayerCanvas : MonoBehaviour {
 	private RectTransform quickAccessBar, activeWeaponIcon, activeHackIcon;
 
 	private GameObject VRCursor;
+
+	private Image testEnemyHealthBarThing;
+
+	public static void RegisterEnemyHealthBar(GameObject enemy) {
+		if(!enemieswithhealthbars.Contains(enemy)) {
+			enemieswithhealthbars.Add(enemy);
+		}
+	}
 
 	// Use this for initialization
 	void Start () {
@@ -94,6 +105,9 @@ public class PlayerCanvas : MonoBehaviour {
 		activeWeaponIcon = GameObject.Find("ActiveWeaponIcon").GetComponent<RectTransform>();
 		activeHackIcon = GameObject.Find("ActiveHackIcon").GetComponent<RectTransform>();
 
+		testEnemyHealthBarThing = GameObject.Find("TestEnemyHealthBarThing").GetComponent<Image>();
+		enemieswithhealthbars = new List<GameObject>();
+
 		VRCursor = GameObject.Find("VRCursor");
 	}
 	
@@ -146,6 +160,11 @@ public class PlayerCanvas : MonoBehaviour {
 				}
 				quickAccessBar.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = playerRef.quickAccessItems[i].icon;
 			}
+		}
+
+		foreach (GameObject g in enemieswithhealthbars) {
+			Vector3 tempPos = mainCam.camera.WorldToViewportPoint(g.transform.position);
+			testEnemyHealthBarThing.rectTransform.anchoredPosition = new Vector2(11.612f*tempPos.x, -6.53f*(1-tempPos.y));
 		}
 
 
