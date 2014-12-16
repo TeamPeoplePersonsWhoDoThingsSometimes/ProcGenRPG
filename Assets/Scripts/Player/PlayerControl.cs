@@ -14,15 +14,19 @@ public class PlayerControl : MonoBehaviour {
 	private static Transform camTransform;
 
 	private static Player playerref;
-
+	
+	private static LineRenderer rangedIndicator;
+	
 	public static bool PLAYINGWITHOCULUS;
-
+	
 	// Use this for initialization
 	void Start () {
 		playerAnim = this.GetComponent<Animator>();
 		playerref = this.GetComponent<Player>();
+		rangedIndicator = GameObject.Find("RangedAimIndicator").GetComponent<LineRenderer>();
 		camTransform = transform.parent.GetChild(1).transform;
 		PLAYINGWITHOCULUS = transform.parent.gameObject.name.Equals("OculusPlayer");
+		rangedIndicator.enabled = false;
 	}
 	
 	// Update is called once per frame
@@ -53,7 +57,7 @@ public class PlayerControl : MonoBehaviour {
 		}
 
 		/***** Running functionality ****/
-		if(playerAnim.GetFloat("Speed") > 0.5 && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))) {
+		if(playerAnim.GetFloat("Speed") > 0.5f && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))) {
 			if(playerAnim.speed < 1.5f) {
 				playerAnim.speed += Time.deltaTime/2f;
 			}
@@ -65,7 +69,7 @@ public class PlayerControl : MonoBehaviour {
 
 
 		/**** Simple front collision handler *****/
-		if(playerAnim.GetFloat("Speed") > 0.5) {
+		if(playerAnim.GetFloat("Speed") > 0.5f) {
 			RaycastHit info = new RaycastHit();
 			if(Physics.Raycast(new Ray(this.transform.position + new Vector3(0f, 1f, 0f), this.transform.forward), out info, playerAnim.GetFloat("Speed")*1.5f)) {
 				if(!info.collider.gameObject.name.Equals("Byte")) {
@@ -111,13 +115,18 @@ public class PlayerControl : MonoBehaviour {
 				}
 			} else if (playerref.GetWeapon() != null && !playerref.GetWeapon().IsMelee()) {
 				if (Input.GetMouseButtonDown(0)) {
+					if(playerAnim.GetFloat("Speed") < 0.2f) {
+						rangedIndicator.enabled = true;
+					}
 					playerAnim.SetBool("DrawArrow", true);
 				} else if (Input.GetMouseButtonUp(0)) {
+					rangedIndicator.enabled = false;
 					playerAnim.SetBool("DrawArrow", false);
 					playerAnim.SetBool("ShootBow", true);
 				}
 
 				if(!Input.GetMouseButton(0)) {
+					rangedIndicator.enabled = false;
 					playerAnim.SetBool("DrawArrow", false);
 				}
 			}

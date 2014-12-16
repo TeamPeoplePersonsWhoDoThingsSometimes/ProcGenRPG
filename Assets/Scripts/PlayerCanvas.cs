@@ -163,8 +163,10 @@ public class PlayerCanvas : MonoBehaviour {
 		}
 
 		foreach (GameObject g in enemieswithhealthbars) {
-			Vector3 tempPos = mainCam.camera.WorldToViewportPoint(g.transform.position);
-			testEnemyHealthBarThing.rectTransform.anchoredPosition = new Vector2(11.612f*tempPos.x, -6.53f*(1-tempPos.y));
+			if(g != null) {
+				Vector3 tempPos = mainCam.camera.WorldToViewportPoint(g.transform.position);
+				testEnemyHealthBarThing.rectTransform.anchoredPosition = new Vector2(11.612f*tempPos.x, -6.53f*(1-tempPos.y));
+			}
 		}
 
 
