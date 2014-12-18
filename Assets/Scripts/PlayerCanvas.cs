@@ -9,6 +9,8 @@ public class PlayerCanvas : MonoBehaviour {
 
 	public static List<GameObject> enemieswithhealthbars;
 
+	public GameObject enemyhealthbarprefab;
+
 	private Animator playerAnim;
 
 	private Player playerRef;
@@ -42,7 +44,7 @@ public class PlayerCanvas : MonoBehaviour {
 
 	private GameObject VRCursor;
 
-	private Image testEnemyHealthBarThing;
+	private GameObject enemyHealthBars;
 
 	public static void RegisterEnemyHealthBar(GameObject enemy) {
 		if(!enemieswithhealthbars.Contains(enemy)) {
@@ -105,7 +107,7 @@ public class PlayerCanvas : MonoBehaviour {
 		activeWeaponIcon = GameObject.Find("ActiveWeaponIcon").GetComponent<RectTransform>();
 		activeHackIcon = GameObject.Find("ActiveHackIcon").GetComponent<RectTransform>();
 
-		testEnemyHealthBarThing = GameObject.Find("TestEnemyHealthBarThing").GetComponent<Image>();
+		enemyHealthBars = GameObject.Find("EnemyHealthBars");
 		enemieswithhealthbars = new List<GameObject>();
 
 		VRCursor = GameObject.Find("VRCursor");
@@ -142,18 +144,17 @@ public class PlayerCanvas : MonoBehaviour {
 						quickAccessBar.transform.GetChild(i).GetComponent<Image>().sprite = common;
 						break;
 					case Rarity.Uncommon:
-						quickAccessBar.transform.GetChild(i).GetComponent<Image>().overrideSprite = uncommon;
+						quickAccessBar.transform.GetChild(i).GetComponent<Image>().sprite = uncommon;
 						break;
 					case Rarity.Rare:
-						quickAccessBar.transform.GetChild(i).GetComponent<Image>().overrideSprite = rare;
+						quickAccessBar.transform.GetChild(i).GetComponent<Image>().sprite = rare;
 						break;
 					case Rarity.Anomaly:
-						quickAccessBar.transform.GetChild(i).GetComponent<Image>().overrideSprite = anomaly;
+						quickAccessBar.transform.GetChild(i).GetComponent<Image>().sprite = anomaly;
 						break;
 				}
 				if(playerRef.GetWeapon().Equals(playerRef.quickAccessItems[i])) {
 					activeWeaponIcon.SetParent(quickAccessBar.GetChild(i), false);
-//					activeWeaponIcon.GetComponent<RectTransform>().anchoredPosition = new Vector2();
 				}
 				if(playerRef.GetHack().Equals(playerRef.quickAccessItems[i])) {
 					activeHackIcon.SetParent(quickAccessBar.GetChild(i), false);
@@ -164,10 +165,14 @@ public class PlayerCanvas : MonoBehaviour {
 
 		foreach (GameObject g in enemieswithhealthbars) {
 			if(g != null) {
-				Vector3 tempPos = mainCam.camera.WorldToViewportPoint(g.transform.position);
-				testEnemyHealthBarThing.rectTransform.anchoredPosition = new Vector2(11.612f*tempPos.x, -6.53f*(1-tempPos.y));
+				GameObject temp = (GameObject) Instantiate(enemyhealthbarprefab, Vector3.zero, Quaternion.identity);
+				temp.SetActive(true);
+				temp.GetComponent<RectTransform>().SetParent(enemyHealthBars.GetComponent<RectTransform>(),false);
+				temp.GetComponent<EnemyHealthBar>().trackingEnemy = g;
 			}
 		}
+
+		enemieswithhealthbars.Clear();
 
 
 		if(VRCursor != null) {
