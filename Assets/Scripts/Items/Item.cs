@@ -11,4 +11,5 @@ public class Item : MonoBehaviour {
 	public Sprite icon;
 
 	public Rarity RarityVal;
+
 }

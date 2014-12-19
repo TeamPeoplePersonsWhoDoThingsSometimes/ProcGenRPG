@@ -52,6 +52,9 @@ public class Attack : MonoBehaviour {
 				Destroy(this.gameObject);
 			}
 		}
+		if (other.GetComponent<Player>() == null && other.GetComponent<Enemy>() == null && destroyOnImpact) {
+			Destroy(this.gameObject);
+		}
 	}
 
 //	public void MultiplyDamage(int damageMod) {

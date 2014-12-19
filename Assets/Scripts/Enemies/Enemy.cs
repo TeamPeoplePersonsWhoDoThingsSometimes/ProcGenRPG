@@ -71,6 +71,8 @@ public class Enemy : MonoBehaviour {
 				itemDrops.Add(possibleItemDrops[i], possibleItemDropsChance[i]);
 			}
 		}
+
+		PlayerCanvas.RegisterEnemyHealthBar(this.gameObject);
 	}
 
 	public string GetVersion() {
@@ -191,7 +193,6 @@ public class Enemy : MonoBehaviour {
 			hp -= damage;
 			temp.GetComponent<TextMesh>().text = "" + damage;
 		}
-		PlayerCanvas.RegisterEnemyHealthBar(this.gameObject);
 	}
 
 	void OnTriggerEnter(Collider other){

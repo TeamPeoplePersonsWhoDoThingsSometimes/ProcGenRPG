@@ -7,7 +7,6 @@ public class Player : MonoBehaviour {
 
 	public List<Item> inventory = new List<Item>();
 	public List<Item> quickAccessItems = new List<Item>();
-	public List<Enemy> attackedEnemies = new List<Enemy>();
 	private Weapon activeWeapon;
 	private Hack activeHack;
 	private GameObject weaponRef;
@@ -36,6 +35,12 @@ public class Player : MonoBehaviour {
 		integrity = maxIntegrity;
 		rma = maxrma;
 
+//		GameObject temp = (GameObject)Instantiate (inventory [0].gameObject);
+//		activeWeapon = temp.GetComponent<Weapon> ();
+		
+//		temp = (GameObject)Instantiate (inventory [1].gameObject);
+//		activeHack = temp.GetComponent<Hack> ();
+
 		activeWeapon = (Weapon)inventory[0];
 		activeHack = (Hack)inventory[1];
 
@@ -43,6 +48,11 @@ public class Player : MonoBehaviour {
 		weaponRef = GameObject.Find("PlayerWeaponObj");
 		playerPos = transform;
 		bytesToNextVersion = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*levelUpSpeedScale;
+
+//		activeWeapon.gameObject.transform.parent = weaponRef.transform;
+//		activeWeapon.gameObject.transform.localPosition = Vector3.zero;
+//		activeWeapon.gameObject.transform.localEulerAngles = Vector3.zero;
+//		activeWeapon.gameObject.transform.localScale = Vector3.one;
 	}
 	
 	// Update is called once per frame
