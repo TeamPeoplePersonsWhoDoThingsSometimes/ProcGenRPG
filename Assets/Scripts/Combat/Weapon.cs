@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum WeaponType {
+	Melee,
+	Bow,
+	Gun
+}
+
 public class Weapon : Item {
 
 	protected Attack attack;
@@ -14,7 +20,7 @@ public class Weapon : Item {
 	public float attackSpeed;
 	protected float thisDamage;
 	protected float thisKnockback;
-	protected bool isMelee;
+	protected WeaponType weaponType;
 
 	protected bool isAttacking = false;
 	protected int bytes;
@@ -33,10 +39,6 @@ public class Weapon : Item {
 		while (bytes > bytesToLevelUp) {
 			LevelUp();
 		}
-	}
-
-	public bool IsMelee() {
-		return isMelee;
 	}
 
 	public GameObject GetAttack() {
@@ -92,8 +94,12 @@ public class Weapon : Item {
 		bytes += val;
 	}
 
+	public WeaponType Type() {
+		return weaponType;
+	}
+
 	public string InfoString() {
-		return "Type: " + (isMelee ? "Melee" : "Ranged") +
+		return "Type: " + Type() +
 		"\nRarity: " + this.RarityVal +
 		"\nBase Damage: " + thisDamage.ToString("F2") +
 		"\nKnockback: " + knockback.ToString("F2") +

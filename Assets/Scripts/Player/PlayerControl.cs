@@ -98,7 +98,7 @@ public class PlayerControl : MonoBehaviour {
 
 		/**** Handling attacking ****/
 		if(!PlayerCanvas.inConsole) {
-			if (playerref.GetWeapon() != null && playerref.GetWeapon().IsMelee()) {
+			if (playerref.GetWeapon() != null && playerref.GetWeapon().Type().Equals(WeaponType.Melee)) {
 				if (Input.GetMouseButtonDown(0) && comboTime && !attack1 && attack2) {
 					playerAnim.SetBool("Slash3", true);
 					comboTime = false;
@@ -113,7 +113,7 @@ public class PlayerControl : MonoBehaviour {
 					playerAnim.SetBool("Slash1", true);
 					comboTime = false;
 				}
-			} else if (playerref.GetWeapon() != null && !playerref.GetWeapon().IsMelee()) {
+			} else if (playerref.GetWeapon() != null && playerref.GetWeapon().Type().Equals(WeaponType.Bow)) {
 				if (Input.GetMouseButtonDown(0)) {
 					if(playerAnim.GetFloat("Speed") < 0.2f) {
 						rangedIndicator.enabled = true;

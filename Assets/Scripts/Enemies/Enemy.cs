@@ -10,14 +10,17 @@ public class Enemy : MonoBehaviour {
 	public GameObject enemyAttack;
 	public float baseAttackSpeed;
 	public float baseAttackDamage;
+	public float baseHealthRegen;
 	public string maxVersion;
 	public string minVersion;
 	public float healthScale = 1f;
 	public float attackScale = 1f;
 	public float attackSpeedScale = 1f;
+	public float healthRegenScale = 1f;
+
 
 	protected float tempAttackSpeed;
-	protected bool detectedPlayer;
+	protected bool detectedPlayer, retreating;
 	protected bool isBadass;
 	protected string version;
 
@@ -42,6 +45,7 @@ public class Enemy : MonoBehaviour {
 			this.transform.GetChild(2).localScale /= 1.5f;
 			this.transform.GetChild(2).localPosition += new Vector3(0f, 1f);
 			this.maxHP *= 2;
+			this.baseHealthRegen *= 2;
 			this.name = "Badass " + name;
 		} else {
 			this.name = "Basic " + name;
@@ -60,6 +64,7 @@ public class Enemy : MonoBehaviour {
 		int versionInt = Random.Range(Mathf.Min(Mathf.Max(minversionInt, Utility.VersionToInt(Player.version) - 5), maxversionInt),Mathf.Min(Utility.VersionToInt(Player.version) + 5, maxversionInt));
 		this.maxHP *= (int)((versionInt/100f)*(healthScale+1));
 		this.baseAttackDamage *= (versionInt/100f)*(attackScale+1);
+		this.baseHealthRegen *= (versionInt/100f)*(healthRegenScale+1);
 		this.baseAttackSpeed /= (versionInt/100f)*(attackSpeedScale+1);
 		this.version = Utility.IntToVersion(versionInt);
 		hp = maxHP;
@@ -85,6 +90,7 @@ public class Enemy : MonoBehaviour {
 	
 	// Update is called once per frame
 	protected void Update () {
+		/*** Death ****/
 		if (hp <= 0) {
 			int tempByteVal = (int)maxHP*1000;
 			int curByteVal = 0;
@@ -95,6 +101,7 @@ public class Enemy : MonoBehaviour {
 				curByteVal += byteVal;
 			}
 
+			/***** Handles item drops *****/
 			foreach(KeyValuePair<GameObject, float> kvp in itemDrops) {
 				if(Random.value < kvp.Value) {
 					GameObject temp = null;
@@ -125,19 +132,34 @@ public class Enemy : MonoBehaviour {
 			ActionEventInvoker.primaryInvoker.invokeAction(action);
 
 			Destroy(this.gameObject);
+		} else if (hp > maxHP) {
+			hp = maxHP;
 		}
 
+		/*** Handles knockback ***/
 		if (knockbackTime > 0) {
-			knockbackTime -= Time.deltaTime;
+			knockbackTime = 0;
 			Vector3 dir = transform.position - knockbackPos;
 			dir.y = 0f;
 //			rigidbody.AddForceAtPosition(dir*knockbackVal,knockbackPos, ForceMode.Impulse);
-			rigidbody.velocity = -transform.forward*knockbackVal;
+			rigidbody.velocity = dir*knockbackVal;
 		}
 
+		/*** Handles seeing the player ***/
 		RaycastHit hitinfo = new RaycastHit();
-		Debug.DrawRay(transform.position, transform.forward * 5f);
-		if(Physics.Raycast(transform.position, transform.forward,out hitinfo, 10f)) {
+		Ray r1 = new Ray(transform.position + transform.right, (transform.forward + transform.right)*20f);
+		Debug.DrawRay(r1.origin, r1.direction*10f);
+		Ray r2 = new Ray(transform.position - transform.right, (transform.forward + transform.right)*20f);
+		Debug.DrawRay(r2.origin, r2.direction*10f);
+		Ray r3 = new Ray(transform.position + transform.right, (transform.forward - transform.right)*20f);
+		Debug.DrawRay(r3.origin, r3.direction*10f);
+		Ray r4 = new Ray(transform.position - transform.right, (transform.forward - transform.right)*20f);
+		Debug.DrawRay(r4.origin, r4.direction*10f);
+		if(Physics.Raycast(transform.position, transform.forward,out hitinfo, 20f)
+		   || Physics.Raycast(r1, out hitinfo, 10f)
+		   || Physics.Raycast(r2, out hitinfo, 10f)
+		   || Physics.Raycast(r3, out hitinfo, 10f)
+		   || Physics.Raycast(r4, out hitinfo, 10f)) {
 			if(hitinfo.collider.gameObject.tag.Equals("Player")) {
 				detectedPlayer = true;
 			}
@@ -145,15 +167,18 @@ public class Enemy : MonoBehaviour {
 			DoIdle();
 		}
 
+		/*** Updates speed value in Mecanim ***/
 		GetComponent<Animator>().SetFloat("Speed", Vector3.Distance(transform.position, lastPos));
 
+		/*** Handles manual speed calculation since rigidbody.velocity doesn't work ***/
 		lastPos = transform.position;
 
-		if (detectedPlayer && Vector3.Distance(Player.playerPos.position, transform.position) > 3f) {
+		if (detectedPlayer && Vector3.Distance(Player.playerPos.position, transform.position) > 3f && !retreating) {
 			GetComponent<Animator>().SetTrigger("PlayerSpotted");
 			rigidbody.MovePosition(Vector3.MoveTowards(transform.position, Player.playerPos.position + new Vector3(0,1,0), 0.1f));
 			transform.LookAt(Player.playerPos.position + new Vector3(0,1,0));
-		} else if (Vector3.Distance(Player.playerPos.position, transform.position) <= 3f) {
+		} else if (detectedPlayer && Vector3.Distance(Player.playerPos.position, transform.position) <= 3f) {
+			transform.LookAt(Player.playerPos.position + new Vector3(0,1,0));
 			tempAttackSpeed -= Time.deltaTime;
 			if(tempAttackSpeed <= 0) {
 				GetComponent<Animator>().SetTrigger("Attack");
@@ -162,6 +187,36 @@ public class Enemy : MonoBehaviour {
 		} else {
 			tempAttackSpeed = baseAttackSpeed;
 		}
+
+		if(detectedPlayer) {
+			/*** Makes nearby enemies aware of your presence ***/
+			Collider[] nearbyColliders = Physics.OverlapSphere(transform.position, 10f);
+			foreach(Collider c in nearbyColliders) {
+				if(c.gameObject.GetComponent<Enemy>() != null) {
+					c.gameObject.GetComponent<Enemy>().AlertEnemy();
+				}
+			}
+//			Debug.Log(Vector3.Distance(Player.playerPos.position, transform.position));
+			if(Vector3.Distance(Player.playerPos.position, transform.position) > 30f) {
+				detectedPlayer = false;
+			}
+
+			/*** Handle retreating ***/
+			if(GetHealthPercentage() < 0.25f) {
+				retreating = true;
+				transform.LookAt(Player.playerPos.position + new Vector3(0,1,0));
+				transform.Rotate(new Vector3(0, 180, 0));
+				rigidbody.MovePosition(Vector3.MoveTowards(transform.position, transform.forward, 0.1f));
+			} else {
+				retreating = false;
+			}
+		}
+
+		hp += Time.deltaTime*baseHealthRegen/10f;
+	}
+
+	public void AlertEnemy() {
+		detectedPlayer = true;
 	}
 
 	void FixedUpdate () {

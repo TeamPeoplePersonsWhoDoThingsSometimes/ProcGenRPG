@@ -6,7 +6,7 @@ public class LightBow : Weapon {
 	// Use this for initialization
 	new void Start () {
 		base.Start();
-		isMelee = false;
+		weaponType = WeaponType.Bow;
 	}
 	
 	// Update is called once per frame
