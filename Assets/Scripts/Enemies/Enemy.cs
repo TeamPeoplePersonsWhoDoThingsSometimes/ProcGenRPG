@@ -215,8 +215,8 @@ public class Enemy : MonoBehaviour {
 			knockbackTime = 0;
 			Vector3 dir = transform.position - knockbackPos;
 			dir.y = 0f;
-			//			rigidbody.AddForceAtPosition(dir*knockbackVal,knockbackPos, ForceMode.Impulse);
-			rigidbody.velocity = dir*knockbackVal;
+			rigidbody.AddForceAtPosition(dir*knockbackVal,knockbackPos, ForceMode.VelocityChange);
+//			rigidbody.velocity = dir*knockbackVal;
 		}
 	}
 
