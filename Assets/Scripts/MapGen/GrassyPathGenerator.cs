@@ -49,7 +49,7 @@ public class GrassyPathGenerator : MapGenerator {
 		while(distance > 0) {
 			SpawnTile(cursorX, cursorZ, 0);
 			if(spawnedEnemy) {
-				SpawnEnemy(0, cursorX, cursorZ);
+				SpawnEnemy((int)(Random.value*tileSet.enemyTypes.Count), cursorX, cursorZ);
 			}
 			if (left && direction) {
 				// spawns a tile beside the one going left, to make the path 2 blocks wide

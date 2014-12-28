@@ -35,6 +35,8 @@ public class Enemy : MonoBehaviour {
 	private static GameObject hitInfo;
 	private static GameObject byteObject;
 
+	private float healthBarTime;
+
 	private Vector3 lastPos;
 
 	// Use this for initialization
@@ -90,6 +92,76 @@ public class Enemy : MonoBehaviour {
 	
 	// Update is called once per frame
 	protected void Update () {
+		healthBarTime -= Time.deltaTime;
+
+		HandleDeath();
+
+		HandleKnockback();
+
+		HandlePlayerDetection();
+
+		if(!detectedPlayer) {
+			DoIdle();
+		} else {
+			HandleDetectedPlayer();
+		}
+
+		/*** Updates speed value in Mecanim ***/
+		GetComponent<Animator>().SetFloat("Speed", Vector3.Distance(transform.position, lastPos));
+
+		/*** Handles manual speed calculation since rigidbody.velocity doesn't work ***/
+		lastPos = transform.position;
+
+		hp += Time.deltaTime*baseHealthRegen/10f;
+	}
+
+	protected virtual void HandleDetectedPlayer() {
+
+		/*** Makes nearby enemies aware of your presence ***/
+		Collider[] nearbyColliders = Physics.OverlapSphere(transform.position, 10f);
+		foreach(Collider c in nearbyColliders) {
+			if(c.gameObject.GetComponent<Enemy>() != null) {
+				c.gameObject.GetComponent<Enemy>().AlertEnemy();
+			}
+		}
+
+		/*** If player is too far and not in the line of sight, forget player ***/
+		RaycastHit hitinfo = new RaycastHit();
+		if(Vector3.Distance(Player.playerPos.position, transform.position) > 50f
+		   && !Physics.Raycast(transform.position, transform.forward,out hitinfo, 100f)
+		   && hitinfo.collider != null && hitinfo.collider.gameObject != null
+		   && hitinfo.collider.gameObject.tag.Equals("Player")) {
+			detectedPlayer = false;
+		}
+		
+		/*** Handle retreating ***/
+		if(GetHealthPercentage() < 0.25f) {
+			retreating = true;
+			transform.LookAt(Player.playerPos.position + new Vector3(0,1,0));
+			transform.Rotate(new Vector3(0, 180, 0));
+			rigidbody.MovePosition(Vector3.MoveTowards(transform.position, transform.right, 0.1f));
+		} else {
+			retreating = false;
+		}
+
+		/*** Handle Moving towards player and attacking ***/
+		if (Vector3.Distance(Player.playerPos.position, transform.position) > 3f && !retreating) {
+			GetComponent<Animator>().SetTrigger("PlayerSpotted");
+			rigidbody.MovePosition(Vector3.MoveTowards(transform.position, Player.playerPos.position + new Vector3(0,1,0), 0.1f));
+			transform.LookAt(Player.playerPos.position + new Vector3(0,1,0));
+		} else if (Vector3.Distance(Player.playerPos.position, transform.position) <= 3f && !retreating) {
+			transform.LookAt(Player.playerPos.position + new Vector3(0,1,0));
+			tempAttackSpeed -= Time.deltaTime;
+			if(tempAttackSpeed <= 0) {
+				GetComponent<Animator>().SetTrigger("Attack");
+				tempAttackSpeed = baseAttackSpeed;
+			}
+		} else {
+			tempAttackSpeed = baseAttackSpeed;
+		}
+	}
+
+	protected virtual void HandleDeath() {
 		/*** Death ****/
 		if (hp <= 0) {
 			int tempByteVal = (int)maxHP*1000;
@@ -100,7 +172,7 @@ public class Enemy : MonoBehaviour {
 				tmp.GetComponent<Byte>().val = byteVal;
 				curByteVal += byteVal;
 			}
-
+			
 			/***** Handles item drops *****/
 			foreach(KeyValuePair<GameObject, float> kvp in itemDrops) {
 				if(Random.value < kvp.Value) {
@@ -123,38 +195,42 @@ public class Enemy : MonoBehaviour {
 					break;
 				}
 			}
-
+			
 			//We should figure out how to handle death in a way that more closely ties player attacks to the death of the enemy
 			//to provide for more complex action tracking capailities, also, I'll move this into the backend
 			//when I move everything else that should be in the model as well
 			DirectObject obj = new DirectObject("N/A", name);
 			PlayerAction action = new PlayerAction(obj, ActionType.KILL);
 			ActionEventInvoker.primaryInvoker.invokeAction(action);
-
+			
 			Destroy(this.gameObject);
 		} else if (hp > maxHP) {
 			hp = maxHP;
 		}
+	}
 
+	protected virtual void HandleKnockback() {
 		/*** Handles knockback ***/
 		if (knockbackTime > 0) {
 			knockbackTime = 0;
 			Vector3 dir = transform.position - knockbackPos;
 			dir.y = 0f;
-//			rigidbody.AddForceAtPosition(dir*knockbackVal,knockbackPos, ForceMode.Impulse);
+			//			rigidbody.AddForceAtPosition(dir*knockbackVal,knockbackPos, ForceMode.Impulse);
 			rigidbody.velocity = dir*knockbackVal;
 		}
+	}
 
+	protected virtual void HandlePlayerDetection() {
 		/*** Handles seeing the player ***/
 		RaycastHit hitinfo = new RaycastHit();
 		Ray r1 = new Ray(transform.position + transform.right, (transform.forward + transform.right)*20f);
-		Debug.DrawRay(r1.origin, r1.direction*10f);
+//		Debug.DrawRay(r1.origin, r1.direction*10f);
 		Ray r2 = new Ray(transform.position - transform.right, (transform.forward + transform.right)*20f);
-		Debug.DrawRay(r2.origin, r2.direction*10f);
+//		Debug.DrawRay(r2.origin, r2.direction*10f);
 		Ray r3 = new Ray(transform.position + transform.right, (transform.forward - transform.right)*20f);
-		Debug.DrawRay(r3.origin, r3.direction*10f);
+//		Debug.DrawRay(r3.origin, r3.direction*10f);
 		Ray r4 = new Ray(transform.position - transform.right, (transform.forward - transform.right)*20f);
-		Debug.DrawRay(r4.origin, r4.direction*10f);
+//		Debug.DrawRay(r4.origin, r4.direction*10f);
 		if(Physics.Raycast(transform.position, transform.forward,out hitinfo, 20f)
 		   || Physics.Raycast(r1, out hitinfo, 10f)
 		   || Physics.Raycast(r2, out hitinfo, 10f)
@@ -163,56 +239,7 @@ public class Enemy : MonoBehaviour {
 			if(hitinfo.collider.gameObject.tag.Equals("Player")) {
 				detectedPlayer = true;
 			}
-		} else {
-			DoIdle();
 		}
-
-		/*** Updates speed value in Mecanim ***/
-		GetComponent<Animator>().SetFloat("Speed", Vector3.Distance(transform.position, lastPos));
-
-		/*** Handles manual speed calculation since rigidbody.velocity doesn't work ***/
-		lastPos = transform.position;
-
-		if (detectedPlayer && Vector3.Distance(Player.playerPos.position, transform.position) > 3f && !retreating) {
-			GetComponent<Animator>().SetTrigger("PlayerSpotted");
-			rigidbody.MovePosition(Vector3.MoveTowards(transform.position, Player.playerPos.position + new Vector3(0,1,0), 0.1f));
-			transform.LookAt(Player.playerPos.position + new Vector3(0,1,0));
-		} else if (detectedPlayer && Vector3.Distance(Player.playerPos.position, transform.position) <= 3f) {
-			transform.LookAt(Player.playerPos.position + new Vector3(0,1,0));
-			tempAttackSpeed -= Time.deltaTime;
-			if(tempAttackSpeed <= 0) {
-				GetComponent<Animator>().SetTrigger("Attack");
-				tempAttackSpeed = baseAttackSpeed;
-			}
-		} else {
-			tempAttackSpeed = baseAttackSpeed;
-		}
-
-		if(detectedPlayer) {
-			/*** Makes nearby enemies aware of your presence ***/
-			Collider[] nearbyColliders = Physics.OverlapSphere(transform.position, 10f);
-			foreach(Collider c in nearbyColliders) {
-				if(c.gameObject.GetComponent<Enemy>() != null) {
-					c.gameObject.GetComponent<Enemy>().AlertEnemy();
-				}
-			}
-//			Debug.Log(Vector3.Distance(Player.playerPos.position, transform.position));
-			if(Vector3.Distance(Player.playerPos.position, transform.position) > 30f) {
-				detectedPlayer = false;
-			}
-
-			/*** Handle retreating ***/
-			if(GetHealthPercentage() < 0.25f) {
-				retreating = true;
-				transform.LookAt(Player.playerPos.position + new Vector3(0,1,0));
-				transform.Rotate(new Vector3(0, 180, 0));
-				rigidbody.MovePosition(Vector3.MoveTowards(transform.position, transform.forward, 0.1f));
-			} else {
-				retreating = false;
-			}
-		}
-
-		hp += Time.deltaTime*baseHealthRegen/10f;
 	}
 
 	public void AlertEnemy() {
@@ -237,10 +264,14 @@ public class Enemy : MonoBehaviour {
 	}
 
 	public void GetDamaged(float damage, bool crit) {
+		healthBarTime = 2f;
 		GetComponent<Animator>().SetTrigger("Hurt");
-		detectedPlayer = true;
 		GameObject temp = (GameObject)Instantiate(hitInfo,this.transform.position, hitInfo.transform.rotation);
-		if (crit) {
+		if (!detectedPlayer) {
+			hp -= damage*4;
+			temp.GetComponent<TextMesh>().renderer.material.color = Color.blue;
+			temp.GetComponent<TextMesh>().text = "*" + damage*4 + "*";
+		} else if (crit) {
 			hp -= damage*2;
 			temp.GetComponent<TextMesh>().renderer.material.color = Color.yellow;
 			temp.GetComponent<TextMesh>().text = "" + damage*2 + "!";
@@ -248,6 +279,7 @@ public class Enemy : MonoBehaviour {
 			hp -= damage;
 			temp.GetComponent<TextMesh>().text = "" + damage;
 		}
+		detectedPlayer = true;
 	}
 
 	void OnTriggerEnter(Collider other){
@@ -261,6 +293,10 @@ public class Enemy : MonoBehaviour {
 
 	public float GetHealthPercentage() {
 		return hp/maxHP;
+	}
+
+	public bool ShowHealthbar() {
+		return healthBarTime > 0;
 	}
 
 }

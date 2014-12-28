@@ -47,6 +47,9 @@ public class PlayerCanvas : MonoBehaviour {
 	private GameObject enemyHealthBars;
 
 	public static void RegisterEnemyHealthBar(GameObject enemy) {
+		if(enemieswithhealthbars == null) {
+			enemieswithhealthbars = new List<GameObject>();
+		}
 		if(!enemieswithhealthbars.Contains(enemy)) {
 			enemieswithhealthbars.Add(enemy);
 		}
@@ -108,7 +111,6 @@ public class PlayerCanvas : MonoBehaviour {
 		activeHackIcon = GameObject.Find("ActiveHackIcon").GetComponent<RectTransform>();
 
 		enemyHealthBars = GameObject.Find("EnemyHealthBars");
-		enemieswithhealthbars = new List<GameObject>();
 
 		VRCursor = GameObject.Find("VRCursor");
 	}

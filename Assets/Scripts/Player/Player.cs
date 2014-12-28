@@ -108,13 +108,6 @@ public class Player : MonoBehaviour {
 		if(quickAccessItems.Count >= val + 1) {
 			if(quickAccessItems[val].GetType().IsSubclassOf(typeof(Weapon))) { 
 				activeWeapon = (Weapon)quickAccessItems[val];
-//				Destroy(activeWeapon.gameObject);
-//				GameObject temp = (GameObject) Instantiate(quickAccessItems[val].gameObject);
-//				activeWeapon = temp.GetComponent<Weapon>();
-//				activeWeapon.transform.parent = weaponRef.transform;
-//				activeWeapon.transform.localPosition = Vector3.zero;
-//				activeWeapon.transform.localEulerAngles = Vector3.zero;
-//				activeWeapon.transform.localScale = Vector3.one;
 				for(int i = 0; i < playerInventoryRef.transform.childCount; i++) {
 					if(playerInventoryRef.transform.GetChild(i).GetComponent<Weapon>() != null
 					   && playerInventoryRef.transform.GetChild(i).GetComponent<Weapon>().Equals(activeWeapon)) {
