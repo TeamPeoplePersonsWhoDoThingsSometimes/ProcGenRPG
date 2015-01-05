@@ -15,7 +15,7 @@ public class Byte : MonoBehaviour {
 			playerRef = GameObject.Find("PlayerObj").GetComponent<Player>();
 		}
 
-		float scale = Mathf.Min(0.0002f*val, 0.4f);
+		float scale = Mathf.Clamp(val*0.00001f,0.0000001f,1f); 
 		this.transform.localScale = new Vector3(scale, scale, scale);
 	}
 	

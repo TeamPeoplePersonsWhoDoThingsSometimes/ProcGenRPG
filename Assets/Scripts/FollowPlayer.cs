@@ -4,6 +4,7 @@ using System.Collections;
 public class FollowPlayer : MonoBehaviour {
 
 	public static float rotate;
+	public static bool locked = false;
 
 	private Vector3 offset;
 	private Transform centerCamRef;
@@ -42,7 +43,9 @@ public class FollowPlayer : MonoBehaviour {
 			}
 		}
 
-		transform.parent.position = Vector3.MoveTowards(transform.parent.position, Player.playerPos.position, 50*Time.deltaTime);
+		if (!locked) {
+			transform.parent.position = Vector3.MoveTowards(transform.parent.position, Player.playerPos.position, 50*Time.deltaTime);
+		}
 
 //		this.transform.LookAt(Player.playerPos);
 	}

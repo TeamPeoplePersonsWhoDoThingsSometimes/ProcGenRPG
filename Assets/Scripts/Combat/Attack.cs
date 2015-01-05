@@ -1,6 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum Effect {
+	None,
+	Deteriorating,
+	Slow,
+	Stun
+}
+
 public class Attack : MonoBehaviour {
 
 	private float thisDamage;
@@ -12,6 +19,10 @@ public class Attack : MonoBehaviour {
 	public float duration;
 	public bool destroyOnImpact;
 	public GameObject hitObject;
+	public Effect attackEffect;
+	public float attackEffectChance;
+	public float attackEffectValue;
+	public float attackEffectTime;
 
 	// Use this for initialization
 	protected void Start () {
@@ -29,6 +40,9 @@ public class Attack : MonoBehaviour {
 				other.GetComponent<Enemy>().GetDamaged(Mathf.CeilToInt(thisDamage), Random.value <= critChance); 
 			} else {
 				other.GetComponent<Enemy>().GetDamaged(Mathf.FloorToInt(thisDamage), Random.value <= critChance); 
+			}
+			if (Random.value < attackEffectChance) {
+				other.GetComponent<Enemy>().GetDamaged(attackEffect, attackEffectValue, attackEffectTime);
 			}
 			other.GetComponent<Enemy>().DoKnockback(this.transform.position, knockback);
 			if(hitObject != null) {

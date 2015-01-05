@@ -99,10 +99,25 @@ public class Weapon : Item {
 	}
 
 	public string InfoString() {
-		return "Type: " + Type() +
-		"\nRarity: " + this.RarityVal +
-		"\nBase Damage: " + thisDamage.ToString("F2") +
-		"\nKnockback: " + knockback.ToString("F2") +
-		"\nCrit Chance: " + critChance.ToString("F2");
+		string forreturn = "Type: " + Type() +
+				"\nRarity: " + this.RarityVal +
+				"\nBase Damage: " + thisDamage.ToString("F2") +
+				"\nKnockback: " + knockback.ToString("F2") +
+				"\nCrit Chance: " + critChance.ToString("F2");
+
+		if(GetAttack().GetComponent<Attack>().attackEffect != Effect.None) {
+
+			forreturn += "\nEffect: " + GetAttack().GetComponent<Attack>().attackEffect;
+
+			if(GetAttack().GetComponent<Attack>().attackEffect == Effect.Deteriorating) {
+				forreturn += " - " + GetAttack().GetComponent<Attack>().attackEffectChance*100f + "% chance of " + 
+					GetAttack().GetComponent<Attack>().attackEffectValue + " damage for " +
+						GetAttack().GetComponent<Attack>().attackEffectTime + " secs";
+			} else {
+				forreturn += " - for " + GetAttack().GetComponent<Attack>().attackEffectTime + " secs";
+			}
+		}
+
+		return forreturn;
 	}
 }

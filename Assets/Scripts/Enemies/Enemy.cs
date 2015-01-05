@@ -18,6 +18,9 @@ public class Enemy : MonoBehaviour {
 	public float attackSpeedScale = 1f;
 	public float healthRegenScale = 1f;
 
+	public Effect currentEffect;
+	private float effectTime;
+	private float effectValue;
 
 	protected float tempAttackSpeed;
 	protected bool detectedPlayer, retreating;
@@ -79,6 +82,8 @@ public class Enemy : MonoBehaviour {
 			}
 		}
 
+		currentEffect = Effect.None;
+
 		PlayerCanvas.RegisterEnemyHealthBar(this.gameObject);
 	}
 
@@ -106,6 +111,8 @@ public class Enemy : MonoBehaviour {
 			HandleDetectedPlayer();
 		}
 
+		HandleEffect();
+
 		/*** Updates speed value in Mecanim ***/
 		GetComponent<Animator>().SetFloat("Speed", Vector3.Distance(transform.position, lastPos));
 
@@ -115,8 +122,28 @@ public class Enemy : MonoBehaviour {
 		hp += Time.deltaTime*baseHealthRegen/10f;
 	}
 
-	protected virtual void HandleDetectedPlayer() {
+	protected virtual void HandleEffect() {
+		if(effectTime <= 0) {
+			currentEffect = Effect.None;
+		}
+		if(currentEffect != Effect.None) {
+			float prevEffectTime = effectTime;
+			effectTime -= Time.deltaTime;
+			if(currentEffect == Effect.Deteriorating
+			   && (int)effectTime < (int)prevEffectTime) {
+				GetDamaged(effectValue, false);
+				GameObject tempbyte = (GameObject) GameObject.Instantiate(Utility.GetByteObject(), transform.position, Quaternion.identity);
+				tempbyte.GetComponent<Byte>().val = (int)effectValue*100;
+			} else if (currentEffect == Effect.Slow) {
+				transform.position -= (transform.position - lastPos)/2f;
+			} else if (currentEffect == Effect.Stun) {
+				transform.position = lastPos;
+			}
+		}
+	}
 
+
+	protected virtual void HandleDetectedPlayer() {
 		/*** Makes nearby enemies aware of your presence ***/
 		Collider[] nearbyColliders = Physics.OverlapSphere(transform.position, 10f);
 		foreach(Collider c in nearbyColliders) {
@@ -139,7 +166,7 @@ public class Enemy : MonoBehaviour {
 			retreating = true;
 			transform.LookAt(Player.playerPos.position + new Vector3(0,1,0));
 			transform.Rotate(new Vector3(0, 180, 0));
-			rigidbody.MovePosition(Vector3.MoveTowards(transform.position, transform.right, 0.1f));
+			transform.Translate(new Vector3(transform.forward.x, 0f, transform.forward.z)*Time.deltaTime*2f, Space.World);
 		} else {
 			retreating = false;
 		}
@@ -253,7 +280,7 @@ public class Enemy : MonoBehaviour {
 
 	}
 
-	protected void DoIdle() {
+	protected virtual void DoIdle() {
 		rigidbody.MoveRotation(Quaternion.Euler(transform.eulerAngles + new Vector3(0,10*Time.deltaTime,0f)));
 	}
 
@@ -280,6 +307,12 @@ public class Enemy : MonoBehaviour {
 			temp.GetComponent<TextMesh>().text = "" + damage;
 		}
 		detectedPlayer = true;
+	}
+
+	public void GetDamaged(Effect attackEffect, float effectValue, float effectTime) {
+		this.effectTime = effectTime;
+		currentEffect = attackEffect;
+		this.effectValue = effectValue;
 	}
 
 	void OnTriggerEnter(Collider other){
