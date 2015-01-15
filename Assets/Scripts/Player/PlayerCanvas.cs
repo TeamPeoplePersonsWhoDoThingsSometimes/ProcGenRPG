@@ -165,16 +165,17 @@ public class PlayerCanvas : MonoBehaviour {
 			}
 		}
 
-		foreach (GameObject g in enemieswithhealthbars) {
-			if(g != null) {
-				GameObject temp = (GameObject) Instantiate(enemyhealthbarprefab, Vector3.zero, Quaternion.identity);
-				temp.SetActive(true);
-				temp.GetComponent<RectTransform>().SetParent(enemyHealthBars.GetComponent<RectTransform>(),false);
-				temp.GetComponent<EnemyHealthBar>().trackingEnemy = g;
+		if(enemieswithhealthbars != null) {
+			foreach (GameObject g in enemieswithhealthbars) {
+				if(g != null) {
+					GameObject temp = (GameObject) Instantiate(enemyhealthbarprefab, Vector3.zero, Quaternion.identity);
+					temp.SetActive(true);
+					temp.GetComponent<RectTransform>().SetParent(enemyHealthBars.GetComponent<RectTransform>(),false);
+					temp.GetComponent<EnemyHealthBar>().trackingEnemy = g;
+				}
 			}
+			enemieswithhealthbars.Clear();
 		}
-
-		enemieswithhealthbars.Clear();
 
 
 		if(VRCursor != null) {
@@ -284,6 +285,16 @@ public class PlayerCanvas : MonoBehaviour {
 	public void HandleSecurityClick() {
 		Player.algorithmPoints--;
 		Player.security++;
+	}
+
+	public void InventoryClicked() {
+		GetComponent<Animator>().SetBool("ShowingInventory", true);
+		GetComponent<Animator>().SetBool("ShowingStats", false);
+	}
+
+	public void StatsClicked() {
+		GetComponent<Animator>().SetBool("ShowingInventory", false);
+		GetComponent<Animator>().SetBool("ShowingStats", true);
 	}
 
 }

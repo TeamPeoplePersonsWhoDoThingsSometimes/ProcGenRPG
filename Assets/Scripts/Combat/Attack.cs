@@ -25,12 +25,12 @@ public class Attack : MonoBehaviour {
 	public float attackEffectTime;
 
 	// Use this for initialization
-	protected void Start () {
+	protected virtual void Start () {
 
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	protected virtual void Update () {
 
 	}
 
@@ -66,7 +66,7 @@ public class Attack : MonoBehaviour {
 				Destroy(this.gameObject);
 			}
 		}
-		if (other.GetComponent<Player>() == null && other.GetComponent<Enemy>() == null && destroyOnImpact) {
+		if (other.GetComponent<Player>() == null && other.GetComponent<Enemy>() == null && destroyOnImpact && !other.name.Equals(this.name)) {
 			Destroy(this.gameObject);
 		}
 	}

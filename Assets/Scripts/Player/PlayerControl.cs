@@ -154,17 +154,22 @@ public class PlayerControl : MonoBehaviour {
 		float screenX = Screen.width;
 		float screenY = Screen.height;
 		float angle;
-		if (mousePosY < screenY/2) {
-			angle = Mathf.Rad2Deg * Mathf.Atan(((mousePosX/screenX*2) - 1)/((mousePosY/screenY*2) - 1)) + 180;
-		} else {
-			angle = Mathf.Rad2Deg * Mathf.Atan(((mousePosX/screenX*2) - 1)/((mousePosY/screenY*2) - 1));
-		}
-
-		if(!PLAYINGWITHOCULUS) {
+		if(playerAnim.GetFloat("Speed") < 0.1f) {
+			if (mousePosY < screenY/2) {
+				angle = Mathf.Rad2Deg * Mathf.Atan(((mousePosX/screenX*2) - 1)/((mousePosY/screenY*2) - 1)) + 180;
+			} else {
+				angle = Mathf.Rad2Deg * Mathf.Atan(((mousePosX/screenX*2) - 1)/((mousePosY/screenY*2) - 1));
+			}
 			transform.eulerAngles = new Vector3(0f, angle + camTransform.eulerAngles.y, 0f);
 		} else {
 			transform.eulerAngles = new Vector3(0f, camTransform.eulerAngles.y, 0f);
 		}
+
+//		if(!PLAYINGWITHOCULUS) {
+//			transform.eulerAngles = new Vector3(0f, angle + camTransform.eulerAngles.y, 0f);
+//		} else {
+//			transform.eulerAngles = new Vector3(0f, camTransform.eulerAngles.y, 0f);
+//		}
 
 		/** Other ways of handling looking **/
 		//transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new Vector3(0f, transform.eulerAngles.y + Input.GetAxis("Mouse X")*(2-playerAnim.GetFloat("Speed")), 0f)), 2000*Time.deltaTime);

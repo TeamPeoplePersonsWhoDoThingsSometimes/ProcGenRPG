@@ -23,6 +23,7 @@ public class Utility : MonoBehaviour {
 
 	public static string IntToVersion(int version) {
 		string versionString = version.ToString();
+		Debug.Log("Here: " + versionString);
 		string forreturn = versionString.Substring(0, 1) + "." + versionString.Substring(1, 1) + "." + versionString.Substring(2, 1);
 		return forreturn;
 	}

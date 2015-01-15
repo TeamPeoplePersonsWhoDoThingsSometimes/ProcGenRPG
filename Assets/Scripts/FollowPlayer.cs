@@ -7,6 +7,7 @@ public class FollowPlayer : MonoBehaviour {
 	public static bool locked = false;
 
 	private Vector3 offset;
+	private float rotateSpeed;
 	private Transform centerCamRef;
 	// Use this for initialization
 	void Start () {
@@ -26,12 +27,24 @@ public class FollowPlayer : MonoBehaviour {
 
 //		this.transform.position = Vector3.MoveTowards(this.transform.position, Player.playerPos.position + offset, Time.deltaTime*10f);
 		if (Input.GetKey(KeyCode.D)) {
+			if(rotateSpeed <= 100f) {
+				rotateSpeed = 100f;
+			}
 //			transform.parent.Rotate(Vector3.up, 100*Time.deltaTime, Space.World);
-			transform.parent.RotateAround(Player.playerPos.position, Player.playerPos.up, 100*Time.deltaTime);
+			rotateSpeed = Mathf.MoveTowards(rotateSpeed, 300, 100*Time.deltaTime);
+			transform.parent.RotateAround(Player.playerPos.position, Player.playerPos.up, rotateSpeed*Time.deltaTime);
 		}
 		if (Input.GetKey(KeyCode.A)) {
+			if(rotateSpeed >= -100f) {
+				rotateSpeed = -100f;
+			}
 //			transform.parent.Rotate(Vector3.up, -100*Time.deltaTime, Space.World);
-			transform.parent.RotateAround(Player.playerPos.position, Player.playerPos.up, -100*Time.deltaTime);
+			rotateSpeed = Mathf.MoveTowards(rotateSpeed, -300, 100*Time.deltaTime);
+			transform.parent.RotateAround(Player.playerPos.position, Player.playerPos.up, rotateSpeed*Time.deltaTime);
+		}
+
+		if(!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D)) {
+			rotateSpeed = 0;
 		}
 //
 		if(PlayerControl.PLAYINGWITHOCULUS) {

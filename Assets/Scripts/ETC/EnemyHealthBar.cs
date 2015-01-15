@@ -27,24 +27,30 @@ public class EnemyHealthBar : MonoBehaviour {
 			}
 
 			/*** Sets position and scale of healthbar on screenspace ***/
-			Vector3 tempPos = Camera.main.WorldToViewportPoint(trackingEnemy.transform.position);
-			float tempScale = Mathf.Clamp(15f/Vector3.Distance(Player.playerPos.position,trackingEnemy.transform.position), 1f, 1.75f);
-			this.GetComponent<RectTransform>().anchoredPosition = new Vector2(11.612f*tempPos.x - tempScale*0.7f, 0.5f-6.53f*(1-tempPos.y));
-			this.GetComponent<RectTransform>().localScale = new Vector3(tempScale, tempScale, tempScale);
-			this.transform.GetChild(3).GetComponent<RectTransform>().localScale = new Vector3(trackingEnemy.GetComponent<Enemy>().GetHealthPercentage(), 1,1);
+			if(trackingEnemy.GetComponent<Boss>() == null) {
+				Vector3 tempPos = Camera.main.WorldToViewportPoint(trackingEnemy.transform.position);
+				float tempScale = Mathf.Clamp(15f/Vector3.Distance(Player.playerPos.position,trackingEnemy.transform.position), 1f, 1.75f);
+				this.GetComponent<RectTransform>().anchoredPosition = new Vector2(13.62f*tempPos.x - tempScale*0.7f, 0.5f-7.4f*(1-tempPos.y));
+				this.GetComponent<RectTransform>().localScale = new Vector3(tempScale, tempScale, tempScale);
+				this.transform.GetChild(3).GetComponent<RectTransform>().localScale = new Vector3(trackingEnemy.GetComponent<Enemy>().GetHealthPercentage(), 1,1);
 
-			/*** Mouseover checking and opacity handling ***/
-			RaycastHit hitinfo = new RaycastHit();
-			if(trackingEnemy.GetComponent<Enemy>().ShowHealthbar()
-			   || (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitinfo, 2000000f)
-			   && hitinfo.collider != null && hitinfo.collider.gameObject != null
-			    && hitinfo.collider.gameObject.Equals(trackingEnemy))) {
-				this.GetComponent<CanvasGroup>().alpha = 1f;
-			} else {
-				this.GetComponent<CanvasGroup>().alpha -= Time.deltaTime;
-				if (this.GetComponent<CanvasGroup>().alpha <= 0.1f) {
-					this.GetComponent<CanvasGroup>().alpha = 0.1f;
+				/*** Mouseover checking and opacity handling ***/
+				RaycastHit hitinfo = new RaycastHit();
+				if(trackingEnemy.GetComponent<Enemy>().ShowHealthbar()
+				   || (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitinfo, 2000000f)
+				    && hitinfo.collider != null && hitinfo.collider.gameObject != null
+				    && hitinfo.collider.gameObject.Equals(trackingEnemy))) {
+					this.GetComponent<CanvasGroup>().alpha = 1f;
+				} else {
+					this.GetComponent<CanvasGroup>().alpha -= Time.deltaTime;
+					if (this.GetComponent<CanvasGroup>().alpha <= 0.1f) {
+						this.GetComponent<CanvasGroup>().alpha = 0.1f;
+					}
 				}
+			} else {
+				this.GetComponent<RectTransform>().anchoredPosition = new Vector2(4f,-0.4f);
+				this.GetComponent<RectTransform>().localScale = new Vector3(3.5f,3f,2f);
+				this.transform.GetChild(3).GetComponent<RectTransform>().localScale = new Vector3(trackingEnemy.GetComponent<Enemy>().GetHealthPercentage(), 1,1);
 			}
 
 			/*** Destroy healthbar if tracking enemy is null ***/

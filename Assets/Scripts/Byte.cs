@@ -15,7 +15,7 @@ public class Byte : MonoBehaviour {
 			playerRef = GameObject.Find("PlayerObj").GetComponent<Player>();
 		}
 
-		float scale = Mathf.Clamp(val*0.00001f,0.0000001f,1f); 
+		float scale = Mathf.Clamp(val*0.000001f,0.0000001f,1f); 
 		this.transform.localScale = new Vector3(scale, scale, scale);
 	}
 	
@@ -38,5 +38,9 @@ public class Byte : MonoBehaviour {
 			Destroy(this.gameObject);
 		}
 
+	}
+
+	void FixedUpdate() {
+		transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, 0.25f, 100f), transform.position.z);
 	}
 }
