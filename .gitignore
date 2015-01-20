@@ -61,3 +61,5 @@ $RECYCLE.BIN/
 *.msi
 *.msm
 *.msp
+
+Assets/OVR/Materials/GUIHUD.mat.meta
