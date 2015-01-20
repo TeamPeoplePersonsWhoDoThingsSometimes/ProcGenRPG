@@ -11,6 +11,11 @@ public class PlayerAction : Action {
 		this.action = action;
 	}
 
+	public PlayerAction(ActionProtocol protocol) {
+		action = protocol.Type;
+		obj = new DirectObject(protocol.Target);
+	}
+
 	public ActionType getActionType() {
 		return action;
 	}
@@ -18,4 +23,5 @@ public class PlayerAction : Action {
 	public DirectObject getDirectObject() {
 		return obj;
 	}
+	
 }

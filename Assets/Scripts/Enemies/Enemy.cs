@@ -34,6 +34,10 @@ public class Enemy : MonoBehaviour {
 
 	private Vector3 lastPos;
 
+	public DirectObject getDirectObject() {
+		return new DirectObject (name.Substring(name.IndexOf(" ") + 1), (isBadass? "Badass" : "Basic" ));
+	}
+
 	// Use this for initialization
 	protected void Start () {
 		if(Random.value < badassChance) {
@@ -108,12 +112,8 @@ public class Enemy : MonoBehaviour {
 				}
 			}
 
-			//We should figure out how to handle death in a way that more closely ties player attacks to the death of the enemy
-			//to provide for more complex action tracking capailities, also, I'll move this into the backend
-			//when I move everything else that should be in the model as well
-			DirectObject obj = new DirectObject("N/A", name);
-			PlayerAction action = new PlayerAction(obj, ActionType.KILL);
-			ActionEventInvoker.primaryInvoker.invokeAction(action);
+			//trigger kill event for this enemy
+			ActionEventInvoker.primaryInvoker.invokeAction(new PlayerAction(getDirectObject(), ActionType.KILL));
 
 			Destroy(this.gameObject);
 		}

@@ -45,8 +45,13 @@ public class Status : ActionEventListener {
 	/**
 	 * Privatize the constructor to revoke access per the singelton
 	 * implementation
+	 * 
+	 * Note: Base constructor is intentionally left out. Yes, this is generally
+	 * very bad practice, but in this case, the listener registration for Status is
+	 * handled by the invoker itself, and so to avoid double registration, the Status base
+	 * constructor should not be called.
 	 */
-	private Status() : base() {
+	private Status() {
 		recentActions = new Queue<Action> ();
 		enemiesKilled = new Dictionary<string, int> ();
 		visitedAreas = new List<string> ();
@@ -90,6 +95,7 @@ public class Status : ActionEventListener {
 			   recentAction.getDirectObject().getIdentifier().Equals(action.getDirectObject().getIdentifier()) &&
 			   recentAction.getDirectObject().getTypeIdentifier().Equals(action.getDirectObject().getTypeIdentifier()))
 				return true;
+			recentActions.Enqueue(recentAction);
 
 		}
 		return false;

@@ -10,5 +10,10 @@ public interface StatusCheckable {
 	/**
 	 * Is the status checked by this StatusCheckable met
 	 */
-	bool isStatusMet ();
+	bool isStatusMet (Action action);
+
+	/**
+	 * Set this status checkable with the information from the given protocol
+	 */
+	void setFromProtocol (StatusCheckableProtocol protocol);
 }

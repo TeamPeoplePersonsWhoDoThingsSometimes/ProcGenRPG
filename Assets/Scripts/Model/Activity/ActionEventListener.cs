@@ -4,12 +4,17 @@ using System.Collections;
 public abstract class ActionEventListener {
 
 	/**
-	 * The entire reason this is a virtual class instead of an interface
-	 * is that this constructor masks the hookup of onAction to the
-	 * ActionEventInvoker
+	 * Register this listener with the primary action event invoker
 	 */
-	public ActionEventListener() {
-		ActionEventInvoker.primaryInvoker.ActionEvent += new ActionEventHandler(onAction);
+	public void register() {
+		ActionEventInvoker.primaryInvoker.ActionEvent += onAction;
+	}
+
+	/**
+	 * Deregister this listener with the primary action event invoker
+	 */
+	public void deregister() {
+		ActionEventInvoker.primaryInvoker.ActionEvent -= onAction;
 	}
 
 	/**

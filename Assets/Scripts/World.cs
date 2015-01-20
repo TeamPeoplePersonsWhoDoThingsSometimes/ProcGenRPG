@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 
 public class World : MonoBehaviour {
 	
@@ -12,15 +13,22 @@ public class World : MonoBehaviour {
 	public static Area CurrentArea{get{return currentArea;}}
 	public static TileSet[] TileSets;
 
+	private static QuestListener questListener;
 	private static DataStorage data;
 	private static Area currentArea;
 	private static List<Area> notParents;
 
-
+	private const string builderDataStore = "./Assets/Resources/builder.data";
 
 	/*********************************
 	 * Public instance data, should be used for settings only
 	*********************************/
+
+	/*
+	 * When we move all the builders to external applications, we will get rid of this, but for we need this to provide data
+	 * to the quest builder about possible actions
+	 */
+	public bool generateBuilderDataOnLaunch;
 
 	public bool saveData;
 	public bool loadData;
@@ -117,23 +125,16 @@ public class World : MonoBehaviour {
 
 
 	/*********************************
-	 * Instance Methods
+	 * Instance Methods (actually, not instance anymore, but these are the ones that used to be instance anyway)
 	 *********************************/
 
 	// Use this for initialization
 	void Start () {
-		//INITIALIZE DUMMY QUEST, REMOVE NEXT LINES UP TO, BUT NOT INCLUDING, Map.Init() IF YOU ARE READING THIS
-		DirectObject obj = new DirectObject("N/A", "Basic EmberFox");
-		PlayerAction action = new PlayerAction(obj, ActionType.KILL);
-		ActionCheckable killEnemyStatus = new ActionCheckable(action);
-		Dictionary<StatusCheckable, bool>[] steps = new Dictionary<StatusCheckable, bool>[3];
-		steps[0] = new Dictionary<StatusCheckable, bool> ();
-		steps[1] = new Dictionary<StatusCheckable, bool> ();
-		steps[2] = new Dictionary<StatusCheckable, bool> ();
-		steps [0].Add (killEnemyStatus, false);
-		steps [1].Add (killEnemyStatus, false);
-		steps [2].Add (killEnemyStatus, false);
-		Quest q = new Quest (steps);
+		if (generateBuilderDataOnLaunch) {
+			generateBuilderData();
+		}
+
+		questListener = new QuestListener ();
 
 		Map.Init();
 		notParents = new List<Area>();
@@ -151,6 +152,31 @@ public class World : MonoBehaviour {
 			currentArea.Init();
 			Map.PrintMap();
 		}
+	}
+
+	/**
+	 * Generate the protobufs for the builder application with information about potential actions
+	 */
+	public void generateBuilderData() {
+		//first grab all enemy types from the tilesets stored in global
+		HashSet<Enemy> possibleEnemyTypes = new HashSet<Enemy> ();//hashet ensures distinct enemy types
+
+		foreach (TileSet t in tileSets) {
+			foreach (Enemy e in t.enemyTypes) {
+				possibleEnemyTypes.Add(e);
+			}
+		}
+
+		BuilderPackage.Builder builder = BuilderPackage.CreateBuilder ();
+		foreach (Enemy e in possibleEnemyTypes) {
+			builder.AddActions(e.getDirectObject().getDirectObjectAsProtobuf());
+		}
+
+		FileStream fs = new FileStream (builderDataStore, FileMode.OpenOrCreate);
+		BuilderPackage pack = builder.Build();
+		pack.WriteTo(fs);
+		fs.Flush();
+		fs.Close();
 	}
 
 	/**
