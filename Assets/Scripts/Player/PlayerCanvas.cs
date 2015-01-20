@@ -8,6 +8,7 @@ public class PlayerCanvas : MonoBehaviour {
 	public Sprite common, uncommon, rare, anomaly;
 
 	public static List<GameObject> enemieswithhealthbars;
+	public static bool updateInventoryUI;
 
 	public GameObject enemyhealthbarprefab;
 
@@ -45,6 +46,8 @@ public class PlayerCanvas : MonoBehaviour {
 	private GameObject VRCursor;
 
 	private GameObject enemyHealthBars;
+
+	private GameObject inventoryItemContainer;
 
 	public static void RegisterEnemyHealthBar(GameObject enemy) {
 		if(enemieswithhealthbars == null) {
@@ -113,6 +116,8 @@ public class PlayerCanvas : MonoBehaviour {
 		enemyHealthBars = GameObject.Find("EnemyHealthBars");
 
 		VRCursor = GameObject.Find("VRCursor");
+
+		inventoryItemContainer = GameObject.Find("InventoryItemContainer");
 	}
 	
 	// Update is called once per frame
@@ -138,23 +143,29 @@ public class PlayerCanvas : MonoBehaviour {
 		}
 	}
 
+	public static void UpdateInventory() {
+		updateInventoryUI = true;
+	}
+
+	private Sprite GetSprite(Rarity r) {
+		switch(r) {
+			case Rarity.Common:
+				return common;
+			case Rarity.Uncommon:
+				return uncommon;
+			case Rarity.Rare:
+				return rare;
+			case Rarity.Anomaly:
+				return anomaly;
+			default:
+				return common;
+		}
+	}
+
 	void Update () {
 		for(int i = 0; i < playerRef.quickAccessItems.Count; i++) {
 			if(playerRef.quickAccessItems[i] != null) {
-				switch(playerRef.quickAccessItems[i].RarityVal) {
-					case Rarity.Common:
-						quickAccessBar.transform.GetChild(i).GetComponent<Image>().sprite = common;
-						break;
-					case Rarity.Uncommon:
-						quickAccessBar.transform.GetChild(i).GetComponent<Image>().sprite = uncommon;
-						break;
-					case Rarity.Rare:
-						quickAccessBar.transform.GetChild(i).GetComponent<Image>().sprite = rare;
-						break;
-					case Rarity.Anomaly:
-						quickAccessBar.transform.GetChild(i).GetComponent<Image>().sprite = anomaly;
-						break;
-				}
+				quickAccessBar.transform.GetChild(i).GetComponent<Image>().sprite = GetSprite(playerRef.quickAccessItems[i].RarityVal);
 				if(playerRef.GetWeapon().Equals(playerRef.quickAccessItems[i])) {
 					activeWeaponIcon.SetParent(quickAccessBar.GetChild(i), false);
 				}
@@ -175,6 +186,28 @@ public class PlayerCanvas : MonoBehaviour {
 				}
 			}
 			enemieswithhealthbars.Clear();
+		}
+
+		if(updateInventoryUI) {
+			for (int i = 0; i < playerRef.inventory.Count; i++) {
+				inventoryItemContainer.transform.GetChild(i).GetComponent<Image>().sprite = GetSprite(playerRef.inventory[i].RarityVal);
+				inventoryItemContainer.transform.GetChild(i).GetComponent<Image>().color = Color.white;
+				inventoryItemContainer.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = playerRef.inventory[i].icon;
+				inventoryItemContainer.transform.GetChild(i).GetChild(0).GetComponent<Image>().color = Color.white;
+//				GameObject itembox = new GameObject();
+//				itembox.AddComponent<RectTransform>();
+//				itembox.GetComponent<RectTransform>().SetParent(inventoryItemContainer.transform);
+//				itembox.GetComponent<RectTransform>().anchorMax = new Vector2(1,1);
+//				itembox.GetComponent<RectTransform>().anchorMin = new Vector2(0,0);
+//				itembox.GetComponent<RectTransform>().pivot = new Vector2(0,1);
+//				itembox.GetComponent<RectTransform>().sizeDelta = new Vector2(-5.7f, -2.3f);
+//				itembox.GetComponent<RectTransform>().localPosition = Vector3.zero;
+//				itembox.GetComponent<RectTransform>().localRotation = Quaternion.identity;
+//				itembox.GetComponent<RectTransform>().anchoredPosition = new Vector2(i - i*0.1f, 0);
+//				itembox.AddComponent<Image>();
+//				itembox.GetComponent<Image>().sprite = playerRef.inventory[i].icon;
+			}
+			updateInventoryUI = false;
 		}
 
 

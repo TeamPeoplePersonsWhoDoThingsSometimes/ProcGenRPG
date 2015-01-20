@@ -12,4 +12,8 @@ public class Item : MonoBehaviour {
 
 	public Rarity RarityVal;
 
+	public virtual string InfoString() {
+		return name + " (" + value + ")\n" + description;
+	}
+
 }

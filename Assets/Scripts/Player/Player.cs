@@ -58,7 +58,7 @@ public class Player : MonoBehaviour {
 		activeHack = (Hack)inventory[1];
 
 		quickAccessItems = new List<Item>(inventory);
-
+		PlayerCanvas.UpdateInventory();
 //		activeWeapon.gameObject.transform.parent = weaponRef.transform;
 //		activeWeapon.gameObject.transform.localPosition = Vector3.zero;
 //		activeWeapon.gameObject.transform.localEulerAngles = Vector3.zero;
@@ -241,6 +241,7 @@ public class Player : MonoBehaviour {
 			quickAccessItems.Add(temp.GetComponent<Item>());
 		}
 		temp.SetActive(false);
+		PlayerCanvas.UpdateInventory();
 	}
 
 }
