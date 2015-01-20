@@ -9,10 +9,11 @@ public class DungeonGenerator : MapGenerator {
 	}
 
 	protected override void generateGround(int length) {
+		length /= 2;
 		Vector2 cursor = Vector2.zero;
 		int dir = Random.Range(0, 4);//0:-x, 1: +y, 2: +x, 3: -y
 		int width = Random.Range(1,3);
-		generateHallway(length, width, dir, leftDir(dir), cursor);
+		generateHallway(length, width, dir, cursor);
 	}
 
 	int leftDir(int dir) {
@@ -73,77 +74,65 @@ public class DungeonGenerator : MapGenerator {
 		return cursor;
 	}
 
-	Vector2 generateHallway(int n, int w, int dir, int lineDir, Vector2 cursor) {
-		//float adjustLeft = (((float)w-1)/2 + (w%2 == 0? 1/2 : 0)) * tiles[0].size;
+	Vector2 generateHallway(int n, int w, int dir, Vector2 cursor) {
 		for(int count = 0; count < n; count++) {
-			generateLine(w, lineDir, cursor);
-			cursor = moveCursor(dir, cursor);
-			if(count % 3 == 0) {
+			cursor = generateLine(w, dir, cursor);
+			if(count % 2 == 0) {
 				float action = Random.value;
 				if(action > 0.8f) {//fork
-					bool left = Random.value > 0.6;
-					bool right = Random.value > 0.6;
-					bool up = Random.value > 0.6;
+					bool left = Random.value > 0.5f;
+					bool up = Random.value > 0.5f;
+					bool dirSwitch = (dir == 0 || dir == 2) ? Random.value > 0.9f : Random.value > 0.1f;
 
-					//if none are selected, randomly select at least one direction to generate in
-					if(!left && !right && !up) {
-						int motion = Random.Range(1,4);
-						if(motion == 1) left = true;
-						else if(motion == 2) right = true;
-						else if(motion == 3) up = true;
+//					int num = 0 + (left?1:0) + (right?1:0) + (up?1:0);
+
+					if(left && dirSwitch) {
+//						Debug.LogError("Left");
+						generateHallway(n-count, 1, 0, cursor);
 					}
-
-					int num = 0 + (left?1:0) + (right?1:0) + (up?1:0);
-
-					//if the fork goes left or right, then the current path must fill in to the far edge of the fork
-					/*Vector2 tmpCursor = cursor;
-					if(left || right) {
-						for(int i = 0; i < w; i++) {
-							generateLine(w, (dir + 1) % 4, tmpCursor);
-							tmpCursor = moveCursor(dir, tmpCursor);
-						}
-					}*/
-
-					if(left) {
-						generateHallway((n-count)/num, w, leftDir(dir), backDir(dir), moveCursorToSide(leftDir(dir), cursor));
+					if(!left && dirSwitch) {
+//						Debug.LogError("Right");
+						generateHallway(n-count, 1, 2, cursor);
 					}
-					if(right) {
-						generateHallway((n-count)/num, w, rightDir(dir), backDir(dir), moveCursorToSide(rightDir(dir), cursor));
+					if(up && !dirSwitch) {
+//						Debug.LogError("Up");
+						generateHallway(n-count, 1, 1, cursor);
 					}
-					if(up) {
-						generateHallway((n-count)/num, w, dir, lineDir, cursor);
+					if(!up && !dirSwitch) {
+//						Debug.LogError("Down");
+						generateHallway(n-count, 1, 3, cursor);
 					}
 					return cursor;
-
-				} else if(action > 0.79f) {//branch
-					int branch = Random.Range(1,4);//1: left, 2: right, 3: both
-					int width = Random.Range(1,1);
-					if(branch == 1) {
-						generateBranch(Random.Range(5,20), width, leftDir(dir), dir, moveCursorToSide(leftDir(dir), cursor));
-					} else if(branch == 2) {
-						generateBranch(Random.Range(5,20), width, rightDir(dir), dir, moveCursorToSide(rightDir(dir), cursor));
-					} else {
-						generateBranch(Random.Range(5,20), width, leftDir(dir), dir, moveCursorToSide(leftDir(dir), cursor));
-						generateBranch(Random.Range(5,20), width, rightDir(dir), dir, moveCursorToSide(rightDir(dir), cursor));
-					}
 				} else if(action > 0.6f) {//generate room
-					int height = Random.Range(1,5);
-					int width = Random.Range(1,5);
+					int height = Random.Range(1,4);
+					int width = Random.Range(1,4);
 					bool left = Random.value > 0.5f;
 					bool right = Random.value > 0.5f;
-
+					
 					if(!left && !right) {
 						left = Random.value > 0.5f;
 						right = !left;
 					}
-
+					
 					if(left && canRoomFit(width, height, leftDir(dir), cursor)) {
-						generateRoom(width, height, leftDir(dir), moveCursorToSide(leftDir(dir), cursor));
+						generateRoom(width, height, leftDir(dir), cursor);
 					}
 					if(right && canRoomFit(width, height, rightDir(dir), cursor)) {
-						generateRoom(width, height, rightDir(dir),  moveCursorToSide(rightDir(dir), cursor));
+						generateRoom(width, height, rightDir(dir),  cursor);
 					}
 				}
+//				else if(action > 0.79f) {//branch
+//					int branch = Random.Range(1,4);//1: left, 2: right, 3: both
+//					int width = Random.Range(1,1);
+//					if(branch == 1) {
+//						generateBranch(Random.Range(5,20), width, leftDir(dir), dir, moveCursorToSide(leftDir(dir), cursor));
+//					} else if(branch == 2) {
+//						generateBranch(Random.Range(5,20), width, rightDir(dir), dir, moveCursorToSide(rightDir(dir), cursor));
+//					} else {
+//						generateBranch(Random.Range(5,20), width, leftDir(dir), dir, moveCursorToSide(leftDir(dir), cursor));
+//						generateBranch(Random.Range(5,20), width, rightDir(dir), dir, moveCursorToSide(rightDir(dir), cursor));
+//					}
+//				}
 			}
 		}
 		return cursor;
@@ -167,24 +156,15 @@ public class DungeonGenerator : MapGenerator {
 		Vector2 localCursor = cursor;
 		SpawnTile(localCursor.x, localCursor.y, 0);
 		localCursor = moveCursor(dir, localCursor);
-		
-		//note that this is not a regular cursor movement, thus the movecursor method
-		//is innefective
-		if(dir == 0) {
-			localCursor.x -= w;
-			localCursor.y -= h/2;
-		} else if(dir == 1) {
-			localCursor.x -= w/2;
-		} else if(dir == 2) {
-			localCursor.y -= h/2;
-		} else if(dir == 3) {
-			localCursor.y -= h;
-			localCursor.x -= w/2;
-		}
 
 		for(float i = 0; i <= w; i+= tileSet.tiles[0].size) {
 			for(float j = 0; j <= h; j+= tileSet.tiles[0].size) {
 				SpawnTile(localCursor.x + i, localCursor.y + j, 0);
+				for(int k = 0; k < tileSet.enemyTypeChances.Count; k++) {
+					if (Random.value < tileSet.enemyTypeChances[k]) {
+						SpawnEnemy(k, localCursor.x + i, localCursor.y + j);
+					}
+				}
 			}
 		}
 	}
@@ -226,6 +206,31 @@ public class DungeonGenerator : MapGenerator {
 	}
 
 	protected override void generateStructures(List<Tile> ground, bool up, bool down, bool right, bool left) {
-		
+		bool hasDoneUp = !up;
+		bool hasDoneDown = !down;
+		bool hasDoneLeft = !left;
+		bool hasDoneRight = !right;
+		bool placeLight = false;
+		float placeLightCounter = 5;
+		foreach(Tile t in ground) {
+			if(placeLightCounter > 4) {
+				placeLight = true;
+				placeLightCounter = 0;
+			} else {
+				placeLightCounter++;
+				placeLight = false;
+			}
+			SpawnTileInDirection(t.X, t.Z - t.size, placeLight ? 2 : 1, Vector2.right);
+			SpawnTileInDirection(t.X, t.Z + t.size, placeLight ? 2 : 1, -Vector2.right);
+			SpawnTileInDirection(t.X + t.size, t.Z, placeLight ? 2 : 1, Vector2.up);
+			SpawnTileInDirection(t.X - t.size, t.Z, placeLight ? 2 : 1, -Vector2.up);
+		}
+
+		foreach (Tile t in ground) {
+			SpawnTile(t.X + t.size, t.Z + t.size, 1);
+			SpawnTile(t.X + t.size, t.Z - t.size, 1);
+			SpawnTile(t.X - t.size, t.Z - t.size, 1);
+			SpawnTile(t.X - t.size, t.Z + t.size, 1);
+		}
 	}
 }

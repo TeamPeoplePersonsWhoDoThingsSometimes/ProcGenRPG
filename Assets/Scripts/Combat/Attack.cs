@@ -1,6 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum Effect {
+	None,
+	Deteriorating,
+	Slow,
+	Stun
+}
+
 public class Attack : MonoBehaviour {
 
 	private float thisDamage;
@@ -12,14 +19,18 @@ public class Attack : MonoBehaviour {
 	public float duration;
 	public bool destroyOnImpact;
 	public GameObject hitObject;
+	public Effect attackEffect;
+	public float attackEffectChance;
+	public float attackEffectValue;
+	public float attackEffectTime;
 
 	// Use this for initialization
-	protected void Start () {
+	protected virtual void Start () {
 
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	protected virtual void Update () {
 
 	}
 
@@ -30,9 +41,15 @@ public class Attack : MonoBehaviour {
 			} else {
 				other.GetComponent<Enemy>().GetDamaged(Mathf.FloorToInt(thisDamage), Random.value <= critChance); 
 			}
+			if (Random.value < attackEffectChance) {
+				other.GetComponent<Enemy>().GetDamaged(attackEffect, attackEffectValue, attackEffectTime);
+			}
 			other.GetComponent<Enemy>().DoKnockback(this.transform.position, knockback);
 			if(hitObject != null) {
 				GameObject.Instantiate(hitObject, other.gameObject.transform.position + new Vector3(0,1,0), Quaternion.Euler(new Vector3(0,FollowPlayer.rotate,0f)));
+			}
+			if(destroyOnImpact) {
+				Destroy(this.gameObject);
 			}
 		}
 
@@ -45,8 +62,11 @@ public class Attack : MonoBehaviour {
 			if(hitObject != null) {
 				GameObject.Instantiate(hitObject, other.gameObject.transform.position + new Vector3(0,1,0), Quaternion.Euler(new Vector3(0,FollowPlayer.rotate,0f)));
 			}
+			if(destroyOnImpact) {
+				Destroy(this.gameObject);
+			}
 		}
-		if(destroyOnImpact) {
+		if (other.GetComponent<Player>() == null && other.GetComponent<Enemy>() == null && destroyOnImpact && !other.name.Equals(this.name)) {
 			Destroy(this.gameObject);
 		}
 	}

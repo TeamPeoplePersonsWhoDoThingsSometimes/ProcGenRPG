@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum WeaponType {
+	Melee,
+	Bow,
+	Gun
+}
+
 public class Weapon : Item {
 
 	protected Attack attack;
@@ -8,12 +14,13 @@ public class Weapon : Item {
 	public string version = "1.0.0";
 	public float critChance;
 	public float levelUpScale;
-	public int levelUpSpeedScale;
+	public float levelUpSpeedScale;
 	public float damage;
 	public float knockback;
+	public float attackSpeed;
 	protected float thisDamage;
 	protected float thisKnockback;
-	protected bool isMelee;
+	protected WeaponType weaponType;
 
 	protected bool isAttacking = false;
 	protected int bytes;
@@ -28,14 +35,10 @@ public class Weapon : Item {
 	
 	// Update is called once per frame
 	protected void Update () {
-		bytesToLevelUp = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*levelUpSpeedScale*10000;
+		bytesToLevelUp = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*(int)(levelUpSpeedScale*10000);
 		while (bytes > bytesToLevelUp) {
 			LevelUp();
 		}
-	}
-
-	public bool IsMelee() {
-		return isMelee;
 	}
 
 	public GameObject GetAttack() {
@@ -52,7 +55,7 @@ public class Weapon : Item {
 		} else {
 			version = (int.Parse(version.Split('.')[0])*1 + 1) + ".0.0";
 		}
-		bytesToLevelUp = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*levelUpSpeedScale*10000;
+		bytesToLevelUp = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*(int)(levelUpSpeedScale*10000);
 	}
 
 	public float GetCrit() {
@@ -91,11 +94,30 @@ public class Weapon : Item {
 		bytes += val;
 	}
 
+	public WeaponType Type() {
+		return weaponType;
+	}
+
 	public string InfoString() {
-		return "Type: " + (isMelee ? "Melee" : "Ranged") +
-		"\nRarity: " + this.RarityVal +
-		"\nBase Damage: " + thisDamage.ToString("F2") +
-		"\nKnockback: " + knockback.ToString("F2") +
-		"\nCrit Chance: " + critChance.ToString("F2");
+		string forreturn = "Type: " + Type() +
+				"\nRarity: " + this.RarityVal +
+				"\nBase Damage: " + thisDamage.ToString("F2") +
+				"\nKnockback: " + knockback.ToString("F2") +
+				"\nCrit Chance: " + critChance.ToString("F2");
+
+		if(GetAttack().GetComponent<Attack>().attackEffect != Effect.None) {
+
+			forreturn += "\nEffect: " + GetAttack().GetComponent<Attack>().attackEffect;
+
+			if(GetAttack().GetComponent<Attack>().attackEffect == Effect.Deteriorating) {
+				forreturn += " - " + GetAttack().GetComponent<Attack>().attackEffectChance*100f + "% chance of " + 
+					GetAttack().GetComponent<Attack>().attackEffectValue + " damage for " +
+						GetAttack().GetComponent<Attack>().attackEffectTime + " secs";
+			} else {
+				forreturn += " - for " + GetAttack().GetComponent<Attack>().attackEffectTime + " secs";
+			}
+		}
+
+		return forreturn;
 	}
 }

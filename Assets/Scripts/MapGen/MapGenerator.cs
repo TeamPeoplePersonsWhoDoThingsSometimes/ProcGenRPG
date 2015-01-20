@@ -98,7 +98,7 @@ public class MapGenerator {
 	 * Spawn an enemy of the given type at the given coordinates (x,z)
 	 */
 	protected void SpawnEnemy(int enemyType, float x, float z) {
-		GameObject.Instantiate(tileSet.enemyTypes[enemyType], new Vector3(x, 0.5f, z), Quaternion.identity);
+		Object temp = GameObject.Instantiate(tileSet.enemyTypes[enemyType], new Vector3(x, 0.5f, z), Quaternion.identity);
 	}
 
 	/**

@@ -35,13 +35,34 @@ public class Player : MonoBehaviour {
 		integrity = maxIntegrity;
 		rma = maxrma;
 
-		activeWeapon = (Weapon)inventory[0];
-		activeHack = (Hack)inventory[1];
+//		GameObject temp = (GameObject)Instantiate (inventory [0].gameObject);
+//		activeWeapon = temp.GetComponent<Weapon> ();
+//		
+//		temp = (GameObject)Instantiate (inventory [1].gameObject);
+//		activeHack = temp.GetComponent<Hack> ();
+
+
 
 		playerInventoryRef = GameObject.Find("PlayerInventory");
 		weaponRef = GameObject.Find("PlayerWeaponObj");
 		playerPos = transform;
 		bytesToNextVersion = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*levelUpSpeedScale;
+
+		inventory = new List<Item>();
+		inventory.Add(weaponRef.transform.GetChild(0).GetComponent<Item>());
+		for (int i = 0; i < playerInventoryRef.transform.childCount; i++) {
+			inventory.Add(playerInventoryRef.transform.GetChild(i).GetComponent<Item>());
+		}
+
+		activeWeapon = (Weapon)inventory[0];
+		activeHack = (Hack)inventory[1];
+
+		quickAccessItems = new List<Item>(inventory);
+
+//		activeWeapon.gameObject.transform.parent = weaponRef.transform;
+//		activeWeapon.gameObject.transform.localPosition = Vector3.zero;
+//		activeWeapon.gameObject.transform.localEulerAngles = Vector3.zero;
+//		activeWeapon.gameObject.transform.localScale = Vector3.one;
 	}
 	
 	// Update is called once per frame
@@ -73,7 +94,7 @@ public class Player : MonoBehaviour {
 //
 //		if(meleeTimeFreeze <= 0) {
 //			Time.timeScale = 0.001f;
-//		}
+//		
 
 	}
 
@@ -84,24 +105,26 @@ public class Player : MonoBehaviour {
 	}
 
 	public void SetActiveItem (int val) {
-		if(quickAccessItems[val].GetType().IsSubclassOf(typeof(Weapon))) { 
-			activeWeapon = (Weapon)quickAccessItems[val];
-			for(int i = 0; i < playerInventoryRef.transform.childCount; i++) {
-				if(playerInventoryRef.transform.GetChild(i).GetComponent<Weapon>() != null
-				   && playerInventoryRef.transform.GetChild(i).GetComponent<Weapon>().Equals(activeWeapon)) {
-					if (weaponRef.transform.childCount > 0) {
-						weaponRef.transform.GetChild(0).gameObject.SetActive(false);
-						weaponRef.transform.GetChild(0).transform.parent = playerInventoryRef.transform;
+		if(quickAccessItems.Count >= val + 1) {
+			if(quickAccessItems[val].GetType().IsSubclassOf(typeof(Weapon))) { 
+				activeWeapon = (Weapon)quickAccessItems[val];
+				for(int i = 0; i < playerInventoryRef.transform.childCount; i++) {
+					if(playerInventoryRef.transform.GetChild(i).GetComponent<Weapon>() != null
+					   && playerInventoryRef.transform.GetChild(i).GetComponent<Weapon>().Equals(activeWeapon)) {
+						if (weaponRef.transform.childCount > 0) {
+							weaponRef.transform.GetChild(0).gameObject.SetActive(false);
+							weaponRef.transform.GetChild(0).transform.parent = playerInventoryRef.transform;
+						}
+						playerInventoryRef.transform.GetChild(i).parent = weaponRef.transform;
+						weaponRef.transform.GetChild(0).gameObject.SetActive(true);
+						weaponRef.transform.GetChild(0).localPosition = Vector3.zero;
+						weaponRef.transform.GetChild(0).localEulerAngles = Vector3.zero;
+						weaponRef.transform.GetChild(0).localScale = new Vector3(1,1,1);
 					}
-					playerInventoryRef.transform.GetChild(i).parent = weaponRef.transform;
-					weaponRef.transform.GetChild(0).gameObject.SetActive(true);
-					weaponRef.transform.GetChild(0).localPosition = Vector3.zero;
-					weaponRef.transform.GetChild(0).localEulerAngles = Vector3.zero;
-					weaponRef.transform.GetChild(0).localScale = new Vector3(1,1,1);
 				}
+			} else {
+				activeHack = (Hack)quickAccessItems[val];
 			}
-		} else {
-			activeHack = (Hack)quickAccessItems[val];
 		}
 	}
 

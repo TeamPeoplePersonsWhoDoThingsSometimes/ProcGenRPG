@@ -16,6 +16,7 @@ public class Area {
 
 	private Area parent;
 	private int xPos, yPos;
+	private string enemyVersions;
 
 	public Area(TileSet tiles, Area parent, int x, int y) {
 		Data = new AreaData(-1, "Landy Land", tiles.generatorType.ToString(), -1);

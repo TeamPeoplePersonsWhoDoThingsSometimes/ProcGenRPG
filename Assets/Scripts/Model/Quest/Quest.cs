@@ -34,7 +34,7 @@ public class Quest : ActionEventListener {
 	 * Starts this quest by registering the quest with the event invoker
 	 * if it is not already started
 	 */
-	public void startQuestIfMetByAction(Action act) {
+	public void startQuestIfMetByAction(IAction act) {
 		if (currentStep != 0)
 			return;
 
@@ -69,7 +69,7 @@ public class Quest : ActionEventListener {
 	 * Steps and modifies the quest steps based on the action,
 	 * note: may simply reference the state
 	 */
-	public override void onAction (Action action)
+	public override void onAction (IAction action)
 	{
 		Debug.Log ("Action registered");
 		Dictionary<StatusCheckable, bool> curr = steps [currentStep];

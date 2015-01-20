@@ -36,7 +36,7 @@ public class QuestListener : ActionEventListener {
 	}
 	
 	// Update is called once per frame
-	public override void onAction (Action action) {
+	public override void onAction (IAction action) {
 		foreach (Quest q in quests) {
 			q.startQuestIfMetByAction(action);
 		}

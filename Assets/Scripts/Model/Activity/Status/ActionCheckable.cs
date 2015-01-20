@@ -9,18 +9,18 @@ public class ActionCheckable : StatusCheckable {
 		currentAmount = 0;
 	}
 
-	public ActionCheckable(Action act) {
+	public ActionCheckable(IAction act) {
 		checkAction = act;
 		quantity = 1;
 		currentAmount = 0;
 	}
 
-	private Action checkAction;
+	private IAction checkAction;
 
 	private int quantity;
 	private int currentAmount;
 
-	public bool isStatusMet(Action action) {
+	public bool isStatusMet(IAction action) {
 		if (action.getActionType ().Equals (checkAction.getActionType ()) &&
 						action.getDirectObject ().getIdentifier ().Equals (checkAction.getDirectObject ().getIdentifier ()) &&
 						action.getDirectObject ().getTypeIdentifier ().Equals (checkAction.getDirectObject ().getTypeIdentifier ()))

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public delegate void ActionEventHandler(Action action);
+public delegate void ActionEventHandler(IAction action);
 
 public class ActionEventInvoker {
 
@@ -31,7 +31,7 @@ public class ActionEventInvoker {
 	 * Call this to invoke this action across all objects listening
 	 * to the invoker
 	 */
-	public void invokeAction(Action action) {
+	public void invokeAction(IAction action) {
 		ActionEvent (action);
 	}
 }

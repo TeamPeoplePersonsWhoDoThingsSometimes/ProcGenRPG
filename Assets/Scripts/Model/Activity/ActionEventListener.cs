@@ -20,5 +20,5 @@ public abstract class ActionEventListener {
 	/**
 	 * Action to perform on action event
 	 */
-	public abstract void onAction(Action action);
+	public abstract void onAction(IAction action);
 }

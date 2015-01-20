@@ -45,12 +45,15 @@ public class GrassyPathGenerator : MapGenerator {
 	private void spawnPath(int distance, bool left, bool up) {
 		// determines whether the path is going to move to the side or up
 		bool direction = true;
-		bool spawnedEnemy = false;
 		while(distance > 0) {
 			SpawnTile(cursorX, cursorZ, 0);
-			if(spawnedEnemy) {
-				SpawnEnemy(0, cursorX, cursorZ);
+			
+			for(int k = 0; k < tileSet.enemyTypeChances.Count; k++) {
+				if (Random.value < tileSet.enemyTypeChances[k]) {
+					SpawnEnemy(k, cursorX, cursorZ);
+				}
 			}
+
 			if (left && direction) {
 				// spawns a tile beside the one going left, to make the path 2 blocks wide
 				SpawnTile(cursorX, cursorZ + tileSet.tiles[0].size, 0);
@@ -66,7 +69,6 @@ public class GrassyPathGenerator : MapGenerator {
 				cursorZ += tileSet.tiles[0].size;
 			}
 			direction = Random.value < 0.5f;
-			spawnedEnemy = Random.value < tileSet.enemySpawnChance;
 			distance--;
 		}
 	}

@@ -10,7 +10,7 @@ public interface StatusCheckable {
 	/**
 	 * Is the status checked by this StatusCheckable met
 	 */
-	bool isStatusMet (Action action);
+	bool isStatusMet (IAction action);
 
 	/**
 	 * Set this status checkable with the information from the given protocol
