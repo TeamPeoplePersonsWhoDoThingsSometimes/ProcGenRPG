@@ -31,7 +31,7 @@ public class PlayerCanvas : MonoBehaviour {
 	private int tempWeaponXPVal;
 
 	private Button strengthButton, defenseButton, efficiencyButton, securityButton, encryptionButton;
-	private Text playerStrengthText, playerDefenseText, playerEfficiencyText, playerSecurityText, playerEncryptionText, algorithmPointsText, weaponStatsInfo;
+	private Text playerStrengthText, playerDefenseText, playerEfficiencyText, playerSecurityText, playerEncryptionText, algorithmPointsText, weaponStatsInfo, hackStatsInfo;
 
 	private Text integrityPercentage, RMAPercentage;
 	private Image integrityBar, RMABar;
@@ -118,6 +118,8 @@ public class PlayerCanvas : MonoBehaviour {
 		VRCursor = GameObject.Find("VRCursor");
 
 		inventoryItemContainer = GameObject.Find("InventoryItemContainer");
+
+		playerName.text = playerRef.GetName();
 	}
 	
 	// Update is called once per frame
@@ -163,6 +165,7 @@ public class PlayerCanvas : MonoBehaviour {
 	}
 
 	void Update () {
+		/*** Updates QuickAccessItems ***/
 		for(int i = 0; i < playerRef.quickAccessItems.Count; i++) {
 			if(playerRef.quickAccessItems[i] != null) {
 				quickAccessBar.transform.GetChild(i).GetComponent<Image>().sprite = GetSprite(playerRef.quickAccessItems[i].RarityVal);
@@ -176,6 +179,7 @@ public class PlayerCanvas : MonoBehaviour {
 			}
 		}
 
+		/*** Handles instantiation of enemyhealthbars ***/
 		if(enemieswithhealthbars != null) {
 			foreach (GameObject g in enemieswithhealthbars) {
 				if(g != null) {
@@ -188,33 +192,18 @@ public class PlayerCanvas : MonoBehaviour {
 			enemieswithhealthbars.Clear();
 		}
 
+		/*** adds inventory icons to UI when bool is true ***/
 		if(updateInventoryUI) {
 			for (int i = 0; i < playerRef.inventory.Count; i++) {
 				inventoryItemContainer.transform.GetChild(i).GetComponent<Image>().sprite = GetSprite(playerRef.inventory[i].RarityVal);
 				inventoryItemContainer.transform.GetChild(i).GetComponent<Image>().color = Color.white;
 				inventoryItemContainer.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = playerRef.inventory[i].icon;
 				inventoryItemContainer.transform.GetChild(i).GetChild(0).GetComponent<Image>().color = Color.white;
-//				GameObject itembox = new GameObject();
-//				itembox.AddComponent<RectTransform>();
-//				itembox.GetComponent<RectTransform>().SetParent(inventoryItemContainer.transform);
-//				itembox.GetComponent<RectTransform>().anchorMax = new Vector2(1,1);
-//				itembox.GetComponent<RectTransform>().anchorMin = new Vector2(0,0);
-//				itembox.GetComponent<RectTransform>().pivot = new Vector2(0,1);
-//				itembox.GetComponent<RectTransform>().sizeDelta = new Vector2(-5.7f, -2.3f);
-//				itembox.GetComponent<RectTransform>().localPosition = Vector3.zero;
-//				itembox.GetComponent<RectTransform>().localRotation = Quaternion.identity;
-//				itembox.GetComponent<RectTransform>().anchoredPosition = new Vector2(i - i*0.1f, 0);
-//				itembox.AddComponent<Image>();
-//				itembox.GetComponent<Image>().sprite = playerRef.inventory[i].icon;
 			}
 			updateInventoryUI = false;
 		}
 
-
-		if(VRCursor != null) {
-			VRCursor.GetComponent<Image>().rectTransform.anchoredPosition = new Vector2(Input.mousePosition.x/Screen.width*11.612f,Input.mousePosition.y/Screen.height*6.53f - 6.53f);
-		}
-
+		/*** Shows WeaponXP bar ***/
 		if(playerRef.GetWeapon() != null) {
 			if(tempWeaponXPVal != playerRef.GetWeapon().GetBytes()) {
 				curWeapon.text = playerRef.GetWeapon().GetName();
@@ -227,14 +216,14 @@ public class PlayerCanvas : MonoBehaviour {
 			weaponXPPercentage.text = (playerRef.GetWeapon().GetVersionPercent()*100).ToString("F2") + "%";
 		}
 
+		/*** draws and updates RMA and Integrity bar and bytes accumulated ***/
 		RMABar.rectTransform.localScale = new Vector3(playerRef.GetRMAPercentage(), 1f);
 		RMAPercentage.text = (playerRef.GetRMAPercentage()*100).ToString("F2") + "%";
 		integrityBar.rectTransform.localScale = new Vector3(playerRef.GetIntegrityPercentage(),1f);
-
-		playerName.text = playerRef.GetName();
-
+		integrityPercentage.text = (playerRef.GetIntegrityPercentage()*100).ToString("F2") + "%";
 		byteText.text = "Bytes: " + Utility.ByteToString(playerRef.GetBytes());
 
+		/*** Updates xp bar and draws background yellow xp scale ***/
 		byteXP.rectTransform.localScale = new Vector3(playerRef.XPPercentage(), 1f, 1f);
 		if(byteXPSmooth.rectTransform.localScale.x < playerRef.XPPercentage()) {
 			byteXPSmooth.rectTransform.localScale = new Vector3(Mathf.MoveTowards(byteXPSmooth.rectTransform.localScale.x,playerRef.XPPercentage(),Time.deltaTime/10f), 1f, 1f);
@@ -242,20 +231,19 @@ public class PlayerCanvas : MonoBehaviour {
 			byteXPSmooth.rectTransform.localScale = new Vector3(playerRef.XPPercentage(), 1f, 1f);
 		}
 
+		/*** Opens Console and sets animator control ***/
 		if(Input.GetKeyDown(KeyCode.BackQuote)) {
 			inConsole = !inConsole;
 		}
-
 		GetComponent<Animator>().SetBool("ShowingConsole", inConsole);
 
-		if(PlayerControl.PLAYINGWITHOCULUS) {
-			Screen.showCursor = false;
-			Screen.lockCursor = true;
-		}
-
+		/*** Handles logic when in console ***/
 		if(inConsole) {
+			/*** Disables minimap and allows interaction with UI ***/
 			minimap.SetActive(false);
 			consoleGUI.interactable = true;
+
+			/*** Handles algorithm point allocation ***/
 			if (Player.algorithmPoints > 0) {
 				algorithmPointsText.text = "Algorithm Points Available: " + Player.algorithmPoints;
 				defenseButton.interactable = true;
@@ -271,21 +259,27 @@ public class PlayerCanvas : MonoBehaviour {
 				encryptionButton.interactable = false;
 				securityButton.interactable = false;
 			}
+			/*** Updates algorithm points values ***/
 			playerDefenseText.text = "Defense: " + Player.defense;
 			playerStrengthText.text = "Strength: " + Player.strength;
 			playerEfficiencyText.text = "Efficiency: " + Player.efficiency;
 			playerEncryptionText.text = "Encryption: " + Player.encryption;
 			playerSecurityText.text = "Security: " + Player.security;
+
+			/*** Gets info string for current weapons ***/
 			weaponStatsInfo.text = playerRef.GetWeapon().InfoString();
 
+			/*** Handles Blur effect ***/
 			mainCam.camera.enabled = false;
 			mainCamWithEffects.camera.enabled = true;
 			mainCamWithEffects.GetComponent<Blur>().blur = Mathf.MoveTowards(mainCamWithEffects.GetComponent<Blur>().blur, 5, Time.deltaTime*5f);
 
 		} else {
+			/*** Handles non-console interaction, disallows interaction with console ***/
 			consoleGUI.interactable = false;
 			minimap.SetActive(true);
 
+			/*** Handles un-blurring ***/
 			mainCamWithEffects.GetComponent<Blur>().blur = Mathf.MoveTowards(mainCamWithEffects.GetComponent<Blur>().blur, 0, Time.deltaTime*5f);
 			if(mainCamWithEffects.GetComponent<Blur>().blur == 0) {
 				mainCam.camera.enabled = true;
@@ -295,6 +289,10 @@ public class PlayerCanvas : MonoBehaviour {
 		}
 	}
 
+
+
+
+	/*** Button handlers ***/
 	public void HandleDefenseClick() {
 		Player.algorithmPoints--;
 		Player.defense++;
