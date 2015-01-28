@@ -9,7 +9,7 @@ public class DungeonGenerator : MapGenerator {
 	}
 
 	protected override void generateGround(int length) {
-		length /= 2;
+		length /= 4;
 		Vector2 cursor = Vector2.zero;
 		int dir = Random.Range(0, 4);//0:-x, 1: +y, 2: +x, 3: -y
 		int width = Random.Range(1,3);

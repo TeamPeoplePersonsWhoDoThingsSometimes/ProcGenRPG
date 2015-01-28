@@ -7,6 +7,9 @@ using System.Collections;
  */
 public abstract class Interactable : MonoBehaviour {
 
+	private int frameOffset = 20;
+	private int lastFrame = 0;
+
 	/**
 	 * true if the player is within the trigger of the interactable item
 	 */
@@ -21,7 +24,10 @@ public abstract class Interactable : MonoBehaviour {
 			if (Player.useKey == null) {
 				Debug.LogError("Player use key is not set");
 			} else if (Input.GetKeyDown(Player.useKey)) {
-				Interact();
+				if(Time.frameCount - lastFrame > frameOffset) {
+					Interact();
+					lastFrame = Time.frameCount;
+				}
 			}
 		}
 	}

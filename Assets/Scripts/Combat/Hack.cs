@@ -65,4 +65,14 @@ public class Hack : Item {
 		isCalled = true;
 	}
 
+	public override string InfoString() {
+		string forreturn = "Type: " + (passive ? "Passive" : "Active") +
+			"\n\nRarity: " + this.RarityVal +
+				"\n\nBase Damage: " + damage.ToString("F2") +
+				"\n\nKnockback: " + attack.GetComponent<Attack>().knockback.ToString("F2") +
+				"\n\nDescription: " + description;
+
+		return forreturn;
+	}
+
 }

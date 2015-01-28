@@ -7,9 +7,11 @@ public class PlayerControl : MonoBehaviour {
 
 	private static Animator playerAnim;
 
+	public static bool immobile = false;
+
 	private bool comboTime = false;
 
-	private bool attack1, attack2, attack3;
+	private bool swordAttack1, swordAttack2, swordAttack3;
 
 	private static Transform camTransform;
 
@@ -17,15 +19,12 @@ public class PlayerControl : MonoBehaviour {
 	
 	private static LineRenderer rangedIndicator;
 	
-	public static bool PLAYINGWITHOCULUS;
-	
 	// Use this for initialization
 	void Start () {
 		playerAnim = this.GetComponent<Animator>();
 		playerref = this.GetComponent<Player>();
 		rangedIndicator = GameObject.Find("RangedAimIndicator").GetComponent<LineRenderer>();
 		camTransform = transform.parent.GetChild(1).transform;
-		PLAYINGWITHOCULUS = transform.parent.gameObject.name.Equals("OculusPlayer");
 		rangedIndicator.enabled = false;
 	}
 	
@@ -36,14 +35,20 @@ public class PlayerControl : MonoBehaviour {
 		playerAnim.SetBool("Slash2", false);
 		playerAnim.SetBool("Slash3", false);
 		playerAnim.SetBool("ShootBow", false);
+		playerAnim.SetBool("ShootHandgun", false);
 
 		/***** Updates booleans to check what attack player is in *****/
-		attack1 = playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Base.Slash1") || playerAnim.GetCurrentAnimatorStateInfo(1).IsName("SlashWalking.SlashWalking");
-		attack2 = playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Base.Slash2");
-		attack3 = playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Base.Slash3");
+		swordAttack1 = playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Base.Slash1") || playerAnim.GetCurrentAnimatorStateInfo(1).IsName("SlashWalking.SlashWalking");
+		swordAttack2 = playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Base.Slash2");
+		swordAttack2 = playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Base.Slash3");
 
 		/****** Set movement variables *****/
-		playerAnim.SetFloat("Speed",Input.GetAxis("Vertical"));
+		if(!immobile) {
+			playerAnim.SetFloat("Speed",Input.GetAxis("Vertical"));
+		} else {
+			playerAnim.SetFloat("Speed",0);
+		}
+
 //		playerAnim.SetFloat("Direction",Input.GetAxis("Horizontal"));
 		if(playerAnim.GetFloat("Speed") == 0) {
 			playerAnim.transform.Rotate(new Vector3(0f, playerAnim.GetFloat("Direction"), 0f));
@@ -79,7 +84,7 @@ public class PlayerControl : MonoBehaviour {
 		}
 
 		/**** Messy way of handling LightStick's green trail ****/
-		if(attack3) {
+		if(swordAttack2) {
 			GetComponent<Player>().StartAttack();
 		} else {
 			GetComponent<Player>().StopAttack();
@@ -109,19 +114,19 @@ public class PlayerControl : MonoBehaviour {
 		}
 
 		/**** Handling attacking ****/
-		if(!PlayerCanvas.inConsole) {
+		if(!PlayerCanvas.inConsole && !immobile) {
 			if (playerref.GetWeapon() != null && playerref.GetWeapon().Type().Equals(WeaponType.Melee)) {
-				if (Input.GetMouseButtonDown(0) && comboTime && !attack1 && attack2) {
+				if (Input.GetMouseButtonDown(0) && comboTime && !swordAttack1 && swordAttack2) {
 					playerAnim.SetBool("Slash3", true);
 					comboTime = false;
 				}
 
-				if (Input.GetMouseButtonDown(0) && comboTime && attack1 && !attack2) {
+				if (Input.GetMouseButtonDown(0) && comboTime && swordAttack1 && !swordAttack2) {
 					playerAnim.SetBool("Slash2", true);
 					comboTime = false;
 				}
 
-				if (Input.GetMouseButtonDown(0) && !attack2 && !attack3) {
+				if (Input.GetMouseButtonDown(0) && !swordAttack2 && !swordAttack2) {
 					playerAnim.SetBool("Slash1", true);
 					comboTime = false;
 				}
@@ -141,6 +146,8 @@ public class PlayerControl : MonoBehaviour {
 					rangedIndicator.enabled = false;
 					playerAnim.SetBool("DrawArrow", false);
 				}
+			} else if (playerref.GetWeapon() != null && playerref.GetWeapon().Type().Equals(WeaponType.Handgun)) {
+				playerAnim.SetBool("ShootHandgun", true);
 			}
 
 			if (playerref.GetHack() != null && Input.GetMouseButton(1)) {
@@ -154,7 +161,7 @@ public class PlayerControl : MonoBehaviour {
 		float screenX = Screen.width;
 		float screenY = Screen.height;
 		float angle;
-		if(playerAnim.GetFloat("Speed") < 0.1f) {
+		if(playerAnim.GetFloat("Speed") < 0.1f && !immobile) {
 			if (mousePosY < screenY/2) {
 				angle = Mathf.Rad2Deg * Mathf.Atan(((mousePosX/screenX*2) - 1)/((mousePosY/screenY*2) - 1)) + 180;
 			} else {

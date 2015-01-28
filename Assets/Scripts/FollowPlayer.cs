@@ -11,10 +11,6 @@ public class FollowPlayer : MonoBehaviour {
 	private Transform centerCamRef;
 	// Use this for initialization
 	void Start () {
-		GameObject centerCamRefObj = GameObject.Find("CenterEyeAnchor");
-		if (centerCamRefObj != null) {
-			centerCamRef = centerCamRefObj.GetComponent<Transform>();
-		}
 		offset = this.transform.position - Player.playerPos.position;
 	}
 	
@@ -25,39 +21,37 @@ public class FollowPlayer : MonoBehaviour {
 
 		rotate = transform.parent.eulerAngles.y;
 
-//		this.transform.position = Vector3.MoveTowards(this.transform.position, Player.playerPos.position + offset, Time.deltaTime*10f);
-		if (Input.GetKey(KeyCode.D)) {
-			if(rotateSpeed <= 100f) {
-				rotateSpeed = 100f;
+		if(!PlayerControl.immobile) {
+			if (Input.GetKey(KeyCode.D)) {
+				if(rotateSpeed <= 100f) {
+					rotateSpeed = 100f;
+				}
+				rotateSpeed = Mathf.MoveTowards(rotateSpeed, 300, 100*Time.deltaTime);
+				transform.parent.RotateAround(Player.playerPos.position, Player.playerPos.up, rotateSpeed*Time.deltaTime);
 			}
-//			transform.parent.Rotate(Vector3.up, 100*Time.deltaTime, Space.World);
-			rotateSpeed = Mathf.MoveTowards(rotateSpeed, 300, 100*Time.deltaTime);
-			transform.parent.RotateAround(Player.playerPos.position, Player.playerPos.up, rotateSpeed*Time.deltaTime);
-		}
-		if (Input.GetKey(KeyCode.A)) {
-			if(rotateSpeed >= -100f) {
-				rotateSpeed = -100f;
+			if (Input.GetKey(KeyCode.A)) {
+				if(rotateSpeed >= -100f) {
+					rotateSpeed = -100f;
+				}
+				rotateSpeed = Mathf.MoveTowards(rotateSpeed, -300, 100*Time.deltaTime);
+				transform.parent.RotateAround(Player.playerPos.position, Player.playerPos.up, rotateSpeed*Time.deltaTime);
 			}
-//			transform.parent.Rotate(Vector3.up, -100*Time.deltaTime, Space.World);
-			rotateSpeed = Mathf.MoveTowards(rotateSpeed, -300, 100*Time.deltaTime);
-			transform.parent.RotateAround(Player.playerPos.position, Player.playerPos.up, rotateSpeed*Time.deltaTime);
 		}
 
 		if(!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D)) {
 			rotateSpeed = 0;
 		}
-//
-		if(PlayerControl.PLAYINGWITHOCULUS) {
-//			Debug.Log(centerCamRef.eulerAngles.y);
-			if(Input.GetKey(KeyCode.Space) && centerCamRef.localEulerAngles.y > 20f && centerCamRef.localEulerAngles.y < 270f) {
-				transform.parent.RotateAround(Player.playerPos.position, Player.playerPos.up, 100*Time.deltaTime);
-			} else if (Input.GetKey(KeyCode.Space) && centerCamRef.localEulerAngles.y < 340f && centerCamRef.localEulerAngles.y > 270f) {
-				transform.parent.RotateAround(Player.playerPos.position, Player.playerPos.up, -100*Time.deltaTime);
-			}
-		}
 
 		if (!locked) {
 			transform.parent.position = Vector3.MoveTowards(transform.parent.position, Player.playerPos.position, 50*Time.deltaTime);
+		}
+
+		if(Input.GetAxis("Mouse ScrollWheel") > 0) {
+			transform.GetChild(0).camera.fieldOfView = Mathf.Clamp(++transform.GetChild(0).camera.fieldOfView, 30f, 60f);
+			transform.GetChild(1).camera.fieldOfView = Mathf.Clamp(++transform.GetChild(1).camera.fieldOfView, 30f, 60f);
+		} else if (Input.GetAxis("Mouse ScrollWheel") < 0) {
+			transform.GetChild(0).camera.fieldOfView = Mathf.Clamp(--transform.GetChild(0).camera.fieldOfView, 30f, 60f);
+			transform.GetChild(1).camera.fieldOfView = Mathf.Clamp(--transform.GetChild(1).camera.fieldOfView, 30f, 60f);
 		}
 
 //		this.transform.LookAt(Player.playerPos);
@@ -68,5 +62,9 @@ public class FollowPlayer : MonoBehaviour {
 	 */
 	public void SetToPlayer() {
 		transform.parent.position = Player.playerPos.position;
+	}
+
+	public void ZoomOut() {
+
 	}
 }

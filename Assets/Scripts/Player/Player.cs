@@ -27,7 +27,6 @@ public class Player : MonoBehaviour {
 
 	private static GameObject hitInfo;
 
-	private float meleeTimeFreeze = 1f;
 	// Use this for initialization
 	void Start () {
 		hitInfo = Resources.Load<GameObject>("Info/HitInfo");
@@ -50,6 +49,7 @@ public class Player : MonoBehaviour {
 
 		inventory = new List<Item>();
 		inventory.Add(weaponRef.transform.GetChild(0).GetComponent<Item>());
+
 		for (int i = 0; i < playerInventoryRef.transform.childCount; i++) {
 			inventory.Add(playerInventoryRef.transform.GetChild(i).GetComponent<Item>());
 		}

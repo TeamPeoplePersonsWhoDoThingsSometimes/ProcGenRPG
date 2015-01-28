@@ -12,7 +12,7 @@ public class LightStick : Weapon {
 	}
 	
 	// Update is called once per frame
-	new void Update () {
+	protected override void Update () {
 		base.Update();
 		if(isAttacking) {
 			lightSwipeTime = 0.5f;
@@ -23,5 +23,15 @@ public class LightStick : Weapon {
 		} else {
 			GetComponent<TrailRenderer>().time = 0f;
 		}
+	}
+
+	public override void StartAttack ()
+	{
+		base.StartAttack ();
+	}
+
+	public override void StopAttack ()
+	{
+		base.StopAttack ();
 	}
 }

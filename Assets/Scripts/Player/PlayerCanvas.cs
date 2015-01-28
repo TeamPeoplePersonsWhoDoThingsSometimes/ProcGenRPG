@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 public class PlayerCanvas : MonoBehaviour {
 
+	public static bool cinematicMode;
+
 	public Sprite common, uncommon, rare, anomaly;
 
 	public static List<GameObject> enemieswithhealthbars;
@@ -38,7 +40,7 @@ public class PlayerCanvas : MonoBehaviour {
 
 	public static bool inConsole = false;
 
-	private GameObject minimap, mainCam, mainCamWithEffects;
+	private GameObject minimap, mainCam, mainCamWithEffects, uiCam;
 	private Vector3 playerCanvasOffset;
 
 	private RectTransform quickAccessBar, activeWeaponIcon, activeHackIcon;
@@ -47,7 +49,7 @@ public class PlayerCanvas : MonoBehaviour {
 
 	private GameObject enemyHealthBars;
 
-	private GameObject inventoryItemContainer;
+	private GameObject inventoryItemContainer, mouseOverInfo;
 
 	public static void RegisterEnemyHealthBar(GameObject enemy) {
 		if(enemieswithhealthbars == null) {
@@ -64,6 +66,7 @@ public class PlayerCanvas : MonoBehaviour {
 
 		minimap = GameObject.Find("MiniMapCam");
 		mainCam = GameObject.Find("Main Camera");
+		uiCam = GameObject.Find("UICam");
 		mainCamWithEffects = GameObject.Find("Main Camera With Effects");
 
 		playerAnim = GameObject.Find("PlayerObj").GetComponent<Animator>();
@@ -103,6 +106,7 @@ public class PlayerCanvas : MonoBehaviour {
 		playerEncryptionText = GameObject.Find("PlayerEncryptionText").GetComponent<Text>();
 		algorithmPointsText = GameObject.Find("AlgorithmPointsText").GetComponent<Text>();
 		weaponStatsInfo = GameObject.Find("WeaponStatInfo").GetComponent<Text>();
+		hackStatsInfo = GameObject.Find("HackStatInfo").GetComponent<Text>();
 
 		integrityBar = GameObject.Find("IntegrityBar").GetComponent<Image>();
 		integrityPercentage = GameObject.Find("IntegrityPercentText").GetComponent<Text>();
@@ -118,6 +122,7 @@ public class PlayerCanvas : MonoBehaviour {
 		VRCursor = GameObject.Find("VRCursor");
 
 		inventoryItemContainer = GameObject.Find("InventoryItemContainer");
+		mouseOverInfo = GameObject.Find("MouseOverInfo");
 
 		playerName.text = playerRef.GetName();
 	}
@@ -266,8 +271,9 @@ public class PlayerCanvas : MonoBehaviour {
 			playerEncryptionText.text = "Encryption: " + Player.encryption;
 			playerSecurityText.text = "Security: " + Player.security;
 
-			/*** Gets info string for current weapons ***/
+			/*** Gets info string for current weapon and hack ***/
 			weaponStatsInfo.text = playerRef.GetWeapon().InfoString();
+			hackStatsInfo.text = playerRef.GetHack().InfoString();
 
 			/*** Handles Blur effect ***/
 			mainCam.camera.enabled = false;
@@ -286,6 +292,14 @@ public class PlayerCanvas : MonoBehaviour {
 				mainCamWithEffects.camera.enabled = false;
 			}
 
+		}
+
+		if(cinematicMode) {
+			minimap.camera.enabled = false;
+			uiCam.camera.enabled = false;
+		} else {
+			minimap.camera.enabled = true;
+			uiCam.camera.enabled = true;
 		}
 	}
 
@@ -326,6 +340,10 @@ public class PlayerCanvas : MonoBehaviour {
 	public void StatsClicked() {
 		GetComponent<Animator>().SetBool("ShowingInventory", false);
 		GetComponent<Animator>().SetBool("ShowingStats", true);
+	}
+
+	public void HandleInventoryMousOver() {
+
 	}
 
 }
