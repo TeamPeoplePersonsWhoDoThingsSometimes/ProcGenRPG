@@ -39,7 +39,7 @@ public class PlayerControl : MonoBehaviour {
 		playerAnim.SetBool("ShootMediumGun", false);
 
 		/***** Updates booleans to check what attack player is in *****/
-		swordAttack1 = playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Base.Slash1") || playerAnim.GetCurrentAnimatorStateInfo(1).IsName("SlashWalking.SlashWalking");
+		swordAttack1 = playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Base.Slash1") || playerAnim.GetCurrentAnimatorStateInfo(1).IsName("RightHandLayer.SlashWalking");
 		swordAttack2 = playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Base.Slash2");
 		swordAttack2 = playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Base.Slash3");
 
@@ -162,8 +162,12 @@ public class PlayerControl : MonoBehaviour {
 				}
 			} else if (playerref.GetWeapon() != null && playerref.GetWeapon().Type().Equals(WeaponType.MediumGun)) {
 				playerAnim.SetBool("HoldingMediumGun", true);
-				if(Input.GetMouseButton(0)) {
+				if(Input.GetMouseButton(0) && playerref.CanAttack()) {
+					rangedIndicator.enabled = true;
 					playerAnim.SetBool("ShootMediumGun", true);
+				} else if (!Input.GetMouseButton(0)) {
+					rangedIndicator.enabled = false;
+					playerAnim.SetBool("ShootMediumGun", false);
 				}
 			}
 
