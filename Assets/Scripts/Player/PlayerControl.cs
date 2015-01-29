@@ -36,6 +36,7 @@ public class PlayerControl : MonoBehaviour {
 		playerAnim.SetBool("Slash3", false);
 		playerAnim.SetBool("ShootBow", false);
 		playerAnim.SetBool("ShootHandgun", false);
+		playerAnim.SetBool("ShootMediumGun", false);
 
 		/***** Updates booleans to check what attack player is in *****/
 		swordAttack1 = playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Base.Slash1") || playerAnim.GetCurrentAnimatorStateInfo(1).IsName("SlashWalking.SlashWalking");
@@ -147,7 +148,23 @@ public class PlayerControl : MonoBehaviour {
 					playerAnim.SetBool("DrawArrow", false);
 				}
 			} else if (playerref.GetWeapon() != null && playerref.GetWeapon().Type().Equals(WeaponType.Handgun)) {
-				playerAnim.SetBool("ShootHandgun", true);
+				if(Input.GetMouseButton(0)) {
+					playerAnim.SetBool("ShootHandgun", true);
+					rangedIndicator.enabled = true;
+					if(playerref.CanAttack()) {
+						playerAnim.SetBool("ContinuedShooting", true);
+					} else {
+						playerAnim.SetBool("ContinuedShooting", false);
+					}
+				} else {
+					rangedIndicator.enabled = false;
+					playerAnim.SetBool("ShootHandgun", false);
+				}
+			} else if (playerref.GetWeapon() != null && playerref.GetWeapon().Type().Equals(WeaponType.MediumGun)) {
+				playerAnim.SetBool("HoldingMediumGun", true);
+				if(Input.GetMouseButton(0)) {
+					playerAnim.SetBool("ShootMediumGun", true);
+				}
 			}
 
 			if (playerref.GetHack() != null && Input.GetMouseButton(1)) {

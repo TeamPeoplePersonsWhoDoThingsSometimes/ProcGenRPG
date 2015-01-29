@@ -4,12 +4,12 @@ using System.Collections;
 public enum WeaponType {
 	Melee,
 	Bow,
-	Handgun
+	Handgun,
+	MediumGun
 }
 
 public class Weapon : Item {
 
-	protected Attack attack;
 	public GameObject attackOBJ;
 	public string version = "1.0.0";
 	public float critChance;
@@ -20,22 +20,22 @@ public class Weapon : Item {
 	public float attackSpeed;
 	protected float thisDamage;
 	protected float thisKnockback;
-	protected WeaponType weaponType;
+	public WeaponType weaponType;
 
 	protected bool isAttacking = false;
 	protected int bytes;
 	protected int bytesToLevelUp = 1000000;
+	protected float attackSpeedTime = 0f;
 
 	// Use this for initialization
 	protected void Start () {
-		attack = attackOBJ.GetComponent<Attack>();
-		attackOBJ.GetComponent<Attack>().SetCrit(critChance);
 		thisDamage = damage;
 	}
 	
 	// Update is called once per frame
 	protected virtual void Update () {
 		bytesToLevelUp = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*(int)(levelUpSpeedScale*10000);
+		attackSpeedTime += Time.deltaTime;
 		while (bytes > bytesToLevelUp) {
 			LevelUp();
 		}
@@ -43,6 +43,20 @@ public class Weapon : Item {
 
 	public GameObject GetAttack() {
 		return attackOBJ;
+	}
+
+	public virtual bool CanAttack() {
+		if(attackSpeedTime > attackSpeed) {
+			attackSpeedTime = 0;
+			return true;
+		}
+		return false;
+	}
+
+	public virtual void Attack(float damage) {
+		GameObject tempAttack = (GameObject)GameObject.Instantiate(attackOBJ, Player.playerPos.position + new Vector3(0,1,0), Player.playerPos.rotation);
+		tempAttack.GetComponent<Attack>().SetCrit(critChance);
+		tempAttack.GetComponent<Attack>().SetDamage(damage);
 	}
 
 	private void LevelUp() {
@@ -111,16 +125,18 @@ public class Weapon : Item {
 				"\n\nKnockback: " + knockback.ToString("F2") +
 				"\n\nCrit Chance: " + critChance.ToString("F2");
 
-		if(GetAttack().GetComponent<Attack>().attackEffect != Effect.None) {
+		if(GetAttack() != null) {
+			if(GetAttack().GetComponent<Attack>().attackEffect != Effect.None) {
 
-			forreturn += "\n\nEffect: " + GetAttack().GetComponent<Attack>().attackEffect;
+				forreturn += "\n\nEffect: " + GetAttack().GetComponent<Attack>().attackEffect;
 
-			if(GetAttack().GetComponent<Attack>().attackEffect == Effect.Deteriorating) {
-				forreturn += " - " + GetAttack().GetComponent<Attack>().attackEffectChance*100f + "% chance of " + 
-					GetAttack().GetComponent<Attack>().attackEffectValue + " damage for " +
-						GetAttack().GetComponent<Attack>().attackEffectTime + " secs";
-			} else {
-				forreturn += " - for " + GetAttack().GetComponent<Attack>().attackEffectTime + " secs";
+				if(GetAttack().GetComponent<Attack>().attackEffect == Effect.Deteriorating) {
+					forreturn += " - " + GetAttack().GetComponent<Attack>().attackEffectChance*100f + "% chance of " + 
+						GetAttack().GetComponent<Attack>().attackEffectValue + " damage for " +
+							GetAttack().GetComponent<Attack>().attackEffectTime + " secs";
+				} else {
+					forreturn += " - for " + GetAttack().GetComponent<Attack>().attackEffectTime + " secs";
+				}
 			}
 		}
 

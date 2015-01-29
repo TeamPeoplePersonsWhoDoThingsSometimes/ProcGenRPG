@@ -99,9 +99,11 @@ public class Player : MonoBehaviour {
 	}
 
 	public void Attack (int combo) {
-		GameObject temp = (GameObject)Instantiate(activeWeapon.GetAttack(), transform.position + new Vector3(0,1f,0), transform.localRotation);
-		temp.GetComponent<Attack>().SetDamage(strength + (activeWeapon.GetDamage() * combo));
-		temp.GetComponent<Attack>().SetCrit(activeWeapon.GetCrit());
+		activeWeapon.Attack(strength + (activeWeapon.GetDamage() * combo));
+	}
+
+	public bool CanAttack() {
+		return activeWeapon.CanAttack();
 	}
 
 	public void SetActiveItem (int val) {
