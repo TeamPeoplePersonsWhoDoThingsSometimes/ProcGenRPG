@@ -6,6 +6,7 @@ public class Player : MonoBehaviour {
 	public static KeyCode forwardKey = KeyCode.W, backKey = KeyCode.S, useKey = KeyCode.F, rollKey = KeyCode.Space;
 
 	public List<Item> inventory = new List<Item>();
+	public GameObject[] playerArmor;
 	public List<Item> quickAccessItems = new List<Item>();
 	private Weapon activeWeapon;
 	private Hack activeHack;
@@ -27,45 +28,40 @@ public class Player : MonoBehaviour {
 
 	private static GameObject hitInfo;
 
-	// Use this for initialization
 	void Start () {
+		//Need to figure out a better way to load the hitinfo prefab
 		hitInfo = Resources.Load<GameObject>("Info/HitInfo");
 
+		//setting initial integrity and rma values
 		integrity = maxIntegrity;
 		rma = maxrma;
 
-//		GameObject temp = (GameObject)Instantiate (inventory [0].gameObject);
-//		activeWeapon = temp.GetComponent<Weapon> ();
-//		
-//		temp = (GameObject)Instantiate (inventory [1].gameObject);
-//		activeHack = temp.GetComponent<Hack> ();
-
-
-
+		//initializing the references to the player inventory, armor points, and weaponhand
 		playerInventoryRef = GameObject.Find("PlayerInventory");
 		weaponRef = GameObject.Find("PlayerWeaponObj");
 		playerPos = transform;
 		bytesToNextVersion = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*levelUpSpeedScale;
 
+		//setting up inventory
 		inventory = new List<Item>();
 		inventory.Add(weaponRef.transform.GetChild(0).GetComponent<Item>());
-
 		for (int i = 0; i < playerInventoryRef.transform.childCount; i++) {
 			inventory.Add(playerInventoryRef.transform.GetChild(i).GetComponent<Item>());
 		}
 
+		//setting up playerarmor
+		playerArmor = new GameObject[4];
+
+		//setting up initial weapon and hack (not the best way to do this since
+		//it requires that the first item in the inventory prefab needs to be a hack
 		activeWeapon = (Weapon)inventory[0];
 		activeHack = (Hack)inventory[1];
 
+		//sets up quickaccessitems and makes the canvas update the inventory ui
 		quickAccessItems = new List<Item>(inventory);
 		PlayerCanvas.UpdateInventory();
-//		activeWeapon.gameObject.transform.parent = weaponRef.transform;
-//		activeWeapon.gameObject.transform.localPosition = Vector3.zero;
-//		activeWeapon.gameObject.transform.localEulerAngles = Vector3.zero;
-//		activeWeapon.gameObject.transform.localScale = Vector3.one;
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
 		playerPos = transform;
 		rma += Time.deltaTime/2f * (encryption + 1);
@@ -83,29 +79,19 @@ public class Player : MonoBehaviour {
 		}
 
 		maxrma = (encryption/2f + 1)*20f;
-		maxIntegrity = (security/5f + 1)*100f;
-//		if (Time.timeScale == 0f) {
-//			Debug.Log(meleeTimeFreeze);
-//			meleeTimeFreeze -= 0.5f;
-//		} else if(Time.timeScale < 1) {
-//			Time.timeScale = 1f;
-//			meleeTimeFreeze = 1f;
-//		}
-//
-//		if(meleeTimeFreeze <= 0) {
-//			Time.timeScale = 0.001f;
-//		
-
+		maxIntegrity = (security/5f + 1)*100f;	
 	}
 
 	public void Attack (int combo) {
 		activeWeapon.Attack(strength + (activeWeapon.GetDamage() * combo));
 	}
 
+	//Used to control gun shooting animation
 	public bool CanAttack() {
 		return activeWeapon.CanAttack();
 	}
 
+	//Called whenever the player presses a number to quick select
 	public void SetActiveItem (int val) {
 		if(quickAccessItems.Count >= val + 1) {
 			if(quickAccessItems[val].GetType().IsSubclassOf(typeof(Weapon))) { 
@@ -144,6 +130,7 @@ public class Player : MonoBehaviour {
 		return integrity/maxIntegrity;
 	}
 
+	//used to start weaponfx (the green trail on the lightstick)
 	public void StartAttack() {
 		activeWeapon.StartAttack();
 	}
@@ -162,6 +149,7 @@ public class Player : MonoBehaviour {
 		}
 	}
 
+	//Called any time the player gets bytes
 	public void AddBytes(int val) {
 		bytes += val;
 		xpBytes += val;
@@ -204,6 +192,7 @@ public class Player : MonoBehaviour {
 		return activeHack;
 	}
 
+	//Called by any attack that hits the player
 	public void GetDamaged(float damage, bool crit) {
 		GameObject temp = (GameObject)Instantiate(hitInfo,this.transform.position + new Vector3(0,1,0), hitInfo.transform.rotation);
 		temp.GetComponent<TextMesh>().renderer.material.color = Color.red;
@@ -244,6 +233,14 @@ public class Player : MonoBehaviour {
 		}
 		temp.SetActive(false);
 		PlayerCanvas.UpdateInventory();
+
+		if(item.GetComponent<Armor>() != null) {
+			EquipArmor(temp);
+		}
+	}
+
+	public void EquipArmor(GameObject armor) {
+		
 	}
 
 }
