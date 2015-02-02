@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using PriorityQueue;
+using System.Collections.Generic;
 
 public class Map
 {
@@ -20,6 +21,8 @@ public class Map
     //The point which map generation starts around.
     private Point origin;
 
+    private List<AreaGroup> areaGroups;
+
     #endregion
 
 
@@ -27,6 +30,9 @@ public class Map
 
     public Map(int seed = 0)
     {
+        //Instantiate Object.
+        areaGroups = new List<AreaGroup>();
+
         //If a seed isn't given, a random seed is generated.
         if (seed == 0)
         {
@@ -206,6 +212,13 @@ public class Map
     private void generateAreaGroups()
     {
         //TODO: Implement this method.
+
+        //Plan:
+        //  Search in a floodfill pattern (Moving along paths), until no more Areas exist to flood fill.
+        //  When an Area without an AreaGroup is found,
+        //      Create a new AreaGroup Object, and add it to the list.
+        //      Start Dijksta's algorithm to assign surrounding Areas to this group.
+
     }
 
     #endregion
