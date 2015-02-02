@@ -5,6 +5,10 @@ using PriorityQueue;
 public class Map
 {
 
+    //TODO: Make Map Expandable. (Try to avoid extending arrays. Takes too long to copy large Maps.)
+        //possibly remove restriction of moving outside of a Map, and when player enters a non-existant area,
+        //make a new map, and place the player on that one, yet keep the last one? (Rough idea)
+
     #region Variables
 
     //Seed for this map. (Will be used to save the map).
@@ -246,7 +250,7 @@ public class Map
         for(int i = 0; i < areaMap.GetLength(0); i++){
 			for(int j = 0; j < areaMap.GetLength(1); j++){
 
-				GameObject currentObject = (GameObject) GameObject.Instantiate(Resources.instance.spriteHolder, new Vector3(i, j, 0), Quaternion.identity);
+				GameObject currentObject = (GameObject) GameObject.Instantiate(LoadResources.instance.spriteHolder, new Vector3(i, j, 0), Quaternion.identity);
                 SpriteRenderer renderer = currentObject.GetComponent<SpriteRenderer>();
 
                 currentObject.transform.parent = parent.transform;
@@ -260,65 +264,65 @@ public class Map
 
 				switch (Total) {
 				case 16:
-					renderer.sprite = Resources.instance.fourWay;
+                        renderer.sprite = LoadResources.instance.fourWay;
 					break;
 				case 8:
 					if(E){
-                        renderer.sprite = Resources.instance.corner;
+                        renderer.sprite = LoadResources.instance.corner;
 					}
 					else{
-                        renderer.sprite = Resources.instance.corner;
+                        renderer.sprite = LoadResources.instance.corner;
 						currentObject.transform.Rotate(new Vector3(0,0,180));
 					}
 
 					break;
 				case 12:
-                    renderer.sprite = Resources.instance.corner;
+                    renderer.sprite = LoadResources.instance.corner;
 					currentObject.transform.Rotate(new Vector3(0,0,270));
 					break;
 				case 4:
-                    renderer.sprite = Resources.instance.corner;
+                    renderer.sprite = LoadResources.instance.corner;
 					currentObject.transform.Rotate(new Vector3(0,0,90));
 					break;
 				case 10:
-                    renderer.sprite = Resources.instance.twoWay;
+                    renderer.sprite = LoadResources.instance.twoWay;
 					currentObject.transform.Rotate(new Vector3(0,0,90));
 					break;
 				case 6:
-                    renderer.sprite = Resources.instance.twoWay;
+                    renderer.sprite = LoadResources.instance.twoWay;
 					break;
 				case 9:
-                    renderer.sprite = Resources.instance.threeWay;
+                    renderer.sprite = LoadResources.instance.threeWay;
 					currentObject.transform.Rotate(new Vector3(0,0,90));
 					break;
 				case 11:
-                    renderer.sprite = Resources.instance.threeWay;
+                    renderer.sprite = LoadResources.instance.threeWay;
 					currentObject.transform.Rotate(new Vector3(0,0,180));
 					break;
 				case 13:
-                    renderer.sprite = Resources.instance.threeWay;
+                    renderer.sprite = LoadResources.instance.threeWay;
 					currentObject.transform.Rotate(new Vector3(0,0,270));
 					break;
 				case 15:
-                    renderer.sprite = Resources.instance.threeWay;
+                    renderer.sprite = LoadResources.instance.threeWay;
 					break;
 				case 1:
-                    renderer.sprite = Resources.instance.end;
+                    renderer.sprite = LoadResources.instance.end;
 					currentObject.transform.Rotate(new Vector3(0,0,180));
 					break;
 				case 3:
-                    renderer.sprite = Resources.instance.end;
+                    renderer.sprite = LoadResources.instance.end;
 					currentObject.transform.Rotate(new Vector3(0,0,90));
 					break;
 				case 5:
-                    renderer.sprite = Resources.instance.end;
+                    renderer.sprite = LoadResources.instance.end;
 					break;
 				case 7:
-                    renderer.sprite = Resources.instance.end;
+                    renderer.sprite = LoadResources.instance.end;
 					currentObject.transform.Rotate(new Vector3(0,0,270));
 					break;
 				default:
-                    renderer.sprite = Resources.instance.end;
+                    renderer.sprite = LoadResources.instance.end;
 					break;
 				}
             }
