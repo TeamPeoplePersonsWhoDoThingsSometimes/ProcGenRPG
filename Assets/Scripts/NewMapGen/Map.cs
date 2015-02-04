@@ -6,15 +6,17 @@ using System.Collections.Generic;
 public class Map
 {
 
+    #region Plans
+
     //TODO: Make Map Expandable. (Try to avoid extending arrays. Takes too long to copy large Maps.)
         //possibly remove restriction of moving outside of a Map, and when player enters a non-existant area,
         //make a new map, and place the player on that one, yet keep the last one? (Rough idea)
 
     //Possible Solution:
-        //Allow Area's to point outside of map, and when a player moves outside of the map, either load or generate 
+        //Allow Areas to point outside of map, and when a player moves outside of the map, either load or generate 
         //the map they're trying to move to. Would require a data structure to hold all the Maps, and their seed values.
             //A 2-key dictionary might work well for this. The keys being x and y values, of course.
-            //Probably need to 2-key dictionary from online. People usually make them and give them away.
+            //Probably can get 2-key dictionary from online. People usually make them and give them away.
 
         //**Generate the maps, first. THEN, run a method to randomly create connections on both edges of an Map.
             //This would probably be the best solution. Somewhat easy to implement and more natural looking.
@@ -30,6 +32,13 @@ public class Map
         //that also allows for loading and saving Map seeds.
 
         //NOTE: Area Groups will only be able to exist within one Map. They cannot spill over onto other Maps.
+
+
+    //TODO: Create a function that assigns a quest to a random Area, and returns the Area's position.
+
+    //TODO: Create a function that assigns a quest to a random AreaGroup in this Map, and returns the AreaGroup's name.
+
+    #endregion
 
 
     #region Variables
@@ -117,7 +126,7 @@ public class Map
             Point tempPoint = temp.to;
 
             //If not already connected, and Point is a valid point on the map.
-            if (withinAreaBounds(tempPoint) && !areaData[tempPoint.x, tempPoint.y].isConnected)
+            if (withinMapBounds(tempPoint) && !areaData[tempPoint.x, tempPoint.y].isConnected)
             { 
 
                 //Set Next Vertex to isConnected.
@@ -195,7 +204,7 @@ public class Map
                 Edge edge = array[random.Next(0, array.Length)];
 
                 //If this is a valid connection to add.
-                if (withinAreaBounds(edge.to))
+                if (withinMapBounds(edge.to))
                 {
                     //Set BOTH side to be used.
 
@@ -241,6 +250,27 @@ public class Map
         //      Create a new AreaGroup Object, and add it to the list.
         //      Start Dijksta's algorithm to assign surrounding Areas to this group.
 
+        System.Random random = new System.Random(seed);
+
+        int numOfTypes = System.Enum.GetNames(typeof(AreaType)).Length;
+
+        //Queue of non-assigned Areas.
+        Queue<Area> queue = new Queue<Area>();
+        queue.Enqueue(areaMap[origin.x, origin.y]);
+
+        while (queue.Count > 0)
+        {
+            //Get the area.
+            Area temp = queue.Dequeue();
+            int distance = random.Next(2, 4); //Get a random distance for this AreaGroup to expand.
+            AreaType type = (AreaType)random.Next(numOfTypes); //Get a random AreaType
+
+            temp.type = type;
+
+            //Do Dijkstra's algorithm on this Area.
+                //NOT IMPLEMENTED YET
+        }
+
     }
 
     #endregion
@@ -251,7 +281,7 @@ public class Map
     //Returns the area at the input point. (Can input x and y, or a Point object)
     public Area getArea(int x, int y)
     {
-        if (withinAreaBounds(x, y))
+        if (withinMapBounds(x, y))
         {
             return areaMap[x, y];
         }
@@ -275,6 +305,16 @@ public class Map
     public Point getMapBounds()
     {
         return new Point(areaMap.GetLength(0) - 1, areaMap.GetLength(1) - 1);
+    }
+
+    //Check to see if the input point is a valid point on the map. Returns false, if not. (Can input x and y, or a Point object)
+    public bool withinMapBounds(Point p)
+    {
+        return (p.x > -1 && p.y > -1 && p.x < areaMap.GetLength(0) && p.y < areaMap.GetLength(1));
+    }
+    public bool withinMapBounds(int x, int y)
+    {
+        return (x > -1 && y > -1 && x < areaMap.GetLength(0) && y < areaMap.GetLength(1));
     }
 
     public void debugDisplayMap()
@@ -389,19 +429,9 @@ public class Map
             for (int j = 0; j < areaData.GetLength(1); j++)
             {
                 Vertex temp = areaData[i, j];
-                areaMap[i, j] = new Area(new Point(i, j), temp.N.isUsed, temp.E.isUsed, temp.S.isUsed, temp.W.isUsed);
+                areaMap[i, j] = new Area(this, new Point(i, j), temp.N.isUsed, temp.E.isUsed, temp.S.isUsed, temp.W.isUsed);
             }
         }
-    }
-
-    //Check to see if the input point is a valid point on the map. Returns false, if not. (Can input x and y, or a Point object)
-    private bool withinAreaBounds(Point p)
-    {
-        return (p.x > -1 && p.y > -1 && p.x < areaMap.GetLength(0) && p.y < areaMap.GetLength(1));
-    }
-    private bool withinAreaBounds(int x, int y)
-    {
-        return (x > -1 && y > -1 && x < areaMap.GetLength(0) && y < areaMap.GetLength(1));
     }
 
     #endregion

@@ -10,6 +10,23 @@ public class Point
 
     public int x, y;
 
+    //These are the Points +1 in these directions.
+    public Point up
+    {
+        get { return new Point(x, y + 1); }
+    }
+    public Point right
+    {
+        get { return new Point(x + 1, y); }
+    }
+    public Point left
+    {
+        get { return new Point(x - 1, y); }
+    }
+    public Point down
+    {
+        get { return new Point(x, y - 1); }
+    }
 
     #region Constructors
 
