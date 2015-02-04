@@ -4,9 +4,11 @@ using System.Collections.Generic;
 
 public class AreaGroup {
 
+    //TODO: Create a function that randomly assigns a quest to an Area in this AreaGroup.
+
+
     //Areas don't need to be in any order.
     private List<Area> areas;
-
 
     public AreaGroup()
     {

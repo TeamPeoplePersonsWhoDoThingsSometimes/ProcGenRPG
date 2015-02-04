@@ -10,6 +10,28 @@ public class Map
         //possibly remove restriction of moving outside of a Map, and when player enters a non-existant area,
         //make a new map, and place the player on that one, yet keep the last one? (Rough idea)
 
+    //Possible Solution:
+        //Allow Area's to point outside of map, and when a player moves outside of the map, either load or generate 
+        //the map they're trying to move to. Would require a data structure to hold all the Maps, and their seed values.
+            //A 2-key dictionary might work well for this. The keys being x and y values, of course.
+            //Probably need to 2-key dictionary from online. People usually make them and give them away.
+
+        //**Generate the maps, first. THEN, run a method to randomly create connections on both edges of an Map.
+            //This would probably be the best solution. Somewhat easy to implement and more natural looking.
+                //ONLY problem, is how to save this as data? Can we seed this every time?
+                    //The seed for the connections between two maps, could be the seeds of the two Maps addded together?
+                    //In theory, that should work every time, since the seeds of the two maps are the same every time.
+            //This will require that every Map surrounding the current map have a seed value. Simple.
+                //Map class will have to be changed, so that it is only generated when a method is called, rather than
+                //when it is constructed. The constructor should only give the Map object it's seed value.
+                    //Need new functions, like generateMap(), and releaseData(). Much like the Area class.
+
+        //Should a World class be created again, to hold the 2-key dictionary? It would be a nice wrapper, 
+        //that also allows for loading and saving Map seeds.
+
+        //NOTE: Area Groups will only be able to exist within one Map. They cannot spill over onto other Maps.
+
+
     #region Variables
 
     //Seed for this map. (Will be used to save the map).
