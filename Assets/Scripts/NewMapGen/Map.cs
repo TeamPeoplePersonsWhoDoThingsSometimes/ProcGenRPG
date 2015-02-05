@@ -83,6 +83,8 @@ public class Map
 
         //Convert Vertex array into Area Array.
         createAreaMap(areaData);
+
+        generateAreaGroups();
         
     }
 
@@ -242,38 +244,56 @@ public class Map
     //Divides the areas into AreaGroups, which will have the same biome (tileset). (Flood-Fill algorithm)
     private void generateAreaGroups()
     {
-        //TODO: Implement this method.
-
         //Plan:
         //  Search in a floodfill pattern (Moving along paths), until no more Areas exist to flood fill.
         //  When an Area without an AreaGroup is found,
         //      Create a new AreaGroup Object, and add it to the list.
-        //      Start Dijksta's algorithm to assign surrounding Areas to this group.
+        //      Start floodfill to assign surrounding Areas to this group.
+
+        bool[,] check = new bool[areaMap.GetLength(0), areaMap.GetLength(1)];
+        bool isFinished = false;
 
         System.Random random = new System.Random(seed);
 
         int numOfTypes = System.Enum.GetNames(typeof(AreaType)).Length;
 
-        //SEARCH FOR UN-ASSIGNED AREAS.
-        Area search = getArea(origin.x, origin.y);
-            //TODO: DO SEARCH.
+        int x = 0;
+        int y = 0;
 
-        if (search.getType() == null)
+        while (!isFinished)
         {
-            //Get the area.
-            Area temp = search;
-            int distance = random.Next(2, 4); //Get a random distance for this AreaGroup to expand.
+            Point bounds = getMapBounds();
 
-            AreaGroup group = new AreaGroup((AreaType)random.Next(numOfTypes)); //Get a random AreaType
-            group.addArea(temp);
+            Area search = getArea(x, y);
 
-            Area[] array = floodFill(temp, distance);
-
-            for (int i = 0; i < array.Length; i++)
+            if (search.getType() == 0)
             {
-                if (array[i].getType() == null)
+                //Get the area.
+                Area temp = search;
+                int distance = random.Next(2, 4); //Get a random distance for this AreaGroup to expand.
+
+                AreaGroup group = new AreaGroup((AreaType)random.Next(1, numOfTypes)); //Get a random AreaType
+
+                List<Area> array = floodFill(null, temp, distance);
+
+                for (int i = 0; i < array.Count; i++)
                 {
-                    group.addArea(array[i]);
+                    if (array[i].getType() == 0)
+                    {
+                        group.addArea(array[i]);
+                    }
+                }
+            }
+
+            x++;
+
+            if (x > bounds.x)
+            {
+                x = 0;
+                y++;
+                if (y > bounds.y)
+                {
+                    isFinished = true;
                 }
             }
         }
@@ -407,6 +427,21 @@ public class Map
                     renderer.sprite = LoadResources.instance.end;
 					break;
 				}
+
+                switch(areaMap[i,j].getType())
+                {
+                    case AreaType.Blue:
+                        renderer.color = Color.blue;
+                        break;
+                    case AreaType.Green:
+                        renderer.color = Color.green;
+                        break;
+                    case AreaType.Red:
+                        renderer.color = Color.red;
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }
@@ -441,16 +476,37 @@ public class Map
         }
     }
 
-    //Returns all the Areas within the input distance of A, including A.
-    private Area[] floodFill(Area a, int distance)
+    //Recursively gets all the Areas within the input distance of A, including A.
+    private List<Area> floodFill(Area from, Area search, int distance)
     {
-        if (distance < 1)
+        if (distance <= 0)
         {
-            throw new System.ArgumentException("Distance must be 1 or greater!");
+            return null;
         }
 
-        //TODO: Implement method.
-        return null;
+        List<Area> temp = new List<Area>();
+        temp.Add(search);
+
+        Area[] neighbors = search.getNeighbors();
+
+        foreach (Area a in neighbors)
+        {
+            if (a.getType() == 0)
+            {
+                List<Area> next = null;
+                if (a != from)
+                {
+                    next = floodFill(search, a, distance - 1);
+                }
+                if (next != null)
+                {
+                    temp.AddRange(next);
+                }
+            }
+        }
+        
+
+        return temp;
     }
 
     #endregion
