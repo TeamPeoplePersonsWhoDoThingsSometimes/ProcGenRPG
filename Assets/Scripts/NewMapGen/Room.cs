@@ -16,7 +16,7 @@ public class Room {
     //TODO: Create a function and varible that requires Quest Material to be generated in this Room.
 
     private Point botLeft; //Bottom left corner of this room.
-    private Point topRight; //Top Right corner of this room. (The length and width).
+    private Point topRight; //Top Right corner of this room.
 
     public int length //X size of this Room.
     {

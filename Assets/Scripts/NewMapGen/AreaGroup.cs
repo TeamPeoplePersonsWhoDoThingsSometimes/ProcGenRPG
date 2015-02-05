@@ -17,14 +17,18 @@ public class AreaGroup {
     //Areas don't need to be in any order.
     private List<Area> areas;
 
-    public AreaGroup(Color color)
+    public AreaGroup(AreaType type)
     {
+        this.type = type;
+
         areas = new List<Area>();
     }
 
+    //Adds the Area to this AreaGroup, and sets it's type to be this group's type.
     public void addArea(Area a)
     {
         areas.Add(a);
+        a.setType(this.type);
     }
 
     //Returns a random Area from this AreaGroup.

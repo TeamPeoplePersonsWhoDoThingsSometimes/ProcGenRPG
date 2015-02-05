@@ -239,7 +239,7 @@ public class Map
 
     }
 
-    //Divides the areas into AreaGroups, which will have the same biome (tileset). (Dijkstra's algorithm)
+    //Divides the areas into AreaGroups, which will have the same biome (tileset). (Flood-Fill algorithm)
     private void generateAreaGroups()
     {
         //TODO: Implement this method.
@@ -254,21 +254,28 @@ public class Map
 
         int numOfTypes = System.Enum.GetNames(typeof(AreaType)).Length;
 
-        //Queue of non-assigned Areas.
-        Queue<Area> queue = new Queue<Area>();
-        queue.Enqueue(areaMap[origin.x, origin.y]);
+        //SEARCH FOR UN-ASSIGNED AREAS.
+        Area search = getArea(origin.x, origin.y);
+            //TODO: DO SEARCH.
 
-        while (queue.Count > 0)
+        if (search.getType() == null)
         {
             //Get the area.
-            Area temp = queue.Dequeue();
+            Area temp = search;
             int distance = random.Next(2, 4); //Get a random distance for this AreaGroup to expand.
-            AreaType type = (AreaType)random.Next(numOfTypes); //Get a random AreaType
 
-            temp.type = type;
+            AreaGroup group = new AreaGroup((AreaType)random.Next(numOfTypes)); //Get a random AreaType
+            group.addArea(temp);
 
-            //Do Dijkstra's algorithm on this Area.
-                //NOT IMPLEMENTED YET
+            Area[] array = floodFill(temp, distance);
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (array[i].getType() == null)
+                {
+                    group.addArea(array[i]);
+                }
+            }
         }
 
     }
@@ -432,6 +439,18 @@ public class Map
                 areaMap[i, j] = new Area(this, new Point(i, j), temp.N.isUsed, temp.E.isUsed, temp.S.isUsed, temp.W.isUsed);
             }
         }
+    }
+
+    //Returns all the Areas within the input distance of A, including A.
+    private Area[] floodFill(Area a, int distance)
+    {
+        if (distance < 1)
+        {
+            throw new System.ArgumentException("Distance must be 1 or greater!");
+        }
+
+        //TODO: Implement method.
+        return null;
     }
 
     #endregion
