@@ -11,7 +11,7 @@ public class MasterDriver : MonoBehaviour {
 	void Start ()
     {
 
-        currentMap = new Map(26574);
+        currentMap = new Map();
 
         currentMap.debugDisplayMap();
 

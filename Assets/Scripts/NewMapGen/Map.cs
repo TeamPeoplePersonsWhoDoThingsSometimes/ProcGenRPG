@@ -250,7 +250,6 @@ public class Map
         //      Create a new AreaGroup Object, and add it to the list.
         //      Start floodfill to assign surrounding Areas to this group.
 
-        bool[,] check = new bool[areaMap.GetLength(0), areaMap.GetLength(1)];
         bool isFinished = false;
 
         System.Random random = new System.Random(seed);
@@ -259,6 +258,8 @@ public class Map
 
         int x = 0;
         int y = 0;
+
+        Queue<Area> unset = new Queue<Area>();
 
         while (!isFinished)
         {
@@ -272,17 +273,30 @@ public class Map
                 Area temp = search;
                 int distance = random.Next(2, 4); //Get a random distance for this AreaGroup to expand.
 
-                AreaGroup group = new AreaGroup((AreaType)random.Next(1, numOfTypes)); //Get a random AreaType
-
                 List<Area> array = floodFill(null, temp, distance);
-
-                for (int i = 0; i < array.Count; i++)
+                
+                //Don't allow tiny AreaGroups.
+                if (array.Count > 3)
                 {
-                    if (array[i].getType() == 0)
+                    //Get a random AreaType
+                    AreaGroup group = new AreaGroup((AreaType)random.Next(1, numOfTypes));
+
+                    for (int i = 0; i < array.Count; i++)
                     {
-                        group.addArea(array[i]);
+                        if (array[i].getType() == AreaType.NotAssigned)
+                        {
+                            group.addArea(array[i]);
+                        }
                     }
                 }
+                else
+                {
+                    foreach(Area a in array)
+                    {
+                        unset.Enqueue(a);
+                    }
+                }
+
             }
 
             x++;
@@ -296,6 +310,26 @@ public class Map
                     isFinished = true;
                 }
             }
+        }
+
+        while (unset.Count > 0)
+        {
+            //Set this Area to the nearest AreaGroup.
+            Area next = unset.Dequeue();
+
+            foreach (Area a in next.getNeighbors())
+            {
+                if (a.getGroup() != null)
+                {
+                    a.getGroup().addArea(next);
+                    break;
+                }
+            }
+            if (next.getType() == AreaType.NotAssigned)
+            {
+                unset.Enqueue(next);
+            }
+
         }
 
     }
@@ -438,6 +472,12 @@ public class Map
                         break;
                     case AreaType.Red:
                         renderer.color = Color.red;
+                        break;
+                    case AreaType.Yellow:
+                        renderer.color = Color.yellow;
+                        break;
+                    case AreaType.Cyan:
+                        renderer.color = Color.cyan;
                         break;
                     default:
                         break;

@@ -7,6 +7,8 @@ public enum AreaType {
     NotAssigned,
     Red,
     Blue,
-    Green
+    Green,
+    Yellow,
+    Cyan
 	
 }

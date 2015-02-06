@@ -29,7 +29,7 @@ public class Area
 
     #region Variables
 
-    private AreaType type;
+    private AreaGroup group;
 
     //Areas which this Area is connected to. True, if connected to an area in that direction.
     public bool north;
@@ -43,8 +43,6 @@ public class Area
         get;
         private set;
     }
-
-    AreaGroup group;
     
     //The Map which this Area is a part of.
     Map parentMap;
@@ -150,13 +148,21 @@ public class Area
         return temp;
     }
 
-    public void setType(AreaType t)
+    public void setGroup(AreaGroup g)
     {
-        type = t;
+        group = g;
+    }
+    public AreaGroup getGroup()
+    {
+        return group;
     }
     public AreaType getType()
     {
-        return type;
+        if (group == null)
+        {
+            return AreaType.NotAssigned;
+        }
+        return group.type;
     }
 
     #endregion

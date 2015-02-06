@@ -28,7 +28,7 @@ public class AreaGroup {
     public void addArea(Area a)
     {
         areas.Add(a);
-        a.setType(this.type);
+        a.setGroup(this);
     }
 
     //Returns a random Area from this AreaGroup.
