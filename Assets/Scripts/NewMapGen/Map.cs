@@ -316,18 +316,20 @@ public class Map
         {
             //Set this Area to the nearest AreaGroup.
             Area next = unset.Dequeue();
-
-            foreach (Area a in next.getNeighbors())
-            {
-                if (a.getGroup() != null)
-                {
-                    a.getGroup().addArea(next);
-                    break;
-                }
-            }
             if (next.getType() == AreaType.NotAssigned)
             {
-                unset.Enqueue(next);
+                foreach (Area a in next.getNeighbors())
+                {
+                    if (a.getGroup() != null)
+                    {
+                        a.getGroup().addArea(next);
+                        break;
+                    }
+                }
+                if (next.getType() == AreaType.NotAssigned)
+                {
+                    unset.Enqueue(next);
+                }
             }
 
         }
