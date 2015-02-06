@@ -47,11 +47,11 @@ public class FollowPlayer : MonoBehaviour {
 		}
 
 		if(Input.GetAxis("Mouse ScrollWheel") > 0) {
-			transform.GetChild(0).camera.fieldOfView = Mathf.Clamp(++transform.GetChild(0).camera.fieldOfView, 30f, 60f);
-			transform.GetChild(1).camera.fieldOfView = Mathf.Clamp(++transform.GetChild(1).camera.fieldOfView, 30f, 60f);
+			transform.GetChild(0).transform.position = new Vector3(transform.GetChild(0).transform.position.x, transform.GetChild(0).transform.position.y - 0.5f, transform.GetChild(0).transform.position.z);
+			transform.GetChild(1).transform.position = new Vector3(transform.GetChild(1).transform.position.x, transform.GetChild(1).transform.position.y - 0.5f, transform.GetChild(1).transform.position.z);
 		} else if (Input.GetAxis("Mouse ScrollWheel") < 0) {
-			transform.GetChild(0).camera.fieldOfView = Mathf.Clamp(--transform.GetChild(0).camera.fieldOfView, 30f, 60f);
-			transform.GetChild(1).camera.fieldOfView = Mathf.Clamp(--transform.GetChild(1).camera.fieldOfView, 30f, 60f);
+			transform.GetChild(0).transform.position = new Vector3(transform.GetChild(0).transform.position.x, transform.GetChild(0).transform.position.y + 0.5f, transform.GetChild(0).transform.position.z);
+			transform.GetChild(1).transform.position = new Vector3(transform.GetChild(1).transform.position.x, transform.GetChild(1).transform.position.y + 0.5f, transform.GetChild(1).transform.position.z);
 		}
 
 //		this.transform.LookAt(Player.playerPos);
