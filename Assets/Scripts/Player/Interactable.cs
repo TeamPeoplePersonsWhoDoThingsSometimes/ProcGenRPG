@@ -9,7 +9,7 @@ public abstract class Interactable : MonoBehaviour {
 
 	private int frameOffset = 20;
 	private int lastFrame = 0;
-
+	protected Player player;
 	/**
 	 * true if the player is within the trigger of the interactable item
 	 */
@@ -19,7 +19,8 @@ public abstract class Interactable : MonoBehaviour {
 	 * Calls the interact method when the player hits the use key within range
 	 */
 	protected void OnTriggerStay(Collider other) {
-		if (other.gameObject.GetComponent<Player>() != null) {
+		player = other.gameObject.GetComponent<Player>();
+		if (player != null) {
 			canInteract = true;
 			if (Player.useKey == null) {
 				Debug.LogError("Player use key is not set");
