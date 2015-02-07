@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -199,11 +200,21 @@ public class PlayerCanvas : MonoBehaviour {
 
 		/*** adds inventory icons to UI when bool is true ***/
 		if(updateInventoryUI) {
-			for (int i = 0; i < playerRef.inventory.Count; i++) {
+			int i;
+			for (i = 0; i < playerRef.inventory.Count && i < 21; i++) {
 				inventoryItemContainer.transform.GetChild(i).GetComponent<Image>().sprite = GetSprite(playerRef.inventory[i].RarityVal);
 				inventoryItemContainer.transform.GetChild(i).GetComponent<Image>().color = Color.white;
 				inventoryItemContainer.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = playerRef.inventory[i].icon;
 				inventoryItemContainer.transform.GetChild(i).GetChild(0).GetComponent<Image>().color = Color.white;
+				inventoryItemContainer.transform.GetChild(i).GetComponent<EventTrigger>().enabled = true;
+			}
+			if(i < 21)
+			{
+				for(;i<21;i++)
+				{
+					inventoryItemContainer.transform.GetChild(i).GetComponent<Image>().color = Color.black;
+					inventoryItemContainer.transform.GetChild(i).GetComponent<EventTrigger>().enabled = false;
+				}
 			}
 			updateInventoryUI = false;
 		}
@@ -342,8 +353,17 @@ public class PlayerCanvas : MonoBehaviour {
 		GetComponent<Animator>().SetBool("ShowingStats", true);
 	}
 
-	public void HandleInventoryMousOver() {
-
+	public void HandleInventoryMouseOver(int index) {
+		if(index == -1) {
+			GetComponent<Animator>().SetBool("MouseOver", false);
+			mouseOverInfo.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector2(-200f, 0f);
+		} else {
+			GetComponent<Animator>().SetBool("MouseOver", true);
+			mouseOverInfo.transform.parent.GetComponent<RectTransform>().anchoredPosition = inventoryItemContainer.transform.GetChild(index).GetComponent<RectTransform>().anchoredPosition
+				+ new Vector2(-3.7f, 0.19f);
+			mouseOverInfo.transform.GetChild(1).GetChild(0).GetComponent<Text>().text = playerRef.inventory[index].name;
+			mouseOverInfo.transform.GetChild(0).GetComponent<Text>().text = playerRef.inventory[index].InfoString();
+		}
 	}
 
 }
