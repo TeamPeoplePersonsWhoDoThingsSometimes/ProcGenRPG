@@ -46,7 +46,7 @@ public class Status : ActionEventListener {
 	 * Privatize the constructor to revoke access per the singelton
 	 * implementation
 	 */
-	private Status() : base() {
+	private Status() {
 		recentActions = new Queue<IAction> ();
 		enemiesKilled = new Dictionary<string, int> ();
 		visitedAreas = new List<string> ();

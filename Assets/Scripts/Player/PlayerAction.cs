@@ -11,6 +11,11 @@ public class PlayerAction : IAction {
 		this.action = action;
 	}
 
+	public PlayerAction(ActionProtocol protocol) {
+		action = protocol.Type;
+		obj = new DirectObject(protocol.Target);
+	}
+
 	public ActionType getActionType() {
 		return action;
 	}

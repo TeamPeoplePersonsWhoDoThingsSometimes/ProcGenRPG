@@ -11,6 +11,8 @@ public class ActionEventInvoker {
 		get {
 			if(instance == null) {
 				instance = new ActionEventInvoker();
+				//first thing registered should always be the status, so status SHOULD NOT call its base constructor
+				instance.ActionEvent += new ActionEventHandler(Status.playerStatus.onAction);
 			}
 			return instance;
 		}

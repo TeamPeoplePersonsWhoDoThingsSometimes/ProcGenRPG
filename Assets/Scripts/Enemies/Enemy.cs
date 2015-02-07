@@ -42,6 +42,10 @@ public class Enemy : MonoBehaviour {
 
 	private Vector3 lastPos;
 
+	public DirectObject getDirectObject() {
+		return new DirectObject (name.Substring(name.IndexOf(" ") + 1), (isBadass? "Badass" : "Basic" ));
+	}
+
 	// Use this for initialization
 	protected void Start () {
 		if(Random.value < badassChance) {
@@ -125,6 +129,10 @@ public class Enemy : MonoBehaviour {
 		hp += Time.deltaTime*baseHealthRegen/10f;
 
 		if(transform.position.y < -10f) {
+
+			//trigger kill event for this enemy
+			ActionEventInvoker.primaryInvoker.invokeAction(new PlayerAction(getDirectObject(), ActionType.KILL));
+
 			Destroy(this.gameObject);
 		}
 	}
