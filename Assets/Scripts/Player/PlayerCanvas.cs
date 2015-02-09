@@ -52,7 +52,9 @@ public class PlayerCanvas : MonoBehaviour {
 
 	private GameObject inventoryItemContainer, mouseOverInfo;
 	
-	private Vector2 dragDelta;
+	private Vector2 dragDelta = Vector2.zero;
+	private Vector2 mousePressedLocation;
+	private Vector2 dragStart;
 
 	public static void RegisterEnemyHealthBar(GameObject enemy) {
 		if(enemieswithhealthbars == null) {
@@ -293,6 +295,14 @@ public class PlayerCanvas : MonoBehaviour {
 			mainCamWithEffects.camera.enabled = true;
 			mainCamWithEffects.GetComponent<Blur>().blur = Mathf.MoveTowards(mainCamWithEffects.GetComponent<Blur>().blur, 5, Time.deltaTime*5f);
 
+			/*** Handles dragging logic ***/
+			if(Input.GetMouseButtonDown(0)) {
+				mousePressedLocation = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+			}
+			if(Input.GetMouseButton(0)) {
+				dragDelta = (new Vector2(Input.mousePosition.x, Input.mousePosition.y)) - mousePressedLocation;
+			}
+
 		} else {
 			/*** Handles non-console interaction, disallows interaction with console ***/
 			consoleGUI.interactable = false;
@@ -313,10 +323,6 @@ public class PlayerCanvas : MonoBehaviour {
 		} else {
 			minimap.camera.enabled = true;
 			uiCam.camera.enabled = true;
-		}
-
-		if(Input.GetMouseButton(0)) {
-
 		}
 	}
 
@@ -363,7 +369,7 @@ public class PlayerCanvas : MonoBehaviour {
 		if(index == -1) {
 			GetComponent<Animator>().SetBool("MouseOver", false);
 			mouseOverInfo.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector2(-200f, 0f);
-		} else {
+		} else if (dragDelta == Vector2.zero) {
 			GetComponent<Animator>().SetBool("MouseOver", true);
 			mouseOverInfo.transform.parent.GetComponent<RectTransform>().anchoredPosition = inventoryItemContainer.transform.GetChild(index).GetComponent<RectTransform>().anchoredPosition
 				+ new Vector2(-3.7f, 0.19f);
@@ -373,7 +379,17 @@ public class PlayerCanvas : MonoBehaviour {
 	}
 
 	public void HandleInventoryMouseDrag(int index) {
-		inventoryItemContainer.transform.GetChild(index).GetComponent<RectTransform>().anchoredPosition = new Vector2(Input.mouse, Input.mousePosition.normalized.y);
+		if(dragStart == Vector2.zero)
+		{
+			dragStart = inventoryItemContainer.transform.GetChild(index).GetComponent<RectTransform>().anchoredPosition;
+		}
+		inventoryItemContainer.transform.GetChild(index).GetComponent<RectTransform>().anchoredPosition = dragStart + dragDelta/Screen.width*14f;
+	}
+
+	public void HandleInventoryMouseEndDrag(int index) {
+		inventoryItemContainer.transform.GetChild(index).GetComponent<RectTransform>().anchoredPosition = dragStart;
+		dragDelta = Vector2.zero;
+		dragStart = Vector2.zero;
 	}
 
 }
