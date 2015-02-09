@@ -51,6 +51,8 @@ public class PlayerCanvas : MonoBehaviour {
 	private GameObject enemyHealthBars;
 
 	private GameObject inventoryItemContainer, mouseOverInfo;
+	
+	private Vector2 dragDelta;
 
 	public static void RegisterEnemyHealthBar(GameObject enemy) {
 		if(enemieswithhealthbars == null) {
@@ -312,6 +314,10 @@ public class PlayerCanvas : MonoBehaviour {
 			minimap.camera.enabled = true;
 			uiCam.camera.enabled = true;
 		}
+
+		if(Input.GetMouseButton(0)) {
+
+		}
 	}
 
 
@@ -364,6 +370,10 @@ public class PlayerCanvas : MonoBehaviour {
 			mouseOverInfo.transform.GetChild(1).GetChild(0).GetComponent<Text>().text = playerRef.inventory[index].name;
 			mouseOverInfo.transform.GetChild(0).GetComponent<Text>().text = playerRef.inventory[index].InfoString();
 		}
+	}
+
+	public void HandleInventoryMouseDrag(int index) {
+		inventoryItemContainer.transform.GetChild(index).GetComponent<RectTransform>().anchoredPosition = new Vector2(Input.mouse, Input.mousePosition.normalized.y);
 	}
 
 }

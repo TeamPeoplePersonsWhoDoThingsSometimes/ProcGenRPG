@@ -41,7 +41,7 @@ public class PlayerControl : MonoBehaviour {
 		/***** Updates booleans to check what attack player is in *****/
 		swordAttack1 = playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Base.Slash1") || playerAnim.GetCurrentAnimatorStateInfo(1).IsName("RightHandLayer.SlashWalking");
 		swordAttack2 = playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Base.Slash2");
-		swordAttack2 = playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Base.Slash3");
+		swordAttack3 = playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Base.Slash3");
 
 		/****** Set movement variables *****/
 		if(!immobile) {
@@ -117,6 +117,8 @@ public class PlayerControl : MonoBehaviour {
 		/**** Handling attacking ****/
 		if(!PlayerCanvas.inConsole && !immobile) {
 			if (playerref.GetWeapon() != null && playerref.GetWeapon().Type().Equals(WeaponType.Melee)) {
+				Debug.Log(swordAttack1 + " " + swordAttack2 + " " + swordAttack3);
+
 				if (Input.GetMouseButtonDown(0) && comboTime && !swordAttack1 && swordAttack2) {
 					playerAnim.SetBool("Slash3", true);
 					comboTime = false;
