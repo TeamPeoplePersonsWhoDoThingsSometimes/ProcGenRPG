@@ -26,6 +26,9 @@ public class Player : MonoBehaviour {
 	public static int algorithmPoints;
 	private float integrity, rma, maxIntegrity = 100f, maxrma = 20f;
 
+	//Armor Refs
+	private Transform leftUpLegRef, rightUpLegRef, leftLegRef, rightLegRef, leftFootRef, rightFootRef;
+
 	private static GameObject hitInfo;
 
 	void Start () {
@@ -51,6 +54,13 @@ public class Player : MonoBehaviour {
 
 		//setting up playerarmor
 		playerArmor = new GameObject[4];
+
+		leftUpLegRef = GameObject.Find("Character1_LeftUpLeg").GetComponent<Transform>();
+		rightUpLegRef = GameObject.Find("Character1_RightUpLeg").GetComponent<Transform>();
+		leftLegRef = GameObject.Find("Character1_LeftLeg").GetComponent<Transform>();
+		rightLegRef = GameObject.Find("Character1_RightLeg").GetComponent<Transform>();
+		leftFootRef = GameObject.Find("Character1_LeftFoot").GetComponent<Transform>();
+		rightFootRef = GameObject.Find("Character1_RightFoot").GetComponent<Transform>();
 
 		//setting up initial weapon and hack (not the best way to do this since
 		//it requires that the first item in the inventory prefab needs to be a hack
@@ -228,19 +238,51 @@ public class Player : MonoBehaviour {
 		GameObject temp = (GameObject) Instantiate(item, Vector3.zero, Quaternion.identity);
 		inventory.Add(temp.GetComponent<Item>());
 		temp.transform.parent = playerInventoryRef.transform;
-		if(quickAccessItems.Count < 10) {
+		if(quickAccessItems.Count < 10 && (temp.GetComponent<Weapon>() != null || temp.GetComponent<Hack>() != null)) {
 			quickAccessItems.Add(temp.GetComponent<Item>());
 		}
 		temp.SetActive(false);
 		PlayerCanvas.UpdateInventory();
 
 		if(item.GetComponent<Armor>() != null) {
-			EquipArmor(temp.GetComponent<Armor>());
+			EquipArmor(temp);
 		}
 	}
 
-	public void EquipArmor(Armor armor) {
-		
+	public void EquipArmor(GameObject armor) {
+		if(armor.GetComponent<Armor>().armorType == ArmorType.Leg) {
+			armor.SetActive(true);
+
+			armor.transform.GetChild(0).GetChild(0).parent = leftUpLegRef.transform;
+			leftUpLegRef.transform.GetChild(1).localPosition = Vector3.zero;
+			leftUpLegRef.transform.GetChild(1).localEulerAngles = Vector3.zero;
+			leftUpLegRef.transform.GetChild(1).localScale = Vector3.one;
+
+			armor.transform.GetChild(0).GetChild(0).parent = leftLegRef.transform;
+			leftLegRef.transform.GetChild(1).localPosition = Vector3.zero;
+			leftLegRef.transform.GetChild(1).localEulerAngles = Vector3.zero;
+			leftLegRef.transform.GetChild(1).localScale = Vector3.one;
+
+			armor.transform.GetChild(0).GetChild(0).parent = leftFootRef.transform;
+			leftFootRef.transform.GetChild(1).localPosition = Vector3.zero;
+			leftFootRef.transform.GetChild(1).localEulerAngles = Vector3.zero;
+			leftFootRef.transform.GetChild(1).localScale = Vector3.one;
+
+			armor.transform.GetChild(1).GetChild(0).parent = rightUpLegRef.transform;
+			rightUpLegRef.transform.GetChild(1).localPosition = Vector3.zero;
+			rightUpLegRef.transform.GetChild(1).localEulerAngles = Vector3.zero;
+			rightUpLegRef.transform.GetChild(1).localScale = Vector3.one;
+			
+			armor.transform.GetChild(1).GetChild(0).parent = rightLegRef.transform;
+			rightLegRef.transform.GetChild(1).localPosition = Vector3.zero;
+			rightLegRef.transform.GetChild(1).localEulerAngles = Vector3.zero;
+			rightLegRef.transform.GetChild(1).localScale = Vector3.one;
+			
+			armor.transform.GetChild(1).GetChild(0).parent = rightFootRef.transform;
+			rightFootRef.transform.GetChild(1).localPosition = Vector3.zero;
+			rightFootRef.transform.GetChild(1).localEulerAngles = Vector3.zero;
+			rightFootRef.transform.GetChild(1).localScale = Vector3.one;
+		}
 	}
 
 }

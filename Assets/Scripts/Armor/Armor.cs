@@ -15,10 +15,10 @@ public class Armor : Item {
 
 	// Use this for initialization
 	void Start () {
-		if(armorType == ArmorType.Leg && !(transform.childCount == 2 && transform.GetChild(0).childCount == 3 && transform.GetChild(1).childCount == 3))
-		{
-			Debug.LogError("Incorrect leg armor setup!!");
-		}
+//		if(armorType == ArmorType.Leg && !(transform.childCount == 2 && transform.GetChild(0).childCount == 3 && transform.GetChild(1).childCount == 3))
+//		{
+//			Debug.LogError("Incorrect leg armor setup!!");
+//		}
 	}
 	
 	// Update is called once per frame
