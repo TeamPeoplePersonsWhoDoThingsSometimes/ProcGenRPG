@@ -6,7 +6,7 @@ public class Player : MonoBehaviour {
 	public static KeyCode forwardKey = KeyCode.W, backKey = KeyCode.S, useKey = KeyCode.F, rollKey = KeyCode.Space;
 
 	public List<Item> inventory = new List<Item>();
-	public GameObject[] playerArmor;
+	public GameObject[] playerArmor; //0: head, 1: chest, 2: arms, 3: legs
 	public List<Item> quickAccessItems = new List<Item>();
 	private Weapon activeWeapon;
 	private Hack activeHack;
@@ -235,11 +235,11 @@ public class Player : MonoBehaviour {
 		PlayerCanvas.UpdateInventory();
 
 		if(item.GetComponent<Armor>() != null) {
-			EquipArmor(temp);
+			EquipArmor(temp.GetComponent<Armor>());
 		}
 	}
 
-	public void EquipArmor(GameObject armor) {
+	public void EquipArmor(Armor armor) {
 		
 	}
 
