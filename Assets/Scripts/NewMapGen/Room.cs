@@ -12,6 +12,8 @@ public class Room {
                 //Use its tileset to decorate the Room.
                 //Maybe generate some enemies in this Room.
                 //Whatever.
+
+    //Note: generateRoom() will NOT generate the Tiles. Only the insides of the Room.
             
     //TODO: Create a function and varible that requires Quest Material to be generated in this Room.
 
@@ -32,6 +34,12 @@ public class Room {
         {
             return topRight.y - botLeft.y;
         }
+    }
+
+    public Room(Point botLeft, Point topRight)
+    {
+        this.botLeft = botLeft;
+        this.topRight = topRight;
     }
 
     //Make a enum that represents a quest type, so that a room will know what to generated.

@@ -508,12 +508,16 @@ public class Map
     //Takes a 2d array of Verticies that have been generated into a map, and creates Areas out of them.
     private void createAreaMap(Vertex[,] areaData)
     {
+        System.Random random = new System.Random(seed);
+
         for (int i = 0; i < areaData.GetLength(0); i++)
         {
             for (int j = 0; j < areaData.GetLength(1); j++)
             {
                 Vertex temp = areaData[i, j];
-                areaMap[i, j] = new Area(this, new Point(i, j), temp.N.isUsed, temp.E.isUsed, temp.S.isUsed, temp.W.isUsed);
+
+                areaMap[i, j] = new Area(this, new Point(i, j), random.Next(),
+                    temp.N.isUsed, temp.E.isUsed, temp.S.isUsed, temp.W.isUsed);
             }
         }
     }
