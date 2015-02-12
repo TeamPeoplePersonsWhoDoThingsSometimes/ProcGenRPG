@@ -27,20 +27,54 @@ public static class AreaGen {
         //TODO: Determine number of Rooms to make.
         int numOfRooms = random.Next(5, 10);
 
+        int currentRoom = 0;
+        int failures = 0;
+
         //Can we require that a Room be within some min distance of another Room, yet further than a max distance?
 
-        //TODO: Create random sized room.
 
-        //TODO: Check to see if this room fits in the Area, and doesn't overlap other rooms.
-            //Checking for overlaping only needs to check the borders of the Room.
-            //NEEDS to ensure that it's not trying to place an impossible room indefinitely.
+        //While we still need more Rooms, and we've failed to make a room less than 5 times in a row.
+        while (currentRoom < numOfRooms && failures < 6)
+        {
+            //Create random sized room.
+            int xSize = random.Next(4, 8);
+            int ySize = random.Next(4, 8);
 
-        //NOTE: When placing a Room, the tiles bordering the Room need to be marked as "non-Room-Able" tiles,
-            //so that Rooms can't be placed there.
-            //(MAYBE?) corners need to be marked as "non-corridor-able," since we don't
-            //want corridors to enter the corner of rooms. That'd be odd.
+            //Create random botLeft Point for the Room.
+            Point placement = new Point(random.Next(0, tiles.GetLength(0)), random.Next(0, tiles.GetLength(1)));
 
-        //TODO: Add this Room to the Area, as tiles.
+            Room newRoom = new Room(placement, new Point(placement.x + xSize, placement.y + ySize));
+
+            bool roomFailed = false;
+            //Test to ensure this Room doesn't overlap other rooms.
+            foreach (Room r in rooms)
+            {
+                if (newRoom.intersects(r))
+                {
+                    roomFailed = true;
+                    break;
+                }
+            }
+
+            if(!roomFailed)
+            {
+                //TODO: Place the Room
+
+                //NOTE: When placing a Room, the tiles bordering the Room need to be marked as "non-Room-Able" tiles,
+                //so that Rooms can't be placed there.
+                //(MAYBE?) corners need to be marked as "non-corridor-able," since we don't
+                //want corridors to enter the corner of rooms. That'd be odd.
+
+                //TODO: Add this Room to the Area, as tiles.
+
+                failures = 0;
+            }
+            else
+            {
+                failures++;
+            }
+            
+        }
     }
 
     private static void defaultConnect(int seed, ref TileData[,] tiles, ref List<Room> rooms)

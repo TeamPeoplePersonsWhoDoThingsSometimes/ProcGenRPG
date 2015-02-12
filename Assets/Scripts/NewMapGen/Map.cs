@@ -273,7 +273,8 @@ public class Map
                 Area temp = search;
                 int distance = random.Next(2, 4); //Get a random distance for this AreaGroup to expand.
 
-                List<Area> array = floodFill(null, temp, distance);
+                List<Area> array = new List<Area>();
+                floodFill(null, temp, distance, array);
                 
                 //Don't allow tiny AreaGroups.
                 if (array.Count > 3)
@@ -523,15 +524,14 @@ public class Map
     }
 
     //Recursively gets all the Areas within the input distance of A, including A.
-    private List<Area> floodFill(Area from, Area search, int distance)
+    private void floodFill(Area from, Area search, int distance, List<Area> list)
     {
+        list.Add(search);
+
         if (distance <= 0)
         {
-            return null;
+            return;
         }
-
-        List<Area> temp = new List<Area>();
-        temp.Add(search);
 
         Area[] neighbors = search.getNeighbors();
 
@@ -539,20 +539,13 @@ public class Map
         {
             if (a.getType() == 0)
             {
-                List<Area> next = null;
                 if (a != from)
                 {
-                    next = floodFill(search, a, distance - 1);
-                }
-                if (next != null)
-                {
-                    temp.AddRange(next);
+                    floodFill(search, a, distance - 1, list);
                 }
             }
         }
-        
 
-        return temp;
     }
 
     #endregion

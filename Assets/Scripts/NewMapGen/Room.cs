@@ -42,6 +42,35 @@ public class Room {
         this.topRight = topRight;
     }
 
+    #region Public Methods
+
+    //Returns true if this Room intersects the other Room. False, otherwise.
+    public bool intersects(Room other)
+    {
+        //If this Rect's MIN X position is greater than other's MAX X position, they'll never touch in any dimension.
+        //If this Rect's MAX X position is less than other's MIN X position, they'll never touch in any dimension.
+
+        //Same goes for other dimensions.
+
+        //If neither of these are true in one dimension, they have a common point in that dimension.
+        //If neither of these are true for ALL dimensions, then they MUST intersect at some point in space.
+        //Inversely, if any of these are true, they will never intersect.
+
+        return !(this.botLeft.x > other.topRight.x || this.topRight.x < other.botLeft.x
+             || this.botLeft.y > other.topRight.y || this.topRight.y < other.botLeft.y);
+    }
+
+    public Point getBotLeft()
+    {
+        return botLeft;
+    }
+    public Point getTopRight()
+    {
+        return topRight;
+    }
+
+    #endregion
+
     //Make a enum that represents a quest type, so that a room will know what to generated.
 
 }
