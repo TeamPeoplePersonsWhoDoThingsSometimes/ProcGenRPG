@@ -13,7 +13,9 @@ public class MasterDriver : MonoBehaviour {
 
         currentMap = new Map();
 
-        currentMap.debugDisplayMap();
+        currentMap.getArea(5, 5).debugShowArea();
+
+        //currentMap.debugDisplayMap();
 
         Debug.Log("Startup time: " + Time.realtimeSinceStartup);
 	}
