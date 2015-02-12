@@ -42,6 +42,10 @@ public class Enemy : MonoBehaviour {
 
 	private Vector3 lastPos;
 
+	private float seed1 = 0f;
+	private float seed2 = 0f;
+	private int count = 0;
+
 	// Use this for initialization
 	protected void Start () {
 		if(Random.value < badassChance) {
@@ -136,14 +140,31 @@ public class Enemy : MonoBehaviour {
 		if(currentEffect != Effect.None) {
 			float prevEffectTime = effectTime;
 			effectTime -= Time.deltaTime;
+
 			if(currentEffect == Effect.Deteriorating
 			   && (int)effectTime < (int)prevEffectTime) {
 				GetDamaged(effectValue, false);
 				GameObject tempbyte = (GameObject) GameObject.Instantiate(Utility.GetByteObject(), transform.position, Quaternion.identity);
 				tempbyte.GetComponent<Byte>().val = (int)effectValue*100;
-			} else if (currentEffect == Effect.Slow) {
+			}
+
+			if (currentEffect == Effect.Slow) {
 				transform.position -= (transform.position - lastPos)/2f;
-			} else if (currentEffect == Effect.Stun) {
+			}
+			if (currentEffect == Effect.Bugged) {
+				if ((count % 15) == 0) { //walks in a random direction, changes direction every 15 frames
+					seed1 = Random.value *  - 0.5f;
+					seed2 = Random.value *  - 0.5f;
+				}
+				transform.position += new Vector3(seed1, 0f, seed2);
+				count++;
+			}
+			if (currentEffect == Effect.Weakened) {
+				GameObject temp = (GameObject)Instantiate(hitInfo,this.transform.position, hitInfo.transform.rotation);
+				temp.GetComponent<TextMesh>().renderer.material.color = Color.cyan;
+			}
+
+			if (currentEffect == Effect.Stun) {
 				transform.position = lastPos;
 			}
 		}
@@ -296,6 +317,9 @@ public class Enemy : MonoBehaviour {
 		healthBarTime = 2f;
 		GetComponent<Animator>().SetTrigger("Hurt");
 		GameObject temp = (GameObject)Instantiate(hitInfo,this.transform.position, hitInfo.transform.rotation);
+		if (currentEffect == Effect.Weakened) {
+			damage = damage * 1.5f;
+		}
 		if (!detectedPlayer) {
 			hp -= damage*4;
 			temp.GetComponent<TextMesh>().renderer.material.color = Color.blue;
@@ -333,5 +357,5 @@ public class Enemy : MonoBehaviour {
 	public bool ShowHealthbar() {
 		return healthBarTime > 0;
 	}
-
+	
 }

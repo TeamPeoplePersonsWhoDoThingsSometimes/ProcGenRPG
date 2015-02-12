@@ -1,11 +1,14 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public enum Effect {
 	None,
 	Deteriorating,
 	Slow,
-	Stun
+	Stun,
+	Weakened,
+	Bugged
+	//Virus,
 }
 
 public class Attack : MonoBehaviour {
@@ -39,6 +42,7 @@ public class Attack : MonoBehaviour {
 			}
 		}
 	}
+
 
 	void OnTriggerEnter(Collider other) {
 		//If we want to damage an enemy and the other object has an enemy component
