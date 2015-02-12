@@ -27,7 +27,7 @@ public class Player : MonoBehaviour {
 	private float integrity, rma, maxIntegrity = 100f, maxrma = 20f;
 
 	//Armor Refs
-	private Transform leftUpLegRef, rightUpLegRef, leftLegRef, rightLegRef, leftFootRef, rightFootRef;
+	private Transform leftUpLegRef, rightUpLegRef, leftLegRef, rightLegRef, leftFootRef, rightFootRef, spineRef, leftShoulderRef, rightShoulderRef;
 
 	private static GameObject hitInfo;
 
@@ -61,6 +61,9 @@ public class Player : MonoBehaviour {
 		rightLegRef = GameObject.Find("Character1_RightLeg").GetComponent<Transform>();
 		leftFootRef = GameObject.Find("Character1_LeftFoot").GetComponent<Transform>();
 		rightFootRef = GameObject.Find("Character1_RightFoot").GetComponent<Transform>();
+		spineRef = GameObject.Find("Character1_Spine").GetComponent<Transform>();
+		leftShoulderRef = GameObject.Find("Character1_LeftShoulder").GetComponent<Transform>();
+		rightShoulderRef = GameObject.Find("Character1_RightShoulder").GetComponent<Transform>();
 
 		//setting up initial weapon and hack (not the best way to do this since
 		//it requires that the first item in the inventory prefab needs to be a hack
@@ -282,6 +285,23 @@ public class Player : MonoBehaviour {
 			rightFootRef.transform.GetChild(1).localPosition = Vector3.zero;
 			rightFootRef.transform.GetChild(1).localEulerAngles = Vector3.zero;
 			rightFootRef.transform.GetChild(1).localScale = Vector3.one;
+		} else if(armor.GetComponent<Armor>().armorType == ArmorType.Chest) {
+			armor.SetActive(true);
+
+			armor.transform.GetChild(0).parent = spineRef.transform;
+			spineRef.transform.GetChild(1).localPosition = Vector3.zero;
+			spineRef.transform.GetChild(1).localEulerAngles = Vector3.zero;
+			spineRef.transform.GetChild(1).localScale = Vector3.one;
+
+			armor.transform.GetChild(0).parent = leftShoulderRef.transform;
+			leftShoulderRef.transform.GetChild(1).localPosition = Vector3.zero;
+			leftShoulderRef.transform.GetChild(1).localEulerAngles = Vector3.zero;
+			leftShoulderRef.transform.GetChild(1).localScale = Vector3.one;
+
+			armor.transform.GetChild(0).parent = rightShoulderRef.transform;
+			rightShoulderRef.transform.GetChild(1).localPosition = Vector3.zero;
+			rightShoulderRef.transform.GetChild(1).localEulerAngles = Vector3.zero;
+			rightShoulderRef.transform.GetChild(1).localScale = Vector3.one;
 		}
 	}
 
