@@ -12,6 +12,8 @@ public class World : MonoBehaviour {
 	public static DataStorage Data{get{return data;}}
 	public static Area CurrentArea{get{return currentArea;}}
 	public static TileSet[] TileSets;
+	public static GameObject[] Weapons;
+	public static GameObject[] Hacks;
 
 	private static QuestListener questListener;
 	private static DataStorage data;
@@ -34,6 +36,8 @@ public class World : MonoBehaviour {
 	public bool loadData;
 	
 	public TileSet[] tileSets;
+	public GameObject[] weapons;
+	public GameObject[] hacks;
 
 
 	/*********************************
@@ -169,7 +173,15 @@ public class World : MonoBehaviour {
 		
 		BuilderPackage.Builder builder = BuilderPackage.CreateBuilder ();
 		foreach (Enemy e in possibleEnemyTypes) {
-			builder.AddActions(e.getDirectObject().getDirectObjectAsProtobuf());
+			builder.AddEnemies(e.getDirectObject().getDirectObjectAsProtobuf());
+		}
+
+		foreach (GameObject o in weapons) {
+			builder.AddWeapons(new DirectObject(o.name, o.GetComponent<Item>().name).getDirectObjectAsProtobuf());
+		}
+
+		foreach (GameObject o in hacks) {
+			builder.AddHacks(new DirectObject(o.name, o.GetComponent<Item>().name).getDirectObjectAsProtobuf());
 		}
 		
 		FileStream fs = new FileStream (builderDataStore, FileMode.OpenOrCreate);

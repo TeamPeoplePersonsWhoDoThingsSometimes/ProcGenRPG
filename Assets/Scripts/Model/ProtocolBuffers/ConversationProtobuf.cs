@@ -22,6 +22,8 @@ public static partial class ConversationProtobuf {
   internal static pb::FieldAccess.FieldAccessorTable<global::ConversationNode, global::ConversationNode.Builder> internal__static_ConversationNode__FieldAccessorTable;
   internal static pbd::MessageDescriptor internal__static_Connection__Descriptor;
   internal static pb::FieldAccess.FieldAccessorTable<global::Connection, global::Connection.Builder> internal__static_Connection__FieldAccessorTable;
+  internal static pbd::MessageDescriptor internal__static_RequirementSet__Descriptor;
+  internal static pb::FieldAccess.FieldAccessorTable<global::RequirementSet, global::RequirementSet.Builder> internal__static_RequirementSet__FieldAccessorTable;
   #endregion
   #region Descriptor
   public static pbd::FileDescriptor Descriptor {
@@ -38,9 +40,11 @@ public static partial class ConversationProtobuf {
         "B2NyZWF0b3IYAyABKAkiiwEKEENvbnZlcnNhdGlvbk5vZGUSDAoEdGV4dBgB" + 
         "IAIoCRILCgN1aWQYAiACKAMSCQoBWBgDIAIoBRIJCgFZGAQgAigFEiAKC2Nv" + 
         "bm5lY3Rpb25zGAUgAygLMgsuQ29ubmVjdGlvbhIkCgZibG9ja3MYBiADKAsy" + 
-        "FC5TdGF0dXNCbG9ja1Byb3RvY29sIioKCkNvbm5lY3Rpb24SDgoGbm9kZUlk" + 
-        "GAEgAigDEgwKBHRleHQYAiACKAlCIQofc3RzcXVlc3RidWlsZGVyLnByb3Rv" + 
-        "Y29sYnVmZmVycw==");
+        "FC5TdGF0dXNCbG9ja1Byb3RvY29sIlQKCkNvbm5lY3Rpb24SDgoGbm9kZUlk" + 
+        "GAEgAigDEgwKBHRleHQYAiACKAkSKAoPcmVxdWlyZW1lbnRTZXRzGAMgAygL" + 
+        "Mg8uUmVxdWlyZW1lbnRTZXQiQAoOUmVxdWlyZW1lbnRTZXQSLgoMcmVxdWly" + 
+        "ZW1lbnRzGAEgAygLMhguU3RhdHVzQ2hlY2thYmxlUHJvdG9jb2xCIQofc3Rz" + 
+        "cXVlc3RidWlsZGVyLnByb3RvY29sYnVmZmVycw==");
     pbd::FileDescriptor.InternalDescriptorAssigner assigner = delegate(pbd::FileDescriptor root) {
       descriptor = root;
       internal__static_ConversationPackage__Descriptor = Descriptor.MessageTypes[0];
@@ -58,7 +62,11 @@ public static partial class ConversationProtobuf {
       internal__static_Connection__Descriptor = Descriptor.MessageTypes[3];
       internal__static_Connection__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::Connection, global::Connection.Builder>(internal__static_Connection__Descriptor,
-              new string[] { "NodeId", "Text", });
+              new string[] { "NodeId", "Text", "RequirementSets", });
+      internal__static_RequirementSet__Descriptor = Descriptor.MessageTypes[4];
+      internal__static_RequirementSet__FieldAccessorTable = 
+          new pb::FieldAccess.FieldAccessorTable<global::RequirementSet, global::RequirementSet.Builder>(internal__static_RequirementSet__Descriptor,
+              new string[] { "Requirements", });
       return null;
     };
     pbd::FileDescriptor.InternalBuildGeneratedFileFrom(descriptorData,
@@ -1312,8 +1320,8 @@ public sealed partial class ConversationNode : pb::GeneratedMessage<Conversation
 public sealed partial class Connection : pb::GeneratedMessage<Connection, Connection.Builder> {
   private Connection() { }
   private static readonly Connection defaultInstance = new Connection().MakeReadOnly();
-  private static readonly string[] _connectionFieldNames = new string[] { "nodeId", "text" };
-  private static readonly uint[] _connectionFieldTags = new uint[] { 8, 18 };
+  private static readonly string[] _connectionFieldNames = new string[] { "nodeId", "requirementSets", "text" };
+  private static readonly uint[] _connectionFieldTags = new uint[] { 8, 26, 18 };
   public static Connection DefaultInstance {
     get { return defaultInstance; }
   }
@@ -1354,10 +1362,25 @@ public sealed partial class Connection : pb::GeneratedMessage<Connection, Connec
     get { return text_; }
   }
   
+  public const int RequirementSetsFieldNumber = 3;
+  private pbc::PopsicleList<global::RequirementSet> requirementSets_ = new pbc::PopsicleList<global::RequirementSet>();
+  public scg::IList<global::RequirementSet> RequirementSetsList {
+    get { return requirementSets_; }
+  }
+  public int RequirementSetsCount {
+    get { return requirementSets_.Count; }
+  }
+  public global::RequirementSet GetRequirementSets(int index) {
+    return requirementSets_[index];
+  }
+  
   public override bool IsInitialized {
     get {
       if (!hasNodeId) return false;
       if (!hasText) return false;
+      foreach (global::RequirementSet element in RequirementSetsList) {
+        if (!element.IsInitialized) return false;
+      }
       return true;
     }
   }
@@ -1369,7 +1392,10 @@ public sealed partial class Connection : pb::GeneratedMessage<Connection, Connec
       output.WriteInt64(1, field_names[0], NodeId);
     }
     if (hasText) {
-      output.WriteString(2, field_names[1], Text);
+      output.WriteString(2, field_names[2], Text);
+    }
+    if (requirementSets_.Count > 0) {
+      output.WriteMessageArray(3, field_names[1], requirementSets_);
     }
     UnknownFields.WriteTo(output);
   }
@@ -1386,6 +1412,9 @@ public sealed partial class Connection : pb::GeneratedMessage<Connection, Connec
       }
       if (hasText) {
         size += pb::CodedOutputStream.ComputeStringSize(2, Text);
+      }
+      foreach (global::RequirementSet element in RequirementSetsList) {
+        size += pb::CodedOutputStream.ComputeMessageSize(3, element);
       }
       size += UnknownFields.SerializedSize;
       memoizedSerializedSize = size;
@@ -1424,6 +1453,7 @@ public sealed partial class Connection : pb::GeneratedMessage<Connection, Connec
     return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
   }
   private Connection MakeReadOnly() {
+    requirementSets_.MakeReadOnly();
     return this;
   }
   
@@ -1517,6 +1547,9 @@ public sealed partial class Connection : pb::GeneratedMessage<Connection, Connec
       if (other.HasText) {
         Text = other.Text;
       }
+      if (other.requirementSets_.Count != 0) {
+        result.requirementSets_.Add(other.requirementSets_);
+      }
       this.MergeUnknownFields(other.UnknownFields);
       return this;
     }
@@ -1566,6 +1599,10 @@ public sealed partial class Connection : pb::GeneratedMessage<Connection, Connec
           }
           case 18: {
             result.hasText = input.ReadString(ref result.text_);
+            break;
+          }
+          case 26: {
+            input.ReadMessageArray(tag, field_name, result.requirementSets_, global::RequirementSet.DefaultInstance, extensionRegistry);
             break;
           }
         }
@@ -1618,8 +1655,352 @@ public sealed partial class Connection : pb::GeneratedMessage<Connection, Connec
       result.text_ = "";
       return this;
     }
+    
+    public pbc::IPopsicleList<global::RequirementSet> RequirementSetsList {
+      get { return PrepareBuilder().requirementSets_; }
+    }
+    public int RequirementSetsCount {
+      get { return result.RequirementSetsCount; }
+    }
+    public global::RequirementSet GetRequirementSets(int index) {
+      return result.GetRequirementSets(index);
+    }
+    public Builder SetRequirementSets(int index, global::RequirementSet value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      result.requirementSets_[index] = value;
+      return this;
+    }
+    public Builder SetRequirementSets(int index, global::RequirementSet.Builder builderForValue) {
+      pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+      PrepareBuilder();
+      result.requirementSets_[index] = builderForValue.Build();
+      return this;
+    }
+    public Builder AddRequirementSets(global::RequirementSet value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      result.requirementSets_.Add(value);
+      return this;
+    }
+    public Builder AddRequirementSets(global::RequirementSet.Builder builderForValue) {
+      pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+      PrepareBuilder();
+      result.requirementSets_.Add(builderForValue.Build());
+      return this;
+    }
+    public Builder AddRangeRequirementSets(scg::IEnumerable<global::RequirementSet> values) {
+      PrepareBuilder();
+      result.requirementSets_.Add(values);
+      return this;
+    }
+    public Builder ClearRequirementSets() {
+      PrepareBuilder();
+      result.requirementSets_.Clear();
+      return this;
+    }
   }
   static Connection() {
+    object.ReferenceEquals(global::ConversationProtobuf.Descriptor, null);
+  }
+}
+
+[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+public sealed partial class RequirementSet : pb::GeneratedMessage<RequirementSet, RequirementSet.Builder> {
+  private RequirementSet() { }
+  private static readonly RequirementSet defaultInstance = new RequirementSet().MakeReadOnly();
+  private static readonly string[] _requirementSetFieldNames = new string[] { "requirements" };
+  private static readonly uint[] _requirementSetFieldTags = new uint[] { 10 };
+  public static RequirementSet DefaultInstance {
+    get { return defaultInstance; }
+  }
+  
+  public override RequirementSet DefaultInstanceForType {
+    get { return DefaultInstance; }
+  }
+  
+  protected override RequirementSet ThisMessage {
+    get { return this; }
+  }
+  
+  public static pbd::MessageDescriptor Descriptor {
+    get { return global::ConversationProtobuf.internal__static_RequirementSet__Descriptor; }
+  }
+  
+  protected override pb::FieldAccess.FieldAccessorTable<RequirementSet, RequirementSet.Builder> InternalFieldAccessors {
+    get { return global::ConversationProtobuf.internal__static_RequirementSet__FieldAccessorTable; }
+  }
+  
+  public const int RequirementsFieldNumber = 1;
+  private pbc::PopsicleList<global::StatusCheckableProtocol> requirements_ = new pbc::PopsicleList<global::StatusCheckableProtocol>();
+  public scg::IList<global::StatusCheckableProtocol> RequirementsList {
+    get { return requirements_; }
+  }
+  public int RequirementsCount {
+    get { return requirements_.Count; }
+  }
+  public global::StatusCheckableProtocol GetRequirements(int index) {
+    return requirements_[index];
+  }
+  
+  public override bool IsInitialized {
+    get {
+      foreach (global::StatusCheckableProtocol element in RequirementsList) {
+        if (!element.IsInitialized) return false;
+      }
+      return true;
+    }
+  }
+  
+  public override void WriteTo(pb::ICodedOutputStream output) {
+    int size = SerializedSize;
+    string[] field_names = _requirementSetFieldNames;
+    if (requirements_.Count > 0) {
+      output.WriteMessageArray(1, field_names[0], requirements_);
+    }
+    UnknownFields.WriteTo(output);
+  }
+  
+  private int memoizedSerializedSize = -1;
+  public override int SerializedSize {
+    get {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+      
+      size = 0;
+      foreach (global::StatusCheckableProtocol element in RequirementsList) {
+        size += pb::CodedOutputStream.ComputeMessageSize(1, element);
+      }
+      size += UnknownFields.SerializedSize;
+      memoizedSerializedSize = size;
+      return size;
+    }
+  }
+  
+  public static RequirementSet ParseFrom(pb::ByteString data) {
+    return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+  }
+  public static RequirementSet ParseFrom(pb::ByteString data, pb::ExtensionRegistry extensionRegistry) {
+    return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+  }
+  public static RequirementSet ParseFrom(byte[] data) {
+    return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+  }
+  public static RequirementSet ParseFrom(byte[] data, pb::ExtensionRegistry extensionRegistry) {
+    return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+  }
+  public static RequirementSet ParseFrom(global::System.IO.Stream input) {
+    return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+  }
+  public static RequirementSet ParseFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+    return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+  }
+  public static RequirementSet ParseDelimitedFrom(global::System.IO.Stream input) {
+    return CreateBuilder().MergeDelimitedFrom(input).BuildParsed();
+  }
+  public static RequirementSet ParseDelimitedFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+    return CreateBuilder().MergeDelimitedFrom(input, extensionRegistry).BuildParsed();
+  }
+  public static RequirementSet ParseFrom(pb::ICodedInputStream input) {
+    return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+  }
+  public static RequirementSet ParseFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+    return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+  }
+  private RequirementSet MakeReadOnly() {
+    requirements_.MakeReadOnly();
+    return this;
+  }
+  
+  public static Builder CreateBuilder() { return new Builder(); }
+  public override Builder ToBuilder() { return CreateBuilder(this); }
+  public override Builder CreateBuilderForType() { return new Builder(); }
+  public static Builder CreateBuilder(RequirementSet prototype) {
+    return new Builder(prototype);
+  }
+  
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+  public sealed partial class Builder : pb::GeneratedBuilder<RequirementSet, Builder> {
+    protected override Builder ThisBuilder {
+      get { return this; }
+    }
+    public Builder() {
+      result = DefaultInstance;
+      resultIsReadOnly = true;
+    }
+    internal Builder(RequirementSet cloneFrom) {
+      result = cloneFrom;
+      resultIsReadOnly = true;
+    }
+    
+    private bool resultIsReadOnly;
+    private RequirementSet result;
+    
+    private RequirementSet PrepareBuilder() {
+      if (resultIsReadOnly) {
+        RequirementSet original = result;
+        result = new RequirementSet();
+        resultIsReadOnly = false;
+        MergeFrom(original);
+      }
+      return result;
+    }
+    
+    public override bool IsInitialized {
+      get { return result.IsInitialized; }
+    }
+    
+    protected override RequirementSet MessageBeingBuilt {
+      get { return PrepareBuilder(); }
+    }
+    
+    public override Builder Clear() {
+      result = DefaultInstance;
+      resultIsReadOnly = true;
+      return this;
+    }
+    
+    public override Builder Clone() {
+      if (resultIsReadOnly) {
+        return new Builder(result);
+      } else {
+        return new Builder().MergeFrom(result);
+      }
+    }
+    
+    public override pbd::MessageDescriptor DescriptorForType {
+      get { return global::RequirementSet.Descriptor; }
+    }
+    
+    public override RequirementSet DefaultInstanceForType {
+      get { return global::RequirementSet.DefaultInstance; }
+    }
+    
+    public override RequirementSet BuildPartial() {
+      if (resultIsReadOnly) {
+        return result;
+      }
+      resultIsReadOnly = true;
+      return result.MakeReadOnly();
+    }
+    
+    public override Builder MergeFrom(pb::IMessage other) {
+      if (other is RequirementSet) {
+        return MergeFrom((RequirementSet) other);
+      } else {
+        base.MergeFrom(other);
+        return this;
+      }
+    }
+    
+    public override Builder MergeFrom(RequirementSet other) {
+      if (other == global::RequirementSet.DefaultInstance) return this;
+      PrepareBuilder();
+      if (other.requirements_.Count != 0) {
+        result.requirements_.Add(other.requirements_);
+      }
+      this.MergeUnknownFields(other.UnknownFields);
+      return this;
+    }
+    
+    public override Builder MergeFrom(pb::ICodedInputStream input) {
+      return MergeFrom(input, pb::ExtensionRegistry.Empty);
+    }
+    
+    public override Builder MergeFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+      PrepareBuilder();
+      pb::UnknownFieldSet.Builder unknownFields = null;
+      uint tag;
+      string field_name;
+      while (input.ReadTag(out tag, out field_name)) {
+        if(tag == 0 && field_name != null) {
+          int field_ordinal = global::System.Array.BinarySearch(_requirementSetFieldNames, field_name, global::System.StringComparer.Ordinal);
+          if(field_ordinal >= 0)
+            tag = _requirementSetFieldTags[field_ordinal];
+          else {
+            if (unknownFields == null) {
+              unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+            }
+            ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+            continue;
+          }
+        }
+        switch (tag) {
+          case 0: {
+            throw pb::InvalidProtocolBufferException.InvalidTag();
+          }
+          default: {
+            if (pb::WireFormat.IsEndGroupTag(tag)) {
+              if (unknownFields != null) {
+                this.UnknownFields = unknownFields.Build();
+              }
+              return this;
+            }
+            if (unknownFields == null) {
+              unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+            }
+            ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+            break;
+          }
+          case 10: {
+            input.ReadMessageArray(tag, field_name, result.requirements_, global::StatusCheckableProtocol.DefaultInstance, extensionRegistry);
+            break;
+          }
+        }
+      }
+      
+      if (unknownFields != null) {
+        this.UnknownFields = unknownFields.Build();
+      }
+      return this;
+    }
+    
+    
+    public pbc::IPopsicleList<global::StatusCheckableProtocol> RequirementsList {
+      get { return PrepareBuilder().requirements_; }
+    }
+    public int RequirementsCount {
+      get { return result.RequirementsCount; }
+    }
+    public global::StatusCheckableProtocol GetRequirements(int index) {
+      return result.GetRequirements(index);
+    }
+    public Builder SetRequirements(int index, global::StatusCheckableProtocol value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      result.requirements_[index] = value;
+      return this;
+    }
+    public Builder SetRequirements(int index, global::StatusCheckableProtocol.Builder builderForValue) {
+      pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+      PrepareBuilder();
+      result.requirements_[index] = builderForValue.Build();
+      return this;
+    }
+    public Builder AddRequirements(global::StatusCheckableProtocol value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      result.requirements_.Add(value);
+      return this;
+    }
+    public Builder AddRequirements(global::StatusCheckableProtocol.Builder builderForValue) {
+      pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+      PrepareBuilder();
+      result.requirements_.Add(builderForValue.Build());
+      return this;
+    }
+    public Builder AddRangeRequirements(scg::IEnumerable<global::StatusCheckableProtocol> values) {
+      PrepareBuilder();
+      result.requirements_.Add(values);
+      return this;
+    }
+    public Builder ClearRequirements() {
+      PrepareBuilder();
+      result.requirements_.Clear();
+      return this;
+    }
+  }
+  static RequirementSet() {
     object.ReferenceEquals(global::ConversationProtobuf.Descriptor, null);
   }
 }
