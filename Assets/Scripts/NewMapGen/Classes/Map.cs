@@ -467,19 +467,19 @@ public class Map
 
                 switch(areaMap[i,j].getType())
                 {
-                    case AreaType.Blue:
+                    case 0:
                         renderer.color = Color.blue;
                         break;
-                    case AreaType.Green:
+                    case (AreaType) 1:
                         renderer.color = Color.green;
                         break;
-                    case AreaType.Red:
+                    case (AreaType) 2:
                         renderer.color = Color.red;
                         break;
-                    case AreaType.Yellow:
+                    case (AreaType) 3:
                         renderer.color = Color.yellow;
                         break;
-                    case AreaType.Cyan:
+                    case (AreaType) 4:
                         renderer.color = Color.cyan;
                         break;
                     default:

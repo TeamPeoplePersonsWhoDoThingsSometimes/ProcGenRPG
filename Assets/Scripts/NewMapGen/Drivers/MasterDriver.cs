@@ -13,7 +13,7 @@ public class MasterDriver : MonoBehaviour {
 
         currentMap = new Map();
 
-        currentMap.getArea(5, 5).debugShowArea();
+        currentMap.getArea(5, 5).showArea();
 
         //currentMap.debugDisplayMap();
 

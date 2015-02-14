@@ -5,10 +5,7 @@ public enum AreaType {
 
     //TEMPORARY COLORS FOR AREATYPES
     NotAssigned,
-    Red,
-    Blue,
-    Green,
-    Yellow,
-    Cyan
+    GrassyPath,
+    Dungeon
 	
 }
