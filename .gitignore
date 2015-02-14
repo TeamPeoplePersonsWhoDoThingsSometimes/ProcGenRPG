@@ -61,6 +61,7 @@ $RECYCLE.BIN/
 *.msi
 *.msm
 *.msp
+
 Assets/UnityVS.meta
 Assets/UnityVS/Editor.meta
 Assets/UnityVS/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll

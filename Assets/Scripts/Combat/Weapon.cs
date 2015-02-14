@@ -119,7 +119,7 @@ public class Weapon : Item {
 	}
 
 	//used for UI
-	public string InfoString() {
+	public override string InfoString() {
 		string forreturn = "Type: " + Type() +
 				"\n\nRarity: " + this.RarityVal +
 				"\n\nBase Damage: " + thisDamage.ToString("F2") +
