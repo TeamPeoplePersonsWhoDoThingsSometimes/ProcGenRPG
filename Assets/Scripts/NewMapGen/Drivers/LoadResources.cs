@@ -11,6 +11,10 @@ public class LoadResources : MonoBehaviour {
 
     public GameObject spriteHolder;
 
+    public GameObject grassyPath;
+    public GameObject dungeon;
+    public GameObject city;
+
     public static LoadResources instance;
 
 	// Use this for initialization

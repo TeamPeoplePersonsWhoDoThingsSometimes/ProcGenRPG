@@ -10,7 +10,7 @@ public class Point
 
     public int x, y;
 
-    //These are the Points +1 in these directions.
+    //These are the Points +1 in the given directions.
     public Point up
     {
         get { return new Point(x, y + 1); }
@@ -161,14 +161,34 @@ public class Point
     }
 
     //Returns an array of the 4 Points (up, right, down, left in that order) adjacent to the point called on.
-    public Point[] getAdjacent()
+    //If EightDir is true, will return the 8 neighbors to this point, adjacent and diagonals.
+    public Point[] getAdjacent(bool EightDir = false)
     {
-        Point[] array = new Point[4];
+        Point[] array;
 
-        array[0] = new Point(this.x, this.y + 1); //Up
-        array[1] = new Point(this.x + 1, this.y); //Right
-        array[2] = new Point(this.x, this.y - 1); //Down
-        array[3] = new Point(this.x - 1, this.y); //Left
+        if (!EightDir)
+        {
+            array = new Point[4];
+
+            array[0] = new Point(this.x, this.y + 1); //Up
+            array[1] = new Point(this.x + 1, this.y); //Right
+            array[2] = new Point(this.x, this.y - 1); //Down
+            array[3] = new Point(this.x - 1, this.y); //Left
+        }
+        else
+        {
+            array = new Point[8];
+
+            array[0] = new Point(this.x, this.y + 1); //Up
+            array[1] = new Point(this.x + 1, this.y); //Right
+            array[2] = new Point(this.x, this.y - 1); //Down
+            array[3] = new Point(this.x - 1, this.y); //Left
+
+            array[4] = new Point(this.x + 1, this.y + 1); //Upper Right
+            array[5] = new Point(this.x + 1, this.y - 1); //Lower Right
+            array[6] = new Point(this.x - 1, this.y - 1); //Lower Left
+            array[7] = new Point(this.x - 1, this.y + 1); //Upper Left
+        }
 
         return array;
     }

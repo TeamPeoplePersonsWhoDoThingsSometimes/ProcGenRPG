@@ -12,6 +12,8 @@ public static class AreaGen {
 
     //Can we require that a Room be within some min distance of another Room, yet further than a max distance?
 
+    #region Default Gen
+
     //Takes in references to a TileData array and Room list, creates an Area, and puts the Area back into these inputs.
     public static void defaultGen(int seed, out TileData [,] tiles, out List<Room> rooms, out List<TileData> corridors)
     {
@@ -52,7 +54,7 @@ public static class AreaGen {
             int ySize = random.Next(4, 8);
 
             //Create random botLeft Point to place the Room.
-            Point placement = new Point(random.Next(0, tiles.GetLength(0) - xSize), random.Next(0, tiles.GetLength(1) - ySize));
+            Point placement = new Point(random.Next(1, tiles.GetLength(0) - xSize - 1), random.Next(1, tiles.GetLength(1) - ySize - 1));
 
             Room newRoom = new Room(placement, new Point(placement.x + xSize, placement.y + ySize));
 
@@ -190,19 +192,55 @@ public static class AreaGen {
         return corridors;
     }
 
+    #endregion
+
+
     #region Helper Methods
 
-    //Puts the input Room on the map as a TileData object.
+    //Puts the input Room on the map as TileData objects, and surrounds it with border.
     private static void placeRoom(ref TileData[,]tiles, Room r)
     {
         Point botLeft = r.getBotLeft();
         Point topRight = r.getTopRight();
 
+        //Add Room to map.
         for(int i = botLeft.x; i < topRight.x + 1; i++)
         {
-            for(int j = botLeft.y; j < topRight.y; j++)
+            for(int j = botLeft.y; j < topRight.y + 1; j++)
             {
-                tiles[i, j] = new TileData();
+                TileData temp = new TileData(new Point(i, j));
+                temp.isTile = true;
+                tiles[i, j] = temp;
+            }
+        }
+
+        //Add border to Map.
+
+        //Move along x direction.
+        for (int i = botLeft.x - 1; i < topRight.x + 2; i++)
+        {
+            //If on the left/right edges
+            if (i == botLeft.x - 1 || i == topRight.x + 1)
+            {
+                for (int j = botLeft.y - 1; j < topRight.y + 2; j++)
+                {
+                    if (tiles[i, j] == null || !tiles[i, j].isTile)
+                    {
+                        TileData temp = new TileData(new Point(i, j));
+                        temp.isBorder = true;
+                        tiles[i, j] = temp;
+                    }
+                }
+            }
+            else
+            {
+                TileData temp = new TileData(new Point(i, botLeft.y - 1));
+                temp.isBorder = true;
+                tiles[i, botLeft.y - 1] = temp;
+
+                TileData temp2 = new TileData(new Point(i, botLeft.y - 1));
+                temp2.isBorder = true;
+                tiles[i, topRight.y + 1] = temp2;
             }
         }
 
@@ -223,7 +261,12 @@ public static class AreaGen {
             {
                 if (tiles[i, j] == null)
                 {
-                    weights[i, j] = random.Next(2, 5);
+                    weights[i, j] = random.Next(2, 8);
+                }
+                else if (tiles[i, j].isBorder)
+                {
+                    //Don't go through borders, if possible.
+                    weights[i, j] = 5;
                 }
                 else
                 {
@@ -247,12 +290,26 @@ public static class AreaGen {
         {
             Point pos = nextPath.position;
 
-            //If this tile isn't already a Room.
-            if (tiles[pos.x, pos.y] == null)
+            //If this tile isn't already there, or it's just a border tile.
+            if (tiles[pos.x, pos.y] == null || tiles[pos.x, pos.y].isBorder)
             {
-                TileData temp = new TileData();
+                //Make a new TileData there.
+                TileData temp = new TileData(pos);
+                temp.isTile = true;
                 tiles[pos.x, pos.y] = temp;
                 finishedPath.Add(temp);
+
+                //TODO: Check TileDatas around this one, to add borders to paths.
+                foreach(Point p in pos.getAdjacent(true))
+                {
+                    if (tiles[p.x, p.y] == null || !tiles[p.x, p.y].isTile)
+                    {
+                        TileData temp2 = new TileData(p);
+                        temp2.isBorder = true;
+                        tiles[p.x, p.y] = temp2;
+
+                    }
+                }
             }
 
             nextPath = nextPath.cameFrom;
@@ -266,6 +323,7 @@ public static class AreaGen {
 
     #region Internal Classes
 
+    //Internal class used to help generate corridors.
     internal class pathMap
     {
         path[,] map;
