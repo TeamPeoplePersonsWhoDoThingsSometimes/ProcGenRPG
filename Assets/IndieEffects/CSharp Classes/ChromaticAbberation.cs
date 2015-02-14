@@ -8,6 +8,7 @@ public class ChromaticAbberation : MonoBehaviour
     public Shader shader;
     private Material chromMat;
     public Texture2D vignette;
+	public float scale;
 
     public void Start () {
 	    fxRes = GetComponent<IndieEffects>();
@@ -17,6 +18,7 @@ public class ChromaticAbberation : MonoBehaviour
     public void OnPostRender () {
 	    chromMat.SetTexture("_MainTex", fxRes.RT);
 	    chromMat.SetTexture("_Vignette", vignette);
+		chromMat.SetFloat("_Scale", scale);
 	    IndieEffects.FullScreenQuad(chromMat);
     }
 }

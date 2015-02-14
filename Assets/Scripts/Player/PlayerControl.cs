@@ -117,7 +117,7 @@ public class PlayerControl : MonoBehaviour {
 		/**** Handling attacking ****/
 		if(!PlayerCanvas.inConsole && !immobile) {
 			if (playerref.GetWeapon() != null && playerref.GetWeapon().Type().Equals(WeaponType.Melee)) {
-				Debug.Log(swordAttack1 + " " + swordAttack2 + " " + swordAttack3);
+//				Debug.Log(swordAttack1 + " " + swordAttack2 + " " + swordAttack3);
 
 				if (Input.GetMouseButtonDown(0) && comboTime && !swordAttack1 && swordAttack2) {
 					playerAnim.SetBool("Slash3", true);

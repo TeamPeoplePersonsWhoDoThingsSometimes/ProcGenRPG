@@ -13,6 +13,7 @@
 			
 			sampler2D _MainTex;
 			sampler2D _Vignette;
+			float _Scale;
 
 			struct v2f {
 				float4 pos : POSITION;
@@ -38,11 +39,11 @@
 				realCoordOffs.y = coords.y * 0.1 * 0.1;
 				
 				half red = tex2D(_MainTex, i.uv - realCoordOffs).r;
-				half green = tex2D(_MainTex, i.uv - realCoordOffs * 1.5).g;
-				half blue = tex2D(_MainTex, i.uv - realCoordOffs * 2).b;
-				half red2 = tex2D(_MainTex, i.uv - realCoordOffs * 2.4).r;
-				half green2 = tex2D(_MainTex, i.uv - realCoordOffs * 2.8).g;
-				half blue2 = tex2D(_MainTex, i.uv - realCoordOffs * 3.2).b;
+				half green = tex2D(_MainTex, i.uv - realCoordOffs * 1.5 * _Scale).g;
+				half blue = tex2D(_MainTex, i.uv - realCoordOffs * 2 * _Scale).b;
+				half red2 = tex2D(_MainTex, i.uv - realCoordOffs * 2.4 * _Scale).r;
+				half green2 = tex2D(_MainTex, i.uv - realCoordOffs * 2.8 * _Scale).g;
+				half blue2 = tex2D(_MainTex, i.uv - realCoordOffs * 3.2 * _Scale).b;
 				half4 chroma = half4(red,0,0,1) + half4(0,green,0,1) + half4(0,0,blue,1);
 				half4 chroma2 = half4(red2,0,0,1) + half4(0,green2,0,1) + half4(0,0,blue2,1);
 				

@@ -28,6 +28,7 @@ public class Player : MonoBehaviour {
 
 	//Armor Refs
 	private Transform leftUpLegRef, rightUpLegRef, leftLegRef, rightLegRef, leftFootRef, rightFootRef, spineRef, leftShoulderRef, rightShoulderRef;
+	private Transform leftArmRef, leftForearmRef, leftHandRef, rightArmRef, rightForearmRef, rightHandRef, headRef;
 
 	private static GameObject hitInfo;
 
@@ -64,6 +65,13 @@ public class Player : MonoBehaviour {
 		spineRef = GameObject.Find("Character1_Spine").GetComponent<Transform>();
 		leftShoulderRef = GameObject.Find("Character1_LeftShoulder").GetComponent<Transform>();
 		rightShoulderRef = GameObject.Find("Character1_RightShoulder").GetComponent<Transform>();
+		leftArmRef = GameObject.Find("Character1_LeftArm").GetComponent<Transform>();
+		leftForearmRef = GameObject.Find("Character1_LeftForeArm").GetComponent<Transform>();
+		leftHandRef = GameObject.Find("Character1_LeftHand").GetComponent<Transform>();
+		rightArmRef = GameObject.Find("Character1_RightArm").GetComponent<Transform>();
+		rightForearmRef = GameObject.Find("Character1_RightForeArm").GetComponent<Transform>();
+		rightHandRef = GameObject.Find("Character1_RightHand").GetComponent<Transform>();
+		headRef = GameObject.Find("Character1_Head").GetComponent<Transform>();
 
 		//setting up initial weapon and hack (not the best way to do this since
 		//it requires that the first item in the inventory prefab needs to be a hack
@@ -244,7 +252,10 @@ public class Player : MonoBehaviour {
 		if(quickAccessItems.Count < 10 && (temp.GetComponent<Weapon>() != null || temp.GetComponent<Hack>() != null)) {
 			quickAccessItems.Add(temp.GetComponent<Item>());
 		}
-		temp.SetActive(false);
+
+		if(temp.GetComponent<Hack>() == null) {
+			temp.SetActive(false);
+		}
 		PlayerCanvas.UpdateInventory();
 
 		if(item.GetComponent<Armor>() != null) {
@@ -302,6 +313,45 @@ public class Player : MonoBehaviour {
 			rightShoulderRef.transform.GetChild(1).localPosition = Vector3.zero;
 			rightShoulderRef.transform.GetChild(1).localEulerAngles = Vector3.zero;
 			rightShoulderRef.transform.GetChild(1).localScale = Vector3.one;
+		} else if(armor.GetComponent<Armor>().armorType == ArmorType.Arm) {
+			armor.SetActive(true);
+			
+			armor.transform.GetChild(0).GetChild(0).parent = leftArmRef.transform;
+			leftArmRef.transform.GetChild(1).localPosition = Vector3.zero;
+			leftArmRef.transform.GetChild(1).localEulerAngles = Vector3.zero;
+			leftArmRef.transform.GetChild(1).localScale = Vector3.one;
+			
+			armor.transform.GetChild(0).GetChild(0).parent = leftForearmRef.transform;
+			leftForearmRef.transform.GetChild(1).localPosition = Vector3.zero;
+			leftForearmRef.transform.GetChild(1).localEulerAngles = Vector3.zero;
+			leftForearmRef.transform.GetChild(1).localScale = Vector3.one;
+			
+			armor.transform.GetChild(0).GetChild(0).parent = leftHandRef.transform;
+			leftHandRef.transform.GetChild(3).localPosition = Vector3.zero;
+			leftHandRef.transform.GetChild(3).localEulerAngles = Vector3.zero;
+			leftHandRef.transform.GetChild(3).localScale = Vector3.one;
+			
+			armor.transform.GetChild(1).GetChild(0).parent = rightArmRef.transform;
+			rightArmRef.transform.GetChild(1).localPosition = Vector3.zero;
+			rightArmRef.transform.GetChild(1).localEulerAngles = Vector3.zero;
+			rightArmRef.transform.GetChild(1).localScale = Vector3.one;
+			
+			armor.transform.GetChild(1).GetChild(0).parent = rightForearmRef.transform;
+			rightForearmRef.transform.GetChild(1).localPosition = Vector3.zero;
+			rightForearmRef.transform.GetChild(1).localEulerAngles = Vector3.zero;
+			rightForearmRef.transform.GetChild(1).localScale = Vector3.one;
+			
+			armor.transform.GetChild(1).GetChild(0).parent = rightHandRef.transform;
+			rightHandRef.transform.GetChild(4).localPosition = Vector3.zero;
+			rightHandRef.transform.GetChild(4).localEulerAngles = Vector3.zero;
+			rightHandRef.transform.GetChild(4).localScale = Vector3.one;
+		} else if(armor.GetComponent<Armor>().armorType == ArmorType.Head) {
+			armor.SetActive(true);
+
+			armor.transform.GetChild(0).parent = headRef.transform;
+			headRef.transform.GetChild(0).localPosition = Vector3.zero;
+			headRef.transform.GetChild(0).localEulerAngles = Vector3.zero;
+			headRef.transform.GetChild(0).localScale = Vector3.one;
 		}
 	}
 
