@@ -90,7 +90,6 @@ public class Map
 
     #endregion
 
-
     #region Algorithms
 
     //Generates the initial connections from area to area. (PRIM'S ALGORITHM).
@@ -488,6 +487,25 @@ public class Map
             }
         }
     }
+
+	public Color[,] ColorMap() {
+		Color[,] colorMap = new Color[areaMap.GetLength(0), areaMap.GetLength(1)];
+		
+	
+		for (int i = 0; i < areaMap.GetLength(0); i++) {
+			for (int j = 0; j < areaMap.GetLength(1); j++) {
+				AreaType at = areaMap [i, j].getGroup ().type; //Now Broken, fix plox
+				if (at == AreaType.GrassyPath) {
+					colorMap [i, j] = Color.green;
+				} else if (at == AreaType.Dungeon) {
+					colorMap [i, j] = Color.red;
+				} else if (at == AreaType.NotAssigned) {
+					colorMap [i, j] = Color.black;	
+				}
+			}
+		}
+		return colorMap;
+	}
 
     #endregion
 
