@@ -101,8 +101,8 @@ public class Attack : MonoBehaviour {
 		critChance = critVal;
 	}
 
-	public void SetDamage(float val) {
-		thisDamage = val;
+	public float GetDamage() {
+		return thisDamage;
 	}
 
 }
