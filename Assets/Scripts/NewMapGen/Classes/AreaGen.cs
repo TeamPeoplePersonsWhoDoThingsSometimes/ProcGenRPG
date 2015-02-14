@@ -15,6 +15,10 @@ public static class AreaGen {
     //Takes in references to a TileData array and Room list, creates an Area, and puts the Area back into these inputs.
     public static void defaultGen(int seed, out TileData [,] tiles, out List<Room> rooms, out List<TileData> corridors)
     {
+        System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
+
+        watch.Start();
+
         //Create tiles and rooms.
         tiles = new TileData[30, 30];
         rooms = new List<Room>();
@@ -25,7 +29,9 @@ public static class AreaGen {
         //Do A* to connect each room.
         corridors = defaultConnect(seed, ref tiles, ref rooms);
 
-        placeCorridors(ref tiles, corridors);
+        watch.Stop();
+        Debug.Log("Area Generation time: " + watch.Elapsed);
+
     }
 
     private static void defaultRoomGen(int seed, ref TileData[,] tiles, ref List<Room> rooms)
@@ -83,16 +89,21 @@ public static class AreaGen {
     //Creates corridors from room to room,and returns the list of corridors. (Rooms tiles are not included in corridors).
     private static List<TileData> defaultConnect(int seed, ref TileData[,] tiles, ref List<Room> rooms)
     {
-        //TODO: Implement this method.
-
         //Generate the weight map for A*.
         int[,] weights = generateWeight(seed, tiles);
 
         List<TileData> corridors = new List<TileData>();
 
-        //TODO: Choose Rooms to connect.
+        //Connect first Room to all others.
         for (int i = 1; i < rooms.Count; i++)
         {
+            //Get starting point. (middle of start Room)
+            Point start = rooms[0].getTopRight();
+            start = new Point(start.x - rooms[0].length / 2, start.y - rooms[0].height / 2);
+
+            //Get ending point. (middle of other Room)
+            Point end = rooms[i].getTopRight();
+            end = new Point(end.x - rooms[i].length / 2, end.y - rooms[i].height / 2);
 
             //Plan:
             //Add starting point to Open List.
@@ -100,19 +111,81 @@ public static class AreaGen {
             //While Open List is NOT empty
                 //Get next Point to calculate, and put it on closed list.
                 //foreach neighbor to this nextPoint
-                    //If next point is the final point, make connections and break.
-                    //If next point is not walkable, continue.
-                    //If next point is NOT on the open List, calc ALL it's moveCost values F,G,H, and set the nextPoint
+                    //If neighbor point is the final point, make connections and break.
+                    //If neighbor point is not walkable, continue.
+                    //If neighbor point is NOT on the open List, calc ALL it's moveCost values F,G,H, and set the next Point
                         //as it's cameFrom point.
-                    //If this point is ON the open List (and maybe the closed),
+                    //If neighbor point is ON the open List (and maybe the closed),
                         //if this REALcost (G, not heuristic) from this nextPoint is better than
-                        //the one it already has, replace its cameFrom with this point, and re-calc its F,G,H
+                        //the one it already has, replace its cameFrom with next point, and re-calc its F,G,H
 
             //OpenList sorted by F values.
             PriorityQueue<int, path> openList = new PriorityQueue<int, path>();
 
+            pathMap map = new pathMap(tiles.GetLength(0), tiles.GetLength(1));
 
-        }
+            path startPath = map.getPath(start);
+            startPath.cameFrom = null; //Starting point came From null. (this is a flag for later)
+            startPath.openList = true;
+            startPath.setValues(0, 0, 0); //Start point doesn't need values.
+
+            openList.Enqueue(0, startPath);
+
+            bool isFinished = false;
+
+            while (!openList.IsEmpty && !isFinished)
+            {
+                path next = openList.DequeueValue();
+                next.closedList = true;
+
+                foreach (path neighbor in next.getNeighbors())
+                {
+                    if (neighbor.position.Equals(end))
+                    {
+                        //Do ending stuff!
+                        isFinished = true;
+
+                        neighbor.cameFrom = next;
+
+                        //Start function to get the path, and put the path into corridors, and put the corridors on the tile map.
+                        corridors.AddRange(getFinishedPath(neighbor, ref tiles));
+
+                        break;
+                    }
+
+                    //If not walkable, then check for that here. (currently not possible)
+
+                    if (!neighbor.openList)
+                    {
+                        //PUT on open List.
+                        neighbor.openList = true;
+
+                        neighbor.cameFrom = next;
+                        neighbor.setValues(next.cost + weights[neighbor.position.x, neighbor.position.y], neighbor.position.tileDiff(end));
+
+                        openList.Enqueue(neighbor.probableCost, neighbor);
+                    }
+                    else if (!neighbor.closedList)
+                    {
+                        //Compare its current values, and change em if need be.
+                        int newCost = next.cost + weights[neighbor.position.x, neighbor.position.y];
+                        if (newCost < neighbor.cost)
+                        {
+                            //May not actually work...
+                            KeyValuePair<int, path> oldPair = new KeyValuePair<int, path>(neighbor.probableCost, neighbor);
+
+                            openList.Remove(oldPair);
+                            neighbor.setValues(newCost, neighbor.position.tileDiff(end));
+
+                            openList.Enqueue(neighbor.probableCost, neighbor);
+                        }
+                    }
+                }
+
+            } //End of While Loop
+
+
+        } //End of For Loop
 
         return corridors;
     }
@@ -155,7 +228,7 @@ public static class AreaGen {
                 else
                 {
                     //If this is part of a Room, then set its weight to one, to prefer already existing paths.
-                    weights[i, j] = 0;
+                    weights[i, j] = 1;
                 }
             }
         }
@@ -163,39 +236,135 @@ public static class AreaGen {
         return weights;
     }
 
-    //Iterates through the list of Corridors and places them all on the tile map.
-    private static void placeCorridors(ref TileData[,] tiles, List<TileData> corridors)
+    //Gets the final path from the A* algorithm.
+    private static List<TileData> getFinishedPath(path endPoint, ref TileData[,] tiles)
     {
-        throw new System.NotImplementedException();
+        path nextPath = endPoint;
+        List<TileData> finishedPath = new List<TileData>();
+        
+        //While we're not yet at the start.
+        while (nextPath.cameFrom != null)
+        {
+            Point pos = nextPath.position;
+
+            //If this tile isn't already a Room.
+            if (tiles[pos.x, pos.y] == null)
+            {
+                TileData temp = new TileData();
+                tiles[pos.x, pos.y] = temp;
+                finishedPath.Add(temp);
+            }
+
+            nextPath = nextPath.cameFrom;
+        }
+
+        return finishedPath;
     }
 
     #endregion
 
+
+    #region Internal Classes
+
+    internal class pathMap
+    {
+        path[,] map;
+
+        internal pathMap(int length, int height)
+        {
+            map = new path[length, height];
+        }
+
+        internal path getPath(Point p)
+        {
+            return getPath(p.x, p.y);
+        }
+        internal path getPath(int x, int y)
+        {
+            if (map[x,y] == null)
+            {
+                map[x, y] = new path(new Point(x, y), this);
+            }
+
+            return map[x, y];
+        }
+
+        internal bool isWithinMap(Point p)
+        {
+            return (p.x > -1 && p.y > -1 && p.x < map.GetLength(0) && p.y < map.GetLength(1));
+        }
+    }
+
     //Internal class used to help generate corridors.
     internal class path
     {
-        int cost;         //G
-        int estDist;      //H
-        int probableCost; //F = G + H
+        internal int cost;         //G
+        internal int estDist;      //H
+        internal int probableCost; //F = G + H
 
-        Point cameFrom;
+        internal path cameFrom;
+        internal Point position;
 
-        bool closedList = false;
+        internal pathMap map;
 
-        internal path(Point cameFrom)
+        internal bool closedList = false;
+        internal bool openList = false;
+
+        internal path(Point myPoint, pathMap myMap)
         {
-            this.cameFrom = cameFrom;
+            this.position = myPoint;
+            this.map = myMap;
         }
 
         //Returns an array of the neighbors of this path.
-        public path[] getNeighbors()
+        internal List<path> getNeighbors()
         {
-            return null;
+            Point[] points = position.getAdjacent();
+
+            List<path> paths = new List<path>();
+            
+            foreach(Point p in points)
+            {
+                if (map.isWithinMap(p))
+                {
+                    paths.Add(map.getPath(p));
+                }
+            }
+
+            return paths;
         }
 
-        public Point getCameFrom()
+        internal void setValues(int G, int H, int F)
         {
-            return cameFrom;
+            this.cost = G;
+            this.estDist = H;
+            this.probableCost = F;
         }
+
+        internal void setValues(int G, int H)
+        {
+            setValues(G, H, G + H);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+
+            path p = obj as path;
+            if ((System.Object)p == null)
+            {
+                return false;
+            }
+
+            return this.position.Equals(p.position);
+        }
+
     }
+
+    #endregion
+
+
 }

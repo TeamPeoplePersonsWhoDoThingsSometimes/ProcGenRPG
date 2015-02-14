@@ -212,6 +212,9 @@ public class Area
             generateArea();
         }
 
+        Debug.Log("Map seed is : " + parentMap.getSeed());
+        Debug.Log("Area Seed is: " + areaSeed);
+
         GameObject parent = new GameObject();
         parent.name = "Area Debug Parent";
 

@@ -14,7 +14,7 @@ public class LoadResources : MonoBehaviour {
     public static LoadResources instance;
 
 	// Use this for initialization
-	void Start () {
+	void OnEnable () {
 
         //UNSAFE, TEMPORARY SINGLETON
 	    instance = this;

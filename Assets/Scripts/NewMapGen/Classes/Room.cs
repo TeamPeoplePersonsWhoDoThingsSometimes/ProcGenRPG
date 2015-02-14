@@ -24,7 +24,7 @@ public class Room {
     {
         get
         {
-            return topRight.x - botLeft.x;
+            return (topRight.x - botLeft.x) + 1;
         }
     }
 
@@ -32,7 +32,7 @@ public class Room {
     {
         get
         {
-            return topRight.y - botLeft.y;
+            return (topRight.y - botLeft.y) + 1;
         }
     }
 
