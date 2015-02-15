@@ -491,17 +491,17 @@ public class Map
 	public Color[,] ColorMap() {
 		Color[,] colorMap = new Color[areaMap.GetLength(0), areaMap.GetLength(1)];
 		
-	
+		
 		for (int i = 0; i < areaMap.GetLength(0); i++) {
 			for (int j = 0; j < areaMap.GetLength(1); j++) {
-				AreaType at = areaMap [i, j].getGroup ().type; //Now Broken, fix plox
+				AreaType at = areaMap [i, j].getGroup ().type;
 				if (at == AreaType.GrassyPath) {
 					colorMap [i, j] = Color.green;
 				} else if (at == AreaType.Dungeon) {
 					colorMap [i, j] = Color.red;
 				} else if (at == AreaType.NotAssigned) {
 					colorMap [i, j] = Color.black;	
-				}
+				} //As more Area Types are added, they need to be assigned colors here.
 			}
 		}
 		return colorMap;
