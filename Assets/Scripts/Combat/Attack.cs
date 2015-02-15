@@ -93,7 +93,7 @@ public class Attack : MonoBehaviour {
 //		thisDamage = damageMod*damage;
 //	}
 
-	public void SetDamage(int damage) {
+	public void SetDamage(float damage) {
 		thisDamage = damage;
 	}
 

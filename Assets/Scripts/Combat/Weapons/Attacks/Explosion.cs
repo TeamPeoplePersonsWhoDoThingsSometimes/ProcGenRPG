@@ -11,8 +11,15 @@ public class Explosion : Attack {
 
 	protected override void Update() {
 		base.Update ();
-		if (duration == 0) {
+		if (duration <= 0) {
 			enemyHitArray = Physics.OverlapSphere(transform.position, radius);
+
+			Debug.Log ("Exploding");
+
+			if (enemyHitArray.Length != 0) {
+				Debug.Log ("Explosion collided with something");
+			}
+
 			for(int i = 0; i < enemyHitArray.Length; i++) {
 				if(enemyHitArray[i].gameObject.GetComponent<Player>() != null && canDamagePlayer) {
 					enemyHitArray[i].gameObject.GetComponent<Player>().GetDamaged(base.GetDamage(),false);
