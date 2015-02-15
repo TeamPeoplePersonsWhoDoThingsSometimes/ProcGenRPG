@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Room {
 
@@ -14,8 +15,10 @@ public class Room {
                 //Whatever.
 
     //Note: generateRoom() will NOT generate the Tiles. Only the insides of the Room.
-            
+
     //TODO: Create a function and varible that requires Quest Material to be generated in this Room.
+
+    #region Variables
 
     private Point botLeft; //Bottom left corner of this room.
     private Point topRight; //Top Right corner of this room.
@@ -36,11 +39,81 @@ public class Room {
         }
     }
 
+    List<GameObject> objects;
+
+    Area parent;
+
+    public bool isGenerated = false;
+    public bool isShowing = false;
+
+    #endregion
+
+
+    #region Constructors
+
     public Room(Point botLeft, Point topRight)
     {
         this.botLeft = botLeft;
         this.topRight = topRight;
     }
+
+    #endregion
+
+
+    #region Generation Methods
+
+    //Generates and shows the Room, if not yet Generated. Otherwise, shows the Room.
+    public void showRoom(System.Random random)
+    {
+        if (!isGenerated)
+        {
+            objects = new List<GameObject>();
+            
+            RoomGen.generateRoom(random.Next(10));
+
+            isGenerated = true;
+            isShowing = true;
+        }
+        else if (!isShowing)
+        {
+            foreach (GameObject g in objects)
+            {
+                g.SetActive(true);
+            }
+
+            isShowing = true;
+        }
+    }
+
+    public void hideRoom()
+    {
+        if (isShowing)
+        {
+            foreach (GameObject g in objects)
+            {
+                g.SetActive(false);
+            }
+
+            isShowing = false;
+        }
+    }
+
+    public void destroyRoom()
+    {
+        if (isGenerated)
+        {
+            foreach(GameObject g in objects)
+            {
+                GameObject.Destroy(g);
+            }
+
+            isGenerated = false;
+            isShowing = false;
+        }
+    }
+
+    #endregion
+
 
     #region Public Methods
 
