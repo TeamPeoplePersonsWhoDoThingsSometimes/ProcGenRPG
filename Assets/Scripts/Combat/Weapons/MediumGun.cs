@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Minigun : Weapon {
+public class MediumGun : Weapon {
 
 	public GameObject bulletParticles;
 
