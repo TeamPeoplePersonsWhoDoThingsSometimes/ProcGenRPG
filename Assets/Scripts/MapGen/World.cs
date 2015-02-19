@@ -63,6 +63,44 @@ public class World : MonoBehaviour {
 		return name;
 	}
 
+	public static Object getItemFromProtobuf(DirectObjectProtocol proto) {
+		string name = proto.Name;
+
+		foreach (GameObject o in Weapons) {
+			Item i = o.GetComponent<Item>();
+			if (i.name.Equals(name)) {
+				GameObject ret = o;
+				Weapon w = o.GetComponent<Weapon>();
+				w.version = "" + proto.ItemInformation.Version;
+				return ret;
+			}
+		}
+
+		foreach (GameObject o in Hacks) {
+			Item i = o.GetComponent<Item>();
+			if (i.name.Equals(name)) {
+				return o;
+			}
+		}
+
+		return null;
+	}
+
+	public static Object getEnemyFromProtobuf(DirectObjectProtocol proto) {
+		string name = proto.Name;
+
+		foreach (TileSet t in TileSets) {
+			foreach (Enemy o in t.enemyTypes) {
+				if (o.name.Equals(name)) {
+					o.setBadass(proto.Type.Equals("Badass"));
+					return o;
+				}
+			}
+		}
+
+		return null;
+	}
+
 	/*public static TileSet getTileSetByName(string name) {
 		string nname = name.Replace(" ", "").ToLower();
 		foreach(TileSet a in TileSets) {

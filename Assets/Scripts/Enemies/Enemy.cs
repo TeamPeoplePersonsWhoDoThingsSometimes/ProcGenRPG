@@ -93,10 +93,18 @@ public class Enemy : MonoBehaviour {
 		return version;
 	}
 
+	public void SetVersion(string v) {
+		version = v;
+	}
+
+	public void setBadass(bool b) {
+		isBadass = b;
+	}
+
 	public string HealthString() {
 		return hp + "/" + maxHP;
 	}
-	
+
 	// Update is called once per frame
 	protected void Update () {
 //		transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, 0f, 1f), transform.position.z);

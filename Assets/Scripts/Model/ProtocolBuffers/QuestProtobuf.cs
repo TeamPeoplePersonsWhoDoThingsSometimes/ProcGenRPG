@@ -64,41 +64,42 @@ public static partial class QuestProtobuf {
         "Ey5TdGF0dXNTdGVwUHJvdG9jb2wieAoTU3RhdHVzQmxvY2tQcm90b2NvbBIM" + 
         "CgRuYW1lGAEgAigJEioKCHN0YXR1c2VzGAIgAygLMhguU3RhdHVzQ2hlY2th" + 
         "YmxlUHJvdG9jb2wSJwoIY29tbWFuZHMYAyADKAsyFS5TcGF3bkNvbW1hbmRQ" + 
-        "cm90b2NvbCLhAQoUU3Bhd25Db21tYW5kUHJvdG9jb2wSEQoJc3Bhd25BcmVh" + 
-        "GAEgAigJEjcKEnNwYXduU3BlY2lmaWNhdGlvbhgCIAIoDjIbLlNwYXduQXJl" + 
-        "YVR5cGVTcGVjaWZpY2F0aW9uEg0KBXJhbmdlGAMgAigFEiMKBGFyZWEYBCAB" + 
-        "KAsyFS5EaXJlY3RPYmplY3RQcm90b2NvbBIjCgRpdGVtGAUgASgLMhUuRGly" + 
-        "ZWN0T2JqZWN0UHJvdG9jb2wSJAoFZW5lbXkYBiABKAsyFS5EaXJlY3RPYmpl" + 
-        "Y3RQcm90b2NvbCJpChJTdGF0dXNTdGVwUHJvdG9jb2wSDAoEbmFtZRgBIAIo" + 
-        "CRITCgtkZXNjcmlwdGlvbhgCIAIoCRIwCg5zdGF0dXNlc0luU3RlcBgDIAMo" + 
-        "CzIYLlN0YXR1c0NoZWNrYWJsZVByb3RvY29sIkoKF1N0YXR1c0NoZWNrYWJs" + 
-        "ZVByb3RvY29sEh8KBmFjdGlvbhgBIAEoCzIPLkFjdGlvblByb3RvY29sEg4K" + 
-        "BmFtb3VudBgCIAEoBSJSCg5BY3Rpb25Qcm90b2NvbBIZCgR0eXBlGAEgAigO" + 
-        "MgsuQWN0aW9uVHlwZRIlCgZ0YXJnZXQYAiABKAsyFS5EaXJlY3RPYmplY3RQ" + 
-        "cm90b2NvbCKFAQoURGlyZWN0T2JqZWN0UHJvdG9jb2wSDAoEdHlwZRgBIAEo" + 
-        "CRIMCgRuYW1lGAIgAigJEhkKA21hcBgDIAEoCzIMLk1hcFByb3RvY29sEg4K" + 
-        "BmFtb3VudBgEIAEoBRImCg9pdGVtSW5mb3JtYXRpb24YBSABKAsyDS5JdGVt" + 
-        "UHJvdG9jb2wiQwoLTWFwUHJvdG9jb2wSCwoDdWlkGAEgAigDEhgKEGdlbmVy" + 
-        "YXRlSWZOZWVkZWQYAiACKAgSDQoFcmFuZ2UYAyACKAEiRwoMSXRlbVByb3Rv" + 
-        "Y29sEg8KB3ZlcnNpb24YASACKAUSJgoJbGV2ZWxTcGVjGAIgAigOMhMuTGV2" + 
-        "ZWxTcGVjaWZpY2F0aW9uIjsKE0NvbnZlcnNhdGlvblBhY2thZ2USJAoNY29u" + 
-        "dmVyc2F0aW9ucxgBIAMoCzINLkNvbnZlcnNhdGlvbiJSCgxDb252ZXJzYXRp" + 
-        "b24SIwoIYWxsTm9kZXMYASADKAsyES5Db252ZXJzYXRpb25Ob2RlEgwKBG5h" + 
-        "bWUYAiABKAkSDwoHY3JlYXRvchgDIAEoCSKZAQoQQ29udmVyc2F0aW9uTm9k" + 
-        "ZRIMCgR0ZXh0GAEgAigJEgwKBG5hbWUYAiACKAkSCwoDdWlkGAMgAigDEgkK" + 
-        "AVgYBCACKAUSCQoBWRgFIAIoBRIgCgtjb25uZWN0aW9ucxgGIAMoCzILLkNv" + 
-        "bm5lY3Rpb24SJAoGYmxvY2tzGAcgAygLMhQuU3RhdHVzQmxvY2tQcm90b2Nv" + 
-        "bCJUCgpDb25uZWN0aW9uEg4KBm5vZGVJZBgBIAIoAxIMCgR0ZXh0GAIgAigJ" + 
-        "EigKD3JlcXVpcmVtZW50U2V0cxgDIAMoCzIPLlJlcXVpcmVtZW50U2V0IkAK" + 
-        "DlJlcXVpcmVtZW50U2V0Ei4KDHJlcXVpcmVtZW50cxgBIAMoCzIYLlN0YXR1" + 
-        "c0NoZWNrYWJsZVByb3RvY29sKrwBCgpBY3Rpb25UeXBlEggKBEtJTEwQABIN" + 
-        "CglNT1ZFX0FSRUEQARIVChFBUFBST0FDSEVEX09CSkVDVBACEhQKEFBJQ0tF" + 
-        "RF9VUF9PQkpFQ1QQAxIVChFFTlRFUl9DSVRZX0xJTUlUUxAEEgwKCExFVkVM" + 
-        "X1VQEAUSDgoKRVFVSVBfSVRFTRAGEgwKCFVTRV9JVEVNEAcSCgoGQVRUQUNL" + 
-        "EAgSGQoVQ09OVkVSU0FUSU9OX05PREVfSElUEAkqNQoaU3Bhd25BcmVhVHlw" + 
-        "ZVNwZWNpZmljYXRpb24SCQoFTE9DQUwQABIMCghESVNUQU5DRRABKiwKEkxl" + 
-        "dmVsU3BlY2lmaWNhdGlvbhILCgdNSU5JTVVNEAESCQoFRVhBQ1QQAkIhCh9z" + 
-        "dHNxdWVzdGJ1aWxkZXIucHJvdG9jb2xidWZmZXJz");
+        "cm90b2NvbCLrAQoUU3Bhd25Db21tYW5kUHJvdG9jb2wSGwoJc3Bhd25BcmVh" + 
+        "GAEgAigOMgguTWFwVHlwZRI3ChJzcGF3blNwZWNpZmljYXRpb24YAiACKA4y" + 
+        "Gy5TcGF3bkFyZWFUeXBlU3BlY2lmaWNhdGlvbhINCgVyYW5nZRgDIAIoBRIj" + 
+        "CgRhcmVhGAQgASgLMhUuRGlyZWN0T2JqZWN0UHJvdG9jb2wSIwoEaXRlbRgF" + 
+        "IAEoCzIVLkRpcmVjdE9iamVjdFByb3RvY29sEiQKBWVuZW15GAYgASgLMhUu" + 
+        "RGlyZWN0T2JqZWN0UHJvdG9jb2wiaQoSU3RhdHVzU3RlcFByb3RvY29sEgwK" + 
+        "BG5hbWUYASACKAkSEwoLZGVzY3JpcHRpb24YAiACKAkSMAoOc3RhdHVzZXNJ" + 
+        "blN0ZXAYAyADKAsyGC5TdGF0dXNDaGVja2FibGVQcm90b2NvbCJKChdTdGF0" + 
+        "dXNDaGVja2FibGVQcm90b2NvbBIfCgZhY3Rpb24YASABKAsyDy5BY3Rpb25Q" + 
+        "cm90b2NvbBIOCgZhbW91bnQYAiABKAUiUgoOQWN0aW9uUHJvdG9jb2wSGQoE" + 
+        "dHlwZRgBIAIoDjILLkFjdGlvblR5cGUSJQoGdGFyZ2V0GAIgASgLMhUuRGly" + 
+        "ZWN0T2JqZWN0UHJvdG9jb2wihQEKFERpcmVjdE9iamVjdFByb3RvY29sEgwK" + 
+        "BHR5cGUYASABKAkSDAoEbmFtZRgCIAIoCRIZCgNtYXAYAyABKAsyDC5NYXBQ" + 
+        "cm90b2NvbBIOCgZhbW91bnQYBCABKAUSJgoPaXRlbUluZm9ybWF0aW9uGAUg" + 
+        "ASgLMg0uSXRlbVByb3RvY29sIkMKC01hcFByb3RvY29sEgsKA3VpZBgBIAIo" + 
+        "AxIYChBnZW5lcmF0ZUlmTmVlZGVkGAIgAigIEg0KBXJhbmdlGAMgAigBIkcK" + 
+        "DEl0ZW1Qcm90b2NvbBIPCgd2ZXJzaW9uGAEgAigFEiYKCWxldmVsU3BlYxgC" + 
+        "IAIoDjITLkxldmVsU3BlY2lmaWNhdGlvbiI7ChNDb252ZXJzYXRpb25QYWNr" + 
+        "YWdlEiQKDWNvbnZlcnNhdGlvbnMYASADKAsyDS5Db252ZXJzYXRpb24iUgoM" + 
+        "Q29udmVyc2F0aW9uEiMKCGFsbE5vZGVzGAEgAygLMhEuQ29udmVyc2F0aW9u" + 
+        "Tm9kZRIMCgRuYW1lGAIgASgJEg8KB2NyZWF0b3IYAyABKAkimQEKEENvbnZl" + 
+        "cnNhdGlvbk5vZGUSDAoEdGV4dBgBIAIoCRIMCgRuYW1lGAIgAigJEgsKA3Vp" + 
+        "ZBgDIAIoAxIJCgFYGAQgAigFEgkKAVkYBSACKAUSIAoLY29ubmVjdGlvbnMY" + 
+        "BiADKAsyCy5Db25uZWN0aW9uEiQKBmJsb2NrcxgHIAMoCzIULlN0YXR1c0Js" + 
+        "b2NrUHJvdG9jb2wiVAoKQ29ubmVjdGlvbhIOCgZub2RlSWQYASACKAMSDAoE" + 
+        "dGV4dBgCIAIoCRIoCg9yZXF1aXJlbWVudFNldHMYAyADKAsyDy5SZXF1aXJl" + 
+        "bWVudFNldCJACg5SZXF1aXJlbWVudFNldBIuCgxyZXF1aXJlbWVudHMYASAD" + 
+        "KAsyGC5TdGF0dXNDaGVja2FibGVQcm90b2NvbCq8AQoKQWN0aW9uVHlwZRII" + 
+        "CgRLSUxMEAASDQoJTU9WRV9BUkVBEAESFQoRQVBQUk9BQ0hFRF9PQkpFQ1QQ" + 
+        "AhIUChBQSUNLRURfVVBfT0JKRUNUEAMSFQoRRU5URVJfQ0lUWV9MSU1JVFMQ" + 
+        "BBIMCghMRVZFTF9VUBAFEg4KCkVRVUlQX0lURU0QBhIMCghVU0VfSVRFTRAH" + 
+        "EgoKBkFUVEFDSxAIEhkKFUNPTlZFUlNBVElPTl9OT0RFX0hJVBAJKioKB01h" + 
+        "cFR5cGUSCAoEQ0lUWRAAEggKBFBBVEgQARILCgdEVU5HRU9OEAIqNQoaU3Bh" + 
+        "d25BcmVhVHlwZVNwZWNpZmljYXRpb24SCQoFTE9DQUwQABIMCghESVNUQU5D" + 
+        "RRABKiwKEkxldmVsU3BlY2lmaWNhdGlvbhILCgdNSU5JTVVNEAESCQoFRVhB" + 
+        "Q1QQAkIhCh9zdHNxdWVzdGJ1aWxkZXIucHJvdG9jb2xidWZmZXJz");
     pbd::FileDescriptor.InternalDescriptorAssigner assigner = delegate(pbd::FileDescriptor root) {
       descriptor = root;
       internal__static_QuestPackage__Descriptor = Descriptor.MessageTypes[0];
@@ -186,6 +187,12 @@ public enum ActionType {
   USE_ITEM = 7,
   ATTACK = 8,
   CONVERSATION_NODE_HIT = 9,
+}
+
+public enum MapType {
+  CITY = 0,
+  PATH = 1,
+  DUNGEON = 2,
 }
 
 public enum SpawnAreaTypeSpecification {
@@ -1759,7 +1766,7 @@ public sealed partial class SpawnCommandProtocol : pb::GeneratedMessage<SpawnCom
   private SpawnCommandProtocol() { }
   private static readonly SpawnCommandProtocol defaultInstance = new SpawnCommandProtocol().MakeReadOnly();
   private static readonly string[] _spawnCommandProtocolFieldNames = new string[] { "area", "enemy", "item", "range", "spawnArea", "spawnSpecification" };
-  private static readonly uint[] _spawnCommandProtocolFieldTags = new uint[] { 34, 50, 42, 24, 10, 16 };
+  private static readonly uint[] _spawnCommandProtocolFieldTags = new uint[] { 34, 50, 42, 24, 8, 16 };
   public static SpawnCommandProtocol DefaultInstance {
     get { return defaultInstance; }
   }
@@ -1782,11 +1789,11 @@ public sealed partial class SpawnCommandProtocol : pb::GeneratedMessage<SpawnCom
   
   public const int SpawnAreaFieldNumber = 1;
   private bool hasSpawnArea;
-  private string spawnArea_ = "";
+  private global::MapType spawnArea_ = global::MapType.CITY;
   public bool HasSpawnArea {
     get { return hasSpawnArea; }
   }
-  public string SpawnArea {
+  public global::MapType SpawnArea {
     get { return spawnArea_; }
   }
   
@@ -1862,7 +1869,7 @@ public sealed partial class SpawnCommandProtocol : pb::GeneratedMessage<SpawnCom
     int size = SerializedSize;
     string[] field_names = _spawnCommandProtocolFieldNames;
     if (hasSpawnArea) {
-      output.WriteString(1, field_names[4], SpawnArea);
+      output.WriteEnum(1, field_names[4], (int) SpawnArea, SpawnArea);
     }
     if (hasSpawnSpecification) {
       output.WriteEnum(2, field_names[5], (int) SpawnSpecification, SpawnSpecification);
@@ -1890,7 +1897,7 @@ public sealed partial class SpawnCommandProtocol : pb::GeneratedMessage<SpawnCom
       
       size = 0;
       if (hasSpawnArea) {
-        size += pb::CodedOutputStream.ComputeStringSize(1, SpawnArea);
+        size += pb::CodedOutputStream.ComputeEnumSize(1, (int) SpawnArea);
       }
       if (hasSpawnSpecification) {
         size += pb::CodedOutputStream.ComputeEnumSize(2, (int) SpawnSpecification);
@@ -2092,8 +2099,16 @@ public sealed partial class SpawnCommandProtocol : pb::GeneratedMessage<SpawnCom
             ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
             break;
           }
-          case 10: {
-            result.hasSpawnArea = input.ReadString(ref result.spawnArea_);
+          case 8: {
+            object unknown;
+            if(input.ReadEnum(ref result.spawnArea_, out unknown)) {
+              result.hasSpawnArea = true;
+            } else if(unknown is int) {
+              if (unknownFields == null) {
+                unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+              }
+              unknownFields.MergeVarintField(1, (ulong)(int)unknown);
+            }
             break;
           }
           case 16: {
@@ -2150,14 +2165,13 @@ public sealed partial class SpawnCommandProtocol : pb::GeneratedMessage<SpawnCom
     
     
     public bool HasSpawnArea {
-      get { return result.hasSpawnArea; }
+     get { return result.hasSpawnArea; }
     }
-    public string SpawnArea {
+    public global::MapType SpawnArea {
       get { return result.SpawnArea; }
       set { SetSpawnArea(value); }
     }
-    public Builder SetSpawnArea(string value) {
-      pb::ThrowHelper.ThrowIfNull(value, "value");
+    public Builder SetSpawnArea(global::MapType value) {
       PrepareBuilder();
       result.hasSpawnArea = true;
       result.spawnArea_ = value;
@@ -2166,7 +2180,7 @@ public sealed partial class SpawnCommandProtocol : pb::GeneratedMessage<SpawnCom
     public Builder ClearSpawnArea() {
       PrepareBuilder();
       result.hasSpawnArea = false;
-      result.spawnArea_ = "";
+      result.spawnArea_ = global::MapType.CITY;
       return this;
     }
     
