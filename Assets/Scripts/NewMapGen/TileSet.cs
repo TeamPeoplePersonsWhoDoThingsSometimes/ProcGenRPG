@@ -1,0 +1,13 @@
+﻿using UnityEngine;
+using System.Collections.Generic;
+
+/**
+ * A small class intended to hold a complete tileset for a specific generator
+ */
+public class TileSet : MonoBehaviour {
+	public List<Tile> tiles;
+	public List<Enemy> enemyTypes;
+	public List<float> enemyTypeChances;
+	public List<Item> chestItems;
+	public float chestSpawnChance;
+}
