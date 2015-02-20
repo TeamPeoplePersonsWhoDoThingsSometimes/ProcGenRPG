@@ -43,7 +43,7 @@ public class GlitchText : MonoBehaviour {
 				transform.GetChild(1).GetComponent<Outline>().effectDistance = new Vector2(1, -1);
 				transform.GetChild(1).transform.localScale = Vector3.one;
 			}
-			if(Time.frameCount % 2 == 0) {
+			if(Time.frameCount % 10 == 0) {
 				glitchMusic.volume = 0;
 				organicMusic.volume = 1;
 			}
@@ -64,15 +64,22 @@ public class GlitchText : MonoBehaviour {
 	void GlitchAudio() {
 		float tempTime = organicMusic.time;
 		float tempPitch = organicMusic.pitch;
+		float randVal1 = Random.Range(-0.1f,0.1f);
+		float randVal2 = Random.Range(0.1f,1.1f);
+		float randVal3 = Random.Range(0.95f, 1.05f);
 		if(tempTime > 2) {
-			organicMusic.time += Random.Range(-0.1f,0.1f);
+			organicMusic.time += randVal1;
+			glitchMusic.time += randVal1;
 		} else {
-			organicMusic.time += Random.Range(0.1f,1.1f);
+			organicMusic.time += randVal2;
+			glitchMusic.time += randVal2;
 		}
 		if(tempPitch == 1 && Time.frameCount % 50 == 0) {
-			organicMusic.pitch = Random.Range(0.95f, 1.05f);
+			organicMusic.pitch = randVal3;
+			glitchMusic.pitch = randVal3;
 		} else {
 			organicMusic.pitch = 1f;
+			glitchMusic.pitch = 1f;
 		}
 		if(organicMusic.volume == 1) {
 			glitchMusic.volume = 1;
