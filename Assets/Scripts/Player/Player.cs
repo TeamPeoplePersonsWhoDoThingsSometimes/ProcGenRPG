@@ -56,22 +56,22 @@ public class Player : MonoBehaviour {
 		//setting up playerarmor
 		playerArmor = new GameObject[4];
 
-		leftUpLegRef = GameObject.Find("Character1_LeftUpLeg").GetComponent<Transform>();
-		rightUpLegRef = GameObject.Find("Character1_RightUpLeg").GetComponent<Transform>();
-		leftLegRef = GameObject.Find("Character1_LeftLeg").GetComponent<Transform>();
-		rightLegRef = GameObject.Find("Character1_RightLeg").GetComponent<Transform>();
-		leftFootRef = GameObject.Find("Character1_LeftFoot").GetComponent<Transform>();
-		rightFootRef = GameObject.Find("Character1_RightFoot").GetComponent<Transform>();
-		spineRef = GameObject.Find("Character1_Spine").GetComponent<Transform>();
-		leftShoulderRef = GameObject.Find("Character1_LeftShoulder").GetComponent<Transform>();
-		rightShoulderRef = GameObject.Find("Character1_RightShoulder").GetComponent<Transform>();
-		leftArmRef = GameObject.Find("Character1_LeftArm").GetComponent<Transform>();
-		leftForearmRef = GameObject.Find("Character1_LeftForeArm").GetComponent<Transform>();
-		leftHandRef = GameObject.Find("Character1_LeftHand").GetComponent<Transform>();
-		rightArmRef = GameObject.Find("Character1_RightArm").GetComponent<Transform>();
-		rightForearmRef = GameObject.Find("Character1_RightForeArm").GetComponent<Transform>();
-		rightHandRef = GameObject.Find("Character1_RightHand").GetComponent<Transform>();
-		headRef = GameObject.Find("Character1_Head").GetComponent<Transform>();
+		leftUpLegRef = transform.Find("Character1_Reference/Character1_Hips/Character1_LeftUpLeg").GetComponent<Transform>();
+		rightUpLegRef = transform.Find("Character1_Reference/Character1_Hips/Character1_RightUpLeg").GetComponent<Transform>();
+		leftLegRef = transform.Find("Character1_Reference/Character1_Hips/Character1_LeftUpLeg/Character1_LeftLeg").GetComponent<Transform>();
+		rightLegRef = transform.Find("Character1_Reference/Character1_Hips/Character1_RightUpLeg/Character1_RightLeg").GetComponent<Transform>();
+		leftFootRef = transform.Find("Character1_Reference/Character1_Hips/Character1_LeftUpLeg/Character1_LeftLeg/Character1_LeftFoot").GetComponent<Transform>();
+		rightFootRef = transform.Find("Character1_Reference/Character1_Hips/Character1_RightUpLeg/Character1_RightLeg/Character1_RightFoot").GetComponent<Transform>();
+		spineRef = transform.Find("Character1_Reference/Character1_Hips/Character1_Spine").GetComponent<Transform>();
+		leftShoulderRef = transform.Find("Character1_Reference/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_LeftShoulder").GetComponent<Transform>();
+		rightShoulderRef = transform.Find("Character1_Reference/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_RightShoulder").GetComponent<Transform>();
+		leftArmRef = transform.Find("Character1_Reference/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_LeftShoulder/Character1_LeftArm").GetComponent<Transform>();
+		leftForearmRef = transform.Find("Character1_Reference/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_LeftShoulder/Character1_LeftArm/Character1_LeftForeArm").GetComponent<Transform>();
+		leftHandRef = transform.Find("Character1_Reference/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_LeftShoulder/Character1_LeftArm/Character1_LeftForeArm/Character1_LeftHand").GetComponent<Transform>();
+		rightArmRef = transform.Find("Character1_Reference/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_RightShoulder/Character1_RightArm").GetComponent<Transform>();
+		rightForearmRef = transform.Find("Character1_Reference/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_RightShoulder/Character1_RightArm/Character1_RightForeArm").GetComponent<Transform>();
+		rightHandRef = transform.Find("Character1_Reference/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_RightShoulder/Character1_RightArm/Character1_RightForeArm/Character1_RightHand").GetComponent<Transform>();
+		headRef = transform.Find("Character1_Reference/Character1_Hips/Character1_Spine/Character1_Spine1/Character1_Neck/Character1_Head").GetComponent<Transform>();
 
 		//setting up initial weapon and hack (not the best way to do this since
 		//it requires that the first item in the inventory prefab needs to be a hack

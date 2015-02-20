@@ -117,6 +117,7 @@ public class PlayerControl : MonoBehaviour {
 		/**** Handling attacking ****/
 		if(!PlayerCanvas.inConsole && !immobile) {
 			if (playerref.GetWeapon() != null && playerref.GetWeapon().Type().Equals(WeaponType.Melee)) {
+				playerAnim.SetBool("HoldingMediumGun", false);
 //				Debug.Log(swordAttack1 + " " + swordAttack2 + " " + swordAttack3);
 
 				if (Input.GetMouseButtonDown(0) && comboTime && !swordAttack1 && swordAttack2) {
@@ -134,6 +135,7 @@ public class PlayerControl : MonoBehaviour {
 					comboTime = false;
 				}
 			} else if (playerref.GetWeapon() != null && playerref.GetWeapon().Type().Equals(WeaponType.Bow)) {
+				playerAnim.SetBool("HoldingMediumGun", false);
 				if (Input.GetMouseButtonDown(0)) {
 					if(playerAnim.GetFloat("Speed") < 0.2f) {
 						rangedIndicator.enabled = true;
@@ -150,6 +152,7 @@ public class PlayerControl : MonoBehaviour {
 					playerAnim.SetBool("DrawArrow", false);
 				}
 			} else if (playerref.GetWeapon() != null && playerref.GetWeapon().Type().Equals(WeaponType.Handgun)) {
+				playerAnim.SetBool("HoldingMediumGun", false);
 				if(Input.GetMouseButton(0)) {
 					playerAnim.SetBool("ShootHandgun", true);
 					rangedIndicator.enabled = true;
