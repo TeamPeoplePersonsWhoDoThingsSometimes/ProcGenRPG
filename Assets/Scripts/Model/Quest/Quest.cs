@@ -4,9 +4,77 @@ using System.Collections.Generic;
 public class Quest : ActionEventListener {
 
 	/**
+	 * This class helps keep steps ordered together nicely
+	 */
+	public class Step {
+		private string name;
+		private string description;
+		private Dictionary<StatusCheckable, bool> statuses;
+		private List<SpawnCommand> commands;
+
+		public Step(string n, string d, Dictionary<StatusCheckable, bool> s, List<SpawnCommand> c) {
+			name = n;
+			description = d;
+			statuses = s;
+			commands = c;
+		}
+
+		public Step(StatusStepProtocol proto) {
+			name = proto.Name;
+			description = proto.Description;
+
+			StatusCheckableFactory factory = new StatusCheckableFactory ();
+			IList<StatusCheckableProtocol> statusProtocols = proto.StatusesInStepList;
+			statuses = new Dictionary<StatusCheckable, bool>();
+			foreach (StatusCheckableProtocol p in statusProtocols) {
+				statuses.Add(factory.getStatusCheckableFromProtocol(p), false);
+			}
+
+			IList<SpawnCommandProtocol> commandProtocols = proto.CommandsList;
+			commands = new List<SpawnCommand>();
+			foreach (SpawnCommandProtocol c in commandProtocols) {
+				commands.Add(new SpawnCommand(c));
+			}
+		}
+
+		public bool isStepFinished() {
+			foreach (StatusCheckable s in statuses.Keys) {
+				bool test;
+				statuses.TryGetValue(s, out test);
+				if (!test)
+					return false;
+			}
+			return true;
+		}
+
+		public bool updateStatusChecks(IAction action) {
+			StatusCheckable[] stats = new StatusCheckable [curr.Keys.Count];
+			statuses.Keys.CopyTo(stats,0);
+			
+			//go through all the current status checks
+			foreach (StatusCheckable a in stats) {
+				bool done = false;
+				statuses.TryGetValue (a, out done);
+
+				//if the status check is not saved as done, then
+				//see if it has recently been satisfied, if it has,
+				//then save that, otherwise, we may not step state,
+				//so return
+				if (!done) {
+					if (a.isStatusMet (action)) {
+						Debug.Log ("Action Met");
+						statuses.Remove (a);
+						statuses.Add (a, true);
+					}
+				}
+			}
+		}
+	}
+
+	/**
 	 * Initialize the quest with the given steps
 	 */
-	public Quest(Dictionary<StatusCheckable, bool>[] questSteps) {
+	public Quest(Step[] questSteps) {
 		steps = questSteps;
 	}
 
@@ -17,15 +85,9 @@ public class Quest : ActionEventListener {
 		name = quest.Name;
 		currentStep = 0;
 		IList<StatusStepProtocol> stepProtocols = quest.StepsList;
-		StatusCheckableFactory factory = new StatusCheckableFactory ();
-		steps = new Dictionary<StatusCheckable, bool>[stepProtocols.Count];
+		steps = new Step[stepProtocols.Count];
 		for(int i = 0; i < stepProtocols.Count; i++) {
-			Dictionary<StatusCheckable, bool> step = new Dictionary<StatusCheckable, bool>();
-			IList<StatusCheckableProtocol> statusProtocols = stepProtocols[i].StatusesInStepList;
-			foreach(StatusCheckableProtocol p in statusProtocols) {
-				step.Add(factory.getStatusCheckableFromProtocol(p), false);
-			}
-			steps[i] = step;
+			steps[i] = new Step(stepProtocols[i]);
 		}
 		Debug.Log ("Built quest, steps: " + this.steps.Length);
 	}
@@ -35,7 +97,7 @@ public class Quest : ActionEventListener {
 	 * external list should be stepped through in order
 	 * dictionary happens unordered
 	 */
-	private Dictionary<StatusCheckable, bool>[] steps;
+	private Step[] steps;
 
 	/**
 	 * The current step in the quest
@@ -56,13 +118,7 @@ public class Quest : ActionEventListener {
 			return;
 		
 		Debug.Log ("Check Quest: " + this.name);
-		foreach(StatusCheckable s in steps[0].Keys) {
-			if(s.isStatusMet(act)) {
-				register ();
-				Debug.Log ("Started Quest: " + this.name);
-				currentStep = 1;
-			}
-		}
+		return steps[0].isStepFinished();
 	}
 
 	/**
@@ -72,29 +128,12 @@ public class Quest : ActionEventListener {
 	public override void onAction (IAction action)
 	{
 		Debug.Log ("Action registered");
-		Dictionary<StatusCheckable, bool> curr = steps [currentStep];
-		StatusCheckable[] statuses = new StatusCheckable [curr.Keys.Count];
-		curr.Keys.CopyTo(statuses,0);
 
-		//go through all the current status checks
-		foreach(StatusCheckable a in statuses) {
-			bool done = false;
-			curr.TryGetValue(a, out done);
+		steps [currentStep].updateStatusChecks (action);
 
-			//if the status check is not saved as done, then
-			//see if it has recently been satisfied, if it has,
-			//then save that, otherwise, we may not step state,
-			//so return
-			if(!done) {
-				if(a.isStatusMet(action)) {
-					Debug.Log ("Action Met");
-					curr.Remove(a);
-					curr.Add(a, true);
-					continue;
-				}
-				return;
-			}
-		}
+		//return unless we need to move to the next step
+		if (!steps [currentStep].isStepFinished)
+						return;
 
 		//all current status checks are satisfied, step quest
 		currentStep++;

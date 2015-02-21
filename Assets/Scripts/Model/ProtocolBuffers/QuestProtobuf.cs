@@ -28,6 +28,8 @@ public static partial class QuestProtobuf {
   internal static pb::FieldAccess.FieldAccessorTable<global::StatusStepProtocol, global::StatusStepProtocol.Builder> internal__static_StatusStepProtocol__FieldAccessorTable;
   internal static pbd::MessageDescriptor internal__static_StatusCheckableProtocol__Descriptor;
   internal static pb::FieldAccess.FieldAccessorTable<global::StatusCheckableProtocol, global::StatusCheckableProtocol.Builder> internal__static_StatusCheckableProtocol__FieldAccessorTable;
+  internal static pbd::MessageDescriptor internal__static_TierProtocol__Descriptor;
+  internal static pb::FieldAccess.FieldAccessorTable<global::TierProtocol, global::TierProtocol.Builder> internal__static_TierProtocol__FieldAccessorTable;
   internal static pbd::MessageDescriptor internal__static_ActionProtocol__Descriptor;
   internal static pb::FieldAccess.FieldAccessorTable<global::ActionProtocol, global::ActionProtocol.Builder> internal__static_ActionProtocol__FieldAccessorTable;
   internal static pbd::MessageDescriptor internal__static_DirectObjectProtocol__Descriptor;
@@ -64,42 +66,44 @@ public static partial class QuestProtobuf {
         "Ey5TdGF0dXNTdGVwUHJvdG9jb2wieAoTU3RhdHVzQmxvY2tQcm90b2NvbBIM" + 
         "CgRuYW1lGAEgAigJEioKCHN0YXR1c2VzGAIgAygLMhguU3RhdHVzQ2hlY2th" + 
         "YmxlUHJvdG9jb2wSJwoIY29tbWFuZHMYAyADKAsyFS5TcGF3bkNvbW1hbmRQ" + 
-        "cm90b2NvbCLrAQoUU3Bhd25Db21tYW5kUHJvdG9jb2wSGwoJc3Bhd25BcmVh" + 
+        "cm90b2NvbCLGAQoUU3Bhd25Db21tYW5kUHJvdG9jb2wSGwoJc3Bhd25BcmVh" + 
         "GAEgAigOMgguTWFwVHlwZRI3ChJzcGF3blNwZWNpZmljYXRpb24YAiACKA4y" + 
         "Gy5TcGF3bkFyZWFUeXBlU3BlY2lmaWNhdGlvbhINCgVyYW5nZRgDIAIoBRIj" + 
-        "CgRhcmVhGAQgASgLMhUuRGlyZWN0T2JqZWN0UHJvdG9jb2wSIwoEaXRlbRgF" + 
-        "IAEoCzIVLkRpcmVjdE9iamVjdFByb3RvY29sEiQKBWVuZW15GAYgASgLMhUu" + 
-        "RGlyZWN0T2JqZWN0UHJvdG9jb2wiaQoSU3RhdHVzU3RlcFByb3RvY29sEgwK" + 
-        "BG5hbWUYASACKAkSEwoLZGVzY3JpcHRpb24YAiACKAkSMAoOc3RhdHVzZXNJ" + 
-        "blN0ZXAYAyADKAsyGC5TdGF0dXNDaGVja2FibGVQcm90b2NvbCJKChdTdGF0" + 
-        "dXNDaGVja2FibGVQcm90b2NvbBIfCgZhY3Rpb24YASABKAsyDy5BY3Rpb25Q" + 
-        "cm90b2NvbBIOCgZhbW91bnQYAiABKAUiUgoOQWN0aW9uUHJvdG9jb2wSGQoE" + 
-        "dHlwZRgBIAIoDjILLkFjdGlvblR5cGUSJQoGdGFyZ2V0GAIgASgLMhUuRGly" + 
-        "ZWN0T2JqZWN0UHJvdG9jb2wihQEKFERpcmVjdE9iamVjdFByb3RvY29sEgwK" + 
-        "BHR5cGUYASABKAkSDAoEbmFtZRgCIAIoCRIZCgNtYXAYAyABKAsyDC5NYXBQ" + 
-        "cm90b2NvbBIOCgZhbW91bnQYBCABKAUSJgoPaXRlbUluZm9ybWF0aW9uGAUg" + 
-        "ASgLMg0uSXRlbVByb3RvY29sIkMKC01hcFByb3RvY29sEgsKA3VpZBgBIAIo" + 
-        "AxIYChBnZW5lcmF0ZUlmTmVlZGVkGAIgAigIEg0KBXJhbmdlGAMgAigBIkcK" + 
-        "DEl0ZW1Qcm90b2NvbBIPCgd2ZXJzaW9uGAEgAigFEiYKCWxldmVsU3BlYxgC" + 
-        "IAIoDjITLkxldmVsU3BlY2lmaWNhdGlvbiI7ChNDb252ZXJzYXRpb25QYWNr" + 
-        "YWdlEiQKDWNvbnZlcnNhdGlvbnMYASADKAsyDS5Db252ZXJzYXRpb24iUgoM" + 
-        "Q29udmVyc2F0aW9uEiMKCGFsbE5vZGVzGAEgAygLMhEuQ29udmVyc2F0aW9u" + 
-        "Tm9kZRIMCgRuYW1lGAIgASgJEg8KB2NyZWF0b3IYAyABKAkimQEKEENvbnZl" + 
-        "cnNhdGlvbk5vZGUSDAoEdGV4dBgBIAIoCRIMCgRuYW1lGAIgAigJEgsKA3Vp" + 
-        "ZBgDIAIoAxIJCgFYGAQgAigFEgkKAVkYBSACKAUSIAoLY29ubmVjdGlvbnMY" + 
-        "BiADKAsyCy5Db25uZWN0aW9uEiQKBmJsb2NrcxgHIAMoCzIULlN0YXR1c0Js" + 
-        "b2NrUHJvdG9jb2wiVAoKQ29ubmVjdGlvbhIOCgZub2RlSWQYASACKAMSDAoE" + 
-        "dGV4dBgCIAIoCRIoCg9yZXF1aXJlbWVudFNldHMYAyADKAsyDy5SZXF1aXJl" + 
-        "bWVudFNldCJACg5SZXF1aXJlbWVudFNldBIuCgxyZXF1aXJlbWVudHMYASAD" + 
-        "KAsyGC5TdGF0dXNDaGVja2FibGVQcm90b2NvbCq8AQoKQWN0aW9uVHlwZRII" + 
-        "CgRLSUxMEAASDQoJTU9WRV9BUkVBEAESFQoRQVBQUk9BQ0hFRF9PQkpFQ1QQ" + 
-        "AhIUChBQSUNLRURfVVBfT0JKRUNUEAMSFQoRRU5URVJfQ0lUWV9MSU1JVFMQ" + 
-        "BBIMCghMRVZFTF9VUBAFEg4KCkVRVUlQX0lURU0QBhIMCghVU0VfSVRFTRAH" + 
-        "EgoKBkFUVEFDSxAIEhkKFUNPTlZFUlNBVElPTl9OT0RFX0hJVBAJKioKB01h" + 
-        "cFR5cGUSCAoEQ0lUWRAAEggKBFBBVEgQARILCgdEVU5HRU9OEAIqNQoaU3Bh" + 
-        "d25BcmVhVHlwZVNwZWNpZmljYXRpb24SCQoFTE9DQUwQABIMCghESVNUQU5D" + 
-        "RRABKiwKEkxldmVsU3BlY2lmaWNhdGlvbhILCgdNSU5JTVVNEAESCQoFRVhB" + 
-        "Q1QQAkIhCh9zdHNxdWVzdGJ1aWxkZXIucHJvdG9jb2xidWZmZXJz");
+        "CgRpdGVtGAUgASgLMhUuRGlyZWN0T2JqZWN0UHJvdG9jb2wSJAoFZW5lbXkY" + 
+        "BiABKAsyFS5EaXJlY3RPYmplY3RQcm90b2NvbCKSAQoSU3RhdHVzU3RlcFBy" + 
+        "b3RvY29sEgwKBG5hbWUYASACKAkSEwoLZGVzY3JpcHRpb24YAiACKAkSMAoO" + 
+        "c3RhdHVzZXNJblN0ZXAYAyADKAsyGC5TdGF0dXNDaGVja2FibGVQcm90b2Nv" + 
+        "bBInCghjb21tYW5kcxgEIAMoCzIVLlNwYXduQ29tbWFuZFByb3RvY29sImcK" + 
+        "F1N0YXR1c0NoZWNrYWJsZVByb3RvY29sEh8KBmFjdGlvbhgBIAEoCzIPLkFj" + 
+        "dGlvblByb3RvY29sEhsKBHRpZXIYAiABKAsyDS5UaWVyUHJvdG9jb2wSDgoG" + 
+        "YW1vdW50GAMgASgFIhwKDFRpZXJQcm90b2NvbBIMCgR0aWVyGAEgAigFIlIK" + 
+        "DkFjdGlvblByb3RvY29sEhkKBHR5cGUYASACKA4yCy5BY3Rpb25UeXBlEiUK" + 
+        "BnRhcmdldBgCIAEoCzIVLkRpcmVjdE9iamVjdFByb3RvY29sIoUBChREaXJl" + 
+        "Y3RPYmplY3RQcm90b2NvbBIMCgR0eXBlGAEgASgJEgwKBG5hbWUYAiACKAkS" + 
+        "GQoDbWFwGAMgASgLMgwuTWFwUHJvdG9jb2wSDgoGYW1vdW50GAQgASgFEiYK" + 
+        "D2l0ZW1JbmZvcm1hdGlvbhgFIAEoCzINLkl0ZW1Qcm90b2NvbCJDCgtNYXBQ" + 
+        "cm90b2NvbBILCgN1aWQYASACKAMSGAoQZ2VuZXJhdGVJZk5lZWRlZBgCIAIo" + 
+        "CBINCgVyYW5nZRgDIAIoASJHCgxJdGVtUHJvdG9jb2wSDwoHdmVyc2lvbhgB" + 
+        "IAIoBRImCglsZXZlbFNwZWMYAiACKA4yEy5MZXZlbFNwZWNpZmljYXRpb24i" + 
+        "OwoTQ29udmVyc2F0aW9uUGFja2FnZRIkCg1jb252ZXJzYXRpb25zGAEgAygL" + 
+        "Mg0uQ29udmVyc2F0aW9uIlIKDENvbnZlcnNhdGlvbhIjCghhbGxOb2RlcxgB" + 
+        "IAMoCzIRLkNvbnZlcnNhdGlvbk5vZGUSDAoEbmFtZRgCIAEoCRIPCgdjcmVh" + 
+        "dG9yGAMgASgJIpkBChBDb252ZXJzYXRpb25Ob2RlEgwKBHRleHQYASACKAkS" + 
+        "DAoEbmFtZRgCIAIoCRILCgN1aWQYAyACKAMSCQoBWBgEIAIoBRIJCgFZGAUg" + 
+        "AigFEiAKC2Nvbm5lY3Rpb25zGAYgAygLMgsuQ29ubmVjdGlvbhIkCgZibG9j" + 
+        "a3MYByADKAsyFC5TdGF0dXNCbG9ja1Byb3RvY29sIlQKCkNvbm5lY3Rpb24S" + 
+        "DgoGbm9kZUlkGAEgAigDEgwKBHRleHQYAiACKAkSKAoPcmVxdWlyZW1lbnRT" + 
+        "ZXRzGAMgAygLMg8uUmVxdWlyZW1lbnRTZXQiQAoOUmVxdWlyZW1lbnRTZXQS" + 
+        "LgoMcmVxdWlyZW1lbnRzGAEgAygLMhguU3RhdHVzQ2hlY2thYmxlUHJvdG9j" + 
+        "b2wqvAEKCkFjdGlvblR5cGUSCAoES0lMTBAAEg0KCU1PVkVfQVJFQRABEhUK" + 
+        "EUFQUFJPQUNIRURfT0JKRUNUEAISFAoQUElDS0VEX1VQX09CSkVDVBADEhUK" + 
+        "EUVOVEVSX0NJVFlfTElNSVRTEAQSDAoITEVWRUxfVVAQBRIOCgpFUVVJUF9J" + 
+        "VEVNEAYSDAoIVVNFX0lURU0QBxIKCgZBVFRBQ0sQCBIZChVDT05WRVJTQVRJ" + 
+        "T05fTk9ERV9ISVQQCSoqCgdNYXBUeXBlEggKBENJVFkQABIICgRQQVRIEAES" + 
+        "CwoHRFVOR0VPThACKjUKGlNwYXduQXJlYVR5cGVTcGVjaWZpY2F0aW9uEgkK" + 
+        "BUxPQ0FMEAASDAoIRElTVEFOQ0UQASosChJMZXZlbFNwZWNpZmljYXRpb24S" + 
+        "CwoHTUlOSU1VTRABEgkKBUVYQUNUEAJCIQofc3RzcXVlc3RidWlsZGVyLnBy" + 
+        "b3RvY29sYnVmZmVycw==");
     pbd::FileDescriptor.InternalDescriptorAssigner assigner = delegate(pbd::FileDescriptor root) {
       descriptor = root;
       internal__static_QuestPackage__Descriptor = Descriptor.MessageTypes[0];
@@ -121,48 +125,52 @@ public static partial class QuestProtobuf {
       internal__static_SpawnCommandProtocol__Descriptor = Descriptor.MessageTypes[4];
       internal__static_SpawnCommandProtocol__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::SpawnCommandProtocol, global::SpawnCommandProtocol.Builder>(internal__static_SpawnCommandProtocol__Descriptor,
-              new string[] { "SpawnArea", "SpawnSpecification", "Range", "Area", "Item", "Enemy", });
+              new string[] { "SpawnArea", "SpawnSpecification", "Range", "Item", "Enemy", });
       internal__static_StatusStepProtocol__Descriptor = Descriptor.MessageTypes[5];
       internal__static_StatusStepProtocol__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::StatusStepProtocol, global::StatusStepProtocol.Builder>(internal__static_StatusStepProtocol__Descriptor,
-              new string[] { "Name", "Description", "StatusesInStep", });
+              new string[] { "Name", "Description", "StatusesInStep", "Commands", });
       internal__static_StatusCheckableProtocol__Descriptor = Descriptor.MessageTypes[6];
       internal__static_StatusCheckableProtocol__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::StatusCheckableProtocol, global::StatusCheckableProtocol.Builder>(internal__static_StatusCheckableProtocol__Descriptor,
-              new string[] { "Action", "Amount", });
-      internal__static_ActionProtocol__Descriptor = Descriptor.MessageTypes[7];
+              new string[] { "Action", "Tier", "Amount", });
+      internal__static_TierProtocol__Descriptor = Descriptor.MessageTypes[7];
+      internal__static_TierProtocol__FieldAccessorTable = 
+          new pb::FieldAccess.FieldAccessorTable<global::TierProtocol, global::TierProtocol.Builder>(internal__static_TierProtocol__Descriptor,
+              new string[] { "Tier", });
+      internal__static_ActionProtocol__Descriptor = Descriptor.MessageTypes[8];
       internal__static_ActionProtocol__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::ActionProtocol, global::ActionProtocol.Builder>(internal__static_ActionProtocol__Descriptor,
               new string[] { "Type", "Target", });
-      internal__static_DirectObjectProtocol__Descriptor = Descriptor.MessageTypes[8];
+      internal__static_DirectObjectProtocol__Descriptor = Descriptor.MessageTypes[9];
       internal__static_DirectObjectProtocol__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::DirectObjectProtocol, global::DirectObjectProtocol.Builder>(internal__static_DirectObjectProtocol__Descriptor,
               new string[] { "Type", "Name", "Map", "Amount", "ItemInformation", });
-      internal__static_MapProtocol__Descriptor = Descriptor.MessageTypes[9];
+      internal__static_MapProtocol__Descriptor = Descriptor.MessageTypes[10];
       internal__static_MapProtocol__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::MapProtocol, global::MapProtocol.Builder>(internal__static_MapProtocol__Descriptor,
               new string[] { "Uid", "GenerateIfNeeded", "Range", });
-      internal__static_ItemProtocol__Descriptor = Descriptor.MessageTypes[10];
+      internal__static_ItemProtocol__Descriptor = Descriptor.MessageTypes[11];
       internal__static_ItemProtocol__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::ItemProtocol, global::ItemProtocol.Builder>(internal__static_ItemProtocol__Descriptor,
               new string[] { "Version", "LevelSpec", });
-      internal__static_ConversationPackage__Descriptor = Descriptor.MessageTypes[11];
+      internal__static_ConversationPackage__Descriptor = Descriptor.MessageTypes[12];
       internal__static_ConversationPackage__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::ConversationPackage, global::ConversationPackage.Builder>(internal__static_ConversationPackage__Descriptor,
               new string[] { "Conversations", });
-      internal__static_Conversation__Descriptor = Descriptor.MessageTypes[12];
+      internal__static_Conversation__Descriptor = Descriptor.MessageTypes[13];
       internal__static_Conversation__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::Conversation, global::Conversation.Builder>(internal__static_Conversation__Descriptor,
               new string[] { "AllNodes", "Name", "Creator", });
-      internal__static_ConversationNode__Descriptor = Descriptor.MessageTypes[13];
+      internal__static_ConversationNode__Descriptor = Descriptor.MessageTypes[14];
       internal__static_ConversationNode__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::ConversationNode, global::ConversationNode.Builder>(internal__static_ConversationNode__Descriptor,
               new string[] { "Text", "Name", "Uid", "X", "Y", "Connections", "Blocks", });
-      internal__static_Connection__Descriptor = Descriptor.MessageTypes[14];
+      internal__static_Connection__Descriptor = Descriptor.MessageTypes[15];
       internal__static_Connection__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::Connection, global::Connection.Builder>(internal__static_Connection__Descriptor,
               new string[] { "NodeId", "Text", "RequirementSets", });
-      internal__static_RequirementSet__Descriptor = Descriptor.MessageTypes[15];
+      internal__static_RequirementSet__Descriptor = Descriptor.MessageTypes[16];
       internal__static_RequirementSet__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::RequirementSet, global::RequirementSet.Builder>(internal__static_RequirementSet__Descriptor,
               new string[] { "Requirements", });
@@ -1765,8 +1773,8 @@ public sealed partial class StatusBlockProtocol : pb::GeneratedMessage<StatusBlo
 public sealed partial class SpawnCommandProtocol : pb::GeneratedMessage<SpawnCommandProtocol, SpawnCommandProtocol.Builder> {
   private SpawnCommandProtocol() { }
   private static readonly SpawnCommandProtocol defaultInstance = new SpawnCommandProtocol().MakeReadOnly();
-  private static readonly string[] _spawnCommandProtocolFieldNames = new string[] { "area", "enemy", "item", "range", "spawnArea", "spawnSpecification" };
-  private static readonly uint[] _spawnCommandProtocolFieldTags = new uint[] { 34, 50, 42, 24, 8, 16 };
+  private static readonly string[] _spawnCommandProtocolFieldNames = new string[] { "enemy", "item", "range", "spawnArea", "spawnSpecification" };
+  private static readonly uint[] _spawnCommandProtocolFieldTags = new uint[] { 50, 42, 24, 8, 16 };
   public static SpawnCommandProtocol DefaultInstance {
     get { return defaultInstance; }
   }
@@ -1817,16 +1825,6 @@ public sealed partial class SpawnCommandProtocol : pb::GeneratedMessage<SpawnCom
     get { return range_; }
   }
   
-  public const int AreaFieldNumber = 4;
-  private bool hasArea;
-  private global::DirectObjectProtocol area_;
-  public bool HasArea {
-    get { return hasArea; }
-  }
-  public global::DirectObjectProtocol Area {
-    get { return area_ ?? global::DirectObjectProtocol.DefaultInstance; }
-  }
-  
   public const int ItemFieldNumber = 5;
   private bool hasItem;
   private global::DirectObjectProtocol item_;
@@ -1852,9 +1850,6 @@ public sealed partial class SpawnCommandProtocol : pb::GeneratedMessage<SpawnCom
       if (!hasSpawnArea) return false;
       if (!hasSpawnSpecification) return false;
       if (!hasRange) return false;
-      if (HasArea) {
-        if (!Area.IsInitialized) return false;
-      }
       if (HasItem) {
         if (!Item.IsInitialized) return false;
       }
@@ -1869,22 +1864,19 @@ public sealed partial class SpawnCommandProtocol : pb::GeneratedMessage<SpawnCom
     int size = SerializedSize;
     string[] field_names = _spawnCommandProtocolFieldNames;
     if (hasSpawnArea) {
-      output.WriteEnum(1, field_names[4], (int) SpawnArea, SpawnArea);
+      output.WriteEnum(1, field_names[3], (int) SpawnArea, SpawnArea);
     }
     if (hasSpawnSpecification) {
-      output.WriteEnum(2, field_names[5], (int) SpawnSpecification, SpawnSpecification);
+      output.WriteEnum(2, field_names[4], (int) SpawnSpecification, SpawnSpecification);
     }
     if (hasRange) {
-      output.WriteInt32(3, field_names[3], Range);
-    }
-    if (hasArea) {
-      output.WriteMessage(4, field_names[0], Area);
+      output.WriteInt32(3, field_names[2], Range);
     }
     if (hasItem) {
-      output.WriteMessage(5, field_names[2], Item);
+      output.WriteMessage(5, field_names[1], Item);
     }
     if (hasEnemy) {
-      output.WriteMessage(6, field_names[1], Enemy);
+      output.WriteMessage(6, field_names[0], Enemy);
     }
     UnknownFields.WriteTo(output);
   }
@@ -1904,9 +1896,6 @@ public sealed partial class SpawnCommandProtocol : pb::GeneratedMessage<SpawnCom
       }
       if (hasRange) {
         size += pb::CodedOutputStream.ComputeInt32Size(3, Range);
-      }
-      if (hasArea) {
-        size += pb::CodedOutputStream.ComputeMessageSize(4, Area);
       }
       if (hasItem) {
         size += pb::CodedOutputStream.ComputeMessageSize(5, Item);
@@ -2047,9 +2036,6 @@ public sealed partial class SpawnCommandProtocol : pb::GeneratedMessage<SpawnCom
       if (other.HasRange) {
         Range = other.Range;
       }
-      if (other.HasArea) {
-        MergeArea(other.Area);
-      }
       if (other.HasItem) {
         MergeItem(other.Item);
       }
@@ -2125,15 +2111,6 @@ public sealed partial class SpawnCommandProtocol : pb::GeneratedMessage<SpawnCom
           }
           case 24: {
             result.hasRange = input.ReadInt32(ref result.range_);
-            break;
-          }
-          case 34: {
-            global::DirectObjectProtocol.Builder subBuilder = global::DirectObjectProtocol.CreateBuilder();
-            if (result.hasArea) {
-              subBuilder.MergeFrom(Area);
-            }
-            input.ReadMessage(subBuilder, extensionRegistry);
-            Area = subBuilder.BuildPartial();
             break;
           }
           case 42: {
@@ -2221,46 +2198,6 @@ public sealed partial class SpawnCommandProtocol : pb::GeneratedMessage<SpawnCom
       PrepareBuilder();
       result.hasRange = false;
       result.range_ = 0;
-      return this;
-    }
-    
-    public bool HasArea {
-     get { return result.hasArea; }
-    }
-    public global::DirectObjectProtocol Area {
-      get { return result.Area; }
-      set { SetArea(value); }
-    }
-    public Builder SetArea(global::DirectObjectProtocol value) {
-      pb::ThrowHelper.ThrowIfNull(value, "value");
-      PrepareBuilder();
-      result.hasArea = true;
-      result.area_ = value;
-      return this;
-    }
-    public Builder SetArea(global::DirectObjectProtocol.Builder builderForValue) {
-      pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
-      PrepareBuilder();
-      result.hasArea = true;
-      result.area_ = builderForValue.Build();
-      return this;
-    }
-    public Builder MergeArea(global::DirectObjectProtocol value) {
-      pb::ThrowHelper.ThrowIfNull(value, "value");
-      PrepareBuilder();
-      if (result.hasArea &&
-          result.area_ != global::DirectObjectProtocol.DefaultInstance) {
-          result.area_ = global::DirectObjectProtocol.CreateBuilder(result.area_).MergeFrom(value).BuildPartial();
-      } else {
-        result.area_ = value;
-      }
-      result.hasArea = true;
-      return this;
-    }
-    public Builder ClearArea() {
-      PrepareBuilder();
-      result.hasArea = false;
-      result.area_ = null;
       return this;
     }
     
@@ -2353,8 +2290,8 @@ public sealed partial class SpawnCommandProtocol : pb::GeneratedMessage<SpawnCom
 public sealed partial class StatusStepProtocol : pb::GeneratedMessage<StatusStepProtocol, StatusStepProtocol.Builder> {
   private StatusStepProtocol() { }
   private static readonly StatusStepProtocol defaultInstance = new StatusStepProtocol().MakeReadOnly();
-  private static readonly string[] _statusStepProtocolFieldNames = new string[] { "description", "name", "statusesInStep" };
-  private static readonly uint[] _statusStepProtocolFieldTags = new uint[] { 18, 10, 26 };
+  private static readonly string[] _statusStepProtocolFieldNames = new string[] { "commands", "description", "name", "statusesInStep" };
+  private static readonly uint[] _statusStepProtocolFieldTags = new uint[] { 34, 18, 10, 26 };
   public static StatusStepProtocol DefaultInstance {
     get { return defaultInstance; }
   }
@@ -2407,11 +2344,26 @@ public sealed partial class StatusStepProtocol : pb::GeneratedMessage<StatusStep
     return statusesInStep_[index];
   }
   
+  public const int CommandsFieldNumber = 4;
+  private pbc::PopsicleList<global::SpawnCommandProtocol> commands_ = new pbc::PopsicleList<global::SpawnCommandProtocol>();
+  public scg::IList<global::SpawnCommandProtocol> CommandsList {
+    get { return commands_; }
+  }
+  public int CommandsCount {
+    get { return commands_.Count; }
+  }
+  public global::SpawnCommandProtocol GetCommands(int index) {
+    return commands_[index];
+  }
+  
   public override bool IsInitialized {
     get {
       if (!hasName) return false;
       if (!hasDescription) return false;
       foreach (global::StatusCheckableProtocol element in StatusesInStepList) {
+        if (!element.IsInitialized) return false;
+      }
+      foreach (global::SpawnCommandProtocol element in CommandsList) {
         if (!element.IsInitialized) return false;
       }
       return true;
@@ -2422,13 +2374,16 @@ public sealed partial class StatusStepProtocol : pb::GeneratedMessage<StatusStep
     int size = SerializedSize;
     string[] field_names = _statusStepProtocolFieldNames;
     if (hasName) {
-      output.WriteString(1, field_names[1], Name);
+      output.WriteString(1, field_names[2], Name);
     }
     if (hasDescription) {
-      output.WriteString(2, field_names[0], Description);
+      output.WriteString(2, field_names[1], Description);
     }
     if (statusesInStep_.Count > 0) {
-      output.WriteMessageArray(3, field_names[2], statusesInStep_);
+      output.WriteMessageArray(3, field_names[3], statusesInStep_);
+    }
+    if (commands_.Count > 0) {
+      output.WriteMessageArray(4, field_names[0], commands_);
     }
     UnknownFields.WriteTo(output);
   }
@@ -2448,6 +2403,9 @@ public sealed partial class StatusStepProtocol : pb::GeneratedMessage<StatusStep
       }
       foreach (global::StatusCheckableProtocol element in StatusesInStepList) {
         size += pb::CodedOutputStream.ComputeMessageSize(3, element);
+      }
+      foreach (global::SpawnCommandProtocol element in CommandsList) {
+        size += pb::CodedOutputStream.ComputeMessageSize(4, element);
       }
       size += UnknownFields.SerializedSize;
       memoizedSerializedSize = size;
@@ -2487,6 +2445,7 @@ public sealed partial class StatusStepProtocol : pb::GeneratedMessage<StatusStep
   }
   private StatusStepProtocol MakeReadOnly() {
     statusesInStep_.MakeReadOnly();
+    commands_.MakeReadOnly();
     return this;
   }
   
@@ -2583,6 +2542,9 @@ public sealed partial class StatusStepProtocol : pb::GeneratedMessage<StatusStep
       if (other.statusesInStep_.Count != 0) {
         result.statusesInStep_.Add(other.statusesInStep_);
       }
+      if (other.commands_.Count != 0) {
+        result.commands_.Add(other.commands_);
+      }
       this.MergeUnknownFields(other.UnknownFields);
       return this;
     }
@@ -2636,6 +2598,10 @@ public sealed partial class StatusStepProtocol : pb::GeneratedMessage<StatusStep
           }
           case 26: {
             input.ReadMessageArray(tag, field_name, result.statusesInStep_, global::StatusCheckableProtocol.DefaultInstance, extensionRegistry);
+            break;
+          }
+          case 34: {
+            input.ReadMessageArray(tag, field_name, result.commands_, global::SpawnCommandProtocol.DefaultInstance, extensionRegistry);
             break;
           }
         }
@@ -2733,6 +2699,50 @@ public sealed partial class StatusStepProtocol : pb::GeneratedMessage<StatusStep
       result.statusesInStep_.Clear();
       return this;
     }
+    
+    public pbc::IPopsicleList<global::SpawnCommandProtocol> CommandsList {
+      get { return PrepareBuilder().commands_; }
+    }
+    public int CommandsCount {
+      get { return result.CommandsCount; }
+    }
+    public global::SpawnCommandProtocol GetCommands(int index) {
+      return result.GetCommands(index);
+    }
+    public Builder SetCommands(int index, global::SpawnCommandProtocol value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      result.commands_[index] = value;
+      return this;
+    }
+    public Builder SetCommands(int index, global::SpawnCommandProtocol.Builder builderForValue) {
+      pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+      PrepareBuilder();
+      result.commands_[index] = builderForValue.Build();
+      return this;
+    }
+    public Builder AddCommands(global::SpawnCommandProtocol value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      result.commands_.Add(value);
+      return this;
+    }
+    public Builder AddCommands(global::SpawnCommandProtocol.Builder builderForValue) {
+      pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+      PrepareBuilder();
+      result.commands_.Add(builderForValue.Build());
+      return this;
+    }
+    public Builder AddRangeCommands(scg::IEnumerable<global::SpawnCommandProtocol> values) {
+      PrepareBuilder();
+      result.commands_.Add(values);
+      return this;
+    }
+    public Builder ClearCommands() {
+      PrepareBuilder();
+      result.commands_.Clear();
+      return this;
+    }
   }
   static StatusStepProtocol() {
     object.ReferenceEquals(global::QuestProtobuf.Descriptor, null);
@@ -2743,8 +2753,8 @@ public sealed partial class StatusStepProtocol : pb::GeneratedMessage<StatusStep
 public sealed partial class StatusCheckableProtocol : pb::GeneratedMessage<StatusCheckableProtocol, StatusCheckableProtocol.Builder> {
   private StatusCheckableProtocol() { }
   private static readonly StatusCheckableProtocol defaultInstance = new StatusCheckableProtocol().MakeReadOnly();
-  private static readonly string[] _statusCheckableProtocolFieldNames = new string[] { "action", "amount" };
-  private static readonly uint[] _statusCheckableProtocolFieldTags = new uint[] { 10, 16 };
+  private static readonly string[] _statusCheckableProtocolFieldNames = new string[] { "action", "amount", "tier" };
+  private static readonly uint[] _statusCheckableProtocolFieldTags = new uint[] { 10, 24, 18 };
   public static StatusCheckableProtocol DefaultInstance {
     get { return defaultInstance; }
   }
@@ -2775,7 +2785,17 @@ public sealed partial class StatusCheckableProtocol : pb::GeneratedMessage<Statu
     get { return action_ ?? global::ActionProtocol.DefaultInstance; }
   }
   
-  public const int AmountFieldNumber = 2;
+  public const int TierFieldNumber = 2;
+  private bool hasTier;
+  private global::TierProtocol tier_;
+  public bool HasTier {
+    get { return hasTier; }
+  }
+  public global::TierProtocol Tier {
+    get { return tier_ ?? global::TierProtocol.DefaultInstance; }
+  }
+  
+  public const int AmountFieldNumber = 3;
   private bool hasAmount;
   private int amount_;
   public bool HasAmount {
@@ -2790,6 +2810,9 @@ public sealed partial class StatusCheckableProtocol : pb::GeneratedMessage<Statu
       if (HasAction) {
         if (!Action.IsInitialized) return false;
       }
+      if (HasTier) {
+        if (!Tier.IsInitialized) return false;
+      }
       return true;
     }
   }
@@ -2800,8 +2823,11 @@ public sealed partial class StatusCheckableProtocol : pb::GeneratedMessage<Statu
     if (hasAction) {
       output.WriteMessage(1, field_names[0], Action);
     }
+    if (hasTier) {
+      output.WriteMessage(2, field_names[2], Tier);
+    }
     if (hasAmount) {
-      output.WriteInt32(2, field_names[1], Amount);
+      output.WriteInt32(3, field_names[1], Amount);
     }
     UnknownFields.WriteTo(output);
   }
@@ -2816,8 +2842,11 @@ public sealed partial class StatusCheckableProtocol : pb::GeneratedMessage<Statu
       if (hasAction) {
         size += pb::CodedOutputStream.ComputeMessageSize(1, Action);
       }
+      if (hasTier) {
+        size += pb::CodedOutputStream.ComputeMessageSize(2, Tier);
+      }
       if (hasAmount) {
-        size += pb::CodedOutputStream.ComputeInt32Size(2, Amount);
+        size += pb::CodedOutputStream.ComputeInt32Size(3, Amount);
       }
       size += UnknownFields.SerializedSize;
       memoizedSerializedSize = size;
@@ -2946,6 +2975,9 @@ public sealed partial class StatusCheckableProtocol : pb::GeneratedMessage<Statu
       if (other.HasAction) {
         MergeAction(other.Action);
       }
+      if (other.HasTier) {
+        MergeTier(other.Tier);
+      }
       if (other.HasAmount) {
         Amount = other.Amount;
       }
@@ -3001,7 +3033,16 @@ public sealed partial class StatusCheckableProtocol : pb::GeneratedMessage<Statu
             Action = subBuilder.BuildPartial();
             break;
           }
-          case 16: {
+          case 18: {
+            global::TierProtocol.Builder subBuilder = global::TierProtocol.CreateBuilder();
+            if (result.hasTier) {
+              subBuilder.MergeFrom(Tier);
+            }
+            input.ReadMessage(subBuilder, extensionRegistry);
+            Tier = subBuilder.BuildPartial();
+            break;
+          }
+          case 24: {
             result.hasAmount = input.ReadInt32(ref result.amount_);
             break;
           }
@@ -3055,6 +3096,46 @@ public sealed partial class StatusCheckableProtocol : pb::GeneratedMessage<Statu
       return this;
     }
     
+    public bool HasTier {
+     get { return result.hasTier; }
+    }
+    public global::TierProtocol Tier {
+      get { return result.Tier; }
+      set { SetTier(value); }
+    }
+    public Builder SetTier(global::TierProtocol value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      result.hasTier = true;
+      result.tier_ = value;
+      return this;
+    }
+    public Builder SetTier(global::TierProtocol.Builder builderForValue) {
+      pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+      PrepareBuilder();
+      result.hasTier = true;
+      result.tier_ = builderForValue.Build();
+      return this;
+    }
+    public Builder MergeTier(global::TierProtocol value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      if (result.hasTier &&
+          result.tier_ != global::TierProtocol.DefaultInstance) {
+          result.tier_ = global::TierProtocol.CreateBuilder(result.tier_).MergeFrom(value).BuildPartial();
+      } else {
+        result.tier_ = value;
+      }
+      result.hasTier = true;
+      return this;
+    }
+    public Builder ClearTier() {
+      PrepareBuilder();
+      result.hasTier = false;
+      result.tier_ = null;
+      return this;
+    }
+    
     public bool HasAmount {
       get { return result.hasAmount; }
     }
@@ -3076,6 +3157,277 @@ public sealed partial class StatusCheckableProtocol : pb::GeneratedMessage<Statu
     }
   }
   static StatusCheckableProtocol() {
+    object.ReferenceEquals(global::QuestProtobuf.Descriptor, null);
+  }
+}
+
+[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+public sealed partial class TierProtocol : pb::GeneratedMessage<TierProtocol, TierProtocol.Builder> {
+  private TierProtocol() { }
+  private static readonly TierProtocol defaultInstance = new TierProtocol().MakeReadOnly();
+  private static readonly string[] _tierProtocolFieldNames = new string[] { "tier" };
+  private static readonly uint[] _tierProtocolFieldTags = new uint[] { 8 };
+  public static TierProtocol DefaultInstance {
+    get { return defaultInstance; }
+  }
+  
+  public override TierProtocol DefaultInstanceForType {
+    get { return DefaultInstance; }
+  }
+  
+  protected override TierProtocol ThisMessage {
+    get { return this; }
+  }
+  
+  public static pbd::MessageDescriptor Descriptor {
+    get { return global::QuestProtobuf.internal__static_TierProtocol__Descriptor; }
+  }
+  
+  protected override pb::FieldAccess.FieldAccessorTable<TierProtocol, TierProtocol.Builder> InternalFieldAccessors {
+    get { return global::QuestProtobuf.internal__static_TierProtocol__FieldAccessorTable; }
+  }
+  
+  public const int TierFieldNumber = 1;
+  private bool hasTier;
+  private int tier_;
+  public bool HasTier {
+    get { return hasTier; }
+  }
+  public int Tier {
+    get { return tier_; }
+  }
+  
+  public override bool IsInitialized {
+    get {
+      if (!hasTier) return false;
+      return true;
+    }
+  }
+  
+  public override void WriteTo(pb::ICodedOutputStream output) {
+    int size = SerializedSize;
+    string[] field_names = _tierProtocolFieldNames;
+    if (hasTier) {
+      output.WriteInt32(1, field_names[0], Tier);
+    }
+    UnknownFields.WriteTo(output);
+  }
+  
+  private int memoizedSerializedSize = -1;
+  public override int SerializedSize {
+    get {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+      
+      size = 0;
+      if (hasTier) {
+        size += pb::CodedOutputStream.ComputeInt32Size(1, Tier);
+      }
+      size += UnknownFields.SerializedSize;
+      memoizedSerializedSize = size;
+      return size;
+    }
+  }
+  
+  public static TierProtocol ParseFrom(pb::ByteString data) {
+    return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+  }
+  public static TierProtocol ParseFrom(pb::ByteString data, pb::ExtensionRegistry extensionRegistry) {
+    return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+  }
+  public static TierProtocol ParseFrom(byte[] data) {
+    return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+  }
+  public static TierProtocol ParseFrom(byte[] data, pb::ExtensionRegistry extensionRegistry) {
+    return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+  }
+  public static TierProtocol ParseFrom(global::System.IO.Stream input) {
+    return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+  }
+  public static TierProtocol ParseFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+    return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+  }
+  public static TierProtocol ParseDelimitedFrom(global::System.IO.Stream input) {
+    return CreateBuilder().MergeDelimitedFrom(input).BuildParsed();
+  }
+  public static TierProtocol ParseDelimitedFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+    return CreateBuilder().MergeDelimitedFrom(input, extensionRegistry).BuildParsed();
+  }
+  public static TierProtocol ParseFrom(pb::ICodedInputStream input) {
+    return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+  }
+  public static TierProtocol ParseFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+    return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+  }
+  private TierProtocol MakeReadOnly() {
+    return this;
+  }
+  
+  public static Builder CreateBuilder() { return new Builder(); }
+  public override Builder ToBuilder() { return CreateBuilder(this); }
+  public override Builder CreateBuilderForType() { return new Builder(); }
+  public static Builder CreateBuilder(TierProtocol prototype) {
+    return new Builder(prototype);
+  }
+  
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+  public sealed partial class Builder : pb::GeneratedBuilder<TierProtocol, Builder> {
+    protected override Builder ThisBuilder {
+      get { return this; }
+    }
+    public Builder() {
+      result = DefaultInstance;
+      resultIsReadOnly = true;
+    }
+    internal Builder(TierProtocol cloneFrom) {
+      result = cloneFrom;
+      resultIsReadOnly = true;
+    }
+    
+    private bool resultIsReadOnly;
+    private TierProtocol result;
+    
+    private TierProtocol PrepareBuilder() {
+      if (resultIsReadOnly) {
+        TierProtocol original = result;
+        result = new TierProtocol();
+        resultIsReadOnly = false;
+        MergeFrom(original);
+      }
+      return result;
+    }
+    
+    public override bool IsInitialized {
+      get { return result.IsInitialized; }
+    }
+    
+    protected override TierProtocol MessageBeingBuilt {
+      get { return PrepareBuilder(); }
+    }
+    
+    public override Builder Clear() {
+      result = DefaultInstance;
+      resultIsReadOnly = true;
+      return this;
+    }
+    
+    public override Builder Clone() {
+      if (resultIsReadOnly) {
+        return new Builder(result);
+      } else {
+        return new Builder().MergeFrom(result);
+      }
+    }
+    
+    public override pbd::MessageDescriptor DescriptorForType {
+      get { return global::TierProtocol.Descriptor; }
+    }
+    
+    public override TierProtocol DefaultInstanceForType {
+      get { return global::TierProtocol.DefaultInstance; }
+    }
+    
+    public override TierProtocol BuildPartial() {
+      if (resultIsReadOnly) {
+        return result;
+      }
+      resultIsReadOnly = true;
+      return result.MakeReadOnly();
+    }
+    
+    public override Builder MergeFrom(pb::IMessage other) {
+      if (other is TierProtocol) {
+        return MergeFrom((TierProtocol) other);
+      } else {
+        base.MergeFrom(other);
+        return this;
+      }
+    }
+    
+    public override Builder MergeFrom(TierProtocol other) {
+      if (other == global::TierProtocol.DefaultInstance) return this;
+      PrepareBuilder();
+      if (other.HasTier) {
+        Tier = other.Tier;
+      }
+      this.MergeUnknownFields(other.UnknownFields);
+      return this;
+    }
+    
+    public override Builder MergeFrom(pb::ICodedInputStream input) {
+      return MergeFrom(input, pb::ExtensionRegistry.Empty);
+    }
+    
+    public override Builder MergeFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+      PrepareBuilder();
+      pb::UnknownFieldSet.Builder unknownFields = null;
+      uint tag;
+      string field_name;
+      while (input.ReadTag(out tag, out field_name)) {
+        if(tag == 0 && field_name != null) {
+          int field_ordinal = global::System.Array.BinarySearch(_tierProtocolFieldNames, field_name, global::System.StringComparer.Ordinal);
+          if(field_ordinal >= 0)
+            tag = _tierProtocolFieldTags[field_ordinal];
+          else {
+            if (unknownFields == null) {
+              unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+            }
+            ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+            continue;
+          }
+        }
+        switch (tag) {
+          case 0: {
+            throw pb::InvalidProtocolBufferException.InvalidTag();
+          }
+          default: {
+            if (pb::WireFormat.IsEndGroupTag(tag)) {
+              if (unknownFields != null) {
+                this.UnknownFields = unknownFields.Build();
+              }
+              return this;
+            }
+            if (unknownFields == null) {
+              unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+            }
+            ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+            break;
+          }
+          case 8: {
+            result.hasTier = input.ReadInt32(ref result.tier_);
+            break;
+          }
+        }
+      }
+      
+      if (unknownFields != null) {
+        this.UnknownFields = unknownFields.Build();
+      }
+      return this;
+    }
+    
+    
+    public bool HasTier {
+      get { return result.hasTier; }
+    }
+    public int Tier {
+      get { return result.Tier; }
+      set { SetTier(value); }
+    }
+    public Builder SetTier(int value) {
+      PrepareBuilder();
+      result.hasTier = true;
+      result.tier_ = value;
+      return this;
+    }
+    public Builder ClearTier() {
+      PrepareBuilder();
+      result.hasTier = false;
+      result.tier_ = 0;
+      return this;
+    }
+  }
+  static TierProtocol() {
     object.ReferenceEquals(global::QuestProtobuf.Descriptor, null);
   }
 }
