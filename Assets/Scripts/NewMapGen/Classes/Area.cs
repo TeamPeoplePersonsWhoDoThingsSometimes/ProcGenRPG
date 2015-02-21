@@ -53,6 +53,7 @@ public class Area
     public bool south;
     public bool west;
 
+
     //This area's position on the map.
     public Point position
     {
