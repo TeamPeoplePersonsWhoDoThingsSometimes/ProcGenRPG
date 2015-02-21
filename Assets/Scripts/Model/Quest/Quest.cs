@@ -47,8 +47,8 @@ public class Quest : ActionEventListener {
 			return true;
 		}
 
-		public bool updateStatusChecks(IAction action) {
-			StatusCheckable[] stats = new StatusCheckable [curr.Keys.Count];
+		public void updateStatusChecks(IAction action) {
+			StatusCheckable[] stats = new StatusCheckable [statuses.Keys.Count];
 			statuses.Keys.CopyTo(stats,0);
 			
 			//go through all the current status checks
@@ -118,7 +118,10 @@ public class Quest : ActionEventListener {
 			return;
 		
 		Debug.Log ("Check Quest: " + this.name);
-		return steps[0].isStepFinished();
+		if (steps [0].isStepFinished ()) {
+			register();
+			currentStep++;
+		}
 	}
 
 	/**
@@ -129,11 +132,11 @@ public class Quest : ActionEventListener {
 	{
 		Debug.Log ("Action registered");
 
-		steps [currentStep].updateStatusChecks (action);
+		steps[currentStep].updateStatusChecks(action);
 
 		//return unless we need to move to the next step
-		if (!steps [currentStep].isStepFinished)
-						return;
+		if (!steps[currentStep].isStepFinished())
+			return;
 
 		//all current status checks are satisfied, step quest
 		currentStep++;
