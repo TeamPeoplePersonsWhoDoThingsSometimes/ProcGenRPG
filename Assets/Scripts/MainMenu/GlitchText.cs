@@ -64,7 +64,7 @@ public class GlitchText : MonoBehaviour {
 	void GlitchAudio() {
 		float tempTime = organicMusic.time;
 		float tempPitch = organicMusic.pitch;
-		float randVal1 = Random.Range(-0.1f,0.1f);
+		float randVal1 = Random.Range(-1f,1f);
 		float randVal2 = Random.Range(0.1f,1.1f);
 		float randVal3 = Random.Range(0.95f, 1.05f);
 		if(tempTime > 2) {

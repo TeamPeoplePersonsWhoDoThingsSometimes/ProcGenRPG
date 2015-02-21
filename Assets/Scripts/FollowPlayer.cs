@@ -11,9 +11,14 @@ public class FollowPlayer : MonoBehaviour {
 	private Transform centerCamRef;
 
 	private float zoom = 2f;
+
+	private static int damagedTime = 0;
+
+	private static Texture2D screenCap;
 	// Use this for initialization
 	void Start () {
 		offset = this.transform.position - Player.playerPos.position;
+		screenCap = new Texture2D(Screen.width, Screen.height);
 	}
 	
 	// Update is called once per frame
@@ -69,6 +74,11 @@ public class FollowPlayer : MonoBehaviour {
 			transform.GetChild(1).transform.rotation = Quaternion.RotateTowards(transform.GetChild(1).transform.rotation, lookRotation2, 1f);
 		}
 
+		if(damagedTime > 0) {
+			damagedTime--;
+		} else {
+
+		}
 //		transform.GetChild(0).transform.LookAt(Player.playerPos.position + new Vector3(0,2,0) + Player.playerPos.forward);
 //		transform.GetChild(1).transform.LookAt(Player.playerPos.position + new Vector3(0,2,0) + Player.playerPos.forward);
 
@@ -82,7 +92,9 @@ public class FollowPlayer : MonoBehaviour {
 		transform.parent.position = Player.playerPos.position;
 	}
 
-	public void ZoomOut() {
+	public static void PlayerDamaged() {
+//		screenCap.ReadPixels(new Rect(0,0, Screen.width, Screen.height), 0, 0);
+		damagedTime = 10;
 
 	}
 }
