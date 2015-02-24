@@ -6,16 +6,6 @@ public class Room {
 
     //A rectangular space within an Area.
 
-    //TODO: Create a generateRoom(AreaType a) function, that takes in its AreaType, which is the tileSet of the Area.
-            //If (Quest Material is Required in this room)
-                //Generate the quest material + tileset Decorations.
-            //Else
-                //Use its tileset to decorate the Room.
-                //Maybe generate some enemies in this Room.
-                //Whatever.
-
-    //Note: generateRoom() will NOT generate the Tiles. Only the insides of the Room.
-
     //TODO: Create a function and varible that requires Quest Material to be generated in this Room.
 
     #region Variables
@@ -69,7 +59,7 @@ public class Room {
         {
             objects = new List<GameObject>();
             
-            RoomGen.generateRoom(random.Next(10));
+            objects = RoomGen.generateRoom(random.Next(10));
 
             isGenerated = true;
             isShowing = true;
@@ -143,7 +133,5 @@ public class Room {
     }
 
     #endregion
-
-    //Make a enum that represents a quest type, so that a room will know what to generated.
 
 }

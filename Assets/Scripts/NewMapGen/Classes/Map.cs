@@ -90,6 +90,7 @@ public class Map
 
     #endregion
 
+
     #region Algorithms
 
     //Generates the initial connections from area to area. (PRIM'S ALGORITHM).

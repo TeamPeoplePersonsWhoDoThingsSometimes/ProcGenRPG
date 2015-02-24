@@ -63,3 +63,11 @@ $RECYCLE.BIN/
 *.msp
 Assets/OVR.meta
 Assets/OVR/Fonts.meta
+Assets/UnityVS.meta
+Assets/UnityVS/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll
+Assets/UnityVS/Editor/SyntaxTree.VisualStudio.Unity.Messaging.dll
+Assets/UnityVS/Editor.meta
+Assets/UnityVS/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll.meta
+Assets/UnityVS/Editor/SyntaxTree.VisualStudio.Unity.Messaging.dll.meta
+Assets/UnityVS/Editor/UnityVS.VersionSpecific.dll
+Assets/UnityVS/Editor/UnityVS.VersionSpecific.dll.meta

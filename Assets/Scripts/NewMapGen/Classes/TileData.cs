@@ -13,10 +13,23 @@ public class TileData {
 
     public bool disallowCorridor = false;
 
+    public bool isPortal = false;
+    public bool portalDirection;
+
+    //TODO: Use portalDirection.
+
 
     public TileData(Point pos)
     {
         position = pos;
+    }
+
+    public enum Direction
+    {
+        Up,
+        Down,
+        Left,
+        Right
     }
 	
 }
