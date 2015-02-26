@@ -13,8 +13,16 @@ public class FollowPlayer : MonoBehaviour {
 	private float zoom = 2f;
 
 	private static int damagedTime = 0;
-
+	private bool damageDisplay = false;
+	private bool waitingforscreencap = false;
 	private static Texture2D screenCap;
+
+	private float width;
+	private float height;
+	private float x;
+	private float y;
+	private float xOffset;
+	private float yOffset;
 	// Use this for initialization
 	void Start () {
 		offset = this.transform.position - Player.playerPos.position;
@@ -74,15 +82,31 @@ public class FollowPlayer : MonoBehaviour {
 			transform.GetChild(1).transform.rotation = Quaternion.RotateTowards(transform.GetChild(1).transform.rotation, lookRotation2, 1f);
 		}
 
-		if(damagedTime > 0) {
+		if(damagedTime == 1) {
+			if(!waitingforscreencap) {
+				StartCoroutine(ReadScreen());
+				damageDisplay = true;
+			}
 			damagedTime--;
-		} else {
-
+		} else if(Time.frameCount % 5 == 0) {
+			damageDisplay = false;
 		}
-//		transform.GetChild(0).transform.LookAt(Player.playerPos.position + new Vector3(0,2,0) + Player.playerPos.forward);
-//		transform.GetChild(1).transform.LookAt(Player.playerPos.position + new Vector3(0,2,0) + Player.playerPos.forward);
 
-//		this.transform.LookAt(Player.playerPos);
+		if(width == 0 || Time.frameCount % 20 == 0) {
+			width = Random.Range(50,300);
+			height = Random.Range(50,300);
+			x = Random.Range(0,Screen.width - width);
+			y = Random.Range(0,Screen.height - height);
+//			xOffset = Random.Range(-0.01f,0.01f);
+//			yOffset = Random.Range(-0.01f,0.01f);
+			xOffset = 0;
+			yOffset = 0;
+			//				width = Screen.width;
+			//				height = Screen.height;
+			//				x = 0;
+			//				y = 0;
+		}
+
 	}
 
 	/**
@@ -93,8 +117,25 @@ public class FollowPlayer : MonoBehaviour {
 	}
 
 	public static void PlayerDamaged() {
-//		screenCap.ReadPixels(new Rect(0,0, Screen.width, Screen.height), 0, 0);
-		damagedTime = 10;
+		damagedTime = 1;
+	}
 
+	private IEnumerator ReadScreen() {
+		waitingforscreencap = true;
+		yield return new WaitForEndOfFrame();
+		Debug.Log("HERE" + Time.frameCount);
+		screenCap.ReadPixels(new Rect(0,0, Screen.width, Screen.height), 0, 0);
+		screenCap.Apply();
+		waitingforscreencap = false;
+//		for (int i = 0; i < screenCap.GetPixels().Length; i++) {
+//			screenCap.GetPixels()[i].r *= 2;
+//		}
+	}
+
+	void OnGUI() {
+		if(damageDisplay) {
+			GUI.DrawTextureWithTexCoords(new Rect(x,y, width, height), screenCap, new Rect(x/Screen.width + xOffset,y/Screen.height + yOffset, width/Screen.width, height/Screen.height));
+//			GUI.DrawTexture(new Rect(x,y, width, height), screenCap);
+		}
 	}
 }
