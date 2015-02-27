@@ -43,6 +43,11 @@ public class Status : ActionEventListener {
 	private List<string> visitedAreas;
 
 	/**
+	 * The player's current tier
+	 */
+	private int tier;
+
+	/**
 	 * Privatize the constructor to revoke access per the singelton
 	 * implementation
 	 */
