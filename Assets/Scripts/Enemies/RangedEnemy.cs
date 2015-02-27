@@ -2,11 +2,22 @@
 using System.Collections;
 
 public class RangedEnemy : Enemy {
+	// Allowed range from player
 	public float minDistanceFromPlayer = 10f;
 	public float maxDistanceFromPlayer = 15f;
 
-	private bool trackingPlayer;
-	private Vector3 lastKnownPlayerPos;
+	private float speed;
+
+	// For determining whether or not player is in direct line-of-sight from enemy
+	private bool trackingPlayer;				// True when player out of sight, but enemy is searching for him
+	private Vector3 lastKnownPlayerPos;			// Marks the last place the enemy knew the player to be at
+	private int lineOfSightRayCount = 0;		// Small counter variable that determines when player is officially out-of-sight
+
+	private Vector3 dest = Vector3.zero;
+	private bool movingToDest = false;
+
+	private bool circling = false;
+	private float circlePeriod = 3f, circleTimer = 0f;
 
 	// Use this for initialization
 	void Start () {
@@ -16,6 +27,10 @@ public class RangedEnemy : Enemy {
 	// Update is called once per frame
 	void Update () {
 		base.Update ();
+
+		if (movingToDest) {
+			rigidbody.MovePosition (Vector3.MoveTowards (transform.position, dest, 0.2f));
+		}
 	}
 	
 	public void Attack() {
@@ -61,9 +76,33 @@ public class RangedEnemy : Enemy {
 				// Get the value of the separation b/w player & enemy
 				float dist = (Player.playerPos.position - transform.position).magnitude;
 				// Move enemy towards player, but keep at a distance
-				rigidbody.MovePosition(Vector3.MoveTowards(transform.position, dir * (dist - (maxDistanceFromPlayer - minDistanceFromPlayer) / 2), 0.1f));
+				dest = dir * (dist - (maxDistanceFromPlayer - minDistanceFromPlayer) / 2) + transform.position;
+				movingToDest = true;
+				speed = 0.1f;
+				//rigidbody.MovePosition(Vector3.MoveTowards(transform.position, dir * (dist - (maxDistanceFromPlayer - minDistanceFromPlayer) / 2), 0.1f));
 				transform.LookAt(dir * (dist - (maxDistanceFromPlayer - minDistanceFromPlayer)));
 			} else if (Vector3.Distance(Player.playerPos.position, transform.position) > minDistanceFromPlayer) {
+				/*
+				if (!circling) {
+					movingToDest = false;
+					circleTimer += Time.deltaTime;
+					if (circleTimer >= circlePeriod) {
+						circling = true;
+						circleTimer = 0f;
+						dest = transform.position + (Random.value < 0.5 ? Vector3.right : Vector3.left) * 4;
+						movingToDest = true;
+					}
+				}
+				else {
+					circleTimer += Time.deltaTime;
+					if (circleTimer >= 2f) {
+						movingToDest = false;
+						circleTimer = 0f;
+						circling = false;
+					}
+				}
+				*/
+				dest = transform.position;
 				transform.LookAt(Player.playerPos.position);
 				tempAttackSpeed -= Time.deltaTime;
 				if(tempAttackSpeed <= 0) {
@@ -76,11 +115,48 @@ public class RangedEnemy : Enemy {
 				// Get the value of the separation b/w player & enemy
 				float dist = (transform.position - Player.playerPos.position).magnitude;
 				// Move enemy away from player, until within acceptable range
-				rigidbody.MovePosition(Vector3.MoveTowards(transform.position, dir * ((maxDistanceFromPlayer - minDistanceFromPlayer) - dist), 0.2f));
+				//rigidbody.MovePosition(Vector3.MoveTowards(transform.position, dir * ((maxDistanceFromPlayer - minDistanceFromPlayer) - dist), 0.2f));
+				dest = dir * ((maxDistanceFromPlayer) - dist) + transform.position;
+				speed = 0.2f;
+				movingToDest = true;
 				transform.LookAt(Player.playerPos.position);
+				if(tempAttackSpeed <= 0) {
+					GetComponent<Animator>().SetTrigger("Attack");
+					tempAttackSpeed = baseAttackSpeed;
+				}
 			}
 		} else {
 			tempAttackSpeed = baseAttackSpeed;
 		}
+	}
+
+	protected override void HandleDeath() {
+		movingToDest = false;
+		trackingPlayer = false;
+		base.HandleDeath ();
+	}
+
+	private void CheckLineOfSight() {
+		if (detectedPlayer && !trackingPlayer) {
+			RaycastHit hit;
+			if (Physics.Raycast(transform.position, (Player.playerPos.position - transform.position).normalized, out hit)) {
+				if (hit.collider.gameObject.GetComponent<Player>()) {
+					lineOfSightRayCount = 0;
+				}
+				else {
+					lineOfSightRayCount++;
+				}
+
+				if (lineOfSightRayCount >= 3) {
+					trackingPlayer = true;
+				}
+			}
+		} else {
+			Debug.LogWarning("Attempting to check line-of-sight from enemy to player when player is not detected");
+		}
+	}
+
+	private void UpdateDestination() {
+
 	}
 }
