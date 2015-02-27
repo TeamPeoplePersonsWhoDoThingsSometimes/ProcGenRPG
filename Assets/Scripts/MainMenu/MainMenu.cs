@@ -66,4 +66,9 @@ public class MainMenu : MonoBehaviour {
 			curState = MenuState.Main;
 		}
 	}
+
+	public void PlayPressed() {
+		transform.GetChild(0).GetComponent<Animator>().SetBool("MoveRight",true);
+		mainContainer.GetComponent<Animator>().SetTrigger("MainToLoadSave");
+	}
 }

@@ -225,7 +225,6 @@ public class Player : MonoBehaviour {
 			integrity -= damage;
 			temp.GetComponent<TextMesh>().text = "" + damage;
 		}
-		FollowPlayer.PlayerDamaged();
 	}
 
 	public string ToString() {
