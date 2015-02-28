@@ -67,7 +67,7 @@ public class ElkCloner : Boss {
 	{
 		if (phaseName.Equals("SmallAttack")) {
 			smallAttack = phaseObject;
-			smallAttackingTime = 0.5f;
+			smallAttackingTime = 0.1f;
 		}
 	}
 
@@ -79,5 +79,12 @@ public class ElkCloner : Boss {
 	public override void PhaseSpawn (string phaseName, GameObject phaseObject)
 	{
 		
+	}
+
+	public override void PhaseOther (string phaseName, GameObject phaseObject)
+	{
+		if(phaseName.Equals("GetMad")) {
+
+		}
 	}
 }

@@ -16,6 +16,7 @@ public class Boss : Enemy {
 
 		for (int i = 0; i < phases.Length; i++) {
 			if (phases[i].ConditionMet()) {
+//				Debug.Log(phases[i].phaseName);
 				phases[i].HandlePhase();
 			}
 		}
@@ -60,6 +61,10 @@ public class Boss : Enemy {
 	}
 
 	public virtual void PhaseSpawn(string phaseName, GameObject phaseObject) {
+
+	}
+
+	public virtual void PhaseOther(string phaseName, GameObject phaseObject) {
 
 	}
 

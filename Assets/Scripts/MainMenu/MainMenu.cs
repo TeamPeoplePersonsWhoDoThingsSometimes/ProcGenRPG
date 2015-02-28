@@ -68,7 +68,11 @@ public class MainMenu : MonoBehaviour {
 	}
 
 	public void PlayPressed() {
-		transform.GetChild(0).GetComponent<Animator>().SetBool("MoveRight",true);
-		mainContainer.GetComponent<Animator>().SetTrigger("MainToLoadSave");
+		GetComponent<Animator>().SetBool("MoveBGRight", true);
+		GetComponent<Animator>().SetTrigger("GoToLoad");
+	}
+
+	public void StopBG() {
+		GetComponent<Animator>().SetBool("MoveBGRight", false);
 	}
 }
