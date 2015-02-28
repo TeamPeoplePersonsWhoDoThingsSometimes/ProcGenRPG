@@ -30,6 +30,8 @@ public class MasterDriver : MonoBehaviour {
 	public TileSet[] tileSets;
 	public GameObject[] weapons;
 	public GameObject[] hacks;
+
+	public GameObject player;
 	
 	
 	/*********************************
@@ -147,6 +149,7 @@ public class MasterDriver : MonoBehaviour {
         currentMap = new Map();
 
         currentMap.getArea(5, 5).showArea();
+		player.transform.position = new Vector3(currentMap.getArea (5, 5).defaultSpawn.x, player.transform.position.y, currentMap.getArea (5, 5).defaultSpawn.y);
 
         //currentMap.debugDisplayMap();
 

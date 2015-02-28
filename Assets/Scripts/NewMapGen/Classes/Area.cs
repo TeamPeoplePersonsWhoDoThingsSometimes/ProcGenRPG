@@ -32,6 +32,15 @@ public class Area
         get;
         private set;
     }
+
+	//This area's default spawn location if the player did not enter the area via a portal
+	public Point defaultSpawn
+	{
+		get
+		{
+			return rooms[0].center*10;
+		}
+	}
     
     //The Map which this Area is a part of.
     private Map parentMap;

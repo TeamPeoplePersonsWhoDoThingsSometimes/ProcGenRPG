@@ -29,6 +29,17 @@ public class Room {
         }
     }
 
+	public Point center //Point at the center of this Room.
+	{
+		get
+		{
+			Point diff = (topRight - botLeft);
+			diff.x /= 2;
+			diff.y /=2;
+			return botLeft + diff;
+		}
+	}
+
     List<GameObject> objects;
 
     Area parent;
