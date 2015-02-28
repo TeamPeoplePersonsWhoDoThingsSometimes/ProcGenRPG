@@ -61,48 +61,50 @@ public static partial class QuestProtobuf {
         "dHMYASADKAsyDi5RdWVzdFByb3RvY29sIoYBCg5CdWlsZGVyUGFja2FnZRIm" + 
         "CgdlbmVtaWVzGAEgAygLMhUuRGlyZWN0T2JqZWN0UHJvdG9jb2wSJgoHd2Vh" + 
         "cG9ucxgCIAMoCzIVLkRpcmVjdE9iamVjdFByb3RvY29sEiQKBWhhY2tzGAMg" + 
-        "AygLMhUuRGlyZWN0T2JqZWN0UHJvdG9jb2wiUgoNUXVlc3RQcm90b2NvbBIM" + 
+        "AygLMhUuRGlyZWN0T2JqZWN0UHJvdG9jb2wiaQoNUXVlc3RQcm90b2NvbBIM" + 
         "CgRuYW1lGAEgAigJEg8KB2NyZWF0b3IYAyABKAkSIgoFc3RlcHMYAiADKAsy" + 
-        "Ey5TdGF0dXNTdGVwUHJvdG9jb2wieAoTU3RhdHVzQmxvY2tQcm90b2NvbBIM" + 
-        "CgRuYW1lGAEgAigJEioKCHN0YXR1c2VzGAIgAygLMhguU3RhdHVzQ2hlY2th" + 
-        "YmxlUHJvdG9jb2wSJwoIY29tbWFuZHMYAyADKAsyFS5TcGF3bkNvbW1hbmRQ" + 
-        "cm90b2NvbCLGAQoUU3Bhd25Db21tYW5kUHJvdG9jb2wSGwoJc3Bhd25BcmVh" + 
-        "GAEgAigOMgguTWFwVHlwZRI3ChJzcGF3blNwZWNpZmljYXRpb24YAiACKA4y" + 
-        "Gy5TcGF3bkFyZWFUeXBlU3BlY2lmaWNhdGlvbhINCgVyYW5nZRgDIAIoBRIj" + 
-        "CgRpdGVtGAUgASgLMhUuRGlyZWN0T2JqZWN0UHJvdG9jb2wSJAoFZW5lbXkY" + 
-        "BiABKAsyFS5EaXJlY3RPYmplY3RQcm90b2NvbCKSAQoSU3RhdHVzU3RlcFBy" + 
-        "b3RvY29sEgwKBG5hbWUYASACKAkSEwoLZGVzY3JpcHRpb24YAiACKAkSMAoO" + 
-        "c3RhdHVzZXNJblN0ZXAYAyADKAsyGC5TdGF0dXNDaGVja2FibGVQcm90b2Nv" + 
-        "bBInCghjb21tYW5kcxgEIAMoCzIVLlNwYXduQ29tbWFuZFByb3RvY29sImcK" + 
-        "F1N0YXR1c0NoZWNrYWJsZVByb3RvY29sEh8KBmFjdGlvbhgBIAEoCzIPLkFj" + 
-        "dGlvblByb3RvY29sEhsKBHRpZXIYAiABKAsyDS5UaWVyUHJvdG9jb2wSDgoG" + 
-        "YW1vdW50GAMgASgFIhwKDFRpZXJQcm90b2NvbBIMCgR0aWVyGAEgAigFIlIK" + 
-        "DkFjdGlvblByb3RvY29sEhkKBHR5cGUYASACKA4yCy5BY3Rpb25UeXBlEiUK" + 
-        "BnRhcmdldBgCIAEoCzIVLkRpcmVjdE9iamVjdFByb3RvY29sIoUBChREaXJl" + 
-        "Y3RPYmplY3RQcm90b2NvbBIMCgR0eXBlGAEgASgJEgwKBG5hbWUYAiACKAkS" + 
-        "GQoDbWFwGAMgASgLMgwuTWFwUHJvdG9jb2wSDgoGYW1vdW50GAQgASgFEiYK" + 
-        "D2l0ZW1JbmZvcm1hdGlvbhgFIAEoCzINLkl0ZW1Qcm90b2NvbCJDCgtNYXBQ" + 
-        "cm90b2NvbBILCgN1aWQYASACKAMSGAoQZ2VuZXJhdGVJZk5lZWRlZBgCIAIo" + 
-        "CBINCgVyYW5nZRgDIAIoASJHCgxJdGVtUHJvdG9jb2wSDwoHdmVyc2lvbhgB" + 
-        "IAIoBRImCglsZXZlbFNwZWMYAiACKA4yEy5MZXZlbFNwZWNpZmljYXRpb24i" + 
-        "OwoTQ29udmVyc2F0aW9uUGFja2FnZRIkCg1jb252ZXJzYXRpb25zGAEgAygL" + 
-        "Mg0uQ29udmVyc2F0aW9uIlIKDENvbnZlcnNhdGlvbhIjCghhbGxOb2RlcxgB" + 
-        "IAMoCzIRLkNvbnZlcnNhdGlvbk5vZGUSDAoEbmFtZRgCIAEoCRIPCgdjcmVh" + 
-        "dG9yGAMgASgJIpkBChBDb252ZXJzYXRpb25Ob2RlEgwKBHRleHQYASACKAkS" + 
-        "DAoEbmFtZRgCIAIoCRILCgN1aWQYAyACKAMSCQoBWBgEIAIoBRIJCgFZGAUg" + 
-        "AigFEiAKC2Nvbm5lY3Rpb25zGAYgAygLMgsuQ29ubmVjdGlvbhIkCgZibG9j" + 
-        "a3MYByADKAsyFC5TdGF0dXNCbG9ja1Byb3RvY29sIlQKCkNvbm5lY3Rpb24S" + 
-        "DgoGbm9kZUlkGAEgAigDEgwKBHRleHQYAiACKAkSKAoPcmVxdWlyZW1lbnRT" + 
-        "ZXRzGAMgAygLMg8uUmVxdWlyZW1lbnRTZXQiQAoOUmVxdWlyZW1lbnRTZXQS" + 
-        "LgoMcmVxdWlyZW1lbnRzGAEgAygLMhguU3RhdHVzQ2hlY2thYmxlUHJvdG9j" + 
-        "b2wqpQEKCkFjdGlvblR5cGUSCAoES0lMTBAAEg0KCU1PVkVfQVJFQRABEhUK" + 
-        "EUFQUFJPQUNIRURfT0JKRUNUEAISFAoQUElDS0VEX1VQX09CSkVDVBADEgwK" + 
-        "CExFVkVMX1VQEAUSDgoKRVFVSVBfSVRFTRAGEgwKCFVTRV9JVEVNEAcSCgoG" + 
-        "QVRUQUNLEAgSGQoVQ09OVkVSU0FUSU9OX05PREVfSElUEAkqKgoHTWFwVHlw" + 
-        "ZRIICgRDSVRZEAASCAoEUEFUSBABEgsKB0RVTkdFT04QAio1ChpTcGF3bkFy" + 
-        "ZWFUeXBlU3BlY2lmaWNhdGlvbhIJCgVMT0NBTBAAEgwKCERJU1RBTkNFEAEq" + 
-        "LAoSTGV2ZWxTcGVjaWZpY2F0aW9uEgsKB01JTklNVU0QARIJCgVFWEFDVBAC" + 
-        "QiEKH3N0c3F1ZXN0YnVpbGRlci5wcm90b2NvbGJ1ZmZlcnM=");
+        "Ey5TdGF0dXNTdGVwUHJvdG9jb2wSFQoFYmlvbWUYBCABKA4yBi5CaW9tZSJ4" + 
+        "ChNTdGF0dXNCbG9ja1Byb3RvY29sEgwKBG5hbWUYASACKAkSKgoIc3RhdHVz" + 
+        "ZXMYAiADKAsyGC5TdGF0dXNDaGVja2FibGVQcm90b2NvbBInCghjb21tYW5k" + 
+        "cxgDIAMoCzIVLlNwYXduQ29tbWFuZFByb3RvY29sIsYBChRTcGF3bkNvbW1h" + 
+        "bmRQcm90b2NvbBIbCglzcGF3bkFyZWEYASACKA4yCC5NYXBUeXBlEjcKEnNw" + 
+        "YXduU3BlY2lmaWNhdGlvbhgCIAIoDjIbLlNwYXduQXJlYVR5cGVTcGVjaWZp" + 
+        "Y2F0aW9uEg0KBXJhbmdlGAMgAigFEiMKBGl0ZW0YBSABKAsyFS5EaXJlY3RP" + 
+        "YmplY3RQcm90b2NvbBIkCgVlbmVteRgGIAEoCzIVLkRpcmVjdE9iamVjdFBy" + 
+        "b3RvY29sIpIBChJTdGF0dXNTdGVwUHJvdG9jb2wSDAoEbmFtZRgBIAIoCRIT" + 
+        "CgtkZXNjcmlwdGlvbhgCIAIoCRIwCg5zdGF0dXNlc0luU3RlcBgDIAMoCzIY" + 
+        "LlN0YXR1c0NoZWNrYWJsZVByb3RvY29sEicKCGNvbW1hbmRzGAQgAygLMhUu" + 
+        "U3Bhd25Db21tYW5kUHJvdG9jb2wiZwoXU3RhdHVzQ2hlY2thYmxlUHJvdG9j" + 
+        "b2wSHwoGYWN0aW9uGAEgASgLMg8uQWN0aW9uUHJvdG9jb2wSGwoEdGllchgC" + 
+        "IAEoCzINLlRpZXJQcm90b2NvbBIOCgZhbW91bnQYAyABKAUiHAoMVGllclBy" + 
+        "b3RvY29sEgwKBHRpZXIYASACKAUiUgoOQWN0aW9uUHJvdG9jb2wSGQoEdHlw" + 
+        "ZRgBIAIoDjILLkFjdGlvblR5cGUSJQoGdGFyZ2V0GAIgASgLMhUuRGlyZWN0" + 
+        "T2JqZWN0UHJvdG9jb2wihQEKFERpcmVjdE9iamVjdFByb3RvY29sEgwKBHR5" + 
+        "cGUYASABKAkSDAoEbmFtZRgCIAIoCRIZCgNtYXAYAyABKAsyDC5NYXBQcm90" + 
+        "b2NvbBIOCgZhbW91bnQYBCABKAUSJgoPaXRlbUluZm9ybWF0aW9uGAUgASgL" + 
+        "Mg0uSXRlbVByb3RvY29sIkMKC01hcFByb3RvY29sEgsKA3VpZBgBIAIoAxIY" + 
+        "ChBnZW5lcmF0ZUlmTmVlZGVkGAIgAigIEg0KBXJhbmdlGAMgAigBIkcKDEl0" + 
+        "ZW1Qcm90b2NvbBIPCgd2ZXJzaW9uGAEgAigFEiYKCWxldmVsU3BlYxgCIAIo" + 
+        "DjITLkxldmVsU3BlY2lmaWNhdGlvbiI7ChNDb252ZXJzYXRpb25QYWNrYWdl" + 
+        "EiQKDWNvbnZlcnNhdGlvbnMYASADKAsyDS5Db252ZXJzYXRpb24iUgoMQ29u" + 
+        "dmVyc2F0aW9uEiMKCGFsbE5vZGVzGAEgAygLMhEuQ29udmVyc2F0aW9uTm9k" + 
+        "ZRIMCgRuYW1lGAIgASgJEg8KB2NyZWF0b3IYAyABKAkimQEKEENvbnZlcnNh" + 
+        "dGlvbk5vZGUSDAoEdGV4dBgBIAIoCRIMCgRuYW1lGAIgAigJEgsKA3VpZBgD" + 
+        "IAIoAxIJCgFYGAQgAigFEgkKAVkYBSACKAUSIAoLY29ubmVjdGlvbnMYBiAD" + 
+        "KAsyCy5Db25uZWN0aW9uEiQKBmJsb2NrcxgHIAMoCzIULlN0YXR1c0Jsb2Nr" + 
+        "UHJvdG9jb2wiVAoKQ29ubmVjdGlvbhIOCgZub2RlSWQYASACKAMSDAoEdGV4" + 
+        "dBgCIAIoCRIoCg9yZXF1aXJlbWVudFNldHMYAyADKAsyDy5SZXF1aXJlbWVu" + 
+        "dFNldCJACg5SZXF1aXJlbWVudFNldBIuCgxyZXF1aXJlbWVudHMYASADKAsy" + 
+        "GC5TdGF0dXNDaGVja2FibGVQcm90b2NvbCqlAQoKQWN0aW9uVHlwZRIICgRL" + 
+        "SUxMEAASDQoJTU9WRV9BUkVBEAESFQoRQVBQUk9BQ0hFRF9PQkpFQ1QQAhIU" + 
+        "ChBQSUNLRURfVVBfT0JKRUNUEAMSDAoITEVWRUxfVVAQBRIOCgpFUVVJUF9J" + 
+        "VEVNEAYSDAoIVVNFX0lURU0QBxIKCgZBVFRBQ0sQCBIZChVDT05WRVJTQVRJ" + 
+        "T05fTk9ERV9ISVQQCSokCgVCaW9tZRIKCgZQWVRIT04QABIFCgFDEAESCAoE" + 
+        "SFRNTBACKioKB01hcFR5cGUSCAoEQ0lUWRAAEggKBFBBVEgQARILCgdEVU5H" + 
+        "RU9OEAIqNQoaU3Bhd25BcmVhVHlwZVNwZWNpZmljYXRpb24SCQoFTE9DQUwQ" + 
+        "ABIMCghESVNUQU5DRRABKiwKEkxldmVsU3BlY2lmaWNhdGlvbhILCgdNSU5J" + 
+        "TVVNEAESCQoFRVhBQ1QQAkIhCh9zdHNxdWVzdGJ1aWxkZXIucHJvdG9jb2xi" + 
+        "dWZmZXJz");
     pbd::FileDescriptor.InternalDescriptorAssigner assigner = delegate(pbd::FileDescriptor root) {
       descriptor = root;
       internal__static_QuestPackage__Descriptor = Descriptor.MessageTypes[0];
@@ -116,7 +118,7 @@ public static partial class QuestProtobuf {
       internal__static_QuestProtocol__Descriptor = Descriptor.MessageTypes[2];
       internal__static_QuestProtocol__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::QuestProtocol, global::QuestProtocol.Builder>(internal__static_QuestProtocol__Descriptor,
-              new string[] { "Name", "Creator", "Steps", });
+              new string[] { "Name", "Creator", "Steps", "Biome", });
       internal__static_StatusBlockProtocol__Descriptor = Descriptor.MessageTypes[3];
       internal__static_StatusBlockProtocol__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::StatusBlockProtocol, global::StatusBlockProtocol.Builder>(internal__static_StatusBlockProtocol__Descriptor,
@@ -193,6 +195,12 @@ public enum ActionType {
   USE_ITEM = 7,
   ATTACK = 8,
   CONVERSATION_NODE_HIT = 9,
+}
+
+public enum Biome {
+  PYTHON = 0,
+  C = 1,
+  HTML = 2,
 }
 
 public enum MapType {
@@ -964,8 +972,8 @@ public sealed partial class BuilderPackage : pb::GeneratedMessage<BuilderPackage
 public sealed partial class QuestProtocol : pb::GeneratedMessage<QuestProtocol, QuestProtocol.Builder> {
   private QuestProtocol() { }
   private static readonly QuestProtocol defaultInstance = new QuestProtocol().MakeReadOnly();
-  private static readonly string[] _questProtocolFieldNames = new string[] { "creator", "name", "steps" };
-  private static readonly uint[] _questProtocolFieldTags = new uint[] { 26, 10, 18 };
+  private static readonly string[] _questProtocolFieldNames = new string[] { "biome", "creator", "name", "steps" };
+  private static readonly uint[] _questProtocolFieldTags = new uint[] { 32, 26, 10, 18 };
   public static QuestProtocol DefaultInstance {
     get { return defaultInstance; }
   }
@@ -1018,6 +1026,16 @@ public sealed partial class QuestProtocol : pb::GeneratedMessage<QuestProtocol, 
     return steps_[index];
   }
   
+  public const int BiomeFieldNumber = 4;
+  private bool hasBiome;
+  private global::Biome biome_ = global::Biome.PYTHON;
+  public bool HasBiome {
+    get { return hasBiome; }
+  }
+  public global::Biome Biome {
+    get { return biome_; }
+  }
+  
   public override bool IsInitialized {
     get {
       if (!hasName) return false;
@@ -1032,13 +1050,16 @@ public sealed partial class QuestProtocol : pb::GeneratedMessage<QuestProtocol, 
     int size = SerializedSize;
     string[] field_names = _questProtocolFieldNames;
     if (hasName) {
-      output.WriteString(1, field_names[1], Name);
+      output.WriteString(1, field_names[2], Name);
     }
     if (steps_.Count > 0) {
-      output.WriteMessageArray(2, field_names[2], steps_);
+      output.WriteMessageArray(2, field_names[3], steps_);
     }
     if (hasCreator) {
-      output.WriteString(3, field_names[0], Creator);
+      output.WriteString(3, field_names[1], Creator);
+    }
+    if (hasBiome) {
+      output.WriteEnum(4, field_names[0], (int) Biome, Biome);
     }
     UnknownFields.WriteTo(output);
   }
@@ -1058,6 +1079,9 @@ public sealed partial class QuestProtocol : pb::GeneratedMessage<QuestProtocol, 
       }
       foreach (global::StatusStepProtocol element in StepsList) {
         size += pb::CodedOutputStream.ComputeMessageSize(2, element);
+      }
+      if (hasBiome) {
+        size += pb::CodedOutputStream.ComputeEnumSize(4, (int) Biome);
       }
       size += UnknownFields.SerializedSize;
       memoizedSerializedSize = size;
@@ -1193,6 +1217,9 @@ public sealed partial class QuestProtocol : pb::GeneratedMessage<QuestProtocol, 
       if (other.steps_.Count != 0) {
         result.steps_.Add(other.steps_);
       }
+      if (other.HasBiome) {
+        Biome = other.Biome;
+      }
       this.MergeUnknownFields(other.UnknownFields);
       return this;
     }
@@ -1246,6 +1273,18 @@ public sealed partial class QuestProtocol : pb::GeneratedMessage<QuestProtocol, 
           }
           case 26: {
             result.hasCreator = input.ReadString(ref result.creator_);
+            break;
+          }
+          case 32: {
+            object unknown;
+            if(input.ReadEnum(ref result.biome_, out unknown)) {
+              result.hasBiome = true;
+            } else if(unknown is int) {
+              if (unknownFields == null) {
+                unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+              }
+              unknownFields.MergeVarintField(4, (ulong)(int)unknown);
+            }
             break;
           }
         }
@@ -1341,6 +1380,26 @@ public sealed partial class QuestProtocol : pb::GeneratedMessage<QuestProtocol, 
     public Builder ClearSteps() {
       PrepareBuilder();
       result.steps_.Clear();
+      return this;
+    }
+    
+    public bool HasBiome {
+     get { return result.hasBiome; }
+    }
+    public global::Biome Biome {
+      get { return result.Biome; }
+      set { SetBiome(value); }
+    }
+    public Builder SetBiome(global::Biome value) {
+      PrepareBuilder();
+      result.hasBiome = true;
+      result.biome_ = value;
+      return this;
+    }
+    public Builder ClearBiome() {
+      PrepareBuilder();
+      result.hasBiome = false;
+      result.biome_ = global::Biome.PYTHON;
       return this;
     }
   }

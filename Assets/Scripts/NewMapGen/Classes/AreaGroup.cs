@@ -9,6 +9,7 @@ public class AreaGroup {
     //TODO: Create a function that gives this AreaGroup a name, based on what kind of AreaGroup it is.
 
     //TODO: Create some variable that represents a type of Area. Like a Biome.
+	public Biome areaBiome;
 
     public AreaType type;
 
@@ -17,9 +18,10 @@ public class AreaGroup {
     //Areas don't need to be in any order.
     private List<Area> areas;
 
-    public AreaGroup(AreaType type)
+    public AreaGroup(AreaType type, Biome biome)
     {
         this.type = type;
+		this.areaBiome = biome;
 
         areas = new List<Area>();
     }
@@ -34,8 +36,7 @@ public class AreaGroup {
     //Returns a random Area from this AreaGroup.
     private Area getRandomArea()
     {
-        //TODO: Implement this method.
-        return null;
+		return areas [(int)(Random.value * areas.Count)];
     }
 
     public string getName()

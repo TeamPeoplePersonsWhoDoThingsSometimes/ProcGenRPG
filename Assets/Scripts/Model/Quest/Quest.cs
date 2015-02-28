@@ -110,6 +110,16 @@ public class Quest : ActionEventListener {
 	private string name;
 
 	/**
+	 * The type of area group to associate this quest with
+	 */
+	private Biome biomeType;
+
+	/**
+	 * The area group this quest takes place in
+	 */
+	private AreaGroup group;
+
+	/**
 	 * Starts this quest by registering the quest with the event invoker
 	 * if it is not already started
 	 */
@@ -122,6 +132,8 @@ public class Quest : ActionEventListener {
 			register();
 			currentStep++;
 		}
+
+		group = MasterDriver.CurrentMap.getAreaTypeOfBiome (biomeType);
 	}
 
 	/**

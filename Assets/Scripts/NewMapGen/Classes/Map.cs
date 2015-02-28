@@ -359,6 +359,23 @@ public class Map
         return getArea(p.x, p.y);
     }
 
+
+	/**
+	 * Less effecient than it could be if we stored a hashmap of biomes to areas
+	 * 
+	 * returns null if somehow no biome exists yet
+	 */
+	public AreaGroup getAreaTypeOfBiome(Biome b)
+	{
+		foreach (AreaGroup a in areaGroups) {
+			if (a.areaBiome.Equals(b))
+				return a;
+		}
+
+		return null;
+	}
+
+
     //Returns the seed for this Map.
     public int getSeed()
     {

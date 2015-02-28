@@ -9,6 +9,9 @@ public class MasterDriver : MonoBehaviour {
 	/*********************************
 	 * Public static fields
 	*********************************/
+	public static Map CurrentMap;
+	public static Area CurrentArea;
+
 	public static TileSet[] TileSets;
 	public static GameObject[] Weapons;
 	public static GameObject[] Hacks;
@@ -145,6 +148,8 @@ public class MasterDriver : MonoBehaviour {
 		TileSets = tileSets;
 		Weapons = weapons;
 		Hacks = hacks;
+		CurrentMap = currentMap;
+		CurrentArea = currentArea;
 
         currentMap = new Map();
 
