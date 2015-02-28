@@ -156,14 +156,25 @@ public class Enemy : MonoBehaviour {
 					seed1 = Random.value *  - 0.5f;
 					seed2 = Random.value *  - 0.5f;
 				}
-				transform.position += new Vector3(seed1, 0f, seed2);
+				transform.position += new Vector3(seed1 * 0.6f, 0f, seed2 * 0.6f);
 				count++;
 			}
 			if (currentEffect == Effect.Weakened) {
 				GameObject temp = (GameObject)Instantiate(hitInfo,this.transform.position, hitInfo.transform.rotation);
 				temp.GetComponent<TextMesh>().renderer.material.color = Color.cyan;
 			}
-
+			if (currentEffect == Effect.Virus) {
+				Collider[] hitColliders = Physics.OverlapSphere(transform.position, 1f);
+				int i = 0;
+				while (i < hitColliders.Length) {
+					if (hitColliders[i].gameObject.GetComponent<Enemy>()!=null){
+							Enemy temp = (Enemy) hitColliders[i].gameObject.GetComponent<Enemy>();
+							temp.GetDamaged(Effect.Virus, effectValue, effectTime);
+							temp.GetDamaged(Effect.Deteriorating, effectValue, effectTime);
+					}
+				i++;
+				}
+			} 
 			if (currentEffect == Effect.Stun) {
 				transform.position = lastPos;
 			}

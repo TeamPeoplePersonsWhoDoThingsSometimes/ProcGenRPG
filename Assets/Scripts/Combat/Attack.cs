@@ -7,8 +7,8 @@ public enum Effect {
 	Slow,
 	Stun,
 	Weakened,
-	Bugged
-	//Virus,
+	Bugged,
+	Virus
 }
 
 public class Attack : MonoBehaviour {
