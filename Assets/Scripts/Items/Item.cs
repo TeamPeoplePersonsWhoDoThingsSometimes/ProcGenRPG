@@ -12,6 +12,10 @@ public class Item : MonoBehaviour {
 
 	public Rarity RarityVal;
 
+	public DirectObject getDirectObject() {
+		return new DirectObject (this.gameObject.name, base.name);
+	}
+
 	public virtual string InfoString() {
 		return name + " (" + Utility.ByteToString(value) + ")\n" + description;
 	}

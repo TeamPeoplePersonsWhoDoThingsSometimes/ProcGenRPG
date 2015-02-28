@@ -28,12 +28,26 @@ public static partial class QuestProtobuf {
   internal static pb::FieldAccess.FieldAccessorTable<global::StatusStepProtocol, global::StatusStepProtocol.Builder> internal__static_StatusStepProtocol__FieldAccessorTable;
   internal static pbd::MessageDescriptor internal__static_StatusCheckableProtocol__Descriptor;
   internal static pb::FieldAccess.FieldAccessorTable<global::StatusCheckableProtocol, global::StatusCheckableProtocol.Builder> internal__static_StatusCheckableProtocol__FieldAccessorTable;
+  internal static pbd::MessageDescriptor internal__static_TierProtocol__Descriptor;
+  internal static pb::FieldAccess.FieldAccessorTable<global::TierProtocol, global::TierProtocol.Builder> internal__static_TierProtocol__FieldAccessorTable;
   internal static pbd::MessageDescriptor internal__static_ActionProtocol__Descriptor;
   internal static pb::FieldAccess.FieldAccessorTable<global::ActionProtocol, global::ActionProtocol.Builder> internal__static_ActionProtocol__FieldAccessorTable;
   internal static pbd::MessageDescriptor internal__static_DirectObjectProtocol__Descriptor;
   internal static pb::FieldAccess.FieldAccessorTable<global::DirectObjectProtocol, global::DirectObjectProtocol.Builder> internal__static_DirectObjectProtocol__FieldAccessorTable;
   internal static pbd::MessageDescriptor internal__static_MapProtocol__Descriptor;
   internal static pb::FieldAccess.FieldAccessorTable<global::MapProtocol, global::MapProtocol.Builder> internal__static_MapProtocol__FieldAccessorTable;
+  internal static pbd::MessageDescriptor internal__static_ItemProtocol__Descriptor;
+  internal static pb::FieldAccess.FieldAccessorTable<global::ItemProtocol, global::ItemProtocol.Builder> internal__static_ItemProtocol__FieldAccessorTable;
+  internal static pbd::MessageDescriptor internal__static_ConversationPackage__Descriptor;
+  internal static pb::FieldAccess.FieldAccessorTable<global::ConversationPackage, global::ConversationPackage.Builder> internal__static_ConversationPackage__FieldAccessorTable;
+  internal static pbd::MessageDescriptor internal__static_Conversation__Descriptor;
+  internal static pb::FieldAccess.FieldAccessorTable<global::Conversation, global::Conversation.Builder> internal__static_Conversation__FieldAccessorTable;
+  internal static pbd::MessageDescriptor internal__static_ConversationNode__Descriptor;
+  internal static pb::FieldAccess.FieldAccessorTable<global::ConversationNode, global::ConversationNode.Builder> internal__static_ConversationNode__FieldAccessorTable;
+  internal static pbd::MessageDescriptor internal__static_Connection__Descriptor;
+  internal static pb::FieldAccess.FieldAccessorTable<global::Connection, global::Connection.Builder> internal__static_Connection__FieldAccessorTable;
+  internal static pbd::MessageDescriptor internal__static_RequirementSet__Descriptor;
+  internal static pb::FieldAccess.FieldAccessorTable<global::RequirementSet, global::RequirementSet.Builder> internal__static_RequirementSet__FieldAccessorTable;
   #endregion
   #region Descriptor
   public static pbd::FileDescriptor Descriptor {
@@ -44,34 +58,51 @@ public static partial class QuestProtobuf {
   static QuestProtobuf() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         "ChNRdWVzdFByb3RvYnVmLnByb3RvIi4KDFF1ZXN0UGFja2FnZRIeCgZxdWVz" + 
-        "dHMYASADKAsyDi5RdWVzdFByb3RvY29sIjgKDkJ1aWxkZXJQYWNrYWdlEiYK" + 
-        "B2FjdGlvbnMYASADKAsyFS5EaXJlY3RPYmplY3RQcm90b2NvbCJSCg1RdWVz" + 
-        "dFByb3RvY29sEgwKBG5hbWUYASACKAkSDwoHY3JlYXRvchgDIAEoCRIiCgVz" + 
-        "dGVwcxgCIAMoCzITLlN0YXR1c1N0ZXBQcm90b2NvbCJ4ChNTdGF0dXNCbG9j" + 
-        "a1Byb3RvY29sEgwKBG5hbWUYASACKAkSKgoIc3RhdHVzZXMYAiADKAsyGC5T" + 
-        "dGF0dXNDaGVja2FibGVQcm90b2NvbBInCghjb21tYW5kcxgDIAMoCzIVLlNw" + 
-        "YXduQ29tbWFuZFByb3RvY29sIuEBChRTcGF3bkNvbW1hbmRQcm90b2NvbBIR" + 
-        "CglzcGF3bkFyZWEYASACKAkSNwoSc3Bhd25TcGVjaWZpY2F0aW9uGAIgAigO" + 
-        "MhsuU3Bhd25BcmVhVHlwZVNwZWNpZmljYXRpb24SDQoFcmFuZ2UYAyACKAUS" + 
-        "IwoEYXJlYRgEIAEoCzIVLkRpcmVjdE9iamVjdFByb3RvY29sEiMKBGl0ZW0Y" + 
-        "BSABKAsyFS5EaXJlY3RPYmplY3RQcm90b2NvbBIkCgVlbmVteRgGIAEoCzIV" + 
-        "LkRpcmVjdE9iamVjdFByb3RvY29sImkKElN0YXR1c1N0ZXBQcm90b2NvbBIM" + 
-        "CgRuYW1lGAEgAigJEhMKC2Rlc2NyaXB0aW9uGAIgAigJEjAKDnN0YXR1c2Vz" + 
-        "SW5TdGVwGAMgAygLMhguU3RhdHVzQ2hlY2thYmxlUHJvdG9jb2wiSgoXU3Rh" + 
-        "dHVzQ2hlY2thYmxlUHJvdG9jb2wSHwoGYWN0aW9uGAEgASgLMg8uQWN0aW9u" + 
-        "UHJvdG9jb2wSDgoGYW1vdW50GAIgASgFIlIKDkFjdGlvblByb3RvY29sEhkK" + 
-        "BHR5cGUYASACKA4yCy5BY3Rpb25UeXBlEiUKBnRhcmdldBgCIAEoCzIVLkRp" + 
-        "cmVjdE9iamVjdFByb3RvY29sIl0KFERpcmVjdE9iamVjdFByb3RvY29sEgwK" + 
-        "BHR5cGUYASABKAkSDAoEbmFtZRgCIAIoCRIZCgNtYXAYAyABKAsyDC5NYXBQ" + 
-        "cm90b2NvbBIOCgZhbW91bnQYBCABKAUiQwoLTWFwUHJvdG9jb2wSCwoDdWlk" + 
-        "GAEgAigDEhgKEGdlbmVyYXRlSWZOZWVkZWQYAiACKAgSDQoFcmFuZ2UYAyAC" + 
-        "KAEqvAEKCkFjdGlvblR5cGUSCAoES0lMTBAAEg0KCU1PVkVfQVJFQRABEhUK" + 
-        "EUFQUFJPQUNIRURfT0JKRUNUEAISFAoQUElDS0VEX1VQX09CSkVDVBADEhUK" + 
-        "EUVOVEVSX0NJVFlfTElNSVRTEAQSDAoITEVWRUxfVVAQBRIOCgpFUVVJUF9J" + 
-        "VEVNEAYSDAoIVVNFX0hBQ0sQBxIKCgZBVFRBQ0sQCBIZChVDT05WRVJTQVRJ" + 
-        "T05fTk9ERV9ISVQQCSo1ChpTcGF3bkFyZWFUeXBlU3BlY2lmaWNhdGlvbhIJ" + 
-        "CgVMT0NBTBAAEgwKCERJU1RBTkNFEAFCIQofc3RzcXVlc3RidWlsZGVyLnBy" + 
-        "b3RvY29sYnVmZmVycw==");
+        "dHMYASADKAsyDi5RdWVzdFByb3RvY29sIoYBCg5CdWlsZGVyUGFja2FnZRIm" + 
+        "CgdlbmVtaWVzGAEgAygLMhUuRGlyZWN0T2JqZWN0UHJvdG9jb2wSJgoHd2Vh" + 
+        "cG9ucxgCIAMoCzIVLkRpcmVjdE9iamVjdFByb3RvY29sEiQKBWhhY2tzGAMg" + 
+        "AygLMhUuRGlyZWN0T2JqZWN0UHJvdG9jb2wiUgoNUXVlc3RQcm90b2NvbBIM" + 
+        "CgRuYW1lGAEgAigJEg8KB2NyZWF0b3IYAyABKAkSIgoFc3RlcHMYAiADKAsy" + 
+        "Ey5TdGF0dXNTdGVwUHJvdG9jb2wieAoTU3RhdHVzQmxvY2tQcm90b2NvbBIM" + 
+        "CgRuYW1lGAEgAigJEioKCHN0YXR1c2VzGAIgAygLMhguU3RhdHVzQ2hlY2th" + 
+        "YmxlUHJvdG9jb2wSJwoIY29tbWFuZHMYAyADKAsyFS5TcGF3bkNvbW1hbmRQ" + 
+        "cm90b2NvbCLGAQoUU3Bhd25Db21tYW5kUHJvdG9jb2wSGwoJc3Bhd25BcmVh" + 
+        "GAEgAigOMgguTWFwVHlwZRI3ChJzcGF3blNwZWNpZmljYXRpb24YAiACKA4y" + 
+        "Gy5TcGF3bkFyZWFUeXBlU3BlY2lmaWNhdGlvbhINCgVyYW5nZRgDIAIoBRIj" + 
+        "CgRpdGVtGAUgASgLMhUuRGlyZWN0T2JqZWN0UHJvdG9jb2wSJAoFZW5lbXkY" + 
+        "BiABKAsyFS5EaXJlY3RPYmplY3RQcm90b2NvbCKSAQoSU3RhdHVzU3RlcFBy" + 
+        "b3RvY29sEgwKBG5hbWUYASACKAkSEwoLZGVzY3JpcHRpb24YAiACKAkSMAoO" + 
+        "c3RhdHVzZXNJblN0ZXAYAyADKAsyGC5TdGF0dXNDaGVja2FibGVQcm90b2Nv" + 
+        "bBInCghjb21tYW5kcxgEIAMoCzIVLlNwYXduQ29tbWFuZFByb3RvY29sImcK" + 
+        "F1N0YXR1c0NoZWNrYWJsZVByb3RvY29sEh8KBmFjdGlvbhgBIAEoCzIPLkFj" + 
+        "dGlvblByb3RvY29sEhsKBHRpZXIYAiABKAsyDS5UaWVyUHJvdG9jb2wSDgoG" + 
+        "YW1vdW50GAMgASgFIhwKDFRpZXJQcm90b2NvbBIMCgR0aWVyGAEgAigFIlIK" + 
+        "DkFjdGlvblByb3RvY29sEhkKBHR5cGUYASACKA4yCy5BY3Rpb25UeXBlEiUK" + 
+        "BnRhcmdldBgCIAEoCzIVLkRpcmVjdE9iamVjdFByb3RvY29sIoUBChREaXJl" + 
+        "Y3RPYmplY3RQcm90b2NvbBIMCgR0eXBlGAEgASgJEgwKBG5hbWUYAiACKAkS" + 
+        "GQoDbWFwGAMgASgLMgwuTWFwUHJvdG9jb2wSDgoGYW1vdW50GAQgASgFEiYK" + 
+        "D2l0ZW1JbmZvcm1hdGlvbhgFIAEoCzINLkl0ZW1Qcm90b2NvbCJDCgtNYXBQ" + 
+        "cm90b2NvbBILCgN1aWQYASACKAMSGAoQZ2VuZXJhdGVJZk5lZWRlZBgCIAIo" + 
+        "CBINCgVyYW5nZRgDIAIoASJHCgxJdGVtUHJvdG9jb2wSDwoHdmVyc2lvbhgB" + 
+        "IAIoBRImCglsZXZlbFNwZWMYAiACKA4yEy5MZXZlbFNwZWNpZmljYXRpb24i" + 
+        "OwoTQ29udmVyc2F0aW9uUGFja2FnZRIkCg1jb252ZXJzYXRpb25zGAEgAygL" + 
+        "Mg0uQ29udmVyc2F0aW9uIlIKDENvbnZlcnNhdGlvbhIjCghhbGxOb2RlcxgB" + 
+        "IAMoCzIRLkNvbnZlcnNhdGlvbk5vZGUSDAoEbmFtZRgCIAEoCRIPCgdjcmVh" + 
+        "dG9yGAMgASgJIpkBChBDb252ZXJzYXRpb25Ob2RlEgwKBHRleHQYASACKAkS" + 
+        "DAoEbmFtZRgCIAIoCRILCgN1aWQYAyACKAMSCQoBWBgEIAIoBRIJCgFZGAUg" + 
+        "AigFEiAKC2Nvbm5lY3Rpb25zGAYgAygLMgsuQ29ubmVjdGlvbhIkCgZibG9j" + 
+        "a3MYByADKAsyFC5TdGF0dXNCbG9ja1Byb3RvY29sIlQKCkNvbm5lY3Rpb24S" + 
+        "DgoGbm9kZUlkGAEgAigDEgwKBHRleHQYAiACKAkSKAoPcmVxdWlyZW1lbnRT" + 
+        "ZXRzGAMgAygLMg8uUmVxdWlyZW1lbnRTZXQiQAoOUmVxdWlyZW1lbnRTZXQS" + 
+        "LgoMcmVxdWlyZW1lbnRzGAEgAygLMhguU3RhdHVzQ2hlY2thYmxlUHJvdG9j" + 
+        "b2wqpQEKCkFjdGlvblR5cGUSCAoES0lMTBAAEg0KCU1PVkVfQVJFQRABEhUK" + 
+        "EUFQUFJPQUNIRURfT0JKRUNUEAISFAoQUElDS0VEX1VQX09CSkVDVBADEgwK" + 
+        "CExFVkVMX1VQEAUSDgoKRVFVSVBfSVRFTRAGEgwKCFVTRV9JVEVNEAcSCgoG" + 
+        "QVRUQUNLEAgSGQoVQ09OVkVSU0FUSU9OX05PREVfSElUEAkqKgoHTWFwVHlw" + 
+        "ZRIICgRDSVRZEAASCAoEUEFUSBABEgsKB0RVTkdFT04QAio1ChpTcGF3bkFy" + 
+        "ZWFUeXBlU3BlY2lmaWNhdGlvbhIJCgVMT0NBTBAAEgwKCERJU1RBTkNFEAEq" + 
+        "LAoSTGV2ZWxTcGVjaWZpY2F0aW9uEgsKB01JTklNVU0QARIJCgVFWEFDVBAC" + 
+        "QiEKH3N0c3F1ZXN0YnVpbGRlci5wcm90b2NvbGJ1ZmZlcnM=");
     pbd::FileDescriptor.InternalDescriptorAssigner assigner = delegate(pbd::FileDescriptor root) {
       descriptor = root;
       internal__static_QuestPackage__Descriptor = Descriptor.MessageTypes[0];
@@ -81,7 +112,7 @@ public static partial class QuestProtobuf {
       internal__static_BuilderPackage__Descriptor = Descriptor.MessageTypes[1];
       internal__static_BuilderPackage__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::BuilderPackage, global::BuilderPackage.Builder>(internal__static_BuilderPackage__Descriptor,
-              new string[] { "Actions", });
+              new string[] { "Enemies", "Weapons", "Hacks", });
       internal__static_QuestProtocol__Descriptor = Descriptor.MessageTypes[2];
       internal__static_QuestProtocol__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::QuestProtocol, global::QuestProtocol.Builder>(internal__static_QuestProtocol__Descriptor,
@@ -93,27 +124,55 @@ public static partial class QuestProtobuf {
       internal__static_SpawnCommandProtocol__Descriptor = Descriptor.MessageTypes[4];
       internal__static_SpawnCommandProtocol__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::SpawnCommandProtocol, global::SpawnCommandProtocol.Builder>(internal__static_SpawnCommandProtocol__Descriptor,
-              new string[] { "SpawnArea", "SpawnSpecification", "Range", "Area", "Item", "Enemy", });
+              new string[] { "SpawnArea", "SpawnSpecification", "Range", "Item", "Enemy", });
       internal__static_StatusStepProtocol__Descriptor = Descriptor.MessageTypes[5];
       internal__static_StatusStepProtocol__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::StatusStepProtocol, global::StatusStepProtocol.Builder>(internal__static_StatusStepProtocol__Descriptor,
-              new string[] { "Name", "Description", "StatusesInStep", });
+              new string[] { "Name", "Description", "StatusesInStep", "Commands", });
       internal__static_StatusCheckableProtocol__Descriptor = Descriptor.MessageTypes[6];
       internal__static_StatusCheckableProtocol__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::StatusCheckableProtocol, global::StatusCheckableProtocol.Builder>(internal__static_StatusCheckableProtocol__Descriptor,
-              new string[] { "Action", "Amount", });
-      internal__static_ActionProtocol__Descriptor = Descriptor.MessageTypes[7];
+              new string[] { "Action", "Tier", "Amount", });
+      internal__static_TierProtocol__Descriptor = Descriptor.MessageTypes[7];
+      internal__static_TierProtocol__FieldAccessorTable = 
+          new pb::FieldAccess.FieldAccessorTable<global::TierProtocol, global::TierProtocol.Builder>(internal__static_TierProtocol__Descriptor,
+              new string[] { "Tier", });
+      internal__static_ActionProtocol__Descriptor = Descriptor.MessageTypes[8];
       internal__static_ActionProtocol__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::ActionProtocol, global::ActionProtocol.Builder>(internal__static_ActionProtocol__Descriptor,
               new string[] { "Type", "Target", });
-      internal__static_DirectObjectProtocol__Descriptor = Descriptor.MessageTypes[8];
+      internal__static_DirectObjectProtocol__Descriptor = Descriptor.MessageTypes[9];
       internal__static_DirectObjectProtocol__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::DirectObjectProtocol, global::DirectObjectProtocol.Builder>(internal__static_DirectObjectProtocol__Descriptor,
-              new string[] { "Type", "Name", "Map", "Amount", });
-      internal__static_MapProtocol__Descriptor = Descriptor.MessageTypes[9];
+              new string[] { "Type", "Name", "Map", "Amount", "ItemInformation", });
+      internal__static_MapProtocol__Descriptor = Descriptor.MessageTypes[10];
       internal__static_MapProtocol__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::MapProtocol, global::MapProtocol.Builder>(internal__static_MapProtocol__Descriptor,
               new string[] { "Uid", "GenerateIfNeeded", "Range", });
+      internal__static_ItemProtocol__Descriptor = Descriptor.MessageTypes[11];
+      internal__static_ItemProtocol__FieldAccessorTable = 
+          new pb::FieldAccess.FieldAccessorTable<global::ItemProtocol, global::ItemProtocol.Builder>(internal__static_ItemProtocol__Descriptor,
+              new string[] { "Version", "LevelSpec", });
+      internal__static_ConversationPackage__Descriptor = Descriptor.MessageTypes[12];
+      internal__static_ConversationPackage__FieldAccessorTable = 
+          new pb::FieldAccess.FieldAccessorTable<global::ConversationPackage, global::ConversationPackage.Builder>(internal__static_ConversationPackage__Descriptor,
+              new string[] { "Conversations", });
+      internal__static_Conversation__Descriptor = Descriptor.MessageTypes[13];
+      internal__static_Conversation__FieldAccessorTable = 
+          new pb::FieldAccess.FieldAccessorTable<global::Conversation, global::Conversation.Builder>(internal__static_Conversation__Descriptor,
+              new string[] { "AllNodes", "Name", "Creator", });
+      internal__static_ConversationNode__Descriptor = Descriptor.MessageTypes[14];
+      internal__static_ConversationNode__FieldAccessorTable = 
+          new pb::FieldAccess.FieldAccessorTable<global::ConversationNode, global::ConversationNode.Builder>(internal__static_ConversationNode__Descriptor,
+              new string[] { "Text", "Name", "Uid", "X", "Y", "Connections", "Blocks", });
+      internal__static_Connection__Descriptor = Descriptor.MessageTypes[15];
+      internal__static_Connection__FieldAccessorTable = 
+          new pb::FieldAccess.FieldAccessorTable<global::Connection, global::Connection.Builder>(internal__static_Connection__Descriptor,
+              new string[] { "NodeId", "Text", "RequirementSets", });
+      internal__static_RequirementSet__Descriptor = Descriptor.MessageTypes[16];
+      internal__static_RequirementSet__FieldAccessorTable = 
+          new pb::FieldAccess.FieldAccessorTable<global::RequirementSet, global::RequirementSet.Builder>(internal__static_RequirementSet__Descriptor,
+              new string[] { "Requirements", });
       return null;
     };
     pbd::FileDescriptor.InternalBuildGeneratedFileFrom(descriptorData,
@@ -129,17 +188,27 @@ public enum ActionType {
   MOVE_AREA = 1,
   APPROACHED_OBJECT = 2,
   PICKED_UP_OBJECT = 3,
-  ENTER_CITY_LIMITS = 4,
   LEVEL_UP = 5,
   EQUIP_ITEM = 6,
-  USE_HACK = 7,
+  USE_ITEM = 7,
   ATTACK = 8,
   CONVERSATION_NODE_HIT = 9,
+}
+
+public enum MapType {
+  CITY = 0,
+  PATH = 1,
+  DUNGEON = 2,
 }
 
 public enum SpawnAreaTypeSpecification {
   LOCAL = 0,
   DISTANCE = 1,
+}
+
+public enum LevelSpecification {
+  MINIMUM = 1,
+  EXACT = 2,
 }
 
 #endregion
@@ -449,8 +518,8 @@ public sealed partial class QuestPackage : pb::GeneratedMessage<QuestPackage, Qu
 public sealed partial class BuilderPackage : pb::GeneratedMessage<BuilderPackage, BuilderPackage.Builder> {
   private BuilderPackage() { }
   private static readonly BuilderPackage defaultInstance = new BuilderPackage().MakeReadOnly();
-  private static readonly string[] _builderPackageFieldNames = new string[] { "actions" };
-  private static readonly uint[] _builderPackageFieldTags = new uint[] { 10 };
+  private static readonly string[] _builderPackageFieldNames = new string[] { "enemies", "hacks", "weapons" };
+  private static readonly uint[] _builderPackageFieldTags = new uint[] { 10, 26, 18 };
   public static BuilderPackage DefaultInstance {
     get { return defaultInstance; }
   }
@@ -471,21 +540,51 @@ public sealed partial class BuilderPackage : pb::GeneratedMessage<BuilderPackage
     get { return global::QuestProtobuf.internal__static_BuilderPackage__FieldAccessorTable; }
   }
   
-  public const int ActionsFieldNumber = 1;
-  private pbc::PopsicleList<global::DirectObjectProtocol> actions_ = new pbc::PopsicleList<global::DirectObjectProtocol>();
-  public scg::IList<global::DirectObjectProtocol> ActionsList {
-    get { return actions_; }
+  public const int EnemiesFieldNumber = 1;
+  private pbc::PopsicleList<global::DirectObjectProtocol> enemies_ = new pbc::PopsicleList<global::DirectObjectProtocol>();
+  public scg::IList<global::DirectObjectProtocol> EnemiesList {
+    get { return enemies_; }
   }
-  public int ActionsCount {
-    get { return actions_.Count; }
+  public int EnemiesCount {
+    get { return enemies_.Count; }
   }
-  public global::DirectObjectProtocol GetActions(int index) {
-    return actions_[index];
+  public global::DirectObjectProtocol GetEnemies(int index) {
+    return enemies_[index];
+  }
+  
+  public const int WeaponsFieldNumber = 2;
+  private pbc::PopsicleList<global::DirectObjectProtocol> weapons_ = new pbc::PopsicleList<global::DirectObjectProtocol>();
+  public scg::IList<global::DirectObjectProtocol> WeaponsList {
+    get { return weapons_; }
+  }
+  public int WeaponsCount {
+    get { return weapons_.Count; }
+  }
+  public global::DirectObjectProtocol GetWeapons(int index) {
+    return weapons_[index];
+  }
+  
+  public const int HacksFieldNumber = 3;
+  private pbc::PopsicleList<global::DirectObjectProtocol> hacks_ = new pbc::PopsicleList<global::DirectObjectProtocol>();
+  public scg::IList<global::DirectObjectProtocol> HacksList {
+    get { return hacks_; }
+  }
+  public int HacksCount {
+    get { return hacks_.Count; }
+  }
+  public global::DirectObjectProtocol GetHacks(int index) {
+    return hacks_[index];
   }
   
   public override bool IsInitialized {
     get {
-      foreach (global::DirectObjectProtocol element in ActionsList) {
+      foreach (global::DirectObjectProtocol element in EnemiesList) {
+        if (!element.IsInitialized) return false;
+      }
+      foreach (global::DirectObjectProtocol element in WeaponsList) {
+        if (!element.IsInitialized) return false;
+      }
+      foreach (global::DirectObjectProtocol element in HacksList) {
         if (!element.IsInitialized) return false;
       }
       return true;
@@ -495,8 +594,14 @@ public sealed partial class BuilderPackage : pb::GeneratedMessage<BuilderPackage
   public override void WriteTo(pb::ICodedOutputStream output) {
     int size = SerializedSize;
     string[] field_names = _builderPackageFieldNames;
-    if (actions_.Count > 0) {
-      output.WriteMessageArray(1, field_names[0], actions_);
+    if (enemies_.Count > 0) {
+      output.WriteMessageArray(1, field_names[0], enemies_);
+    }
+    if (weapons_.Count > 0) {
+      output.WriteMessageArray(2, field_names[2], weapons_);
+    }
+    if (hacks_.Count > 0) {
+      output.WriteMessageArray(3, field_names[1], hacks_);
     }
     UnknownFields.WriteTo(output);
   }
@@ -508,8 +613,14 @@ public sealed partial class BuilderPackage : pb::GeneratedMessage<BuilderPackage
       if (size != -1) return size;
       
       size = 0;
-      foreach (global::DirectObjectProtocol element in ActionsList) {
+      foreach (global::DirectObjectProtocol element in EnemiesList) {
         size += pb::CodedOutputStream.ComputeMessageSize(1, element);
+      }
+      foreach (global::DirectObjectProtocol element in WeaponsList) {
+        size += pb::CodedOutputStream.ComputeMessageSize(2, element);
+      }
+      foreach (global::DirectObjectProtocol element in HacksList) {
+        size += pb::CodedOutputStream.ComputeMessageSize(3, element);
       }
       size += UnknownFields.SerializedSize;
       memoizedSerializedSize = size;
@@ -548,7 +659,9 @@ public sealed partial class BuilderPackage : pb::GeneratedMessage<BuilderPackage
     return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
   }
   private BuilderPackage MakeReadOnly() {
-    actions_.MakeReadOnly();
+    enemies_.MakeReadOnly();
+    weapons_.MakeReadOnly();
+    hacks_.MakeReadOnly();
     return this;
   }
   
@@ -636,8 +749,14 @@ public sealed partial class BuilderPackage : pb::GeneratedMessage<BuilderPackage
     public override Builder MergeFrom(BuilderPackage other) {
       if (other == global::BuilderPackage.DefaultInstance) return this;
       PrepareBuilder();
-      if (other.actions_.Count != 0) {
-        result.actions_.Add(other.actions_);
+      if (other.enemies_.Count != 0) {
+        result.enemies_.Add(other.enemies_);
+      }
+      if (other.weapons_.Count != 0) {
+        result.weapons_.Add(other.weapons_);
+      }
+      if (other.hacks_.Count != 0) {
+        result.hacks_.Add(other.hacks_);
       }
       this.MergeUnknownFields(other.UnknownFields);
       return this;
@@ -683,7 +802,15 @@ public sealed partial class BuilderPackage : pb::GeneratedMessage<BuilderPackage
             break;
           }
           case 10: {
-            input.ReadMessageArray(tag, field_name, result.actions_, global::DirectObjectProtocol.DefaultInstance, extensionRegistry);
+            input.ReadMessageArray(tag, field_name, result.enemies_, global::DirectObjectProtocol.DefaultInstance, extensionRegistry);
+            break;
+          }
+          case 18: {
+            input.ReadMessageArray(tag, field_name, result.weapons_, global::DirectObjectProtocol.DefaultInstance, extensionRegistry);
+            break;
+          }
+          case 26: {
+            input.ReadMessageArray(tag, field_name, result.hacks_, global::DirectObjectProtocol.DefaultInstance, extensionRegistry);
             break;
           }
         }
@@ -696,47 +823,135 @@ public sealed partial class BuilderPackage : pb::GeneratedMessage<BuilderPackage
     }
     
     
-    public pbc::IPopsicleList<global::DirectObjectProtocol> ActionsList {
-      get { return PrepareBuilder().actions_; }
+    public pbc::IPopsicleList<global::DirectObjectProtocol> EnemiesList {
+      get { return PrepareBuilder().enemies_; }
     }
-    public int ActionsCount {
-      get { return result.ActionsCount; }
+    public int EnemiesCount {
+      get { return result.EnemiesCount; }
     }
-    public global::DirectObjectProtocol GetActions(int index) {
-      return result.GetActions(index);
+    public global::DirectObjectProtocol GetEnemies(int index) {
+      return result.GetEnemies(index);
     }
-    public Builder SetActions(int index, global::DirectObjectProtocol value) {
+    public Builder SetEnemies(int index, global::DirectObjectProtocol value) {
       pb::ThrowHelper.ThrowIfNull(value, "value");
       PrepareBuilder();
-      result.actions_[index] = value;
+      result.enemies_[index] = value;
       return this;
     }
-    public Builder SetActions(int index, global::DirectObjectProtocol.Builder builderForValue) {
+    public Builder SetEnemies(int index, global::DirectObjectProtocol.Builder builderForValue) {
       pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
       PrepareBuilder();
-      result.actions_[index] = builderForValue.Build();
+      result.enemies_[index] = builderForValue.Build();
       return this;
     }
-    public Builder AddActions(global::DirectObjectProtocol value) {
+    public Builder AddEnemies(global::DirectObjectProtocol value) {
       pb::ThrowHelper.ThrowIfNull(value, "value");
       PrepareBuilder();
-      result.actions_.Add(value);
+      result.enemies_.Add(value);
       return this;
     }
-    public Builder AddActions(global::DirectObjectProtocol.Builder builderForValue) {
+    public Builder AddEnemies(global::DirectObjectProtocol.Builder builderForValue) {
       pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
       PrepareBuilder();
-      result.actions_.Add(builderForValue.Build());
+      result.enemies_.Add(builderForValue.Build());
       return this;
     }
-    public Builder AddRangeActions(scg::IEnumerable<global::DirectObjectProtocol> values) {
+    public Builder AddRangeEnemies(scg::IEnumerable<global::DirectObjectProtocol> values) {
       PrepareBuilder();
-      result.actions_.Add(values);
+      result.enemies_.Add(values);
       return this;
     }
-    public Builder ClearActions() {
+    public Builder ClearEnemies() {
       PrepareBuilder();
-      result.actions_.Clear();
+      result.enemies_.Clear();
+      return this;
+    }
+    
+    public pbc::IPopsicleList<global::DirectObjectProtocol> WeaponsList {
+      get { return PrepareBuilder().weapons_; }
+    }
+    public int WeaponsCount {
+      get { return result.WeaponsCount; }
+    }
+    public global::DirectObjectProtocol GetWeapons(int index) {
+      return result.GetWeapons(index);
+    }
+    public Builder SetWeapons(int index, global::DirectObjectProtocol value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      result.weapons_[index] = value;
+      return this;
+    }
+    public Builder SetWeapons(int index, global::DirectObjectProtocol.Builder builderForValue) {
+      pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+      PrepareBuilder();
+      result.weapons_[index] = builderForValue.Build();
+      return this;
+    }
+    public Builder AddWeapons(global::DirectObjectProtocol value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      result.weapons_.Add(value);
+      return this;
+    }
+    public Builder AddWeapons(global::DirectObjectProtocol.Builder builderForValue) {
+      pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+      PrepareBuilder();
+      result.weapons_.Add(builderForValue.Build());
+      return this;
+    }
+    public Builder AddRangeWeapons(scg::IEnumerable<global::DirectObjectProtocol> values) {
+      PrepareBuilder();
+      result.weapons_.Add(values);
+      return this;
+    }
+    public Builder ClearWeapons() {
+      PrepareBuilder();
+      result.weapons_.Clear();
+      return this;
+    }
+    
+    public pbc::IPopsicleList<global::DirectObjectProtocol> HacksList {
+      get { return PrepareBuilder().hacks_; }
+    }
+    public int HacksCount {
+      get { return result.HacksCount; }
+    }
+    public global::DirectObjectProtocol GetHacks(int index) {
+      return result.GetHacks(index);
+    }
+    public Builder SetHacks(int index, global::DirectObjectProtocol value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      result.hacks_[index] = value;
+      return this;
+    }
+    public Builder SetHacks(int index, global::DirectObjectProtocol.Builder builderForValue) {
+      pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+      PrepareBuilder();
+      result.hacks_[index] = builderForValue.Build();
+      return this;
+    }
+    public Builder AddHacks(global::DirectObjectProtocol value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      result.hacks_.Add(value);
+      return this;
+    }
+    public Builder AddHacks(global::DirectObjectProtocol.Builder builderForValue) {
+      pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+      PrepareBuilder();
+      result.hacks_.Add(builderForValue.Build());
+      return this;
+    }
+    public Builder AddRangeHacks(scg::IEnumerable<global::DirectObjectProtocol> values) {
+      PrepareBuilder();
+      result.hacks_.Add(values);
+      return this;
+    }
+    public Builder ClearHacks() {
+      PrepareBuilder();
+      result.hacks_.Clear();
       return this;
     }
   }
@@ -1556,8 +1771,8 @@ public sealed partial class StatusBlockProtocol : pb::GeneratedMessage<StatusBlo
 public sealed partial class SpawnCommandProtocol : pb::GeneratedMessage<SpawnCommandProtocol, SpawnCommandProtocol.Builder> {
   private SpawnCommandProtocol() { }
   private static readonly SpawnCommandProtocol defaultInstance = new SpawnCommandProtocol().MakeReadOnly();
-  private static readonly string[] _spawnCommandProtocolFieldNames = new string[] { "area", "enemy", "item", "range", "spawnArea", "spawnSpecification" };
-  private static readonly uint[] _spawnCommandProtocolFieldTags = new uint[] { 34, 50, 42, 24, 10, 16 };
+  private static readonly string[] _spawnCommandProtocolFieldNames = new string[] { "enemy", "item", "range", "spawnArea", "spawnSpecification" };
+  private static readonly uint[] _spawnCommandProtocolFieldTags = new uint[] { 50, 42, 24, 8, 16 };
   public static SpawnCommandProtocol DefaultInstance {
     get { return defaultInstance; }
   }
@@ -1580,11 +1795,11 @@ public sealed partial class SpawnCommandProtocol : pb::GeneratedMessage<SpawnCom
   
   public const int SpawnAreaFieldNumber = 1;
   private bool hasSpawnArea;
-  private string spawnArea_ = "";
+  private global::MapType spawnArea_ = global::MapType.CITY;
   public bool HasSpawnArea {
     get { return hasSpawnArea; }
   }
-  public string SpawnArea {
+  public global::MapType SpawnArea {
     get { return spawnArea_; }
   }
   
@@ -1606,16 +1821,6 @@ public sealed partial class SpawnCommandProtocol : pb::GeneratedMessage<SpawnCom
   }
   public int Range {
     get { return range_; }
-  }
-  
-  public const int AreaFieldNumber = 4;
-  private bool hasArea;
-  private global::DirectObjectProtocol area_;
-  public bool HasArea {
-    get { return hasArea; }
-  }
-  public global::DirectObjectProtocol Area {
-    get { return area_ ?? global::DirectObjectProtocol.DefaultInstance; }
   }
   
   public const int ItemFieldNumber = 5;
@@ -1643,9 +1848,6 @@ public sealed partial class SpawnCommandProtocol : pb::GeneratedMessage<SpawnCom
       if (!hasSpawnArea) return false;
       if (!hasSpawnSpecification) return false;
       if (!hasRange) return false;
-      if (HasArea) {
-        if (!Area.IsInitialized) return false;
-      }
       if (HasItem) {
         if (!Item.IsInitialized) return false;
       }
@@ -1660,22 +1862,19 @@ public sealed partial class SpawnCommandProtocol : pb::GeneratedMessage<SpawnCom
     int size = SerializedSize;
     string[] field_names = _spawnCommandProtocolFieldNames;
     if (hasSpawnArea) {
-      output.WriteString(1, field_names[4], SpawnArea);
+      output.WriteEnum(1, field_names[3], (int) SpawnArea, SpawnArea);
     }
     if (hasSpawnSpecification) {
-      output.WriteEnum(2, field_names[5], (int) SpawnSpecification, SpawnSpecification);
+      output.WriteEnum(2, field_names[4], (int) SpawnSpecification, SpawnSpecification);
     }
     if (hasRange) {
-      output.WriteInt32(3, field_names[3], Range);
-    }
-    if (hasArea) {
-      output.WriteMessage(4, field_names[0], Area);
+      output.WriteInt32(3, field_names[2], Range);
     }
     if (hasItem) {
-      output.WriteMessage(5, field_names[2], Item);
+      output.WriteMessage(5, field_names[1], Item);
     }
     if (hasEnemy) {
-      output.WriteMessage(6, field_names[1], Enemy);
+      output.WriteMessage(6, field_names[0], Enemy);
     }
     UnknownFields.WriteTo(output);
   }
@@ -1688,16 +1887,13 @@ public sealed partial class SpawnCommandProtocol : pb::GeneratedMessage<SpawnCom
       
       size = 0;
       if (hasSpawnArea) {
-        size += pb::CodedOutputStream.ComputeStringSize(1, SpawnArea);
+        size += pb::CodedOutputStream.ComputeEnumSize(1, (int) SpawnArea);
       }
       if (hasSpawnSpecification) {
         size += pb::CodedOutputStream.ComputeEnumSize(2, (int) SpawnSpecification);
       }
       if (hasRange) {
         size += pb::CodedOutputStream.ComputeInt32Size(3, Range);
-      }
-      if (hasArea) {
-        size += pb::CodedOutputStream.ComputeMessageSize(4, Area);
       }
       if (hasItem) {
         size += pb::CodedOutputStream.ComputeMessageSize(5, Item);
@@ -1838,9 +2034,6 @@ public sealed partial class SpawnCommandProtocol : pb::GeneratedMessage<SpawnCom
       if (other.HasRange) {
         Range = other.Range;
       }
-      if (other.HasArea) {
-        MergeArea(other.Area);
-      }
       if (other.HasItem) {
         MergeItem(other.Item);
       }
@@ -1890,8 +2083,16 @@ public sealed partial class SpawnCommandProtocol : pb::GeneratedMessage<SpawnCom
             ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
             break;
           }
-          case 10: {
-            result.hasSpawnArea = input.ReadString(ref result.spawnArea_);
+          case 8: {
+            object unknown;
+            if(input.ReadEnum(ref result.spawnArea_, out unknown)) {
+              result.hasSpawnArea = true;
+            } else if(unknown is int) {
+              if (unknownFields == null) {
+                unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+              }
+              unknownFields.MergeVarintField(1, (ulong)(int)unknown);
+            }
             break;
           }
           case 16: {
@@ -1908,15 +2109,6 @@ public sealed partial class SpawnCommandProtocol : pb::GeneratedMessage<SpawnCom
           }
           case 24: {
             result.hasRange = input.ReadInt32(ref result.range_);
-            break;
-          }
-          case 34: {
-            global::DirectObjectProtocol.Builder subBuilder = global::DirectObjectProtocol.CreateBuilder();
-            if (result.hasArea) {
-              subBuilder.MergeFrom(Area);
-            }
-            input.ReadMessage(subBuilder, extensionRegistry);
-            Area = subBuilder.BuildPartial();
             break;
           }
           case 42: {
@@ -1948,14 +2140,13 @@ public sealed partial class SpawnCommandProtocol : pb::GeneratedMessage<SpawnCom
     
     
     public bool HasSpawnArea {
-      get { return result.hasSpawnArea; }
+     get { return result.hasSpawnArea; }
     }
-    public string SpawnArea {
+    public global::MapType SpawnArea {
       get { return result.SpawnArea; }
       set { SetSpawnArea(value); }
     }
-    public Builder SetSpawnArea(string value) {
-      pb::ThrowHelper.ThrowIfNull(value, "value");
+    public Builder SetSpawnArea(global::MapType value) {
       PrepareBuilder();
       result.hasSpawnArea = true;
       result.spawnArea_ = value;
@@ -1964,7 +2155,7 @@ public sealed partial class SpawnCommandProtocol : pb::GeneratedMessage<SpawnCom
     public Builder ClearSpawnArea() {
       PrepareBuilder();
       result.hasSpawnArea = false;
-      result.spawnArea_ = "";
+      result.spawnArea_ = global::MapType.CITY;
       return this;
     }
     
@@ -2005,46 +2196,6 @@ public sealed partial class SpawnCommandProtocol : pb::GeneratedMessage<SpawnCom
       PrepareBuilder();
       result.hasRange = false;
       result.range_ = 0;
-      return this;
-    }
-    
-    public bool HasArea {
-     get { return result.hasArea; }
-    }
-    public global::DirectObjectProtocol Area {
-      get { return result.Area; }
-      set { SetArea(value); }
-    }
-    public Builder SetArea(global::DirectObjectProtocol value) {
-      pb::ThrowHelper.ThrowIfNull(value, "value");
-      PrepareBuilder();
-      result.hasArea = true;
-      result.area_ = value;
-      return this;
-    }
-    public Builder SetArea(global::DirectObjectProtocol.Builder builderForValue) {
-      pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
-      PrepareBuilder();
-      result.hasArea = true;
-      result.area_ = builderForValue.Build();
-      return this;
-    }
-    public Builder MergeArea(global::DirectObjectProtocol value) {
-      pb::ThrowHelper.ThrowIfNull(value, "value");
-      PrepareBuilder();
-      if (result.hasArea &&
-          result.area_ != global::DirectObjectProtocol.DefaultInstance) {
-          result.area_ = global::DirectObjectProtocol.CreateBuilder(result.area_).MergeFrom(value).BuildPartial();
-      } else {
-        result.area_ = value;
-      }
-      result.hasArea = true;
-      return this;
-    }
-    public Builder ClearArea() {
-      PrepareBuilder();
-      result.hasArea = false;
-      result.area_ = null;
       return this;
     }
     
@@ -2137,8 +2288,8 @@ public sealed partial class SpawnCommandProtocol : pb::GeneratedMessage<SpawnCom
 public sealed partial class StatusStepProtocol : pb::GeneratedMessage<StatusStepProtocol, StatusStepProtocol.Builder> {
   private StatusStepProtocol() { }
   private static readonly StatusStepProtocol defaultInstance = new StatusStepProtocol().MakeReadOnly();
-  private static readonly string[] _statusStepProtocolFieldNames = new string[] { "description", "name", "statusesInStep" };
-  private static readonly uint[] _statusStepProtocolFieldTags = new uint[] { 18, 10, 26 };
+  private static readonly string[] _statusStepProtocolFieldNames = new string[] { "commands", "description", "name", "statusesInStep" };
+  private static readonly uint[] _statusStepProtocolFieldTags = new uint[] { 34, 18, 10, 26 };
   public static StatusStepProtocol DefaultInstance {
     get { return defaultInstance; }
   }
@@ -2191,11 +2342,26 @@ public sealed partial class StatusStepProtocol : pb::GeneratedMessage<StatusStep
     return statusesInStep_[index];
   }
   
+  public const int CommandsFieldNumber = 4;
+  private pbc::PopsicleList<global::SpawnCommandProtocol> commands_ = new pbc::PopsicleList<global::SpawnCommandProtocol>();
+  public scg::IList<global::SpawnCommandProtocol> CommandsList {
+    get { return commands_; }
+  }
+  public int CommandsCount {
+    get { return commands_.Count; }
+  }
+  public global::SpawnCommandProtocol GetCommands(int index) {
+    return commands_[index];
+  }
+  
   public override bool IsInitialized {
     get {
       if (!hasName) return false;
       if (!hasDescription) return false;
       foreach (global::StatusCheckableProtocol element in StatusesInStepList) {
+        if (!element.IsInitialized) return false;
+      }
+      foreach (global::SpawnCommandProtocol element in CommandsList) {
         if (!element.IsInitialized) return false;
       }
       return true;
@@ -2206,13 +2372,16 @@ public sealed partial class StatusStepProtocol : pb::GeneratedMessage<StatusStep
     int size = SerializedSize;
     string[] field_names = _statusStepProtocolFieldNames;
     if (hasName) {
-      output.WriteString(1, field_names[1], Name);
+      output.WriteString(1, field_names[2], Name);
     }
     if (hasDescription) {
-      output.WriteString(2, field_names[0], Description);
+      output.WriteString(2, field_names[1], Description);
     }
     if (statusesInStep_.Count > 0) {
-      output.WriteMessageArray(3, field_names[2], statusesInStep_);
+      output.WriteMessageArray(3, field_names[3], statusesInStep_);
+    }
+    if (commands_.Count > 0) {
+      output.WriteMessageArray(4, field_names[0], commands_);
     }
     UnknownFields.WriteTo(output);
   }
@@ -2232,6 +2401,9 @@ public sealed partial class StatusStepProtocol : pb::GeneratedMessage<StatusStep
       }
       foreach (global::StatusCheckableProtocol element in StatusesInStepList) {
         size += pb::CodedOutputStream.ComputeMessageSize(3, element);
+      }
+      foreach (global::SpawnCommandProtocol element in CommandsList) {
+        size += pb::CodedOutputStream.ComputeMessageSize(4, element);
       }
       size += UnknownFields.SerializedSize;
       memoizedSerializedSize = size;
@@ -2271,6 +2443,7 @@ public sealed partial class StatusStepProtocol : pb::GeneratedMessage<StatusStep
   }
   private StatusStepProtocol MakeReadOnly() {
     statusesInStep_.MakeReadOnly();
+    commands_.MakeReadOnly();
     return this;
   }
   
@@ -2367,6 +2540,9 @@ public sealed partial class StatusStepProtocol : pb::GeneratedMessage<StatusStep
       if (other.statusesInStep_.Count != 0) {
         result.statusesInStep_.Add(other.statusesInStep_);
       }
+      if (other.commands_.Count != 0) {
+        result.commands_.Add(other.commands_);
+      }
       this.MergeUnknownFields(other.UnknownFields);
       return this;
     }
@@ -2420,6 +2596,10 @@ public sealed partial class StatusStepProtocol : pb::GeneratedMessage<StatusStep
           }
           case 26: {
             input.ReadMessageArray(tag, field_name, result.statusesInStep_, global::StatusCheckableProtocol.DefaultInstance, extensionRegistry);
+            break;
+          }
+          case 34: {
+            input.ReadMessageArray(tag, field_name, result.commands_, global::SpawnCommandProtocol.DefaultInstance, extensionRegistry);
             break;
           }
         }
@@ -2517,6 +2697,50 @@ public sealed partial class StatusStepProtocol : pb::GeneratedMessage<StatusStep
       result.statusesInStep_.Clear();
       return this;
     }
+    
+    public pbc::IPopsicleList<global::SpawnCommandProtocol> CommandsList {
+      get { return PrepareBuilder().commands_; }
+    }
+    public int CommandsCount {
+      get { return result.CommandsCount; }
+    }
+    public global::SpawnCommandProtocol GetCommands(int index) {
+      return result.GetCommands(index);
+    }
+    public Builder SetCommands(int index, global::SpawnCommandProtocol value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      result.commands_[index] = value;
+      return this;
+    }
+    public Builder SetCommands(int index, global::SpawnCommandProtocol.Builder builderForValue) {
+      pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+      PrepareBuilder();
+      result.commands_[index] = builderForValue.Build();
+      return this;
+    }
+    public Builder AddCommands(global::SpawnCommandProtocol value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      result.commands_.Add(value);
+      return this;
+    }
+    public Builder AddCommands(global::SpawnCommandProtocol.Builder builderForValue) {
+      pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+      PrepareBuilder();
+      result.commands_.Add(builderForValue.Build());
+      return this;
+    }
+    public Builder AddRangeCommands(scg::IEnumerable<global::SpawnCommandProtocol> values) {
+      PrepareBuilder();
+      result.commands_.Add(values);
+      return this;
+    }
+    public Builder ClearCommands() {
+      PrepareBuilder();
+      result.commands_.Clear();
+      return this;
+    }
   }
   static StatusStepProtocol() {
     object.ReferenceEquals(global::QuestProtobuf.Descriptor, null);
@@ -2527,8 +2751,8 @@ public sealed partial class StatusStepProtocol : pb::GeneratedMessage<StatusStep
 public sealed partial class StatusCheckableProtocol : pb::GeneratedMessage<StatusCheckableProtocol, StatusCheckableProtocol.Builder> {
   private StatusCheckableProtocol() { }
   private static readonly StatusCheckableProtocol defaultInstance = new StatusCheckableProtocol().MakeReadOnly();
-  private static readonly string[] _statusCheckableProtocolFieldNames = new string[] { "action", "amount" };
-  private static readonly uint[] _statusCheckableProtocolFieldTags = new uint[] { 10, 16 };
+  private static readonly string[] _statusCheckableProtocolFieldNames = new string[] { "action", "amount", "tier" };
+  private static readonly uint[] _statusCheckableProtocolFieldTags = new uint[] { 10, 24, 18 };
   public static StatusCheckableProtocol DefaultInstance {
     get { return defaultInstance; }
   }
@@ -2559,7 +2783,17 @@ public sealed partial class StatusCheckableProtocol : pb::GeneratedMessage<Statu
     get { return action_ ?? global::ActionProtocol.DefaultInstance; }
   }
   
-  public const int AmountFieldNumber = 2;
+  public const int TierFieldNumber = 2;
+  private bool hasTier;
+  private global::TierProtocol tier_;
+  public bool HasTier {
+    get { return hasTier; }
+  }
+  public global::TierProtocol Tier {
+    get { return tier_ ?? global::TierProtocol.DefaultInstance; }
+  }
+  
+  public const int AmountFieldNumber = 3;
   private bool hasAmount;
   private int amount_;
   public bool HasAmount {
@@ -2574,6 +2808,9 @@ public sealed partial class StatusCheckableProtocol : pb::GeneratedMessage<Statu
       if (HasAction) {
         if (!Action.IsInitialized) return false;
       }
+      if (HasTier) {
+        if (!Tier.IsInitialized) return false;
+      }
       return true;
     }
   }
@@ -2584,8 +2821,11 @@ public sealed partial class StatusCheckableProtocol : pb::GeneratedMessage<Statu
     if (hasAction) {
       output.WriteMessage(1, field_names[0], Action);
     }
+    if (hasTier) {
+      output.WriteMessage(2, field_names[2], Tier);
+    }
     if (hasAmount) {
-      output.WriteInt32(2, field_names[1], Amount);
+      output.WriteInt32(3, field_names[1], Amount);
     }
     UnknownFields.WriteTo(output);
   }
@@ -2600,8 +2840,11 @@ public sealed partial class StatusCheckableProtocol : pb::GeneratedMessage<Statu
       if (hasAction) {
         size += pb::CodedOutputStream.ComputeMessageSize(1, Action);
       }
+      if (hasTier) {
+        size += pb::CodedOutputStream.ComputeMessageSize(2, Tier);
+      }
       if (hasAmount) {
-        size += pb::CodedOutputStream.ComputeInt32Size(2, Amount);
+        size += pb::CodedOutputStream.ComputeInt32Size(3, Amount);
       }
       size += UnknownFields.SerializedSize;
       memoizedSerializedSize = size;
@@ -2730,6 +2973,9 @@ public sealed partial class StatusCheckableProtocol : pb::GeneratedMessage<Statu
       if (other.HasAction) {
         MergeAction(other.Action);
       }
+      if (other.HasTier) {
+        MergeTier(other.Tier);
+      }
       if (other.HasAmount) {
         Amount = other.Amount;
       }
@@ -2785,7 +3031,16 @@ public sealed partial class StatusCheckableProtocol : pb::GeneratedMessage<Statu
             Action = subBuilder.BuildPartial();
             break;
           }
-          case 16: {
+          case 18: {
+            global::TierProtocol.Builder subBuilder = global::TierProtocol.CreateBuilder();
+            if (result.hasTier) {
+              subBuilder.MergeFrom(Tier);
+            }
+            input.ReadMessage(subBuilder, extensionRegistry);
+            Tier = subBuilder.BuildPartial();
+            break;
+          }
+          case 24: {
             result.hasAmount = input.ReadInt32(ref result.amount_);
             break;
           }
@@ -2839,6 +3094,46 @@ public sealed partial class StatusCheckableProtocol : pb::GeneratedMessage<Statu
       return this;
     }
     
+    public bool HasTier {
+     get { return result.hasTier; }
+    }
+    public global::TierProtocol Tier {
+      get { return result.Tier; }
+      set { SetTier(value); }
+    }
+    public Builder SetTier(global::TierProtocol value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      result.hasTier = true;
+      result.tier_ = value;
+      return this;
+    }
+    public Builder SetTier(global::TierProtocol.Builder builderForValue) {
+      pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+      PrepareBuilder();
+      result.hasTier = true;
+      result.tier_ = builderForValue.Build();
+      return this;
+    }
+    public Builder MergeTier(global::TierProtocol value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      if (result.hasTier &&
+          result.tier_ != global::TierProtocol.DefaultInstance) {
+          result.tier_ = global::TierProtocol.CreateBuilder(result.tier_).MergeFrom(value).BuildPartial();
+      } else {
+        result.tier_ = value;
+      }
+      result.hasTier = true;
+      return this;
+    }
+    public Builder ClearTier() {
+      PrepareBuilder();
+      result.hasTier = false;
+      result.tier_ = null;
+      return this;
+    }
+    
     public bool HasAmount {
       get { return result.hasAmount; }
     }
@@ -2860,6 +3155,277 @@ public sealed partial class StatusCheckableProtocol : pb::GeneratedMessage<Statu
     }
   }
   static StatusCheckableProtocol() {
+    object.ReferenceEquals(global::QuestProtobuf.Descriptor, null);
+  }
+}
+
+[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+public sealed partial class TierProtocol : pb::GeneratedMessage<TierProtocol, TierProtocol.Builder> {
+  private TierProtocol() { }
+  private static readonly TierProtocol defaultInstance = new TierProtocol().MakeReadOnly();
+  private static readonly string[] _tierProtocolFieldNames = new string[] { "tier" };
+  private static readonly uint[] _tierProtocolFieldTags = new uint[] { 8 };
+  public static TierProtocol DefaultInstance {
+    get { return defaultInstance; }
+  }
+  
+  public override TierProtocol DefaultInstanceForType {
+    get { return DefaultInstance; }
+  }
+  
+  protected override TierProtocol ThisMessage {
+    get { return this; }
+  }
+  
+  public static pbd::MessageDescriptor Descriptor {
+    get { return global::QuestProtobuf.internal__static_TierProtocol__Descriptor; }
+  }
+  
+  protected override pb::FieldAccess.FieldAccessorTable<TierProtocol, TierProtocol.Builder> InternalFieldAccessors {
+    get { return global::QuestProtobuf.internal__static_TierProtocol__FieldAccessorTable; }
+  }
+  
+  public const int TierFieldNumber = 1;
+  private bool hasTier;
+  private int tier_;
+  public bool HasTier {
+    get { return hasTier; }
+  }
+  public int Tier {
+    get { return tier_; }
+  }
+  
+  public override bool IsInitialized {
+    get {
+      if (!hasTier) return false;
+      return true;
+    }
+  }
+  
+  public override void WriteTo(pb::ICodedOutputStream output) {
+    int size = SerializedSize;
+    string[] field_names = _tierProtocolFieldNames;
+    if (hasTier) {
+      output.WriteInt32(1, field_names[0], Tier);
+    }
+    UnknownFields.WriteTo(output);
+  }
+  
+  private int memoizedSerializedSize = -1;
+  public override int SerializedSize {
+    get {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+      
+      size = 0;
+      if (hasTier) {
+        size += pb::CodedOutputStream.ComputeInt32Size(1, Tier);
+      }
+      size += UnknownFields.SerializedSize;
+      memoizedSerializedSize = size;
+      return size;
+    }
+  }
+  
+  public static TierProtocol ParseFrom(pb::ByteString data) {
+    return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+  }
+  public static TierProtocol ParseFrom(pb::ByteString data, pb::ExtensionRegistry extensionRegistry) {
+    return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+  }
+  public static TierProtocol ParseFrom(byte[] data) {
+    return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+  }
+  public static TierProtocol ParseFrom(byte[] data, pb::ExtensionRegistry extensionRegistry) {
+    return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+  }
+  public static TierProtocol ParseFrom(global::System.IO.Stream input) {
+    return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+  }
+  public static TierProtocol ParseFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+    return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+  }
+  public static TierProtocol ParseDelimitedFrom(global::System.IO.Stream input) {
+    return CreateBuilder().MergeDelimitedFrom(input).BuildParsed();
+  }
+  public static TierProtocol ParseDelimitedFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+    return CreateBuilder().MergeDelimitedFrom(input, extensionRegistry).BuildParsed();
+  }
+  public static TierProtocol ParseFrom(pb::ICodedInputStream input) {
+    return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+  }
+  public static TierProtocol ParseFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+    return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+  }
+  private TierProtocol MakeReadOnly() {
+    return this;
+  }
+  
+  public static Builder CreateBuilder() { return new Builder(); }
+  public override Builder ToBuilder() { return CreateBuilder(this); }
+  public override Builder CreateBuilderForType() { return new Builder(); }
+  public static Builder CreateBuilder(TierProtocol prototype) {
+    return new Builder(prototype);
+  }
+  
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+  public sealed partial class Builder : pb::GeneratedBuilder<TierProtocol, Builder> {
+    protected override Builder ThisBuilder {
+      get { return this; }
+    }
+    public Builder() {
+      result = DefaultInstance;
+      resultIsReadOnly = true;
+    }
+    internal Builder(TierProtocol cloneFrom) {
+      result = cloneFrom;
+      resultIsReadOnly = true;
+    }
+    
+    private bool resultIsReadOnly;
+    private TierProtocol result;
+    
+    private TierProtocol PrepareBuilder() {
+      if (resultIsReadOnly) {
+        TierProtocol original = result;
+        result = new TierProtocol();
+        resultIsReadOnly = false;
+        MergeFrom(original);
+      }
+      return result;
+    }
+    
+    public override bool IsInitialized {
+      get { return result.IsInitialized; }
+    }
+    
+    protected override TierProtocol MessageBeingBuilt {
+      get { return PrepareBuilder(); }
+    }
+    
+    public override Builder Clear() {
+      result = DefaultInstance;
+      resultIsReadOnly = true;
+      return this;
+    }
+    
+    public override Builder Clone() {
+      if (resultIsReadOnly) {
+        return new Builder(result);
+      } else {
+        return new Builder().MergeFrom(result);
+      }
+    }
+    
+    public override pbd::MessageDescriptor DescriptorForType {
+      get { return global::TierProtocol.Descriptor; }
+    }
+    
+    public override TierProtocol DefaultInstanceForType {
+      get { return global::TierProtocol.DefaultInstance; }
+    }
+    
+    public override TierProtocol BuildPartial() {
+      if (resultIsReadOnly) {
+        return result;
+      }
+      resultIsReadOnly = true;
+      return result.MakeReadOnly();
+    }
+    
+    public override Builder MergeFrom(pb::IMessage other) {
+      if (other is TierProtocol) {
+        return MergeFrom((TierProtocol) other);
+      } else {
+        base.MergeFrom(other);
+        return this;
+      }
+    }
+    
+    public override Builder MergeFrom(TierProtocol other) {
+      if (other == global::TierProtocol.DefaultInstance) return this;
+      PrepareBuilder();
+      if (other.HasTier) {
+        Tier = other.Tier;
+      }
+      this.MergeUnknownFields(other.UnknownFields);
+      return this;
+    }
+    
+    public override Builder MergeFrom(pb::ICodedInputStream input) {
+      return MergeFrom(input, pb::ExtensionRegistry.Empty);
+    }
+    
+    public override Builder MergeFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+      PrepareBuilder();
+      pb::UnknownFieldSet.Builder unknownFields = null;
+      uint tag;
+      string field_name;
+      while (input.ReadTag(out tag, out field_name)) {
+        if(tag == 0 && field_name != null) {
+          int field_ordinal = global::System.Array.BinarySearch(_tierProtocolFieldNames, field_name, global::System.StringComparer.Ordinal);
+          if(field_ordinal >= 0)
+            tag = _tierProtocolFieldTags[field_ordinal];
+          else {
+            if (unknownFields == null) {
+              unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+            }
+            ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+            continue;
+          }
+        }
+        switch (tag) {
+          case 0: {
+            throw pb::InvalidProtocolBufferException.InvalidTag();
+          }
+          default: {
+            if (pb::WireFormat.IsEndGroupTag(tag)) {
+              if (unknownFields != null) {
+                this.UnknownFields = unknownFields.Build();
+              }
+              return this;
+            }
+            if (unknownFields == null) {
+              unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+            }
+            ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+            break;
+          }
+          case 8: {
+            result.hasTier = input.ReadInt32(ref result.tier_);
+            break;
+          }
+        }
+      }
+      
+      if (unknownFields != null) {
+        this.UnknownFields = unknownFields.Build();
+      }
+      return this;
+    }
+    
+    
+    public bool HasTier {
+      get { return result.hasTier; }
+    }
+    public int Tier {
+      get { return result.Tier; }
+      set { SetTier(value); }
+    }
+    public Builder SetTier(int value) {
+      PrepareBuilder();
+      result.hasTier = true;
+      result.tier_ = value;
+      return this;
+    }
+    public Builder ClearTier() {
+      PrepareBuilder();
+      result.hasTier = false;
+      result.tier_ = 0;
+      return this;
+    }
+  }
+  static TierProtocol() {
     object.ReferenceEquals(global::QuestProtobuf.Descriptor, null);
   }
 }
@@ -3218,8 +3784,8 @@ public sealed partial class ActionProtocol : pb::GeneratedMessage<ActionProtocol
 public sealed partial class DirectObjectProtocol : pb::GeneratedMessage<DirectObjectProtocol, DirectObjectProtocol.Builder> {
   private DirectObjectProtocol() { }
   private static readonly DirectObjectProtocol defaultInstance = new DirectObjectProtocol().MakeReadOnly();
-  private static readonly string[] _directObjectProtocolFieldNames = new string[] { "amount", "map", "name", "type" };
-  private static readonly uint[] _directObjectProtocolFieldTags = new uint[] { 32, 26, 18, 10 };
+  private static readonly string[] _directObjectProtocolFieldNames = new string[] { "amount", "itemInformation", "map", "name", "type" };
+  private static readonly uint[] _directObjectProtocolFieldTags = new uint[] { 32, 42, 26, 18, 10 };
   public static DirectObjectProtocol DefaultInstance {
     get { return defaultInstance; }
   }
@@ -3280,11 +3846,24 @@ public sealed partial class DirectObjectProtocol : pb::GeneratedMessage<DirectOb
     get { return amount_; }
   }
   
+  public const int ItemInformationFieldNumber = 5;
+  private bool hasItemInformation;
+  private global::ItemProtocol itemInformation_;
+  public bool HasItemInformation {
+    get { return hasItemInformation; }
+  }
+  public global::ItemProtocol ItemInformation {
+    get { return itemInformation_ ?? global::ItemProtocol.DefaultInstance; }
+  }
+  
   public override bool IsInitialized {
     get {
       if (!hasName) return false;
       if (HasMap) {
         if (!Map.IsInitialized) return false;
+      }
+      if (HasItemInformation) {
+        if (!ItemInformation.IsInitialized) return false;
       }
       return true;
     }
@@ -3294,16 +3873,19 @@ public sealed partial class DirectObjectProtocol : pb::GeneratedMessage<DirectOb
     int size = SerializedSize;
     string[] field_names = _directObjectProtocolFieldNames;
     if (hasType) {
-      output.WriteString(1, field_names[3], Type);
+      output.WriteString(1, field_names[4], Type);
     }
     if (hasName) {
-      output.WriteString(2, field_names[2], Name);
+      output.WriteString(2, field_names[3], Name);
     }
     if (hasMap) {
-      output.WriteMessage(3, field_names[1], Map);
+      output.WriteMessage(3, field_names[2], Map);
     }
     if (hasAmount) {
       output.WriteInt32(4, field_names[0], Amount);
+    }
+    if (hasItemInformation) {
+      output.WriteMessage(5, field_names[1], ItemInformation);
     }
     UnknownFields.WriteTo(output);
   }
@@ -3326,6 +3908,9 @@ public sealed partial class DirectObjectProtocol : pb::GeneratedMessage<DirectOb
       }
       if (hasAmount) {
         size += pb::CodedOutputStream.ComputeInt32Size(4, Amount);
+      }
+      if (hasItemInformation) {
+        size += pb::CodedOutputStream.ComputeMessageSize(5, ItemInformation);
       }
       size += UnknownFields.SerializedSize;
       memoizedSerializedSize = size;
@@ -3463,6 +4048,9 @@ public sealed partial class DirectObjectProtocol : pb::GeneratedMessage<DirectOb
       if (other.HasAmount) {
         Amount = other.Amount;
       }
+      if (other.HasItemInformation) {
+        MergeItemInformation(other.ItemInformation);
+      }
       this.MergeUnknownFields(other.UnknownFields);
       return this;
     }
@@ -3525,6 +4113,15 @@ public sealed partial class DirectObjectProtocol : pb::GeneratedMessage<DirectOb
           }
           case 32: {
             result.hasAmount = input.ReadInt32(ref result.amount_);
+            break;
+          }
+          case 42: {
+            global::ItemProtocol.Builder subBuilder = global::ItemProtocol.CreateBuilder();
+            if (result.hasItemInformation) {
+              subBuilder.MergeFrom(ItemInformation);
+            }
+            input.ReadMessage(subBuilder, extensionRegistry);
+            ItemInformation = subBuilder.BuildPartial();
             break;
           }
         }
@@ -3636,6 +4233,46 @@ public sealed partial class DirectObjectProtocol : pb::GeneratedMessage<DirectOb
       PrepareBuilder();
       result.hasAmount = false;
       result.amount_ = 0;
+      return this;
+    }
+    
+    public bool HasItemInformation {
+     get { return result.hasItemInformation; }
+    }
+    public global::ItemProtocol ItemInformation {
+      get { return result.ItemInformation; }
+      set { SetItemInformation(value); }
+    }
+    public Builder SetItemInformation(global::ItemProtocol value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      result.hasItemInformation = true;
+      result.itemInformation_ = value;
+      return this;
+    }
+    public Builder SetItemInformation(global::ItemProtocol.Builder builderForValue) {
+      pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+      PrepareBuilder();
+      result.hasItemInformation = true;
+      result.itemInformation_ = builderForValue.Build();
+      return this;
+    }
+    public Builder MergeItemInformation(global::ItemProtocol value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      if (result.hasItemInformation &&
+          result.itemInformation_ != global::ItemProtocol.DefaultInstance) {
+          result.itemInformation_ = global::ItemProtocol.CreateBuilder(result.itemInformation_).MergeFrom(value).BuildPartial();
+      } else {
+        result.itemInformation_ = value;
+      }
+      result.hasItemInformation = true;
+      return this;
+    }
+    public Builder ClearItemInformation() {
+      PrepareBuilder();
+      result.hasItemInformation = false;
+      result.itemInformation_ = null;
       return this;
     }
   }
@@ -3999,6 +4636,2301 @@ public sealed partial class MapProtocol : pb::GeneratedMessage<MapProtocol, MapP
     }
   }
   static MapProtocol() {
+    object.ReferenceEquals(global::QuestProtobuf.Descriptor, null);
+  }
+}
+
+[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+public sealed partial class ItemProtocol : pb::GeneratedMessage<ItemProtocol, ItemProtocol.Builder> {
+  private ItemProtocol() { }
+  private static readonly ItemProtocol defaultInstance = new ItemProtocol().MakeReadOnly();
+  private static readonly string[] _itemProtocolFieldNames = new string[] { "levelSpec", "version" };
+  private static readonly uint[] _itemProtocolFieldTags = new uint[] { 16, 8 };
+  public static ItemProtocol DefaultInstance {
+    get { return defaultInstance; }
+  }
+  
+  public override ItemProtocol DefaultInstanceForType {
+    get { return DefaultInstance; }
+  }
+  
+  protected override ItemProtocol ThisMessage {
+    get { return this; }
+  }
+  
+  public static pbd::MessageDescriptor Descriptor {
+    get { return global::QuestProtobuf.internal__static_ItemProtocol__Descriptor; }
+  }
+  
+  protected override pb::FieldAccess.FieldAccessorTable<ItemProtocol, ItemProtocol.Builder> InternalFieldAccessors {
+    get { return global::QuestProtobuf.internal__static_ItemProtocol__FieldAccessorTable; }
+  }
+  
+  public const int VersionFieldNumber = 1;
+  private bool hasVersion;
+  private int version_;
+  public bool HasVersion {
+    get { return hasVersion; }
+  }
+  public int Version {
+    get { return version_; }
+  }
+  
+  public const int LevelSpecFieldNumber = 2;
+  private bool hasLevelSpec;
+  private global::LevelSpecification levelSpec_ = global::LevelSpecification.MINIMUM;
+  public bool HasLevelSpec {
+    get { return hasLevelSpec; }
+  }
+  public global::LevelSpecification LevelSpec {
+    get { return levelSpec_; }
+  }
+  
+  public override bool IsInitialized {
+    get {
+      if (!hasVersion) return false;
+      if (!hasLevelSpec) return false;
+      return true;
+    }
+  }
+  
+  public override void WriteTo(pb::ICodedOutputStream output) {
+    int size = SerializedSize;
+    string[] field_names = _itemProtocolFieldNames;
+    if (hasVersion) {
+      output.WriteInt32(1, field_names[1], Version);
+    }
+    if (hasLevelSpec) {
+      output.WriteEnum(2, field_names[0], (int) LevelSpec, LevelSpec);
+    }
+    UnknownFields.WriteTo(output);
+  }
+  
+  private int memoizedSerializedSize = -1;
+  public override int SerializedSize {
+    get {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+      
+      size = 0;
+      if (hasVersion) {
+        size += pb::CodedOutputStream.ComputeInt32Size(1, Version);
+      }
+      if (hasLevelSpec) {
+        size += pb::CodedOutputStream.ComputeEnumSize(2, (int) LevelSpec);
+      }
+      size += UnknownFields.SerializedSize;
+      memoizedSerializedSize = size;
+      return size;
+    }
+  }
+  
+  public static ItemProtocol ParseFrom(pb::ByteString data) {
+    return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+  }
+  public static ItemProtocol ParseFrom(pb::ByteString data, pb::ExtensionRegistry extensionRegistry) {
+    return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+  }
+  public static ItemProtocol ParseFrom(byte[] data) {
+    return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+  }
+  public static ItemProtocol ParseFrom(byte[] data, pb::ExtensionRegistry extensionRegistry) {
+    return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+  }
+  public static ItemProtocol ParseFrom(global::System.IO.Stream input) {
+    return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+  }
+  public static ItemProtocol ParseFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+    return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+  }
+  public static ItemProtocol ParseDelimitedFrom(global::System.IO.Stream input) {
+    return CreateBuilder().MergeDelimitedFrom(input).BuildParsed();
+  }
+  public static ItemProtocol ParseDelimitedFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+    return CreateBuilder().MergeDelimitedFrom(input, extensionRegistry).BuildParsed();
+  }
+  public static ItemProtocol ParseFrom(pb::ICodedInputStream input) {
+    return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+  }
+  public static ItemProtocol ParseFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+    return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+  }
+  private ItemProtocol MakeReadOnly() {
+    return this;
+  }
+  
+  public static Builder CreateBuilder() { return new Builder(); }
+  public override Builder ToBuilder() { return CreateBuilder(this); }
+  public override Builder CreateBuilderForType() { return new Builder(); }
+  public static Builder CreateBuilder(ItemProtocol prototype) {
+    return new Builder(prototype);
+  }
+  
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+  public sealed partial class Builder : pb::GeneratedBuilder<ItemProtocol, Builder> {
+    protected override Builder ThisBuilder {
+      get { return this; }
+    }
+    public Builder() {
+      result = DefaultInstance;
+      resultIsReadOnly = true;
+    }
+    internal Builder(ItemProtocol cloneFrom) {
+      result = cloneFrom;
+      resultIsReadOnly = true;
+    }
+    
+    private bool resultIsReadOnly;
+    private ItemProtocol result;
+    
+    private ItemProtocol PrepareBuilder() {
+      if (resultIsReadOnly) {
+        ItemProtocol original = result;
+        result = new ItemProtocol();
+        resultIsReadOnly = false;
+        MergeFrom(original);
+      }
+      return result;
+    }
+    
+    public override bool IsInitialized {
+      get { return result.IsInitialized; }
+    }
+    
+    protected override ItemProtocol MessageBeingBuilt {
+      get { return PrepareBuilder(); }
+    }
+    
+    public override Builder Clear() {
+      result = DefaultInstance;
+      resultIsReadOnly = true;
+      return this;
+    }
+    
+    public override Builder Clone() {
+      if (resultIsReadOnly) {
+        return new Builder(result);
+      } else {
+        return new Builder().MergeFrom(result);
+      }
+    }
+    
+    public override pbd::MessageDescriptor DescriptorForType {
+      get { return global::ItemProtocol.Descriptor; }
+    }
+    
+    public override ItemProtocol DefaultInstanceForType {
+      get { return global::ItemProtocol.DefaultInstance; }
+    }
+    
+    public override ItemProtocol BuildPartial() {
+      if (resultIsReadOnly) {
+        return result;
+      }
+      resultIsReadOnly = true;
+      return result.MakeReadOnly();
+    }
+    
+    public override Builder MergeFrom(pb::IMessage other) {
+      if (other is ItemProtocol) {
+        return MergeFrom((ItemProtocol) other);
+      } else {
+        base.MergeFrom(other);
+        return this;
+      }
+    }
+    
+    public override Builder MergeFrom(ItemProtocol other) {
+      if (other == global::ItemProtocol.DefaultInstance) return this;
+      PrepareBuilder();
+      if (other.HasVersion) {
+        Version = other.Version;
+      }
+      if (other.HasLevelSpec) {
+        LevelSpec = other.LevelSpec;
+      }
+      this.MergeUnknownFields(other.UnknownFields);
+      return this;
+    }
+    
+    public override Builder MergeFrom(pb::ICodedInputStream input) {
+      return MergeFrom(input, pb::ExtensionRegistry.Empty);
+    }
+    
+    public override Builder MergeFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+      PrepareBuilder();
+      pb::UnknownFieldSet.Builder unknownFields = null;
+      uint tag;
+      string field_name;
+      while (input.ReadTag(out tag, out field_name)) {
+        if(tag == 0 && field_name != null) {
+          int field_ordinal = global::System.Array.BinarySearch(_itemProtocolFieldNames, field_name, global::System.StringComparer.Ordinal);
+          if(field_ordinal >= 0)
+            tag = _itemProtocolFieldTags[field_ordinal];
+          else {
+            if (unknownFields == null) {
+              unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+            }
+            ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+            continue;
+          }
+        }
+        switch (tag) {
+          case 0: {
+            throw pb::InvalidProtocolBufferException.InvalidTag();
+          }
+          default: {
+            if (pb::WireFormat.IsEndGroupTag(tag)) {
+              if (unknownFields != null) {
+                this.UnknownFields = unknownFields.Build();
+              }
+              return this;
+            }
+            if (unknownFields == null) {
+              unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+            }
+            ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+            break;
+          }
+          case 8: {
+            result.hasVersion = input.ReadInt32(ref result.version_);
+            break;
+          }
+          case 16: {
+            object unknown;
+            if(input.ReadEnum(ref result.levelSpec_, out unknown)) {
+              result.hasLevelSpec = true;
+            } else if(unknown is int) {
+              if (unknownFields == null) {
+                unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+              }
+              unknownFields.MergeVarintField(2, (ulong)(int)unknown);
+            }
+            break;
+          }
+        }
+      }
+      
+      if (unknownFields != null) {
+        this.UnknownFields = unknownFields.Build();
+      }
+      return this;
+    }
+    
+    
+    public bool HasVersion {
+      get { return result.hasVersion; }
+    }
+    public int Version {
+      get { return result.Version; }
+      set { SetVersion(value); }
+    }
+    public Builder SetVersion(int value) {
+      PrepareBuilder();
+      result.hasVersion = true;
+      result.version_ = value;
+      return this;
+    }
+    public Builder ClearVersion() {
+      PrepareBuilder();
+      result.hasVersion = false;
+      result.version_ = 0;
+      return this;
+    }
+    
+    public bool HasLevelSpec {
+     get { return result.hasLevelSpec; }
+    }
+    public global::LevelSpecification LevelSpec {
+      get { return result.LevelSpec; }
+      set { SetLevelSpec(value); }
+    }
+    public Builder SetLevelSpec(global::LevelSpecification value) {
+      PrepareBuilder();
+      result.hasLevelSpec = true;
+      result.levelSpec_ = value;
+      return this;
+    }
+    public Builder ClearLevelSpec() {
+      PrepareBuilder();
+      result.hasLevelSpec = false;
+      result.levelSpec_ = global::LevelSpecification.MINIMUM;
+      return this;
+    }
+  }
+  static ItemProtocol() {
+    object.ReferenceEquals(global::QuestProtobuf.Descriptor, null);
+  }
+}
+
+[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+public sealed partial class ConversationPackage : pb::GeneratedMessage<ConversationPackage, ConversationPackage.Builder> {
+  private ConversationPackage() { }
+  private static readonly ConversationPackage defaultInstance = new ConversationPackage().MakeReadOnly();
+  private static readonly string[] _conversationPackageFieldNames = new string[] { "conversations" };
+  private static readonly uint[] _conversationPackageFieldTags = new uint[] { 10 };
+  public static ConversationPackage DefaultInstance {
+    get { return defaultInstance; }
+  }
+  
+  public override ConversationPackage DefaultInstanceForType {
+    get { return DefaultInstance; }
+  }
+  
+  protected override ConversationPackage ThisMessage {
+    get { return this; }
+  }
+  
+  public static pbd::MessageDescriptor Descriptor {
+    get { return global::QuestProtobuf.internal__static_ConversationPackage__Descriptor; }
+  }
+  
+  protected override pb::FieldAccess.FieldAccessorTable<ConversationPackage, ConversationPackage.Builder> InternalFieldAccessors {
+    get { return global::QuestProtobuf.internal__static_ConversationPackage__FieldAccessorTable; }
+  }
+  
+  public const int ConversationsFieldNumber = 1;
+  private pbc::PopsicleList<global::Conversation> conversations_ = new pbc::PopsicleList<global::Conversation>();
+  public scg::IList<global::Conversation> ConversationsList {
+    get { return conversations_; }
+  }
+  public int ConversationsCount {
+    get { return conversations_.Count; }
+  }
+  public global::Conversation GetConversations(int index) {
+    return conversations_[index];
+  }
+  
+  public override bool IsInitialized {
+    get {
+      foreach (global::Conversation element in ConversationsList) {
+        if (!element.IsInitialized) return false;
+      }
+      return true;
+    }
+  }
+  
+  public override void WriteTo(pb::ICodedOutputStream output) {
+    int size = SerializedSize;
+    string[] field_names = _conversationPackageFieldNames;
+    if (conversations_.Count > 0) {
+      output.WriteMessageArray(1, field_names[0], conversations_);
+    }
+    UnknownFields.WriteTo(output);
+  }
+  
+  private int memoizedSerializedSize = -1;
+  public override int SerializedSize {
+    get {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+      
+      size = 0;
+      foreach (global::Conversation element in ConversationsList) {
+        size += pb::CodedOutputStream.ComputeMessageSize(1, element);
+      }
+      size += UnknownFields.SerializedSize;
+      memoizedSerializedSize = size;
+      return size;
+    }
+  }
+  
+  public static ConversationPackage ParseFrom(pb::ByteString data) {
+    return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+  }
+  public static ConversationPackage ParseFrom(pb::ByteString data, pb::ExtensionRegistry extensionRegistry) {
+    return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+  }
+  public static ConversationPackage ParseFrom(byte[] data) {
+    return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+  }
+  public static ConversationPackage ParseFrom(byte[] data, pb::ExtensionRegistry extensionRegistry) {
+    return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+  }
+  public static ConversationPackage ParseFrom(global::System.IO.Stream input) {
+    return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+  }
+  public static ConversationPackage ParseFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+    return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+  }
+  public static ConversationPackage ParseDelimitedFrom(global::System.IO.Stream input) {
+    return CreateBuilder().MergeDelimitedFrom(input).BuildParsed();
+  }
+  public static ConversationPackage ParseDelimitedFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+    return CreateBuilder().MergeDelimitedFrom(input, extensionRegistry).BuildParsed();
+  }
+  public static ConversationPackage ParseFrom(pb::ICodedInputStream input) {
+    return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+  }
+  public static ConversationPackage ParseFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+    return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+  }
+  private ConversationPackage MakeReadOnly() {
+    conversations_.MakeReadOnly();
+    return this;
+  }
+  
+  public static Builder CreateBuilder() { return new Builder(); }
+  public override Builder ToBuilder() { return CreateBuilder(this); }
+  public override Builder CreateBuilderForType() { return new Builder(); }
+  public static Builder CreateBuilder(ConversationPackage prototype) {
+    return new Builder(prototype);
+  }
+  
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+  public sealed partial class Builder : pb::GeneratedBuilder<ConversationPackage, Builder> {
+    protected override Builder ThisBuilder {
+      get { return this; }
+    }
+    public Builder() {
+      result = DefaultInstance;
+      resultIsReadOnly = true;
+    }
+    internal Builder(ConversationPackage cloneFrom) {
+      result = cloneFrom;
+      resultIsReadOnly = true;
+    }
+    
+    private bool resultIsReadOnly;
+    private ConversationPackage result;
+    
+    private ConversationPackage PrepareBuilder() {
+      if (resultIsReadOnly) {
+        ConversationPackage original = result;
+        result = new ConversationPackage();
+        resultIsReadOnly = false;
+        MergeFrom(original);
+      }
+      return result;
+    }
+    
+    public override bool IsInitialized {
+      get { return result.IsInitialized; }
+    }
+    
+    protected override ConversationPackage MessageBeingBuilt {
+      get { return PrepareBuilder(); }
+    }
+    
+    public override Builder Clear() {
+      result = DefaultInstance;
+      resultIsReadOnly = true;
+      return this;
+    }
+    
+    public override Builder Clone() {
+      if (resultIsReadOnly) {
+        return new Builder(result);
+      } else {
+        return new Builder().MergeFrom(result);
+      }
+    }
+    
+    public override pbd::MessageDescriptor DescriptorForType {
+      get { return global::ConversationPackage.Descriptor; }
+    }
+    
+    public override ConversationPackage DefaultInstanceForType {
+      get { return global::ConversationPackage.DefaultInstance; }
+    }
+    
+    public override ConversationPackage BuildPartial() {
+      if (resultIsReadOnly) {
+        return result;
+      }
+      resultIsReadOnly = true;
+      return result.MakeReadOnly();
+    }
+    
+    public override Builder MergeFrom(pb::IMessage other) {
+      if (other is ConversationPackage) {
+        return MergeFrom((ConversationPackage) other);
+      } else {
+        base.MergeFrom(other);
+        return this;
+      }
+    }
+    
+    public override Builder MergeFrom(ConversationPackage other) {
+      if (other == global::ConversationPackage.DefaultInstance) return this;
+      PrepareBuilder();
+      if (other.conversations_.Count != 0) {
+        result.conversations_.Add(other.conversations_);
+      }
+      this.MergeUnknownFields(other.UnknownFields);
+      return this;
+    }
+    
+    public override Builder MergeFrom(pb::ICodedInputStream input) {
+      return MergeFrom(input, pb::ExtensionRegistry.Empty);
+    }
+    
+    public override Builder MergeFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+      PrepareBuilder();
+      pb::UnknownFieldSet.Builder unknownFields = null;
+      uint tag;
+      string field_name;
+      while (input.ReadTag(out tag, out field_name)) {
+        if(tag == 0 && field_name != null) {
+          int field_ordinal = global::System.Array.BinarySearch(_conversationPackageFieldNames, field_name, global::System.StringComparer.Ordinal);
+          if(field_ordinal >= 0)
+            tag = _conversationPackageFieldTags[field_ordinal];
+          else {
+            if (unknownFields == null) {
+              unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+            }
+            ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+            continue;
+          }
+        }
+        switch (tag) {
+          case 0: {
+            throw pb::InvalidProtocolBufferException.InvalidTag();
+          }
+          default: {
+            if (pb::WireFormat.IsEndGroupTag(tag)) {
+              if (unknownFields != null) {
+                this.UnknownFields = unknownFields.Build();
+              }
+              return this;
+            }
+            if (unknownFields == null) {
+              unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+            }
+            ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+            break;
+          }
+          case 10: {
+            input.ReadMessageArray(tag, field_name, result.conversations_, global::Conversation.DefaultInstance, extensionRegistry);
+            break;
+          }
+        }
+      }
+      
+      if (unknownFields != null) {
+        this.UnknownFields = unknownFields.Build();
+      }
+      return this;
+    }
+    
+    
+    public pbc::IPopsicleList<global::Conversation> ConversationsList {
+      get { return PrepareBuilder().conversations_; }
+    }
+    public int ConversationsCount {
+      get { return result.ConversationsCount; }
+    }
+    public global::Conversation GetConversations(int index) {
+      return result.GetConversations(index);
+    }
+    public Builder SetConversations(int index, global::Conversation value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      result.conversations_[index] = value;
+      return this;
+    }
+    public Builder SetConversations(int index, global::Conversation.Builder builderForValue) {
+      pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+      PrepareBuilder();
+      result.conversations_[index] = builderForValue.Build();
+      return this;
+    }
+    public Builder AddConversations(global::Conversation value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      result.conversations_.Add(value);
+      return this;
+    }
+    public Builder AddConversations(global::Conversation.Builder builderForValue) {
+      pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+      PrepareBuilder();
+      result.conversations_.Add(builderForValue.Build());
+      return this;
+    }
+    public Builder AddRangeConversations(scg::IEnumerable<global::Conversation> values) {
+      PrepareBuilder();
+      result.conversations_.Add(values);
+      return this;
+    }
+    public Builder ClearConversations() {
+      PrepareBuilder();
+      result.conversations_.Clear();
+      return this;
+    }
+  }
+  static ConversationPackage() {
+    object.ReferenceEquals(global::QuestProtobuf.Descriptor, null);
+  }
+}
+
+[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+public sealed partial class Conversation : pb::GeneratedMessage<Conversation, Conversation.Builder> {
+  private Conversation() { }
+  private static readonly Conversation defaultInstance = new Conversation().MakeReadOnly();
+  private static readonly string[] _conversationFieldNames = new string[] { "allNodes", "creator", "name" };
+  private static readonly uint[] _conversationFieldTags = new uint[] { 10, 26, 18 };
+  public static Conversation DefaultInstance {
+    get { return defaultInstance; }
+  }
+  
+  public override Conversation DefaultInstanceForType {
+    get { return DefaultInstance; }
+  }
+  
+  protected override Conversation ThisMessage {
+    get { return this; }
+  }
+  
+  public static pbd::MessageDescriptor Descriptor {
+    get { return global::QuestProtobuf.internal__static_Conversation__Descriptor; }
+  }
+  
+  protected override pb::FieldAccess.FieldAccessorTable<Conversation, Conversation.Builder> InternalFieldAccessors {
+    get { return global::QuestProtobuf.internal__static_Conversation__FieldAccessorTable; }
+  }
+  
+  public const int AllNodesFieldNumber = 1;
+  private pbc::PopsicleList<global::ConversationNode> allNodes_ = new pbc::PopsicleList<global::ConversationNode>();
+  public scg::IList<global::ConversationNode> AllNodesList {
+    get { return allNodes_; }
+  }
+  public int AllNodesCount {
+    get { return allNodes_.Count; }
+  }
+  public global::ConversationNode GetAllNodes(int index) {
+    return allNodes_[index];
+  }
+  
+  public const int NameFieldNumber = 2;
+  private bool hasName;
+  private string name_ = "";
+  public bool HasName {
+    get { return hasName; }
+  }
+  public string Name {
+    get { return name_; }
+  }
+  
+  public const int CreatorFieldNumber = 3;
+  private bool hasCreator;
+  private string creator_ = "";
+  public bool HasCreator {
+    get { return hasCreator; }
+  }
+  public string Creator {
+    get { return creator_; }
+  }
+  
+  public override bool IsInitialized {
+    get {
+      foreach (global::ConversationNode element in AllNodesList) {
+        if (!element.IsInitialized) return false;
+      }
+      return true;
+    }
+  }
+  
+  public override void WriteTo(pb::ICodedOutputStream output) {
+    int size = SerializedSize;
+    string[] field_names = _conversationFieldNames;
+    if (allNodes_.Count > 0) {
+      output.WriteMessageArray(1, field_names[0], allNodes_);
+    }
+    if (hasName) {
+      output.WriteString(2, field_names[2], Name);
+    }
+    if (hasCreator) {
+      output.WriteString(3, field_names[1], Creator);
+    }
+    UnknownFields.WriteTo(output);
+  }
+  
+  private int memoizedSerializedSize = -1;
+  public override int SerializedSize {
+    get {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+      
+      size = 0;
+      foreach (global::ConversationNode element in AllNodesList) {
+        size += pb::CodedOutputStream.ComputeMessageSize(1, element);
+      }
+      if (hasName) {
+        size += pb::CodedOutputStream.ComputeStringSize(2, Name);
+      }
+      if (hasCreator) {
+        size += pb::CodedOutputStream.ComputeStringSize(3, Creator);
+      }
+      size += UnknownFields.SerializedSize;
+      memoizedSerializedSize = size;
+      return size;
+    }
+  }
+  
+  public static Conversation ParseFrom(pb::ByteString data) {
+    return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+  }
+  public static Conversation ParseFrom(pb::ByteString data, pb::ExtensionRegistry extensionRegistry) {
+    return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+  }
+  public static Conversation ParseFrom(byte[] data) {
+    return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+  }
+  public static Conversation ParseFrom(byte[] data, pb::ExtensionRegistry extensionRegistry) {
+    return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+  }
+  public static Conversation ParseFrom(global::System.IO.Stream input) {
+    return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+  }
+  public static Conversation ParseFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+    return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+  }
+  public static Conversation ParseDelimitedFrom(global::System.IO.Stream input) {
+    return CreateBuilder().MergeDelimitedFrom(input).BuildParsed();
+  }
+  public static Conversation ParseDelimitedFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+    return CreateBuilder().MergeDelimitedFrom(input, extensionRegistry).BuildParsed();
+  }
+  public static Conversation ParseFrom(pb::ICodedInputStream input) {
+    return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+  }
+  public static Conversation ParseFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+    return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+  }
+  private Conversation MakeReadOnly() {
+    allNodes_.MakeReadOnly();
+    return this;
+  }
+  
+  public static Builder CreateBuilder() { return new Builder(); }
+  public override Builder ToBuilder() { return CreateBuilder(this); }
+  public override Builder CreateBuilderForType() { return new Builder(); }
+  public static Builder CreateBuilder(Conversation prototype) {
+    return new Builder(prototype);
+  }
+  
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+  public sealed partial class Builder : pb::GeneratedBuilder<Conversation, Builder> {
+    protected override Builder ThisBuilder {
+      get { return this; }
+    }
+    public Builder() {
+      result = DefaultInstance;
+      resultIsReadOnly = true;
+    }
+    internal Builder(Conversation cloneFrom) {
+      result = cloneFrom;
+      resultIsReadOnly = true;
+    }
+    
+    private bool resultIsReadOnly;
+    private Conversation result;
+    
+    private Conversation PrepareBuilder() {
+      if (resultIsReadOnly) {
+        Conversation original = result;
+        result = new Conversation();
+        resultIsReadOnly = false;
+        MergeFrom(original);
+      }
+      return result;
+    }
+    
+    public override bool IsInitialized {
+      get { return result.IsInitialized; }
+    }
+    
+    protected override Conversation MessageBeingBuilt {
+      get { return PrepareBuilder(); }
+    }
+    
+    public override Builder Clear() {
+      result = DefaultInstance;
+      resultIsReadOnly = true;
+      return this;
+    }
+    
+    public override Builder Clone() {
+      if (resultIsReadOnly) {
+        return new Builder(result);
+      } else {
+        return new Builder().MergeFrom(result);
+      }
+    }
+    
+    public override pbd::MessageDescriptor DescriptorForType {
+      get { return global::Conversation.Descriptor; }
+    }
+    
+    public override Conversation DefaultInstanceForType {
+      get { return global::Conversation.DefaultInstance; }
+    }
+    
+    public override Conversation BuildPartial() {
+      if (resultIsReadOnly) {
+        return result;
+      }
+      resultIsReadOnly = true;
+      return result.MakeReadOnly();
+    }
+    
+    public override Builder MergeFrom(pb::IMessage other) {
+      if (other is Conversation) {
+        return MergeFrom((Conversation) other);
+      } else {
+        base.MergeFrom(other);
+        return this;
+      }
+    }
+    
+    public override Builder MergeFrom(Conversation other) {
+      if (other == global::Conversation.DefaultInstance) return this;
+      PrepareBuilder();
+      if (other.allNodes_.Count != 0) {
+        result.allNodes_.Add(other.allNodes_);
+      }
+      if (other.HasName) {
+        Name = other.Name;
+      }
+      if (other.HasCreator) {
+        Creator = other.Creator;
+      }
+      this.MergeUnknownFields(other.UnknownFields);
+      return this;
+    }
+    
+    public override Builder MergeFrom(pb::ICodedInputStream input) {
+      return MergeFrom(input, pb::ExtensionRegistry.Empty);
+    }
+    
+    public override Builder MergeFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+      PrepareBuilder();
+      pb::UnknownFieldSet.Builder unknownFields = null;
+      uint tag;
+      string field_name;
+      while (input.ReadTag(out tag, out field_name)) {
+        if(tag == 0 && field_name != null) {
+          int field_ordinal = global::System.Array.BinarySearch(_conversationFieldNames, field_name, global::System.StringComparer.Ordinal);
+          if(field_ordinal >= 0)
+            tag = _conversationFieldTags[field_ordinal];
+          else {
+            if (unknownFields == null) {
+              unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+            }
+            ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+            continue;
+          }
+        }
+        switch (tag) {
+          case 0: {
+            throw pb::InvalidProtocolBufferException.InvalidTag();
+          }
+          default: {
+            if (pb::WireFormat.IsEndGroupTag(tag)) {
+              if (unknownFields != null) {
+                this.UnknownFields = unknownFields.Build();
+              }
+              return this;
+            }
+            if (unknownFields == null) {
+              unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+            }
+            ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+            break;
+          }
+          case 10: {
+            input.ReadMessageArray(tag, field_name, result.allNodes_, global::ConversationNode.DefaultInstance, extensionRegistry);
+            break;
+          }
+          case 18: {
+            result.hasName = input.ReadString(ref result.name_);
+            break;
+          }
+          case 26: {
+            result.hasCreator = input.ReadString(ref result.creator_);
+            break;
+          }
+        }
+      }
+      
+      if (unknownFields != null) {
+        this.UnknownFields = unknownFields.Build();
+      }
+      return this;
+    }
+    
+    
+    public pbc::IPopsicleList<global::ConversationNode> AllNodesList {
+      get { return PrepareBuilder().allNodes_; }
+    }
+    public int AllNodesCount {
+      get { return result.AllNodesCount; }
+    }
+    public global::ConversationNode GetAllNodes(int index) {
+      return result.GetAllNodes(index);
+    }
+    public Builder SetAllNodes(int index, global::ConversationNode value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      result.allNodes_[index] = value;
+      return this;
+    }
+    public Builder SetAllNodes(int index, global::ConversationNode.Builder builderForValue) {
+      pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+      PrepareBuilder();
+      result.allNodes_[index] = builderForValue.Build();
+      return this;
+    }
+    public Builder AddAllNodes(global::ConversationNode value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      result.allNodes_.Add(value);
+      return this;
+    }
+    public Builder AddAllNodes(global::ConversationNode.Builder builderForValue) {
+      pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+      PrepareBuilder();
+      result.allNodes_.Add(builderForValue.Build());
+      return this;
+    }
+    public Builder AddRangeAllNodes(scg::IEnumerable<global::ConversationNode> values) {
+      PrepareBuilder();
+      result.allNodes_.Add(values);
+      return this;
+    }
+    public Builder ClearAllNodes() {
+      PrepareBuilder();
+      result.allNodes_.Clear();
+      return this;
+    }
+    
+    public bool HasName {
+      get { return result.hasName; }
+    }
+    public string Name {
+      get { return result.Name; }
+      set { SetName(value); }
+    }
+    public Builder SetName(string value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      result.hasName = true;
+      result.name_ = value;
+      return this;
+    }
+    public Builder ClearName() {
+      PrepareBuilder();
+      result.hasName = false;
+      result.name_ = "";
+      return this;
+    }
+    
+    public bool HasCreator {
+      get { return result.hasCreator; }
+    }
+    public string Creator {
+      get { return result.Creator; }
+      set { SetCreator(value); }
+    }
+    public Builder SetCreator(string value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      result.hasCreator = true;
+      result.creator_ = value;
+      return this;
+    }
+    public Builder ClearCreator() {
+      PrepareBuilder();
+      result.hasCreator = false;
+      result.creator_ = "";
+      return this;
+    }
+  }
+  static Conversation() {
+    object.ReferenceEquals(global::QuestProtobuf.Descriptor, null);
+  }
+}
+
+[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+public sealed partial class ConversationNode : pb::GeneratedMessage<ConversationNode, ConversationNode.Builder> {
+  private ConversationNode() { }
+  private static readonly ConversationNode defaultInstance = new ConversationNode().MakeReadOnly();
+  private static readonly string[] _conversationNodeFieldNames = new string[] { "X", "Y", "blocks", "connections", "name", "text", "uid" };
+  private static readonly uint[] _conversationNodeFieldTags = new uint[] { 32, 40, 58, 50, 18, 10, 24 };
+  public static ConversationNode DefaultInstance {
+    get { return defaultInstance; }
+  }
+  
+  public override ConversationNode DefaultInstanceForType {
+    get { return DefaultInstance; }
+  }
+  
+  protected override ConversationNode ThisMessage {
+    get { return this; }
+  }
+  
+  public static pbd::MessageDescriptor Descriptor {
+    get { return global::QuestProtobuf.internal__static_ConversationNode__Descriptor; }
+  }
+  
+  protected override pb::FieldAccess.FieldAccessorTable<ConversationNode, ConversationNode.Builder> InternalFieldAccessors {
+    get { return global::QuestProtobuf.internal__static_ConversationNode__FieldAccessorTable; }
+  }
+  
+  public const int TextFieldNumber = 1;
+  private bool hasText;
+  private string text_ = "";
+  public bool HasText {
+    get { return hasText; }
+  }
+  public string Text {
+    get { return text_; }
+  }
+  
+  public const int NameFieldNumber = 2;
+  private bool hasName;
+  private string name_ = "";
+  public bool HasName {
+    get { return hasName; }
+  }
+  public string Name {
+    get { return name_; }
+  }
+  
+  public const int UidFieldNumber = 3;
+  private bool hasUid;
+  private long uid_;
+  public bool HasUid {
+    get { return hasUid; }
+  }
+  public long Uid {
+    get { return uid_; }
+  }
+  
+  public const int XFieldNumber = 4;
+  private bool hasX;
+  private int x_;
+  public bool HasX {
+    get { return hasX; }
+  }
+  public int X {
+    get { return x_; }
+  }
+  
+  public const int YFieldNumber = 5;
+  private bool hasY;
+  private int y_;
+  public bool HasY {
+    get { return hasY; }
+  }
+  public int Y {
+    get { return y_; }
+  }
+  
+  public const int ConnectionsFieldNumber = 6;
+  private pbc::PopsicleList<global::Connection> connections_ = new pbc::PopsicleList<global::Connection>();
+  public scg::IList<global::Connection> ConnectionsList {
+    get { return connections_; }
+  }
+  public int ConnectionsCount {
+    get { return connections_.Count; }
+  }
+  public global::Connection GetConnections(int index) {
+    return connections_[index];
+  }
+  
+  public const int BlocksFieldNumber = 7;
+  private pbc::PopsicleList<global::StatusBlockProtocol> blocks_ = new pbc::PopsicleList<global::StatusBlockProtocol>();
+  public scg::IList<global::StatusBlockProtocol> BlocksList {
+    get { return blocks_; }
+  }
+  public int BlocksCount {
+    get { return blocks_.Count; }
+  }
+  public global::StatusBlockProtocol GetBlocks(int index) {
+    return blocks_[index];
+  }
+  
+  public override bool IsInitialized {
+    get {
+      if (!hasText) return false;
+      if (!hasName) return false;
+      if (!hasUid) return false;
+      if (!hasX) return false;
+      if (!hasY) return false;
+      foreach (global::Connection element in ConnectionsList) {
+        if (!element.IsInitialized) return false;
+      }
+      foreach (global::StatusBlockProtocol element in BlocksList) {
+        if (!element.IsInitialized) return false;
+      }
+      return true;
+    }
+  }
+  
+  public override void WriteTo(pb::ICodedOutputStream output) {
+    int size = SerializedSize;
+    string[] field_names = _conversationNodeFieldNames;
+    if (hasText) {
+      output.WriteString(1, field_names[5], Text);
+    }
+    if (hasName) {
+      output.WriteString(2, field_names[4], Name);
+    }
+    if (hasUid) {
+      output.WriteInt64(3, field_names[6], Uid);
+    }
+    if (hasX) {
+      output.WriteInt32(4, field_names[0], X);
+    }
+    if (hasY) {
+      output.WriteInt32(5, field_names[1], Y);
+    }
+    if (connections_.Count > 0) {
+      output.WriteMessageArray(6, field_names[3], connections_);
+    }
+    if (blocks_.Count > 0) {
+      output.WriteMessageArray(7, field_names[2], blocks_);
+    }
+    UnknownFields.WriteTo(output);
+  }
+  
+  private int memoizedSerializedSize = -1;
+  public override int SerializedSize {
+    get {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+      
+      size = 0;
+      if (hasText) {
+        size += pb::CodedOutputStream.ComputeStringSize(1, Text);
+      }
+      if (hasName) {
+        size += pb::CodedOutputStream.ComputeStringSize(2, Name);
+      }
+      if (hasUid) {
+        size += pb::CodedOutputStream.ComputeInt64Size(3, Uid);
+      }
+      if (hasX) {
+        size += pb::CodedOutputStream.ComputeInt32Size(4, X);
+      }
+      if (hasY) {
+        size += pb::CodedOutputStream.ComputeInt32Size(5, Y);
+      }
+      foreach (global::Connection element in ConnectionsList) {
+        size += pb::CodedOutputStream.ComputeMessageSize(6, element);
+      }
+      foreach (global::StatusBlockProtocol element in BlocksList) {
+        size += pb::CodedOutputStream.ComputeMessageSize(7, element);
+      }
+      size += UnknownFields.SerializedSize;
+      memoizedSerializedSize = size;
+      return size;
+    }
+  }
+  
+  public static ConversationNode ParseFrom(pb::ByteString data) {
+    return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+  }
+  public static ConversationNode ParseFrom(pb::ByteString data, pb::ExtensionRegistry extensionRegistry) {
+    return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+  }
+  public static ConversationNode ParseFrom(byte[] data) {
+    return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+  }
+  public static ConversationNode ParseFrom(byte[] data, pb::ExtensionRegistry extensionRegistry) {
+    return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+  }
+  public static ConversationNode ParseFrom(global::System.IO.Stream input) {
+    return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+  }
+  public static ConversationNode ParseFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+    return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+  }
+  public static ConversationNode ParseDelimitedFrom(global::System.IO.Stream input) {
+    return CreateBuilder().MergeDelimitedFrom(input).BuildParsed();
+  }
+  public static ConversationNode ParseDelimitedFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+    return CreateBuilder().MergeDelimitedFrom(input, extensionRegistry).BuildParsed();
+  }
+  public static ConversationNode ParseFrom(pb::ICodedInputStream input) {
+    return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+  }
+  public static ConversationNode ParseFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+    return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+  }
+  private ConversationNode MakeReadOnly() {
+    connections_.MakeReadOnly();
+    blocks_.MakeReadOnly();
+    return this;
+  }
+  
+  public static Builder CreateBuilder() { return new Builder(); }
+  public override Builder ToBuilder() { return CreateBuilder(this); }
+  public override Builder CreateBuilderForType() { return new Builder(); }
+  public static Builder CreateBuilder(ConversationNode prototype) {
+    return new Builder(prototype);
+  }
+  
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+  public sealed partial class Builder : pb::GeneratedBuilder<ConversationNode, Builder> {
+    protected override Builder ThisBuilder {
+      get { return this; }
+    }
+    public Builder() {
+      result = DefaultInstance;
+      resultIsReadOnly = true;
+    }
+    internal Builder(ConversationNode cloneFrom) {
+      result = cloneFrom;
+      resultIsReadOnly = true;
+    }
+    
+    private bool resultIsReadOnly;
+    private ConversationNode result;
+    
+    private ConversationNode PrepareBuilder() {
+      if (resultIsReadOnly) {
+        ConversationNode original = result;
+        result = new ConversationNode();
+        resultIsReadOnly = false;
+        MergeFrom(original);
+      }
+      return result;
+    }
+    
+    public override bool IsInitialized {
+      get { return result.IsInitialized; }
+    }
+    
+    protected override ConversationNode MessageBeingBuilt {
+      get { return PrepareBuilder(); }
+    }
+    
+    public override Builder Clear() {
+      result = DefaultInstance;
+      resultIsReadOnly = true;
+      return this;
+    }
+    
+    public override Builder Clone() {
+      if (resultIsReadOnly) {
+        return new Builder(result);
+      } else {
+        return new Builder().MergeFrom(result);
+      }
+    }
+    
+    public override pbd::MessageDescriptor DescriptorForType {
+      get { return global::ConversationNode.Descriptor; }
+    }
+    
+    public override ConversationNode DefaultInstanceForType {
+      get { return global::ConversationNode.DefaultInstance; }
+    }
+    
+    public override ConversationNode BuildPartial() {
+      if (resultIsReadOnly) {
+        return result;
+      }
+      resultIsReadOnly = true;
+      return result.MakeReadOnly();
+    }
+    
+    public override Builder MergeFrom(pb::IMessage other) {
+      if (other is ConversationNode) {
+        return MergeFrom((ConversationNode) other);
+      } else {
+        base.MergeFrom(other);
+        return this;
+      }
+    }
+    
+    public override Builder MergeFrom(ConversationNode other) {
+      if (other == global::ConversationNode.DefaultInstance) return this;
+      PrepareBuilder();
+      if (other.HasText) {
+        Text = other.Text;
+      }
+      if (other.HasName) {
+        Name = other.Name;
+      }
+      if (other.HasUid) {
+        Uid = other.Uid;
+      }
+      if (other.HasX) {
+        X = other.X;
+      }
+      if (other.HasY) {
+        Y = other.Y;
+      }
+      if (other.connections_.Count != 0) {
+        result.connections_.Add(other.connections_);
+      }
+      if (other.blocks_.Count != 0) {
+        result.blocks_.Add(other.blocks_);
+      }
+      this.MergeUnknownFields(other.UnknownFields);
+      return this;
+    }
+    
+    public override Builder MergeFrom(pb::ICodedInputStream input) {
+      return MergeFrom(input, pb::ExtensionRegistry.Empty);
+    }
+    
+    public override Builder MergeFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+      PrepareBuilder();
+      pb::UnknownFieldSet.Builder unknownFields = null;
+      uint tag;
+      string field_name;
+      while (input.ReadTag(out tag, out field_name)) {
+        if(tag == 0 && field_name != null) {
+          int field_ordinal = global::System.Array.BinarySearch(_conversationNodeFieldNames, field_name, global::System.StringComparer.Ordinal);
+          if(field_ordinal >= 0)
+            tag = _conversationNodeFieldTags[field_ordinal];
+          else {
+            if (unknownFields == null) {
+              unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+            }
+            ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+            continue;
+          }
+        }
+        switch (tag) {
+          case 0: {
+            throw pb::InvalidProtocolBufferException.InvalidTag();
+          }
+          default: {
+            if (pb::WireFormat.IsEndGroupTag(tag)) {
+              if (unknownFields != null) {
+                this.UnknownFields = unknownFields.Build();
+              }
+              return this;
+            }
+            if (unknownFields == null) {
+              unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+            }
+            ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+            break;
+          }
+          case 10: {
+            result.hasText = input.ReadString(ref result.text_);
+            break;
+          }
+          case 18: {
+            result.hasName = input.ReadString(ref result.name_);
+            break;
+          }
+          case 24: {
+            result.hasUid = input.ReadInt64(ref result.uid_);
+            break;
+          }
+          case 32: {
+            result.hasX = input.ReadInt32(ref result.x_);
+            break;
+          }
+          case 40: {
+            result.hasY = input.ReadInt32(ref result.y_);
+            break;
+          }
+          case 50: {
+            input.ReadMessageArray(tag, field_name, result.connections_, global::Connection.DefaultInstance, extensionRegistry);
+            break;
+          }
+          case 58: {
+            input.ReadMessageArray(tag, field_name, result.blocks_, global::StatusBlockProtocol.DefaultInstance, extensionRegistry);
+            break;
+          }
+        }
+      }
+      
+      if (unknownFields != null) {
+        this.UnknownFields = unknownFields.Build();
+      }
+      return this;
+    }
+    
+    
+    public bool HasText {
+      get { return result.hasText; }
+    }
+    public string Text {
+      get { return result.Text; }
+      set { SetText(value); }
+    }
+    public Builder SetText(string value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      result.hasText = true;
+      result.text_ = value;
+      return this;
+    }
+    public Builder ClearText() {
+      PrepareBuilder();
+      result.hasText = false;
+      result.text_ = "";
+      return this;
+    }
+    
+    public bool HasName {
+      get { return result.hasName; }
+    }
+    public string Name {
+      get { return result.Name; }
+      set { SetName(value); }
+    }
+    public Builder SetName(string value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      result.hasName = true;
+      result.name_ = value;
+      return this;
+    }
+    public Builder ClearName() {
+      PrepareBuilder();
+      result.hasName = false;
+      result.name_ = "";
+      return this;
+    }
+    
+    public bool HasUid {
+      get { return result.hasUid; }
+    }
+    public long Uid {
+      get { return result.Uid; }
+      set { SetUid(value); }
+    }
+    public Builder SetUid(long value) {
+      PrepareBuilder();
+      result.hasUid = true;
+      result.uid_ = value;
+      return this;
+    }
+    public Builder ClearUid() {
+      PrepareBuilder();
+      result.hasUid = false;
+      result.uid_ = 0L;
+      return this;
+    }
+    
+    public bool HasX {
+      get { return result.hasX; }
+    }
+    public int X {
+      get { return result.X; }
+      set { SetX(value); }
+    }
+    public Builder SetX(int value) {
+      PrepareBuilder();
+      result.hasX = true;
+      result.x_ = value;
+      return this;
+    }
+    public Builder ClearX() {
+      PrepareBuilder();
+      result.hasX = false;
+      result.x_ = 0;
+      return this;
+    }
+    
+    public bool HasY {
+      get { return result.hasY; }
+    }
+    public int Y {
+      get { return result.Y; }
+      set { SetY(value); }
+    }
+    public Builder SetY(int value) {
+      PrepareBuilder();
+      result.hasY = true;
+      result.y_ = value;
+      return this;
+    }
+    public Builder ClearY() {
+      PrepareBuilder();
+      result.hasY = false;
+      result.y_ = 0;
+      return this;
+    }
+    
+    public pbc::IPopsicleList<global::Connection> ConnectionsList {
+      get { return PrepareBuilder().connections_; }
+    }
+    public int ConnectionsCount {
+      get { return result.ConnectionsCount; }
+    }
+    public global::Connection GetConnections(int index) {
+      return result.GetConnections(index);
+    }
+    public Builder SetConnections(int index, global::Connection value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      result.connections_[index] = value;
+      return this;
+    }
+    public Builder SetConnections(int index, global::Connection.Builder builderForValue) {
+      pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+      PrepareBuilder();
+      result.connections_[index] = builderForValue.Build();
+      return this;
+    }
+    public Builder AddConnections(global::Connection value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      result.connections_.Add(value);
+      return this;
+    }
+    public Builder AddConnections(global::Connection.Builder builderForValue) {
+      pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+      PrepareBuilder();
+      result.connections_.Add(builderForValue.Build());
+      return this;
+    }
+    public Builder AddRangeConnections(scg::IEnumerable<global::Connection> values) {
+      PrepareBuilder();
+      result.connections_.Add(values);
+      return this;
+    }
+    public Builder ClearConnections() {
+      PrepareBuilder();
+      result.connections_.Clear();
+      return this;
+    }
+    
+    public pbc::IPopsicleList<global::StatusBlockProtocol> BlocksList {
+      get { return PrepareBuilder().blocks_; }
+    }
+    public int BlocksCount {
+      get { return result.BlocksCount; }
+    }
+    public global::StatusBlockProtocol GetBlocks(int index) {
+      return result.GetBlocks(index);
+    }
+    public Builder SetBlocks(int index, global::StatusBlockProtocol value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      result.blocks_[index] = value;
+      return this;
+    }
+    public Builder SetBlocks(int index, global::StatusBlockProtocol.Builder builderForValue) {
+      pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+      PrepareBuilder();
+      result.blocks_[index] = builderForValue.Build();
+      return this;
+    }
+    public Builder AddBlocks(global::StatusBlockProtocol value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      result.blocks_.Add(value);
+      return this;
+    }
+    public Builder AddBlocks(global::StatusBlockProtocol.Builder builderForValue) {
+      pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+      PrepareBuilder();
+      result.blocks_.Add(builderForValue.Build());
+      return this;
+    }
+    public Builder AddRangeBlocks(scg::IEnumerable<global::StatusBlockProtocol> values) {
+      PrepareBuilder();
+      result.blocks_.Add(values);
+      return this;
+    }
+    public Builder ClearBlocks() {
+      PrepareBuilder();
+      result.blocks_.Clear();
+      return this;
+    }
+  }
+  static ConversationNode() {
+    object.ReferenceEquals(global::QuestProtobuf.Descriptor, null);
+  }
+}
+
+[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+public sealed partial class Connection : pb::GeneratedMessage<Connection, Connection.Builder> {
+  private Connection() { }
+  private static readonly Connection defaultInstance = new Connection().MakeReadOnly();
+  private static readonly string[] _connectionFieldNames = new string[] { "nodeId", "requirementSets", "text" };
+  private static readonly uint[] _connectionFieldTags = new uint[] { 8, 26, 18 };
+  public static Connection DefaultInstance {
+    get { return defaultInstance; }
+  }
+  
+  public override Connection DefaultInstanceForType {
+    get { return DefaultInstance; }
+  }
+  
+  protected override Connection ThisMessage {
+    get { return this; }
+  }
+  
+  public static pbd::MessageDescriptor Descriptor {
+    get { return global::QuestProtobuf.internal__static_Connection__Descriptor; }
+  }
+  
+  protected override pb::FieldAccess.FieldAccessorTable<Connection, Connection.Builder> InternalFieldAccessors {
+    get { return global::QuestProtobuf.internal__static_Connection__FieldAccessorTable; }
+  }
+  
+  public const int NodeIdFieldNumber = 1;
+  private bool hasNodeId;
+  private long nodeId_;
+  public bool HasNodeId {
+    get { return hasNodeId; }
+  }
+  public long NodeId {
+    get { return nodeId_; }
+  }
+  
+  public const int TextFieldNumber = 2;
+  private bool hasText;
+  private string text_ = "";
+  public bool HasText {
+    get { return hasText; }
+  }
+  public string Text {
+    get { return text_; }
+  }
+  
+  public const int RequirementSetsFieldNumber = 3;
+  private pbc::PopsicleList<global::RequirementSet> requirementSets_ = new pbc::PopsicleList<global::RequirementSet>();
+  public scg::IList<global::RequirementSet> RequirementSetsList {
+    get { return requirementSets_; }
+  }
+  public int RequirementSetsCount {
+    get { return requirementSets_.Count; }
+  }
+  public global::RequirementSet GetRequirementSets(int index) {
+    return requirementSets_[index];
+  }
+  
+  public override bool IsInitialized {
+    get {
+      if (!hasNodeId) return false;
+      if (!hasText) return false;
+      foreach (global::RequirementSet element in RequirementSetsList) {
+        if (!element.IsInitialized) return false;
+      }
+      return true;
+    }
+  }
+  
+  public override void WriteTo(pb::ICodedOutputStream output) {
+    int size = SerializedSize;
+    string[] field_names = _connectionFieldNames;
+    if (hasNodeId) {
+      output.WriteInt64(1, field_names[0], NodeId);
+    }
+    if (hasText) {
+      output.WriteString(2, field_names[2], Text);
+    }
+    if (requirementSets_.Count > 0) {
+      output.WriteMessageArray(3, field_names[1], requirementSets_);
+    }
+    UnknownFields.WriteTo(output);
+  }
+  
+  private int memoizedSerializedSize = -1;
+  public override int SerializedSize {
+    get {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+      
+      size = 0;
+      if (hasNodeId) {
+        size += pb::CodedOutputStream.ComputeInt64Size(1, NodeId);
+      }
+      if (hasText) {
+        size += pb::CodedOutputStream.ComputeStringSize(2, Text);
+      }
+      foreach (global::RequirementSet element in RequirementSetsList) {
+        size += pb::CodedOutputStream.ComputeMessageSize(3, element);
+      }
+      size += UnknownFields.SerializedSize;
+      memoizedSerializedSize = size;
+      return size;
+    }
+  }
+  
+  public static Connection ParseFrom(pb::ByteString data) {
+    return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+  }
+  public static Connection ParseFrom(pb::ByteString data, pb::ExtensionRegistry extensionRegistry) {
+    return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+  }
+  public static Connection ParseFrom(byte[] data) {
+    return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+  }
+  public static Connection ParseFrom(byte[] data, pb::ExtensionRegistry extensionRegistry) {
+    return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+  }
+  public static Connection ParseFrom(global::System.IO.Stream input) {
+    return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+  }
+  public static Connection ParseFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+    return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+  }
+  public static Connection ParseDelimitedFrom(global::System.IO.Stream input) {
+    return CreateBuilder().MergeDelimitedFrom(input).BuildParsed();
+  }
+  public static Connection ParseDelimitedFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+    return CreateBuilder().MergeDelimitedFrom(input, extensionRegistry).BuildParsed();
+  }
+  public static Connection ParseFrom(pb::ICodedInputStream input) {
+    return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+  }
+  public static Connection ParseFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+    return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+  }
+  private Connection MakeReadOnly() {
+    requirementSets_.MakeReadOnly();
+    return this;
+  }
+  
+  public static Builder CreateBuilder() { return new Builder(); }
+  public override Builder ToBuilder() { return CreateBuilder(this); }
+  public override Builder CreateBuilderForType() { return new Builder(); }
+  public static Builder CreateBuilder(Connection prototype) {
+    return new Builder(prototype);
+  }
+  
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+  public sealed partial class Builder : pb::GeneratedBuilder<Connection, Builder> {
+    protected override Builder ThisBuilder {
+      get { return this; }
+    }
+    public Builder() {
+      result = DefaultInstance;
+      resultIsReadOnly = true;
+    }
+    internal Builder(Connection cloneFrom) {
+      result = cloneFrom;
+      resultIsReadOnly = true;
+    }
+    
+    private bool resultIsReadOnly;
+    private Connection result;
+    
+    private Connection PrepareBuilder() {
+      if (resultIsReadOnly) {
+        Connection original = result;
+        result = new Connection();
+        resultIsReadOnly = false;
+        MergeFrom(original);
+      }
+      return result;
+    }
+    
+    public override bool IsInitialized {
+      get { return result.IsInitialized; }
+    }
+    
+    protected override Connection MessageBeingBuilt {
+      get { return PrepareBuilder(); }
+    }
+    
+    public override Builder Clear() {
+      result = DefaultInstance;
+      resultIsReadOnly = true;
+      return this;
+    }
+    
+    public override Builder Clone() {
+      if (resultIsReadOnly) {
+        return new Builder(result);
+      } else {
+        return new Builder().MergeFrom(result);
+      }
+    }
+    
+    public override pbd::MessageDescriptor DescriptorForType {
+      get { return global::Connection.Descriptor; }
+    }
+    
+    public override Connection DefaultInstanceForType {
+      get { return global::Connection.DefaultInstance; }
+    }
+    
+    public override Connection BuildPartial() {
+      if (resultIsReadOnly) {
+        return result;
+      }
+      resultIsReadOnly = true;
+      return result.MakeReadOnly();
+    }
+    
+    public override Builder MergeFrom(pb::IMessage other) {
+      if (other is Connection) {
+        return MergeFrom((Connection) other);
+      } else {
+        base.MergeFrom(other);
+        return this;
+      }
+    }
+    
+    public override Builder MergeFrom(Connection other) {
+      if (other == global::Connection.DefaultInstance) return this;
+      PrepareBuilder();
+      if (other.HasNodeId) {
+        NodeId = other.NodeId;
+      }
+      if (other.HasText) {
+        Text = other.Text;
+      }
+      if (other.requirementSets_.Count != 0) {
+        result.requirementSets_.Add(other.requirementSets_);
+      }
+      this.MergeUnknownFields(other.UnknownFields);
+      return this;
+    }
+    
+    public override Builder MergeFrom(pb::ICodedInputStream input) {
+      return MergeFrom(input, pb::ExtensionRegistry.Empty);
+    }
+    
+    public override Builder MergeFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+      PrepareBuilder();
+      pb::UnknownFieldSet.Builder unknownFields = null;
+      uint tag;
+      string field_name;
+      while (input.ReadTag(out tag, out field_name)) {
+        if(tag == 0 && field_name != null) {
+          int field_ordinal = global::System.Array.BinarySearch(_connectionFieldNames, field_name, global::System.StringComparer.Ordinal);
+          if(field_ordinal >= 0)
+            tag = _connectionFieldTags[field_ordinal];
+          else {
+            if (unknownFields == null) {
+              unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+            }
+            ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+            continue;
+          }
+        }
+        switch (tag) {
+          case 0: {
+            throw pb::InvalidProtocolBufferException.InvalidTag();
+          }
+          default: {
+            if (pb::WireFormat.IsEndGroupTag(tag)) {
+              if (unknownFields != null) {
+                this.UnknownFields = unknownFields.Build();
+              }
+              return this;
+            }
+            if (unknownFields == null) {
+              unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+            }
+            ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+            break;
+          }
+          case 8: {
+            result.hasNodeId = input.ReadInt64(ref result.nodeId_);
+            break;
+          }
+          case 18: {
+            result.hasText = input.ReadString(ref result.text_);
+            break;
+          }
+          case 26: {
+            input.ReadMessageArray(tag, field_name, result.requirementSets_, global::RequirementSet.DefaultInstance, extensionRegistry);
+            break;
+          }
+        }
+      }
+      
+      if (unknownFields != null) {
+        this.UnknownFields = unknownFields.Build();
+      }
+      return this;
+    }
+    
+    
+    public bool HasNodeId {
+      get { return result.hasNodeId; }
+    }
+    public long NodeId {
+      get { return result.NodeId; }
+      set { SetNodeId(value); }
+    }
+    public Builder SetNodeId(long value) {
+      PrepareBuilder();
+      result.hasNodeId = true;
+      result.nodeId_ = value;
+      return this;
+    }
+    public Builder ClearNodeId() {
+      PrepareBuilder();
+      result.hasNodeId = false;
+      result.nodeId_ = 0L;
+      return this;
+    }
+    
+    public bool HasText {
+      get { return result.hasText; }
+    }
+    public string Text {
+      get { return result.Text; }
+      set { SetText(value); }
+    }
+    public Builder SetText(string value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      result.hasText = true;
+      result.text_ = value;
+      return this;
+    }
+    public Builder ClearText() {
+      PrepareBuilder();
+      result.hasText = false;
+      result.text_ = "";
+      return this;
+    }
+    
+    public pbc::IPopsicleList<global::RequirementSet> RequirementSetsList {
+      get { return PrepareBuilder().requirementSets_; }
+    }
+    public int RequirementSetsCount {
+      get { return result.RequirementSetsCount; }
+    }
+    public global::RequirementSet GetRequirementSets(int index) {
+      return result.GetRequirementSets(index);
+    }
+    public Builder SetRequirementSets(int index, global::RequirementSet value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      result.requirementSets_[index] = value;
+      return this;
+    }
+    public Builder SetRequirementSets(int index, global::RequirementSet.Builder builderForValue) {
+      pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+      PrepareBuilder();
+      result.requirementSets_[index] = builderForValue.Build();
+      return this;
+    }
+    public Builder AddRequirementSets(global::RequirementSet value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      result.requirementSets_.Add(value);
+      return this;
+    }
+    public Builder AddRequirementSets(global::RequirementSet.Builder builderForValue) {
+      pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+      PrepareBuilder();
+      result.requirementSets_.Add(builderForValue.Build());
+      return this;
+    }
+    public Builder AddRangeRequirementSets(scg::IEnumerable<global::RequirementSet> values) {
+      PrepareBuilder();
+      result.requirementSets_.Add(values);
+      return this;
+    }
+    public Builder ClearRequirementSets() {
+      PrepareBuilder();
+      result.requirementSets_.Clear();
+      return this;
+    }
+  }
+  static Connection() {
+    object.ReferenceEquals(global::QuestProtobuf.Descriptor, null);
+  }
+}
+
+[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+public sealed partial class RequirementSet : pb::GeneratedMessage<RequirementSet, RequirementSet.Builder> {
+  private RequirementSet() { }
+  private static readonly RequirementSet defaultInstance = new RequirementSet().MakeReadOnly();
+  private static readonly string[] _requirementSetFieldNames = new string[] { "requirements" };
+  private static readonly uint[] _requirementSetFieldTags = new uint[] { 10 };
+  public static RequirementSet DefaultInstance {
+    get { return defaultInstance; }
+  }
+  
+  public override RequirementSet DefaultInstanceForType {
+    get { return DefaultInstance; }
+  }
+  
+  protected override RequirementSet ThisMessage {
+    get { return this; }
+  }
+  
+  public static pbd::MessageDescriptor Descriptor {
+    get { return global::QuestProtobuf.internal__static_RequirementSet__Descriptor; }
+  }
+  
+  protected override pb::FieldAccess.FieldAccessorTable<RequirementSet, RequirementSet.Builder> InternalFieldAccessors {
+    get { return global::QuestProtobuf.internal__static_RequirementSet__FieldAccessorTable; }
+  }
+  
+  public const int RequirementsFieldNumber = 1;
+  private pbc::PopsicleList<global::StatusCheckableProtocol> requirements_ = new pbc::PopsicleList<global::StatusCheckableProtocol>();
+  public scg::IList<global::StatusCheckableProtocol> RequirementsList {
+    get { return requirements_; }
+  }
+  public int RequirementsCount {
+    get { return requirements_.Count; }
+  }
+  public global::StatusCheckableProtocol GetRequirements(int index) {
+    return requirements_[index];
+  }
+  
+  public override bool IsInitialized {
+    get {
+      foreach (global::StatusCheckableProtocol element in RequirementsList) {
+        if (!element.IsInitialized) return false;
+      }
+      return true;
+    }
+  }
+  
+  public override void WriteTo(pb::ICodedOutputStream output) {
+    int size = SerializedSize;
+    string[] field_names = _requirementSetFieldNames;
+    if (requirements_.Count > 0) {
+      output.WriteMessageArray(1, field_names[0], requirements_);
+    }
+    UnknownFields.WriteTo(output);
+  }
+  
+  private int memoizedSerializedSize = -1;
+  public override int SerializedSize {
+    get {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+      
+      size = 0;
+      foreach (global::StatusCheckableProtocol element in RequirementsList) {
+        size += pb::CodedOutputStream.ComputeMessageSize(1, element);
+      }
+      size += UnknownFields.SerializedSize;
+      memoizedSerializedSize = size;
+      return size;
+    }
+  }
+  
+  public static RequirementSet ParseFrom(pb::ByteString data) {
+    return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+  }
+  public static RequirementSet ParseFrom(pb::ByteString data, pb::ExtensionRegistry extensionRegistry) {
+    return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+  }
+  public static RequirementSet ParseFrom(byte[] data) {
+    return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+  }
+  public static RequirementSet ParseFrom(byte[] data, pb::ExtensionRegistry extensionRegistry) {
+    return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+  }
+  public static RequirementSet ParseFrom(global::System.IO.Stream input) {
+    return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+  }
+  public static RequirementSet ParseFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+    return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+  }
+  public static RequirementSet ParseDelimitedFrom(global::System.IO.Stream input) {
+    return CreateBuilder().MergeDelimitedFrom(input).BuildParsed();
+  }
+  public static RequirementSet ParseDelimitedFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+    return CreateBuilder().MergeDelimitedFrom(input, extensionRegistry).BuildParsed();
+  }
+  public static RequirementSet ParseFrom(pb::ICodedInputStream input) {
+    return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+  }
+  public static RequirementSet ParseFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+    return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+  }
+  private RequirementSet MakeReadOnly() {
+    requirements_.MakeReadOnly();
+    return this;
+  }
+  
+  public static Builder CreateBuilder() { return new Builder(); }
+  public override Builder ToBuilder() { return CreateBuilder(this); }
+  public override Builder CreateBuilderForType() { return new Builder(); }
+  public static Builder CreateBuilder(RequirementSet prototype) {
+    return new Builder(prototype);
+  }
+  
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+  public sealed partial class Builder : pb::GeneratedBuilder<RequirementSet, Builder> {
+    protected override Builder ThisBuilder {
+      get { return this; }
+    }
+    public Builder() {
+      result = DefaultInstance;
+      resultIsReadOnly = true;
+    }
+    internal Builder(RequirementSet cloneFrom) {
+      result = cloneFrom;
+      resultIsReadOnly = true;
+    }
+    
+    private bool resultIsReadOnly;
+    private RequirementSet result;
+    
+    private RequirementSet PrepareBuilder() {
+      if (resultIsReadOnly) {
+        RequirementSet original = result;
+        result = new RequirementSet();
+        resultIsReadOnly = false;
+        MergeFrom(original);
+      }
+      return result;
+    }
+    
+    public override bool IsInitialized {
+      get { return result.IsInitialized; }
+    }
+    
+    protected override RequirementSet MessageBeingBuilt {
+      get { return PrepareBuilder(); }
+    }
+    
+    public override Builder Clear() {
+      result = DefaultInstance;
+      resultIsReadOnly = true;
+      return this;
+    }
+    
+    public override Builder Clone() {
+      if (resultIsReadOnly) {
+        return new Builder(result);
+      } else {
+        return new Builder().MergeFrom(result);
+      }
+    }
+    
+    public override pbd::MessageDescriptor DescriptorForType {
+      get { return global::RequirementSet.Descriptor; }
+    }
+    
+    public override RequirementSet DefaultInstanceForType {
+      get { return global::RequirementSet.DefaultInstance; }
+    }
+    
+    public override RequirementSet BuildPartial() {
+      if (resultIsReadOnly) {
+        return result;
+      }
+      resultIsReadOnly = true;
+      return result.MakeReadOnly();
+    }
+    
+    public override Builder MergeFrom(pb::IMessage other) {
+      if (other is RequirementSet) {
+        return MergeFrom((RequirementSet) other);
+      } else {
+        base.MergeFrom(other);
+        return this;
+      }
+    }
+    
+    public override Builder MergeFrom(RequirementSet other) {
+      if (other == global::RequirementSet.DefaultInstance) return this;
+      PrepareBuilder();
+      if (other.requirements_.Count != 0) {
+        result.requirements_.Add(other.requirements_);
+      }
+      this.MergeUnknownFields(other.UnknownFields);
+      return this;
+    }
+    
+    public override Builder MergeFrom(pb::ICodedInputStream input) {
+      return MergeFrom(input, pb::ExtensionRegistry.Empty);
+    }
+    
+    public override Builder MergeFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+      PrepareBuilder();
+      pb::UnknownFieldSet.Builder unknownFields = null;
+      uint tag;
+      string field_name;
+      while (input.ReadTag(out tag, out field_name)) {
+        if(tag == 0 && field_name != null) {
+          int field_ordinal = global::System.Array.BinarySearch(_requirementSetFieldNames, field_name, global::System.StringComparer.Ordinal);
+          if(field_ordinal >= 0)
+            tag = _requirementSetFieldTags[field_ordinal];
+          else {
+            if (unknownFields == null) {
+              unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+            }
+            ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+            continue;
+          }
+        }
+        switch (tag) {
+          case 0: {
+            throw pb::InvalidProtocolBufferException.InvalidTag();
+          }
+          default: {
+            if (pb::WireFormat.IsEndGroupTag(tag)) {
+              if (unknownFields != null) {
+                this.UnknownFields = unknownFields.Build();
+              }
+              return this;
+            }
+            if (unknownFields == null) {
+              unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+            }
+            ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+            break;
+          }
+          case 10: {
+            input.ReadMessageArray(tag, field_name, result.requirements_, global::StatusCheckableProtocol.DefaultInstance, extensionRegistry);
+            break;
+          }
+        }
+      }
+      
+      if (unknownFields != null) {
+        this.UnknownFields = unknownFields.Build();
+      }
+      return this;
+    }
+    
+    
+    public pbc::IPopsicleList<global::StatusCheckableProtocol> RequirementsList {
+      get { return PrepareBuilder().requirements_; }
+    }
+    public int RequirementsCount {
+      get { return result.RequirementsCount; }
+    }
+    public global::StatusCheckableProtocol GetRequirements(int index) {
+      return result.GetRequirements(index);
+    }
+    public Builder SetRequirements(int index, global::StatusCheckableProtocol value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      result.requirements_[index] = value;
+      return this;
+    }
+    public Builder SetRequirements(int index, global::StatusCheckableProtocol.Builder builderForValue) {
+      pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+      PrepareBuilder();
+      result.requirements_[index] = builderForValue.Build();
+      return this;
+    }
+    public Builder AddRequirements(global::StatusCheckableProtocol value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      result.requirements_.Add(value);
+      return this;
+    }
+    public Builder AddRequirements(global::StatusCheckableProtocol.Builder builderForValue) {
+      pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+      PrepareBuilder();
+      result.requirements_.Add(builderForValue.Build());
+      return this;
+    }
+    public Builder AddRangeRequirements(scg::IEnumerable<global::StatusCheckableProtocol> values) {
+      PrepareBuilder();
+      result.requirements_.Add(values);
+      return this;
+    }
+    public Builder ClearRequirements() {
+      PrepareBuilder();
+      result.requirements_.Clear();
+      return this;
+    }
+  }
+  static RequirementSet() {
     object.ReferenceEquals(global::QuestProtobuf.Descriptor, null);
   }
 }

@@ -105,6 +105,7 @@ public class Player : MonoBehaviour {
 
 	public void Attack (int combo) {
 		activeWeapon.Attack(strength + (activeWeapon.GetDamage() * combo));
+		ActionEventInvoker.primaryInvoker.invokeAction (new PlayerAction (activeWeapon.getDirectObject(), ActionType.USE_ITEM));
 	}
 
 	//Used to control gun shooting animation
@@ -115,6 +116,8 @@ public class Player : MonoBehaviour {
 	//Called whenever the player presses a number to quick select
 	public void SetActiveItem (int val) {
 		if(quickAccessItems.Count >= val + 1) {
+			DirectObject equiped = null;
+
 			if(quickAccessItems[val].GetType().IsSubclassOf(typeof(Weapon))) { 
 				activeWeapon = (Weapon)quickAccessItems[val];
 				for(int i = 0; i < playerInventoryRef.transform.childCount; i++) {
@@ -129,17 +132,23 @@ public class Player : MonoBehaviour {
 						weaponRef.transform.GetChild(0).localPosition = Vector3.zero;
 						weaponRef.transform.GetChild(0).localEulerAngles = Vector3.zero;
 						weaponRef.transform.GetChild(0).localScale = new Vector3(1,1,1);
+
+						equiped = activeWeapon.getDirectObject(); //acive weapon is selected weapon?
 					}
 				}
 			} else {
 				activeHack = (Hack)quickAccessItems[val];
+				equiped = activeHack.getDirectObject();
 			}
+
+			ActionEventInvoker.primaryInvoker.invokeAction (new PlayerAction (equiped, ActionType.EQUIP_ITEM));
 		}
 	}
 
 	public void Hack () {
 		if(activeHack != null) {
 			activeHack.Call(this);
+			ActionEventInvoker.primaryInvoker.invokeAction (new PlayerAction (activeHack.getDirectObject(), ActionType.USE_ITEM));
 		}
 	}
 
@@ -195,6 +204,8 @@ public class Player : MonoBehaviour {
 			version = (int.Parse(version.Split('.')[0])*1 + 1) + ".0.0";
 		}
 		bytesToNextVersion = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*levelUpSpeedScale;
+
+		ActionEventInvoker.primaryInvoker.invokeAction (new PlayerAction (new DirectObject ("Level Up", version), ActionType.LEVEL_UP));//TODO level up checks are broken with this setup, rectify differences on builder-side
 	}
 
 	public int GetBytes() {
@@ -262,6 +273,8 @@ public class Player : MonoBehaviour {
 		if(item.GetComponent<Armor>() != null) {
 			EquipArmor(temp);
 		}
+
+		ActionEventInvoker.primaryInvoker.invokeAction (new PlayerAction (temp.GetComponent<Item> ().getDirectObject (), ActionType.PICKED_UP_OBJECT));
 	}
 
 	public void EquipArmor(GameObject armor) {
