@@ -366,21 +366,26 @@ public class PlayerCanvas : MonoBehaviour {
 	}
 
 	public void HandleInventoryMouseOver(int index) {
-		if(index == -1) {
+		if(index != -1) {
+			ColorBlock cb = inventoryItemContainer.transform.GetChild(index).GetComponent<Button>().colors;
+			if (dragDelta == Vector2.zero) {
+				GetComponent<Animator>().SetBool("MouseOver", true);
+				mouseOverInfo.transform.parent.GetComponent<RectTransform>().anchoredPosition = inventoryItemContainer.transform.GetChild(index).GetComponent<RectTransform>().anchoredPosition
+					+ new Vector2(-3.7f, 0.19f);
+				mouseOverInfo.transform.GetChild(1).GetChild(0).GetComponent<Text>().text = playerRef.inventory[index].name;
+				mouseOverInfo.transform.GetChild(0).GetComponent<Text>().text = playerRef.inventory[index].InfoString();
+				cb.highlightedColor = Color.white;
+			} else {
+				cb.highlightedColor = Color.blue;
+			}
+		} else {
 			GetComponent<Animator>().SetBool("MouseOver", false);
 			mouseOverInfo.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector2(-200f, 0f);
-		} else if (dragDelta == Vector2.zero) {
-			GetComponent<Animator>().SetBool("MouseOver", true);
-			mouseOverInfo.transform.parent.GetComponent<RectTransform>().anchoredPosition = inventoryItemContainer.transform.GetChild(index).GetComponent<RectTransform>().anchoredPosition
-				+ new Vector2(-3.7f, 0.19f);
-			mouseOverInfo.transform.GetChild(1).GetChild(0).GetComponent<Text>().text = playerRef.inventory[index].name;
-			mouseOverInfo.transform.GetChild(0).GetComponent<Text>().text = playerRef.inventory[index].InfoString();
 		}
 	}
 
 	public void HandleInventoryMouseDrag(int index) {
-		if(dragStart == Vector2.zero)
-		{
+		if(dragStart == Vector2.zero) {
 			dragStart = inventoryItemContainer.transform.GetChild(index).GetComponent<RectTransform>().anchoredPosition;
 		}
 		inventoryItemContainer.transform.GetChild(index).GetComponent<RectTransform>().anchoredPosition = dragStart + dragDelta/Screen.width*14f;
