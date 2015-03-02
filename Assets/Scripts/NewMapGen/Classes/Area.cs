@@ -136,7 +136,7 @@ public class Area
 
                         if (tiles[i, j].isTile)
                         {
-							Tile temp = (Tile)GameObject.Instantiate(mySet.tiles[0], new Vector3(i * 10, mySet.tiles[0z].y, j * 10), Quaternion.identity);
+							Tile temp = (Tile)GameObject.Instantiate(mySet.tiles[0], new Vector3(i * 10, mySet.tiles[0].y, j * 10), Quaternion.identity);
                             temp.transform.parent = parent.transform;
                             objects.Add(temp);
                         }

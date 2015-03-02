@@ -26,6 +26,10 @@ public class AreaGroup {
         areas = new List<Area>();
     }
 
+	public void executeSpawnCommand(SpawnCommand command) {
+
+	}
+
     //Adds the Area to this AreaGroup, and sets it's type to be this group's type.
     public void addArea(Area a)
     {

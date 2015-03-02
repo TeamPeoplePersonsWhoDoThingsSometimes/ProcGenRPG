@@ -280,7 +280,7 @@ public class Map
                 if (array.Count > 3)
                 {
                     //Get a random AreaType
-                    AreaGroup group = new AreaGroup((AreaType)random.Next(1, numOfTypes));
+					AreaGroup group = new AreaGroup((AreaType)random.Next(1, numOfTypes), (Biome)random.Next(1, numOfTypes));
 
                     for (int i = 0; i < array.Count; i++)
                     {
