@@ -68,11 +68,10 @@ public class MainMenu : MonoBehaviour {
 	}
 
 	public void PlayPressed() {
-		GetComponent<Animator>().SetBool("MoveBGRight", true);
 		GetComponent<Animator>().SetTrigger("GoToLoad");
 	}
 
-	public void StopBG() {
-		GetComponent<Animator>().SetBool("MoveBGRight", false);
+	public void BackButtonOnLoad() {
+		GetComponent<Animator>().SetTrigger("LoadToMain");
 	}
 }

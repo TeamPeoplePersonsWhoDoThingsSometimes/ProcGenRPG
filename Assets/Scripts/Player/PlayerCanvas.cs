@@ -368,11 +368,19 @@ public class PlayerCanvas : MonoBehaviour {
 	public void InventoryClicked() {
 		GetComponent<Animator>().SetBool("ShowingInventory", true);
 		GetComponent<Animator>().SetBool("ShowingStats", false);
+		GetComponent<Animator>().SetBool("ShowingQuests", false);
 	}
 
 	public void StatsClicked() {
 		GetComponent<Animator>().SetBool("ShowingInventory", false);
 		GetComponent<Animator>().SetBool("ShowingStats", true);
+		GetComponent<Animator>().SetBool("ShowingQuests", false);
+	}
+
+	public void QuestsClicked() {
+		GetComponent<Animator>().SetBool("ShowingInventory", false);
+		GetComponent<Animator>().SetBool("ShowingStats", false);
+		GetComponent<Animator>().SetBool("ShowingQuests", true);
 	}
 
 	public void HandleInventoryMouseOver(int index) {
@@ -395,8 +403,10 @@ public class PlayerCanvas : MonoBehaviour {
 
 	public void HandleInventoryMouseDrag(int index) {
 		mouseDragInventoryItem = index;
-		if(dragStart == Vector2.zero) {
+		if(dragStart == Vector2.zero && index != 0) {
 			dragStart = inventoryItemContainer.transform.GetChild(index).GetComponent<RectTransform>().anchoredPosition;
+		} else if(index == 0) {
+			dragStart = Vector2.zero;
 		}
 		inventoryItemContainer.transform.GetChild(index).GetComponent<RectTransform>().anchoredPosition = dragStart + dragDelta/Screen.width*14f;
 		inventoryItemContainer.transform.GetChild(index).GetComponent<CanvasGroup>().blocksRaycasts = false;
