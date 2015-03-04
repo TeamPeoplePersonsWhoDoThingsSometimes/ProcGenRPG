@@ -26,12 +26,8 @@ public class AreaGroup {
         areas = new List<Area>();
     }
 
-	/**
-	 * Execute the given spawn command in this area group
-	 */
 	public void executeSpawnCommand(SpawnCommand command) {
-		//randomly select an area to spawn in
-		areas [(int)(Random.value * areas.Count)].executeSpawnCommand (command);
+
 	}
 
     //Adds the Area to this AreaGroup, and sets it's type to be this group's type.

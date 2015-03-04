@@ -9,7 +9,7 @@ public static class RoomGen
 	public static List<GameObject> generateRoom(int randomNum)
     {
         //Implement this method.
-        return new List<GameObject>();
+        return null;
     }
 
 

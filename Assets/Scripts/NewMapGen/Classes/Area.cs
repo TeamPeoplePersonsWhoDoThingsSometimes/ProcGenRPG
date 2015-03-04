@@ -82,18 +82,6 @@ public class Area
 
     #region Generation methods
 
-	/**
-	 * Execute the given spawn command in this area
-	 */
-	public void executeSpawnCommand(SpawnCommand command) {
-		
-		if (this.Equals (MasterDriver.CurrentArea)) {
-
-		} else {
-			rooms [(int)(Random.value * rooms.Count)].executeSpawnCommand (command);
-		}
-	}
-
     //Generates the 2D array and Rooms List needed to show this area.
     public void generateArea()
     {
@@ -187,7 +175,7 @@ public class Area
 
             foreach(Tile t in objects)
             {
-                t.gameObject.SetActive(false);
+                t.enabled = false;
             }
 
             isShowing = false;
