@@ -156,6 +156,8 @@ public class MasterDriver : MonoBehaviour {
         currentMap.getArea(5, 5).showArea();
 		player.transform.position = new Vector3(currentMap.getArea (5, 5).defaultSpawn.x, player.transform.position.y, currentMap.getArea (5, 5).defaultSpawn.y);
 
+
+
         //currentMap.debugDisplayMap();
 
         Debug.Log("Startup time: " + Time.realtimeSinceStartup);

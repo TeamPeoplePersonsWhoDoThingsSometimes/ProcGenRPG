@@ -63,6 +63,18 @@ public class Room {
 
     #region Generation Methods
 
+	/**
+	 * Execute the given spawn command on this room
+	 */
+	public void executeSpawnCommand(SpawnCommand command, bool live) {
+		GameObject spawned = (GameObject)GameObject.Instantiate (command.getObjectToSpawn ());
+
+		objects.Add(spawned);
+
+		if (!live)
+			spawned.SetActive (false);
+	}
+
     //Generates and shows the Room, if not yet Generated. Otherwise, shows the Room.
     public void showRoom(System.Random random)
     {
