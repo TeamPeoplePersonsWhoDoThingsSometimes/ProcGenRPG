@@ -267,7 +267,7 @@ public class Map
 
             Area search = getArea(x, y);
 
-            if (search.getType() == 0)
+            if (search.getBiome() == 0)
             {
                 //Get the area.
                 Area temp = search;
@@ -280,11 +280,11 @@ public class Map
                 if (array.Count > 3)
                 {
                     //Get a random AreaType
-					AreaGroup group = new AreaGroup((AreaType)random.Next(1, numOfTypes), (Biome)random.Next(1, numOfTypes));
+					AreaGroup group = new AreaGroup((Biome)random.Next(1, numOfTypes));
 
                     for (int i = 0; i < array.Count; i++)
                     {
-                        if (array[i].getType() == AreaType.NotAssigned)
+                        if (array[i].getBiome() == Biome.NOT_ASSIGNED)
                         {
                             group.addArea(array[i]);
                         }
@@ -317,7 +317,7 @@ public class Map
         {
             //Set this Area to the nearest AreaGroup.
             Area next = unset.Dequeue();
-            if (next.getType() == AreaType.NotAssigned)
+            if (next.getBiome() == Biome.NOT_ASSIGNED)
             {
                 foreach (Area a in next.getNeighbors())
                 {
@@ -327,7 +327,7 @@ public class Map
                         break;
                     }
                 }
-                if (next.getType() == AreaType.NotAssigned)
+                if (next.getBiome() == Biome.NOT_ASSIGNED)
                 {
                     unset.Enqueue(next);
                 }
@@ -368,7 +368,7 @@ public class Map
 	public AreaGroup getAreaTypeOfBiome(Biome b)
 	{
 		foreach (AreaGroup a in areaGroups) {
-			if (a.areaBiome.Equals(b))
+			if (a.biome.Equals(b))
 				return a;
 		}
 
@@ -406,7 +406,7 @@ public class Map
         for(int i = 0; i < areaMap.GetLength(0); i++){
 			for(int j = 0; j < areaMap.GetLength(1); j++){
 
-				GameObject currentObject = (GameObject) GameObject.Instantiate(LoadResources.instance.spriteHolder, new Vector3(i, j, 0), Quaternion.identity);
+				GameObject currentObject = (GameObject) GameObject.Instantiate(LoadResources.Instance.spriteHolder, new Vector3(i, j, 0), Quaternion.identity);
                 SpriteRenderer renderer = currentObject.GetComponent<SpriteRenderer>();
 
                 currentObject.transform.parent = parent.transform;
@@ -420,84 +420,81 @@ public class Map
 
 				switch (Total) {
 				case 16:
-                        renderer.sprite = LoadResources.instance.fourWay;
+                        renderer.sprite = LoadResources.Instance.fourWay;
 					break;
 				case 8:
 					if(E){
-                        renderer.sprite = LoadResources.instance.corner;
+                        renderer.sprite = LoadResources.Instance.corner;
 					}
 					else{
-                        renderer.sprite = LoadResources.instance.corner;
+                        renderer.sprite = LoadResources.Instance.corner;
 						currentObject.transform.Rotate(new Vector3(0,0,180));
 					}
 
 					break;
 				case 12:
-                    renderer.sprite = LoadResources.instance.corner;
+                    renderer.sprite = LoadResources.Instance.corner;
 					currentObject.transform.Rotate(new Vector3(0,0,270));
 					break;
 				case 4:
-                    renderer.sprite = LoadResources.instance.corner;
+                    renderer.sprite = LoadResources.Instance.corner;
 					currentObject.transform.Rotate(new Vector3(0,0,90));
 					break;
 				case 10:
-                    renderer.sprite = LoadResources.instance.twoWay;
+                    renderer.sprite = LoadResources.Instance.twoWay;
 					currentObject.transform.Rotate(new Vector3(0,0,90));
 					break;
 				case 6:
-                    renderer.sprite = LoadResources.instance.twoWay;
+                    renderer.sprite = LoadResources.Instance.twoWay;
 					break;
 				case 9:
-                    renderer.sprite = LoadResources.instance.threeWay;
+                    renderer.sprite = LoadResources.Instance.threeWay;
 					currentObject.transform.Rotate(new Vector3(0,0,90));
 					break;
 				case 11:
-                    renderer.sprite = LoadResources.instance.threeWay;
+                    renderer.sprite = LoadResources.Instance.threeWay;
 					currentObject.transform.Rotate(new Vector3(0,0,180));
 					break;
 				case 13:
-                    renderer.sprite = LoadResources.instance.threeWay;
+                    renderer.sprite = LoadResources.Instance.threeWay;
 					currentObject.transform.Rotate(new Vector3(0,0,270));
 					break;
 				case 15:
-                    renderer.sprite = LoadResources.instance.threeWay;
+                    renderer.sprite = LoadResources.Instance.threeWay;
 					break;
 				case 1:
-                    renderer.sprite = LoadResources.instance.end;
+                    renderer.sprite = LoadResources.Instance.end;
 					currentObject.transform.Rotate(new Vector3(0,0,180));
 					break;
 				case 3:
-                    renderer.sprite = LoadResources.instance.end;
+                    renderer.sprite = LoadResources.Instance.end;
 					currentObject.transform.Rotate(new Vector3(0,0,90));
 					break;
 				case 5:
-                    renderer.sprite = LoadResources.instance.end;
+                    renderer.sprite = LoadResources.Instance.end;
 					break;
 				case 7:
-                    renderer.sprite = LoadResources.instance.end;
+                    renderer.sprite = LoadResources.Instance.end;
 					currentObject.transform.Rotate(new Vector3(0,0,270));
 					break;
 				default:
-                    renderer.sprite = LoadResources.instance.end;
+                    renderer.sprite = LoadResources.Instance.end;
 					break;
 				}
 
-                switch(areaMap[i,j].getType())
+                switch(areaMap[i,j].getBiome())
                 {
                     case 0:
                         renderer.color = Color.blue;
                         break;
-                    case (AreaType) 1:
+                    case (Biome) 1:
                         renderer.color = Color.green;
                         break;
-                    case (AreaType) 2:
+                    case (Biome) 2:
                         renderer.color = Color.red;
                         break;
-                    case (AreaType) 3:
+                    case (Biome) 3:
                         renderer.color = Color.yellow;
-                        break;
-                    case (AreaType) 4:
-                        renderer.color = Color.cyan;
                         break;
                     default:
                         break;
@@ -512,12 +509,12 @@ public class Map
 		
 		for (int i = 0; i < areaMap.GetLength(0); i++) {
 			for (int j = 0; j < areaMap.GetLength(1); j++) {
-				AreaType at = areaMap [i, j].getGroup ().type;
-				if (at == AreaType.GrassyPath) {
+				Biome at = areaMap [i, j].getGroup().biome;
+				if (at == Biome.C) {
 					colorMap [i, j] = Color.green;
-				} else if (at == AreaType.Dungeon) {
+				} else if (at == Biome.HTML) {
 					colorMap [i, j] = Color.red;
-				} else if (at == AreaType.NotAssigned) {
+				} else {
 					colorMap [i, j] = Color.black;	
 				} //As more Area Types are added, they need to be assigned colors here.
 			}
@@ -573,7 +570,7 @@ public class Map
 
         foreach (Area a in neighbors)
         {
-            if (a.getType() == 0)
+            if (a.getBiome() == 0)
             {
                 if (a != from)
                 {

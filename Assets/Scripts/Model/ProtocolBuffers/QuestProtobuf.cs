@@ -198,9 +198,10 @@ public enum ActionType {
 }
 
 public enum Biome {
-  PYTHON = 0,
-  C = 1,
-  HTML = 2,
+  NOT_ASSIGNED = 0,
+  PYTHON = 1,
+  C = 2,
+  HTML = 3,
 }
 
 public enum MapType {

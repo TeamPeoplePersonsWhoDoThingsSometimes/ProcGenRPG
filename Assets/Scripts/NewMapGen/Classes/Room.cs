@@ -33,10 +33,10 @@ public class Room {
 	{
 		get
 		{
-			Point diff = (topRight - botLeft);
-			diff.x /= 2;
-			diff.y /=2;
-			return botLeft + diff;
+            Point diff = (topRight - botLeft);
+            diff.x /= 2;
+            diff.y /= 2;
+            return botLeft + diff;
 		}
 	}
 
@@ -67,9 +67,7 @@ public class Room {
     public void showRoom(System.Random random)
     {
         if (!isGenerated)
-        {
-            objects = new List<GameObject>();
-            
+        {            
             objects = RoomGen.generateRoom(random.Next(10));
 
             isGenerated = true;
@@ -111,6 +109,43 @@ public class Room {
             isGenerated = false;
             isShowing = false;
         }
+    }
+
+    public void createPortal(Direction dir, ref TileData[,] tiles)
+    {
+        if (dir == null)
+        {
+            throw new System.ArgumentException("Input Direction cannot be null.");
+        }
+
+        System.Random random = new System.Random(100);
+
+        int x;
+        TileData temp = null;
+
+        switch (dir) {
+            case (Direction.UP):
+                x = topRight.x - (length / 2 + random.Next(-1, 1));
+                temp = tiles[x, topRight.y + 1];
+                break;
+            case (Direction.LEFT):
+                x = topRight.y - (height / 2 + random.Next(-1, 1));
+                temp = tiles[botLeft.x - 1, x];
+                break;
+            case (Direction.DOWN):
+                x = botLeft.x + (length / 2 + random.Next(-1, 1));
+                temp = tiles[x, botLeft.y - 1];
+                break;
+            case (Direction.RIGHT):
+                x = botLeft.y + (height / 2 + random.Next(-1, 1));
+                temp = tiles[topRight.x + 1, x];
+                break;
+        }
+
+        temp.isBorder = false;
+        temp.isTile = false;
+        temp.isPortal = true;
+        temp.portalDirection = dir;
     }
 
     #endregion

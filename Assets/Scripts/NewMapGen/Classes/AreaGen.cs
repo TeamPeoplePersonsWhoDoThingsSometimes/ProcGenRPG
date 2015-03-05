@@ -38,7 +38,7 @@ public static class AreaGen {
 
     private static void defaultRoomGen(int seed, ref TileData[,] tiles, ref List<Room> rooms)
     {
-        System.Random random = new System.Random();
+        System.Random random = new System.Random(seed);
 
         //Determine number of Rooms to make.
         int numOfRooms = random.Next(5, 10);

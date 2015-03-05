@@ -135,6 +135,23 @@ public class MasterDriver : MonoBehaviour {
     Map currentMap;
     Area currentArea;
 
+    //THE MASTERDRIVER IS A SINGLETON. I LIKE SINGLETONS. -Ben
+    public static MasterDriver Instance;
+    void Awake()
+    {
+        // First, check if there are any other instances conflicting.
+        if (Instance != null && Instance != this)
+        {
+            // If so, destroy other instances.
+            Destroy(this.gameObject);
+        }
+
+        //Save our singleton instance.
+        Instance = this;
+
+        DontDestroyOnLoad(this.gameObject);
+
+    }
 
 	// Use this for initialization
 	void Start ()
@@ -152,14 +169,80 @@ public class MasterDriver : MonoBehaviour {
 		CurrentArea = currentArea;
 
         currentMap = new Map();
+        currentArea = currentMap.getArea(5, 5);
 
-        currentMap.getArea(5, 5).showArea();
-		player.transform.position = new Vector3(currentMap.getArea (5, 5).defaultSpawn.x, player.transform.position.y, currentMap.getArea (5, 5).defaultSpawn.y);
+        currentArea.showArea();
+        Point spawnPoint = currentArea.defaultSpawn;
+        player.transform.position = new Vector3(spawnPoint.x, player.transform.position.y, spawnPoint.y);
 
         //currentMap.debugDisplayMap();
 
         Debug.Log("Startup time: " + Time.realtimeSinceStartup);
 	}
+
+    //Changes the current Area to the Area in the input Direction.
+    public void moveArea(Direction dir)
+    {
+        currentArea.releaseData();
+        Point temp;
+
+        //Get next map to move to.
+        switch (dir)
+        {
+            case (Direction.UP):
+                temp = currentArea.position;
+                currentArea = currentMap.getArea(temp.up);
+                break;
+            case (Direction.LEFT):
+                temp = currentArea.position;
+                currentArea = currentMap.getArea(temp.left);
+                break;
+            case (Direction.DOWN):
+                temp = currentArea.position;
+                currentArea = currentMap.getArea(temp.down);
+                break;
+            case (Direction.RIGHT):
+                temp = currentArea.position;
+                currentArea = currentMap.getArea(temp.right);
+                break;
+        }
+
+        currentArea.showArea();
+
+        //Get reversed direction.
+        Direction revDir = (Direction)(((int)dir + 2) % 4);
+
+        //Get the portal we're coming out of.
+        int i = 0;
+        Tile currentPortal;
+
+        do
+        {
+            currentPortal = currentArea.portals[i];
+            i++;
+        } while (currentPortal.gameObject.GetComponent<Portal>().dir != revDir);
+
+        player.transform.GetChild(0).transform.localPosition = Vector3.zero;
+        player.transform.GetChild(1).transform.localPosition = Vector3.zero;
+
+        switch (revDir)
+        {
+            case (Direction.UP):
+                player.transform.position = new Vector3(currentPortal.transform.position.x, player.transform.position.y, currentPortal.transform.position.z - 8);
+                break;
+            case (Direction.LEFT):
+                player.transform.position = new Vector3(currentPortal.transform.position.x + 8, player.transform.position.y, currentPortal.transform.position.z);
+                break;
+            case (Direction.DOWN):
+                player.transform.position = new Vector3(currentPortal.transform.position.x, player.transform.position.y, currentPortal.transform.position.z + 8);
+                break;
+            case (Direction.RIGHT):
+                player.transform.position = new Vector3(currentPortal.transform.position.x - 8, player.transform.position.y, currentPortal.transform.position.z);
+                break;
+        }
+        
+
+    }
 	
 
     //TODO: Create startNewGame and loadGame methods.

@@ -62,6 +62,10 @@ public class Point
     {
         return new Point(a.x * b, a.y * b);
     }
+    public static Point operator *(int a, Point b)
+    {
+        return new Point(b.x * a, b.y * a);
+    }
     public static bool operator ==(Point a, Point b)
     {
         // If both are null, or both are same instance, return true.

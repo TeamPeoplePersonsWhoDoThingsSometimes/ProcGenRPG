@@ -8,20 +8,16 @@ public class AreaGroup {
     
     //TODO: Create a function that gives this AreaGroup a name, based on what kind of AreaGroup it is.
 
-    //TODO: Create some variable that represents a type of Area. Like a Biome.
-	public Biome areaBiome;
-
-    public AreaType type;
+	public Biome biome;
 
     private string name;
 
     //Areas don't need to be in any order.
     private List<Area> areas;
 
-    public AreaGroup(AreaType type, Biome biome)
+    public AreaGroup(Biome biome)
     {
-        this.type = type;
-		this.areaBiome = biome;
+		this.biome = biome;
 
         areas = new List<Area>();
     }

@@ -8,15 +8,13 @@ public class TileData {
 
     Point position;
 
-    public bool isBorder = false;
-    public bool isTile = false;
+    public bool isBorder = false; //If this Tile is a wall.
+    public bool isTile = false; //If this Tile is a walkable Tile.
 
-    public bool disallowCorridor = false;
+    public bool disallowCorridor = false; //If this Tile cannot be a Walkable Tile.
 
-    public bool isPortal = false;
-    public bool portalDirection;
-
-    //TODO: Use portalDirection.
+    public bool isPortal = false; //If this Tile is a portal.
+    public Direction portalDirection; //Direction of the portal
 
 
     public TileData(Point pos)
@@ -24,12 +22,12 @@ public class TileData {
         position = pos;
     }
 
-    public enum Direction
-    {
-        Up,
-        Down,
-        Left,
-        Right
-    }
-	
+}
+
+public enum Direction
+{
+    UP,
+    RIGHT,
+    DOWN,
+    LEFT
 }
