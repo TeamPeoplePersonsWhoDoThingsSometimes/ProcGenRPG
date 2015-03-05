@@ -359,21 +359,40 @@ public class Map
         return getArea(p.x, p.y);
     }
 
+    //Starts from the input Area, and returns the nearest AreaGroup of the input Biome.
+    public AreaGroup findNearestBiome(Area startFrom, Biome search)
+    {
+        //Queue of Areas to check.
+        Queue<Area> queue = new Queue<Area>();
+        //Corresponding Queue of Areas that the Areas in the above queue came from.
+        Queue<Area> fromQueue = new Queue<Area>();
 
-	/**
-	 * Less effecient than it could be if we stored a hashmap of biomes to areas
-	 * 
-	 * returns null if somehow no biome exists yet
-	 */
-	public AreaGroup getAreaTypeOfBiome(Biome b)
-	{
-		foreach (AreaGroup a in areaGroups) {
-			if (a.biome.Equals(b))
-				return a;
-		}
+        queue.Enqueue(startFrom);
 
-		return null;
-	}
+        while (queue.Count > 0)
+        {
+            Area temp = queue.Dequeue();
+
+            if (temp.getBiome().Equals(search))
+            {
+                return temp.getGroup();
+            }
+            else
+            {
+                Area check = fromQueue.Dequeue();
+                foreach (Area a in temp.getNeighbors())
+                {
+                    if (check != a)
+                    {
+                        queue.Enqueue(a);
+                        fromQueue.Enqueue(temp);
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
 
 
     //Returns the seed for this Map.

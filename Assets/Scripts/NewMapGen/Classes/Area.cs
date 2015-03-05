@@ -58,6 +58,8 @@ public class Area
     private bool isCreated = false; //If the GameObjects have been made.
     private bool isHidden = false; //If the GameObjects are hidden.
 
+    private bool questArea = false; //If this Area contains quest material. (if so, it CANNOT EVER BE NULLED! MUAHAHAHA!)
+
     #endregion
 
 
@@ -248,13 +250,21 @@ public class Area
             {
                 r.destroyRoom();
             }
-            rooms = null;
 
-            tiles = null;
-            corridors = null;
+            if (!questArea)
+            {
+                rooms = null;
 
-            isGenerated = false;
-            isCreated = false;
+                tiles = null;
+                corridors = null;
+
+                isGenerated = false;
+                isCreated = false;
+            }
+            else
+            {
+                isGenerated = true;
+            }
         }
     }
 
@@ -309,6 +319,14 @@ public class Area
             return Biome.NOT_ASSIGNED;
         }
         return group.biome;
+    }
+
+    public void executeSpawnCommand(SpawnCommand sc)
+    {
+        questArea = true;
+
+        System.Random rand = new System.Random();
+        rooms[rand.Next(rooms.Count)].generateQuestMaterial(sc);
     }
 
     #endregion

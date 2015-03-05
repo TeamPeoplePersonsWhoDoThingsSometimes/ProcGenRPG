@@ -47,6 +47,10 @@ public class Room {
     public bool isGenerated = false;
     public bool isShowing = false;
 
+    private bool isQuestRoom = false;
+    private Object questObject;
+    int quantity;
+
     #endregion
 
 
@@ -69,6 +73,11 @@ public class Room {
         if (!isGenerated)
         {            
             objects = RoomGen.generateRoom(random.Next(10));
+
+            if (isQuestRoom)
+            {
+                spawnQuestObjects();
+            }
 
             isGenerated = true;
             isShowing = true;
@@ -176,6 +185,34 @@ public class Room {
     public Point getTopRight()
     {
         return topRight;
+    }
+
+    public void generateQuestMaterial(SpawnCommand sc)
+    {
+        isQuestRoom = true;
+
+        questObject = sc.getObjectToSpawn();
+        quantity = sc.getQuantity();
+    }
+
+    #endregion
+
+
+    #region Helper Methods
+
+    private void spawnQuestObjects()
+    {
+        System.Random random = new System.Random();
+
+        //Make as many objects as specified.
+        for (int i = 0; i < quantity; i++)
+        {
+            //Get a random point in the Room.
+            Point place = new Point(random.Next(botLeft.x, topRight.x), random.Next(botLeft.y, topRight.y)) * 10;
+
+            GameObject.Instantiate(questObject, place.toVector3(), Quaternion.identity);
+        }
+
     }
 
     #endregion

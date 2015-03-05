@@ -23,7 +23,7 @@ public class AreaGroup {
     }
 
 	public void executeSpawnCommand(SpawnCommand command) {
-
+        getRandomArea().executeSpawnCommand(command);
 	}
 
     //Adds the Area to this AreaGroup, and sets it's type to be this group's type.
