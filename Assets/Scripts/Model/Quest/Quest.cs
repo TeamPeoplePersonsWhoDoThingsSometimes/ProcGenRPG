@@ -153,6 +153,8 @@ public class Quest : ActionEventListener {
 		//all current status checks are satisfied, step quest
 		currentStep++;
 
+		//TODO call all spawn command on area group with the new step
+
 		if (currentStep >= steps.Length) {
 			Debug.Log("Quest Complete!");
 			deregister();
