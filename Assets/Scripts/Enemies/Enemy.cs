@@ -44,7 +44,8 @@ public class Enemy : MonoBehaviour {
 	private Vector3 lastPos;
 
 	public DirectObject getDirectObject() {
-		return new DirectObject (name.Substring(name.IndexOf(" ") + 1), (isBadass? "Badass" : "Basic" ));
+		int modifierEnd = name.IndexOf (" ");
+		return new DirectObject (name.Substring((modifierEnd == -1 ? 0: modifierEnd + 1)), (isBadass? "Badass" : "Basic" ));
 	}
 
 	protected void Awake() {
@@ -94,6 +95,10 @@ public class Enemy : MonoBehaviour {
 
 	public void SetVersion(string v) {
 		version = v;
+	}
+
+	public bool IsBadass() {
+		return isBadass;
 	}
 
 	public void setBadass(bool b) {
@@ -259,7 +264,7 @@ public class Enemy : MonoBehaviour {
 		//We should figure out how to handle death in a way that more closely ties player attacks to the death of the enemy
 		//to provide for more complex action tracking capailities, also, I'll move this into the backend
 		//when I move everything else that should be in the model as well
-		DirectObject obj = new DirectObject("N/A", name);
+		DirectObject obj = getDirectObject ();
 		PlayerAction action = new PlayerAction(obj, ActionType.KILL);
 		ActionEventInvoker.primaryInvoker.invokeAction(action);
 		

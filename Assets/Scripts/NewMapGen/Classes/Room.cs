@@ -211,7 +211,7 @@ public class Room {
 			//Get a random point in the Room.
 			Point place = new Point(random.Next(botLeft.x, topRight.x), random.Next(botLeft.y, topRight.y)) * 10;
 
-			GameObject obj = (GameObject)GameObject.Instantiate(sc.getObjectToSpawn(), new Vector3(place.x, 5, place.y), Quaternion.identity);
+			GameObject obj = sc.spawnObject(new Vector3(place.x, 5, place.y));
 
 			if (!parent.Equals(MasterDriver.Instance.CurrentArea)) {
 				obj.SetActive(false);
