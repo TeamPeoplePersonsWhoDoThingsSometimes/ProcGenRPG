@@ -7,7 +7,7 @@ public class DirectObject {
 	private string type;
 
 	public DirectObject(string id, string typeId) {
-		name = id;
+		name = trimCloneTag(id);
 		type = typeId;
 	}
 
@@ -44,5 +44,16 @@ public class DirectObject {
 	 */
 	public string getTypeIdentifier() {
 		return type;
+	}
+
+	/**
+	 * This function removes any trailing (clone) tag
+	 */
+	private string trimCloneTag(string name) {
+		string newString = name;
+		if (name.EndsWith("(Clone)")) {
+			newString = newString.Substring(0, newString.Length - 7);
+		}
+		return newString;
 	}
 }

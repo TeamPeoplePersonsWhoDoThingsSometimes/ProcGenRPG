@@ -24,6 +24,7 @@ public class Enemy : MonoBehaviour {
 
 	protected float tempAttackSpeed;
 	protected bool detectedPlayer, retreating;
+	protected bool badassSet;
 	protected bool isBadass;
 	protected string version;
 
@@ -46,16 +47,14 @@ public class Enemy : MonoBehaviour {
 		return new DirectObject (name.Substring(name.IndexOf(" ") + 1), (isBadass? "Badass" : "Basic" ));
 	}
 
+	protected void Awake() {
+		if (!badassSet) {
+			setBadass (Random.value < badassChance);
+		}
+	}
+
 	// Use this for initialization
 	protected void Start () {
-		if(Random.value < badassChance) {
-			isBadass = true;
-			this.transform.localScale *= 2;
-			this.maxHP *= 2;
-			this.baseHealthRegen *= 2;
-			this.name = "Badass " + name;
-		}
-
 		if(hitInfo == null) {
 			hitInfo = Resources.Load<GameObject>("Info/HitInfo");
 		}
@@ -98,7 +97,19 @@ public class Enemy : MonoBehaviour {
 	}
 
 	public void setBadass(bool b) {
+		if (b && !isBadass) {
+			this.transform.localScale *= 2;
+			this.maxHP *= 2;
+			this.baseHealthRegen *= 2;
+			this.name = "Badass " + name;
+		} else if (!b && isBadass) {
+			this.transform.localScale /= 2;
+			this.maxHP /= 2;
+			this.baseHealthRegen /= 2;
+			this.name = name.Substring(7);
+		}
 		isBadass = b;
+		badassSet = true;
 	}
 
 	public string HealthString() {

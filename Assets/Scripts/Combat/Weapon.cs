@@ -47,7 +47,6 @@ public class Weapon : Item {
 
 	public virtual bool CanAttack() {
 		if(attackSpeedTime > attackSpeed) {
-			Debug.Log("HERE" + attackSpeedTime);
 			attackSpeedTime = 0;
 			return true;
 		}

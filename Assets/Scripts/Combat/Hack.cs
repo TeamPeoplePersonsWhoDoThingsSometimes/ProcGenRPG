@@ -36,7 +36,7 @@ public class Hack : Item {
 				playerref.ExpendRMA(RMACost);
 				PassiveActive();
 			}
-
+			Debug.Log("HERERERE");
 			if (tempFiringRate <= 0 && oneShot) {
 				if (playerref.ExpendRMA(RMACost)) {
 					OneShotActivated();

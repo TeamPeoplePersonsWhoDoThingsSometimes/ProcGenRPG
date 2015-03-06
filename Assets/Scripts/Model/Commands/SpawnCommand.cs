@@ -22,12 +22,15 @@ public class SpawnCommand {
 		specification = proto.SpawnSpecification;
 
 		if (proto.HasItem) {
-			objectToSpawn = MasterDriver.getItemFromProtobuf(proto.Item);
+			GameObject obj = LoadResources.Instance.CommonItemDrop;
+			ItemDropObject drop = obj.GetComponent<ItemDropObject>();
+			drop.item = (GameObject)MasterDriver.Instance.getItemFromProtobuf(proto.Item);
+			objectToSpawn = drop.gameObject;
 			quantity = proto.Item.Amount;
         }
 		
 		if(proto.HasEnemy) {
-			objectToSpawn = MasterDriver.getEnemyFromProtobuf(proto.Enemy);
+			objectToSpawn = MasterDriver.Instance.getEnemyFromProtobuf(proto.Enemy);
 			quantity = proto.Enemy.Amount;
 		}
 	}

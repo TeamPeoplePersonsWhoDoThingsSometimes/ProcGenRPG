@@ -364,8 +364,7 @@ public class Map
     {
         //Queue of Areas to check.
         Queue<Area> queue = new Queue<Area>();
-        //Corresponding Queue of Areas that the Areas in the above queue came from.
-        Queue<Area> fromQueue = new Queue<Area>();
+		List<Area> visited = new List<Area> ();
 
         queue.Enqueue(startFrom);
 
@@ -377,21 +376,18 @@ public class Map
             {
                 return temp.getGroup();
             }
-            else
-            {
-                Area check = fromQueue.Dequeue();
-                foreach (Area a in temp.getNeighbors())
-                {
-                    if (check != a)
-                    {
-                        queue.Enqueue(a);
-                        fromQueue.Enqueue(temp);
-                    }
-                }
-            }
+
+			foreach (Area a in temp.getNeighbors()) {
+				if (!visited.Contains(a)) {
+					queue.Enqueue(a);
+				}
+			}
+
+			visited.Add(temp);
+            
         }
 
-        return null;
+        return startFrom.getGroup();
     }
 
 

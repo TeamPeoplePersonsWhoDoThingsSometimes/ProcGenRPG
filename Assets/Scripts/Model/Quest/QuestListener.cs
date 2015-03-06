@@ -24,7 +24,7 @@ public class QuestListener : ActionEventListener {
 		quests = new List<Quest> ();
 		
 		//first read the package from the file, then unwrap it
-		/*System.IO.FileStream fs = new System.IO.FileStream (QuestFile, System.IO.FileMode.Open);
+		System.IO.FileStream fs = new System.IO.FileStream (QuestFile, System.IO.FileMode.Open);
 		QuestPackage package = QuestPackage.ParseFrom (fs);
 		
 		List<QuestProtocol> questProtocols = new List<QuestProtocol>();
@@ -32,7 +32,7 @@ public class QuestListener : ActionEventListener {
 		quests = new List<Quest> ();
 		foreach (QuestProtocol q in questProtocols) {
 			quests.Add(new Quest(q));
-		}*/
+		}
 		
 	}
 	

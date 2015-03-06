@@ -99,12 +99,12 @@ public static partial class QuestProtobuf {
         "SUxMEAASDQoJTU9WRV9BUkVBEAESFQoRQVBQUk9BQ0hFRF9PQkpFQ1QQAhIU" + 
         "ChBQSUNLRURfVVBfT0JKRUNUEAMSDAoITEVWRUxfVVAQBRIOCgpFUVVJUF9J" + 
         "VEVNEAYSDAoIVVNFX0lURU0QBxIKCgZBVFRBQ0sQCBIZChVDT05WRVJTQVRJ" + 
-        "T05fTk9ERV9ISVQQCSokCgVCaW9tZRIKCgZQWVRIT04QABIFCgFDEAESCAoE" + 
-        "SFRNTBACKioKB01hcFR5cGUSCAoEQ0lUWRAAEggKBFBBVEgQARILCgdEVU5H" + 
-        "RU9OEAIqNQoaU3Bhd25BcmVhVHlwZVNwZWNpZmljYXRpb24SCQoFTE9DQUwQ" + 
-        "ABIMCghESVNUQU5DRRABKiwKEkxldmVsU3BlY2lmaWNhdGlvbhILCgdNSU5J" + 
-        "TVVNEAESCQoFRVhBQ1QQAkIhCh9zdHNxdWVzdGJ1aWxkZXIucHJvdG9jb2xi" + 
-        "dWZmZXJz");
+        "T05fTk9ERV9ISVQQCSo2CgVCaW9tZRIQCgxOT1RfQVNTSUdORUQQABIKCgZQ" + 
+        "WVRIT04QARIFCgFDEAISCAoESFRNTBADKioKB01hcFR5cGUSCAoEQ0lUWRAA" + 
+        "EggKBFBBVEgQARILCgdEVU5HRU9OEAIqNQoaU3Bhd25BcmVhVHlwZVNwZWNp" + 
+        "ZmljYXRpb24SCQoFTE9DQUwQABIMCghESVNUQU5DRRABKiwKEkxldmVsU3Bl" + 
+        "Y2lmaWNhdGlvbhILCgdNSU5JTVVNEAESCQoFRVhBQ1QQAkIhCh9zdHNxdWVz" + 
+        "dGJ1aWxkZXIucHJvdG9jb2xidWZmZXJz");
     pbd::FileDescriptor.InternalDescriptorAssigner assigner = delegate(pbd::FileDescriptor root) {
       descriptor = root;
       internal__static_QuestPackage__Descriptor = Descriptor.MessageTypes[0];
@@ -1029,7 +1029,7 @@ public sealed partial class QuestProtocol : pb::GeneratedMessage<QuestProtocol, 
   
   public const int BiomeFieldNumber = 4;
   private bool hasBiome;
-  private global::Biome biome_ = global::Biome.PYTHON;
+  private global::Biome biome_ = global::Biome.NOT_ASSIGNED;
   public bool HasBiome {
     get { return hasBiome; }
   }
@@ -1400,7 +1400,7 @@ public sealed partial class QuestProtocol : pb::GeneratedMessage<QuestProtocol, 
     public Builder ClearBiome() {
       PrepareBuilder();
       result.hasBiome = false;
-      result.biome_ = global::Biome.PYTHON;
+      result.biome_ = global::Biome.NOT_ASSIGNED;
       return this;
     }
   }

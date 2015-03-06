@@ -32,6 +32,7 @@ public class ActionEventInvoker {
 	 * to the invoker
 	 */
 	public void invokeAction(IAction action) {
+		//World.log ("Fire action: " + action);
 		ActionEvent (action);
 	}
 }

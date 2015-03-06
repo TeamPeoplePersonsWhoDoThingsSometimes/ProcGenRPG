@@ -36,6 +36,8 @@ public class ActionCheckable : StatusCheckable {
 	public void setFromProtocol (StatusCheckableProtocol protocol) {
 		if (protocol.HasAmount) {
 			quantity = protocol.Amount;
+		} else if(protocol.Action.Target.HasAmount) { //because its like this too in more places than I feel like changing
+			quantity = protocol.Action.Target.Amount;
 		} else {
 			quantity = 1;
 		}

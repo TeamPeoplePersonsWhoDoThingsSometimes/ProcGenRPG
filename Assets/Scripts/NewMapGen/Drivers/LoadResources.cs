@@ -15,6 +15,11 @@ public class LoadResources : MonoBehaviour {
     public GameObject dungeon;
     public GameObject city;
 
+	public GameObject CommonItemDrop;
+	public GameObject UncommonItemDrop;
+	public GameObject RareItemDrop;
+	public GameObject Chest;
+
     public Tile portal;
 
     public static LoadResources Instance;

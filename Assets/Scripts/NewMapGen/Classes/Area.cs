@@ -91,7 +91,7 @@ public class Area
         if (!isGenerated)
         {
             //Default Area Generation.
-            AreaGen.defaultGen(areaSeed, out tiles, out rooms, out corridors);
+            AreaGen.defaultGen(this, areaSeed, out tiles, out rooms, out corridors);
 
             setupPortals();
 
@@ -202,8 +202,10 @@ public class Area
             isHidden = false;
         }
 
-        if (isHidden)
-        {
+        /*if (isHidden)
+        {*/
+			
+			//Go through each room in the area and spawn any objects in it
             System.Random random = new System.Random(areaSeed);
 
             foreach(Room r in rooms)
@@ -211,8 +213,8 @@ public class Area
                 r.showRoom(random);
             }
 
-            isHidden = false;
-        }
+        /*    isHidden = false;
+        }*/
 
     }
 

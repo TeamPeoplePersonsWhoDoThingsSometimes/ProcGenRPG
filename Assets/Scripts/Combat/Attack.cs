@@ -93,7 +93,7 @@ public class Attack : MonoBehaviour {
 //		thisDamage = damageMod*damage;
 //	}
 
-	public void SetDamage(int damage) {
+	public void SetDamage(float damage) {
 		thisDamage = damage;
 	}
 
@@ -101,8 +101,8 @@ public class Attack : MonoBehaviour {
 		critChance = critVal;
 	}
 
-	public void SetDamage(float val) {
-		thisDamage = val;
+	public float GetDamage() {
+		return thisDamage;
 	}
 
 }

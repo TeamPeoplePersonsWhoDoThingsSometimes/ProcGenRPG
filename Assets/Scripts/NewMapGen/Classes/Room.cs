@@ -41,25 +41,25 @@ public class Room {
 	}
 
     List<GameObject> objects;
+	List<GameObject> spawnedObjects;
 
     Area parent;
 
     public bool isGenerated = false;
     public bool isShowing = false;
 
-    private bool isQuestRoom = false;
-    private Object questObject;
-    int quantity;
-
     #endregion
 
 
     #region Constructors
 
-    public Room(Point botLeft, Point topRight)
+    public Room(Area area, Point botLeft, Point topRight)
     {
+		objects = new List<GameObject> ();
+		spawnedObjects = new List<GameObject> ();
         this.botLeft = botLeft;
         this.topRight = topRight;
+		parent = area;
     }
 
     #endregion
@@ -74,10 +74,9 @@ public class Room {
         {            
             objects = RoomGen.generateRoom(random.Next(10));
 
-            if (isQuestRoom)
-            {
-                spawnQuestObjects();
-            }
+			foreach (GameObject g in spawnedObjects) {
+				g.SetActive(true);
+			}
 
             isGenerated = true;
             isShowing = true;
@@ -89,8 +88,14 @@ public class Room {
                 g.SetActive(true);
             }
 
+			foreach (GameObject g in spawnedObjects) {
+				g.SetActive(true);
+			}
+
             isShowing = true;
         }
+
+
     }
 
     public void hideRoom()
@@ -101,6 +106,11 @@ public class Room {
             {
                 g.SetActive(false);
             }
+
+			foreach (GameObject g in spawnedObjects)
+			{
+				g.SetActive(false);
+			}
 
             isShowing = false;
         }
@@ -114,6 +124,12 @@ public class Room {
             {
                 GameObject.Destroy(g);
             }
+
+			//TODO optimize
+			foreach (GameObject g in spawnedObjects)
+			{
+				g.SetActive(false);
+			}
 
             isGenerated = false;
             isShowing = false;
@@ -189,10 +205,20 @@ public class Room {
 
     public void generateQuestMaterial(SpawnCommand sc)
     {
-        isQuestRoom = true;
+		System.Random random = new System.Random();
 
-        questObject = sc.getObjectToSpawn();
-        quantity = sc.getQuantity();
+		for (int i = 0; i < sc.getQuantity(); i++) {
+			//Get a random point in the Room.
+			Point place = new Point(random.Next(botLeft.x, topRight.x), random.Next(botLeft.y, topRight.y)) * 10;
+
+			GameObject obj = (GameObject)GameObject.Instantiate(sc.getObjectToSpawn(), new Vector3(place.x, 5, place.y), Quaternion.identity);
+
+			if (!parent.Equals(MasterDriver.Instance.CurrentArea)) {
+				obj.SetActive(false);
+			}
+
+			spawnedObjects.Add(obj);
+		}
     }
 
     #endregion
@@ -200,7 +226,7 @@ public class Room {
 
     #region Helper Methods
 
-    private void spawnQuestObjects()
+    /*private void spawnQuestObjects()
     {
         System.Random random = new System.Random();
 
@@ -213,7 +239,7 @@ public class Room {
             GameObject.Instantiate(questObject, place.toVector3(), Quaternion.identity);
         }
 
-    }
+    }*/
 
     #endregion
 

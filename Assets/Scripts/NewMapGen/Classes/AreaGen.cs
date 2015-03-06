@@ -15,7 +15,7 @@ public static class AreaGen {
     #region Default Gen
 
     //Takes in references to a TileData array and Room list, creates an Area, and puts the Area back into these inputs.
-    public static void defaultGen(int seed, out TileData [,] tiles, out List<Room> rooms, out List<TileData> corridors)
+    public static void defaultGen(Area area, int seed, out TileData [,] tiles, out List<Room> rooms, out List<TileData> corridors)
     {
         System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
 
@@ -26,7 +26,7 @@ public static class AreaGen {
         rooms = new List<Room>();
 
         //Generate rooms, put in room List, and place on Tile array.
-        defaultRoomGen(seed, ref tiles, ref rooms);
+		defaultRoomGen(area, seed, ref tiles, ref rooms);
 
         //Do A* to connect each room.
         corridors = defaultConnect(seed, ref tiles, ref rooms);
@@ -36,7 +36,7 @@ public static class AreaGen {
 
     }
 
-    private static void defaultRoomGen(int seed, ref TileData[,] tiles, ref List<Room> rooms)
+    private static void defaultRoomGen(Area area, int seed, ref TileData[,] tiles, ref List<Room> rooms)
     {
         System.Random random = new System.Random(seed);
 
@@ -56,7 +56,7 @@ public static class AreaGen {
             //Create random botLeft Point to place the Room.
             Point placement = new Point(random.Next(1, tiles.GetLength(0) - xSize - 1), random.Next(1, tiles.GetLength(1) - ySize - 1));
 
-            Room newRoom = new Room(placement, new Point(placement.x + xSize, placement.y + ySize));
+			Room newRoom = new Room(area, placement, new Point(placement.x + xSize, placement.y + ySize));
 
             bool roomFailed = false;
             //Test to ensure this Room doesn't overlap other rooms.

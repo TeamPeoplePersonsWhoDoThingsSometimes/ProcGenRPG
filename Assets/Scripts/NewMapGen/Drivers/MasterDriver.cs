@@ -9,14 +9,14 @@ public class MasterDriver : MonoBehaviour {
 	/*********************************
 	 * Public static fields
 	*********************************/
-	public static Map CurrentMap;
+	/*public static Map CurrentMap;
 	public static Area CurrentArea;
 
 	public static TileSet[] TileSets;
 	public static GameObject[] Weapons;
 	public static GameObject[] Hacks;
 	
-	private static QuestListener questListener;
+	private static QuestListener questListener;*/
 	
 	private const string builderDataStore = "./Assets/Resources/builder.data";
 	
@@ -35,19 +35,20 @@ public class MasterDriver : MonoBehaviour {
 	public GameObject[] hacks;
 
 	public GameObject player;
-	
+
+	private QuestListener questListener;
 	
 	/*********************************
 	 * Static methods
 	*********************************/
 	
 	//public log
-	public static void log(string log) {
+	public void log(string log) {
 		print(log);
 	}
 	
 	//yaaay, we have a name generator :D
-	public static string NameGenerator() {
+	public string NameGenerator() {
 		ASCIIEncoding ascii = new ASCIIEncoding();
 		string name = "";
 		int syllables = Random.Range(1,6);
@@ -60,20 +61,21 @@ public class MasterDriver : MonoBehaviour {
 		return name;
 	}
 	
-	public static Object getItemFromProtobuf(DirectObjectProtocol proto) {
+	public Object getItemFromProtobuf(DirectObjectProtocol proto) {
 		string name = proto.Name;
 		
-		foreach (GameObject o in Weapons) {
+		foreach (GameObject o in weapons) {
 			Item i = o.GetComponent<Item>();
-			if (i.name.Equals(name)) {
+			if (i.gameObject.name.Equals(name)) {
 				GameObject ret = o;
 				Weapon w = o.GetComponent<Weapon>();
 				w.version = "" + proto.ItemInformation.Version;
+				w.name = proto.Type;
 				return ret;
 			}
 		}
 		
-		foreach (GameObject o in Hacks) {
+		foreach (GameObject o in hacks) {
 			Item i = o.GetComponent<Item>();
 			if (i.name.Equals(name)) {
 				return o;
@@ -83,14 +85,14 @@ public class MasterDriver : MonoBehaviour {
 		return null;
 	}
 	
-	public static Object getEnemyFromProtobuf(DirectObjectProtocol proto) {
+	public Object getEnemyFromProtobuf(DirectObjectProtocol proto) {
 		string name = proto.Name;
 		
-		foreach (TileSet t in TileSets) {
+		foreach (TileSet t in tileSets) {
 			foreach (Enemy o in t.enemyTypes) {
 				if (o.name.Equals(name)) {
 					o.setBadass(proto.Type.Equals("Badass"));
-					return o;
+					return o.gameObject;
 				}
 			}
 		}
@@ -131,6 +133,8 @@ public class MasterDriver : MonoBehaviour {
 		fs.Close();
 	}
 
+	public Map CurrentMap { get { return currentMap; } }
+	public Area CurrentArea { get { return currentArea; } }
 
     Map currentMap;
     Area currentArea;
@@ -162,15 +166,10 @@ public class MasterDriver : MonoBehaviour {
 		
 		questListener = new QuestListener ();
 		
-		TileSets = tileSets;
-		Weapons = weapons;
-		Hacks = hacks;
-		CurrentMap = currentMap;
-		CurrentArea = currentArea;
-
         currentMap = new Map();
         currentArea = currentMap.getArea(5, 5);
 
+		currentArea.getGroup ().generateAreas ();
         currentArea.showArea();
         Point spawnPoint = currentArea.defaultSpawn;
         player.transform.position = new Vector3(spawnPoint.x, player.transform.position.y, spawnPoint.y);
@@ -207,7 +206,9 @@ public class MasterDriver : MonoBehaviour {
                 break;
         }
 
+		currentArea.getGroup ().generateAreas ();
         currentArea.showArea();
+		log ("Moved to area: " + currentArea.position);
 
         //Get reversed direction.
         Direction revDir = (Direction)(((int)dir + 2) % 4);

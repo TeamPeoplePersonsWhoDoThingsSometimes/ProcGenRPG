@@ -47,6 +47,12 @@ public class Quest : ActionEventListener {
 			return true;
 		}
 
+		public void executeCommands(AreaGroup group) {
+			foreach (SpawnCommand s in commands) {
+				group.executeSpawnCommand(s);
+			}
+		}
+
 		public void updateStatusChecks(IAction action) {
 			StatusCheckable[] stats = new StatusCheckable [statuses.Keys.Count];
 			statuses.Keys.CopyTo(stats,0);
@@ -71,11 +77,14 @@ public class Quest : ActionEventListener {
 		}
 	}
 
+	private bool initSpawns;
+
 	/**
 	 * Initialize the quest with the given steps
 	 */
 	public Quest(Step[] questSteps) {
 		steps = questSteps;
+		initSpawns = false;
 	}
 
 	/**
@@ -90,6 +99,7 @@ public class Quest : ActionEventListener {
 			steps[i] = new Step(stepProtocols[i]);
 		}
 		Debug.Log ("Built quest, steps: " + this.steps.Length);
+		initSpawns = false;
 	}
 
 	/**
@@ -126,14 +136,21 @@ public class Quest : ActionEventListener {
 	public void startQuestIfMetByAction(IAction act) {
 		if (currentStep != 0)
 			return;
-		
+
+		if (!initSpawns) {
+			steps[0].executeCommands(MasterDriver.Instance.CurrentArea.getGroup());
+			initSpawns = true;
+		}
+
+		steps [0].updateStatusChecks (act);
+
 		Debug.Log ("Check Quest: " + this.name);
 		if (steps [0].isStepFinished ()) {
 			register();
-			currentStep++;
+			group = MasterDriver.Instance.CurrentMap.findNearestBiome(MasterDriver.Instance.CurrentArea, biomeType);
+			stepQuest ();
+			Debug.Log ("Start Quest: " + this.name);
 		}
-
-		group = MasterDriver.CurrentMap.getAreaTypeOfBiome (biomeType);
 	}
 
 	/**
@@ -150,14 +167,18 @@ public class Quest : ActionEventListener {
 		if (!steps[currentStep].isStepFinished())
 			return;
 
-		//all current status checks are satisfied, step quest
+		stepQuest ();
+	}
+
+	private void stepQuest() {
 		currentStep++;
-
-		//TODO call all spawn command on area group with the new step
-
+		
 		if (currentStep >= steps.Length) {
 			Debug.Log("Quest Complete!");
 			deregister();
+			return;
 		}
+
+		steps [currentStep].executeCommands (group);
 	}
 }

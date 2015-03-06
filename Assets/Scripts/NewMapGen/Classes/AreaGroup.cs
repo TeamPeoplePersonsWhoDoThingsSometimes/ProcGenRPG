@@ -33,10 +33,21 @@ public class AreaGroup {
         a.setGroup(this);
     }
 
+	/**
+	 * Ensures that all the areas in this area group have been generated
+	 */
+	public void generateAreas() {
+		foreach (Area a in areas) {
+			a.generateArea();
+		}
+	}
+
     //Returns a random Area from this AreaGroup.
     private Area getRandomArea()
     {
-		return areas [(int)(Random.value * areas.Count)];
+		Area area = areas [(int)(Random.value * areas.Count)];
+		MasterDriver.Instance.log ("Randomly got area: " + area.position);
+		return area;
     }
 
     public string getName()
