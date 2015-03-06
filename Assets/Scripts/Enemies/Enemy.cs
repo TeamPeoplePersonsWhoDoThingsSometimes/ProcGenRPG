@@ -48,6 +48,9 @@ public class Enemy : MonoBehaviour {
 		return new DirectObject (name.Substring((modifierEnd == -1 ? 0: modifierEnd + 1)), (isBadass? "Badass" : "Basic" ));
 	}
 
+	private float seed1 = 0f;
+	private float seed2 = 0f;
+
 	protected void Awake() {
 		if (!badassSet) {
 			setBadass (Random.value < badassChance);
@@ -56,6 +59,7 @@ public class Enemy : MonoBehaviour {
 
 	// Use this for initialization
 	protected void Start () {
+
 		if(hitInfo == null) {
 			hitInfo = Resources.Load<GameObject>("Info/HitInfo");
 		}
@@ -168,14 +172,41 @@ public class Enemy : MonoBehaviour {
 		if(currentEffect != Effect.None) {
 			float prevEffectTime = effectTime;
 			effectTime -= Time.deltaTime;
+
 			if(currentEffect == Effect.Deteriorating
 			   && (int)effectTime < (int)prevEffectTime) {
 				GetDamaged(effectValue, false);
 				GameObject tempbyte = (GameObject) GameObject.Instantiate(Utility.GetByteObject(), transform.position, Quaternion.identity);
 				tempbyte.GetComponent<Byte>().val = (int)effectValue*100;
-			} else if (currentEffect == Effect.Slow) {
+			}
+
+			if (currentEffect == Effect.Slow) {
 				transform.position -= (transform.position - lastPos)/2f;
-			} else if (currentEffect == Effect.Stun) {
+			}
+			if (currentEffect == Effect.Bugged) {
+				if ((Time.frameCount % 15) == 0) { //walks in a random direction, changes direction every 15 frames
+					seed1 = Random.Range(-0.5f,0.5f);
+					seed2 = Random.Range(-0.5f,0.5f);
+				}
+				transform.position += new Vector3(seed1 * 0.1f, 0f, seed2 * 0.1f);
+			}
+			if (currentEffect == Effect.Virus) {
+				Collider[] hitColliders = Physics.OverlapSphere(transform.position, 10f);
+				int i = 0;
+				while (i < hitColliders.Length) {
+					if (hitColliders[i].gameObject.GetComponent<Enemy>()!=null && !hitColliders[i].gameObject.Equals(this.gameObject)){
+							Enemy temp = (Enemy) hitColliders[i].gameObject.GetComponent<Enemy>();
+							temp.GetDamaged(Effect.Virus, effectValue, effectTime);
+					}
+				i++;
+				}
+				if(Time.frameCount % 50 == 0) {
+					GetDamaged(effectValue, false);
+					GameObject tempbyte = (GameObject) GameObject.Instantiate(Utility.GetByteObject(), transform.position, Quaternion.identity);
+					tempbyte.GetComponent<Byte>().val = (int)effectValue*100;
+				}
+			} 
+			if (currentEffect == Effect.Stun) {
 				transform.position = lastPos;
 			}
 		}
@@ -337,6 +368,10 @@ public class Enemy : MonoBehaviour {
 			temp.GetComponent<TextMesh>().renderer.material.color = Color.yellow;
 			temp.GetComponent<TextMesh>().text = "" + damage*2 + "!";
 		} else {
+			if (currentEffect == Effect.Weakened) {
+				damage = damage * effectValue;
+				temp.GetComponent<TextMesh>().renderer.material.color = Color.cyan;
+			}
 			hp -= damage;
 			temp.GetComponent<TextMesh>().text = "" + damage;
 		}
@@ -365,5 +400,5 @@ public class Enemy : MonoBehaviour {
 	public bool ShowHealthbar() {
 		return healthBarTime > 0;
 	}
-
+	
 }

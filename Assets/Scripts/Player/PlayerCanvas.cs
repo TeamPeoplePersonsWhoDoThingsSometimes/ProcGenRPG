@@ -55,6 +55,9 @@ public class PlayerCanvas : MonoBehaviour {
 	private Vector2 dragDelta = Vector2.zero;
 	private Vector2 mousePressedLocation;
 	private Vector2 dragStart;
+	private int mouseOverInventoryItem;
+	private int mouseDragInventoryItem;
+	private bool readyToDrop;
 
 	public static void RegisterEnemyHealthBar(GameObject enemy) {
 		if(enemieswithhealthbars == null) {
@@ -324,6 +327,13 @@ public class PlayerCanvas : MonoBehaviour {
 			minimap.camera.enabled = true;
 			uiCam.camera.enabled = true;
 		}
+
+		if(mouseOverInventoryItem != -1 && !dragDelta.Equals(Vector2.zero) && mouseOverInventoryItem != mouseDragInventoryItem) {
+			inventoryItemContainer.transform.GetChild(mouseOverInventoryItem).GetComponent<Image>().color = Color.green;
+			readyToDrop = true;
+		} else {
+			readyToDrop = false;
+		}
 	}
 
 
@@ -358,36 +368,59 @@ public class PlayerCanvas : MonoBehaviour {
 	public void InventoryClicked() {
 		GetComponent<Animator>().SetBool("ShowingInventory", true);
 		GetComponent<Animator>().SetBool("ShowingStats", false);
+		GetComponent<Animator>().SetBool("ShowingQuests", false);
 	}
 
 	public void StatsClicked() {
 		GetComponent<Animator>().SetBool("ShowingInventory", false);
 		GetComponent<Animator>().SetBool("ShowingStats", true);
+		GetComponent<Animator>().SetBool("ShowingQuests", false);
+	}
+
+	public void QuestsClicked() {
+		GetComponent<Animator>().SetBool("ShowingInventory", false);
+		GetComponent<Animator>().SetBool("ShowingStats", false);
+		GetComponent<Animator>().SetBool("ShowingQuests", true);
 	}
 
 	public void HandleInventoryMouseOver(int index) {
-		if(index == -1) {
-			GetComponent<Animator>().SetBool("MouseOver", false);
-			mouseOverInfo.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector2(-200f, 0f);
-		} else if (dragDelta == Vector2.zero) {
+		if(index != -1 && dragDelta == Vector2.zero) {
 			GetComponent<Animator>().SetBool("MouseOver", true);
 			mouseOverInfo.transform.parent.GetComponent<RectTransform>().anchoredPosition = inventoryItemContainer.transform.GetChild(index).GetComponent<RectTransform>().anchoredPosition
 				+ new Vector2(-3.7f, 0.19f);
 			mouseOverInfo.transform.GetChild(1).GetChild(0).GetComponent<Text>().text = playerRef.inventory[index].name;
 			mouseOverInfo.transform.GetChild(0).GetComponent<Text>().text = playerRef.inventory[index].InfoString();
+			inventoryItemContainer.transform.GetChild(index).GetComponent<Image>().color = Color.white;
+		} else {
+			GetComponent<Animator>().SetBool("MouseOver", false);
+			if(mouseOverInventoryItem != -1) {
+				inventoryItemContainer.transform.GetChild(mouseOverInventoryItem).GetComponent<Image>().color = Color.white;
+			}
+			mouseOverInfo.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector2(-200f, 0f);
 		}
+		mouseOverInventoryItem = index;
 	}
 
 	public void HandleInventoryMouseDrag(int index) {
-		if(dragStart == Vector2.zero)
-		{
+		mouseDragInventoryItem = index;
+		if(dragStart == Vector2.zero && index != 0) {
 			dragStart = inventoryItemContainer.transform.GetChild(index).GetComponent<RectTransform>().anchoredPosition;
+		} else if(index == 0) {
+			dragStart = Vector2.zero;
 		}
 		inventoryItemContainer.transform.GetChild(index).GetComponent<RectTransform>().anchoredPosition = dragStart + dragDelta/Screen.width*14f;
+		inventoryItemContainer.transform.GetChild(index).GetComponent<CanvasGroup>().blocksRaycasts = false;
 	}
 
 	public void HandleInventoryMouseEndDrag(int index) {
-		inventoryItemContainer.transform.GetChild(index).GetComponent<RectTransform>().anchoredPosition = dragStart;
+		if(readyToDrop) {
+			inventoryItemContainer.transform.GetChild(index).GetComponent<RectTransform>().anchoredPosition = inventoryItemContainer.transform.GetChild(mouseOverInventoryItem).GetComponent<RectTransform>().anchoredPosition;
+//			inventoryItemContainer.transform.GetChild(index).SetSiblingIndex(mouseOverInventoryItem);
+			inventoryItemContainer.transform.GetChild(mouseOverInventoryItem).GetComponent<RectTransform>().anchoredPosition = dragStart;
+		} else {
+			inventoryItemContainer.transform.GetChild(index).GetComponent<RectTransform>().anchoredPosition = dragStart;
+		}
+		inventoryItemContainer.transform.GetChild(index).GetComponent<CanvasGroup>().blocksRaycasts = true;
 		dragDelta = Vector2.zero;
 		dragStart = Vector2.zero;
 	}

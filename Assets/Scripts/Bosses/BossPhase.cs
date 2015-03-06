@@ -5,6 +5,7 @@ public enum PhaseType {
 	Attack,
 	Spawn,
 	Move,
+	Other,
 }
 
 public class BossPhase : MonoBehaviour {
@@ -64,6 +65,9 @@ public class BossPhase : MonoBehaviour {
 				break;
 			case PhaseType.Spawn:
 				boss.PhaseSpawn(phaseName, phaseObject);
+				break;
+			case PhaseType.Other:
+				boss.PhaseOther(phaseName, phaseObject);
 				break;
 		}
 	}

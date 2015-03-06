@@ -66,4 +66,38 @@ public class MainMenu : MonoBehaviour {
 			curState = MenuState.Main;
 		}
 	}
+
+	public void PlayPressed() {
+		GetComponent<Animator>().SetTrigger("GoToLoad");
+	}
+
+	public void BackButtonOnLoad() {
+		GetComponent<Animator>().SetTrigger("LoadToMain");
+	}
+
+	public void OptionsPressed() {
+		GetComponent<Animator>().SetTrigger("GoToOptions");
+	}
+
+	public void ControlsPressed() {
+		GetComponent<Animator>().SetTrigger("GoToControls");
+	}
+
+	public void BackButtonOnOptions() {
+		GetComponent<Animator>().SetTrigger("OptionsToMain");
+	}
+
+	public void BackButtonOnControls() {
+		GetComponent<Animator>().SetTrigger("GoToOptions");
+	}
+
+	public void VolumeSliderChanged(GameObject slide) {
+		PlayerPrefs.SetFloat("MasterVolume", slide.GetComponent<Slider>().value);
+		slide.transform.parent.GetChild(1).GetComponent<Text>().text = ((int)(PlayerPrefs.GetFloat("MasterVolume")*100)).ToString() + "%";
+	}
+
+	public void QualitySliderChanged(GameObject slide) {
+		QualitySettings.SetQualityLevel((int)slide.GetComponent<Slider>().value, true);
+		slide.transform.parent.GetChild(1).GetComponent<Text>().text = QualitySettings.names[QualitySettings.GetQualityLevel()];
+	}
 }
