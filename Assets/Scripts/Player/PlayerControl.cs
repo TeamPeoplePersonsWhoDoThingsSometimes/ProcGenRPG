@@ -198,16 +198,10 @@ public class PlayerControl : MonoBehaviour {
 			transform.eulerAngles = new Vector3(0f, camTransform.eulerAngles.y, 0f);
 		}
 
-//		if(!PLAYINGWITHOCULUS) {
-//			transform.eulerAngles = new Vector3(0f, angle + camTransform.eulerAngles.y, 0f);
-//		} else {
-//			transform.eulerAngles = new Vector3(0f, camTransform.eulerAngles.y, 0f);
-//		}
-
-		/** Other ways of handling looking **/
-		//transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new Vector3(0f, transform.eulerAngles.y + Input.GetAxis("Mouse X")*(2-playerAnim.GetFloat("Speed")), 0f)), 2000*Time.deltaTime);
-		//playerAnim.SetFloat("Direction",(mousePosX - screenX/2f)/(screenX/2f));
-	}
+		if(transform.position.y > 0) {
+			transform.position = new Vector3(transform.position.x,0,transform.position.z);
+		}
+}
 
 	/**
 	 * Called by Mecanim to set when combo attacks can and can't occur

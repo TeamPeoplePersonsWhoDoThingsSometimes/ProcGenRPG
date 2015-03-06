@@ -31,6 +31,10 @@ public class RangedEnemy : Enemy {
 		if (movingToDest) {
 			rigidbody.MovePosition (Vector3.MoveTowards (transform.position, dest, 0.2f));
 		}
+
+		if(transform.position.y > 1) {
+			transform.position = new Vector3(transform.position.x,1,transform.position.z);
+		}
 	}
 	
 	public void Attack() {
