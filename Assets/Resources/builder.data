@@ -12,9 +12,11 @@
 
 Light Mace	LightMace
 Light Stick
-LightStick"
-Assault CarbineAssault Carbine
-CrossbowCrossbow
+LightStick
+
+Hexplosion
+Hexplosion
+	Null BeamNullBeamCrossbow
 
 Hexplosion
 Hexplosion
