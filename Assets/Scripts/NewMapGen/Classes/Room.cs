@@ -128,7 +128,9 @@ public class Room {
 			//TODO optimize
 			foreach (GameObject g in spawnedObjects)
 			{
-				g.SetActive(false);
+				if(g != null) {
+					g.SetActive(false);
+				}
 			}
 
             isGenerated = false;

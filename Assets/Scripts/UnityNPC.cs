@@ -6,6 +6,8 @@ public class UnityNPC : Interactable {
 
 	private bool talking = false;
 
+	public string name = "Nobody";
+
 	// Use this for initialization
 	void Start () {
 
@@ -15,7 +17,7 @@ public class UnityNPC : Interactable {
 	void Update () {
 		if (this.CanInteract()) {
 			transform.GetChild(2).gameObject.SetActive(true);
-			transform.GetChild(2).GetChild(0).GetComponent<Text>().text = "Press " + Player.useKey + " to talk";
+			transform.GetChild(2).GetChild(0).GetComponent<Text>().text = name;
 		} else {
 			transform.GetChild(2).gameObject.SetActive(false);
 		}

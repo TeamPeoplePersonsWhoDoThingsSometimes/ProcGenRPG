@@ -5,7 +5,8 @@ public enum WeaponType {
 	Melee,
 	Bow,
 	Handgun,
-	MediumGun
+	MediumGun,
+	Dagger
 }
 
 public class Weapon : Item {
