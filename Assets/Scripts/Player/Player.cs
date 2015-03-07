@@ -141,7 +141,7 @@ public class Player : MonoBehaviour {
 				equiped = activeHack.getDirectObject();
 			}
 
-			ActionEventInvoker.primaryInvoker.invokeAction (new PlayerAction (equiped, ActionType.EQUIP_ITEM));
+//			ActionEventInvoker.primaryInvoker.invokeAction (new PlayerAction (equiped, ActionType.EQUIP_ITEM));
 		}
 	}
 

@@ -37,6 +37,7 @@ public class PlayerControl : MonoBehaviour {
 		playerAnim.SetBool("ShootBow", false);
 		playerAnim.SetBool("ShootHandgun", false);
 		playerAnim.SetBool("ShootMediumGun", false);
+		playerAnim.SetBool("DaggerSlash", false);
 
 		/***** Updates booleans to check what attack player is in *****/
 		swordAttack1 = playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Base.Slash1") || playerAnim.GetCurrentAnimatorStateInfo(1).IsName("RightHandLayer.SlashWalking");
@@ -173,6 +174,13 @@ public class PlayerControl : MonoBehaviour {
 				} else if (!Input.GetMouseButton(0)) {
 					rangedIndicator.enabled = false;
 					playerAnim.SetBool("ShootMediumGun", false);
+				}
+			} else if(playerref.GetWeapon() != null && playerref.GetWeapon().Type().Equals(WeaponType.Dagger)) {
+				Debug.Log("HERE");
+				if(Input.GetMouseButton(0)) {
+					playerAnim.SetBool("DaggerSlash",true);
+				} else {
+					playerAnim.SetBool("DaggerSlash",false);
 				}
 			}
 
