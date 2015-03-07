@@ -118,6 +118,10 @@ public class uConversationNode {
 			blocks.Add(new StatusBlock(s));
 		}
 	}
+
+//	public uConversationNode chooseAlternative(string id) {
+//
+//	}
 	
 	public string textProperty() {
 		return text;
