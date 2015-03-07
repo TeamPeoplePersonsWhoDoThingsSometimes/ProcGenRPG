@@ -40,20 +40,6 @@ public class StatusBlock {
 		return blockCommands;
 	}
 
-	/*
-	public StatusBlockProtocol getStatusAsProtobuf() {
-		StatusBlockProtocol.Builder builder = StatusBlockProtocol.newBuilder();
-		
-		builder.SetName(name);
-		
-		foreach(SpawnCommand c in blockCommands) {
-			builder.addCommands(c.getSpawnCommandAsProto());
-		}
-		
-		return builder.build();
-	}
-	*/
-	
 	public override string ToString() {
 		return name;
 	}
