@@ -35,7 +35,7 @@ public class Attack : MonoBehaviour {
 	// Update is called once per frame
 	protected virtual void Update () {
 		//If the duration is not zero, then countdown to destroy attack
-		if(duration != -1) {
+		if(duration != 0) {
 			duration -= Time.deltaTime;
 			if(duration <= 0) {
 				Destroy(this.gameObject);
@@ -44,7 +44,7 @@ public class Attack : MonoBehaviour {
 	}
 
 
-	public virtual void OnTriggerEnter(Collider other) {
+	void OnTriggerEnter(Collider other) {
 		//If we want to damage an enemy and the other object has an enemy component
 		if (damageEnemy && other.GetComponent<Enemy>() != null) {
 
@@ -62,7 +62,7 @@ public class Attack : MonoBehaviour {
 				GameObject.Instantiate(hitObject, other.gameObject.transform.position + new Vector3(0,1,0), Quaternion.Euler(new Vector3(0,FollowPlayer.rotate,0f)));
 			}
 			if(destroyOnImpact) {
-				duration = -2;
+				Destroy(this.gameObject);
 			}
 		}
 

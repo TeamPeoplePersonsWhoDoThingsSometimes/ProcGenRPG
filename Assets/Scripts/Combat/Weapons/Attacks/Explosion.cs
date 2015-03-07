@@ -10,15 +10,14 @@ public class Explosion : Attack {
 
 
 	protected override void Update() {
-		duration -= Time.deltaTime;
-		transform.Translate(new Vector3(0f, 0f, 50*Time.deltaTime));
+		base.Update ();
 		if (duration <= 0) {
 			enemyHitArray = Physics.OverlapSphere(transform.position, radius);
 
 			Debug.Log ("Exploding");
 
 			if (enemyHitArray.Length != 0) {
-				Debug.Log ("Explosion collided with " + enemyHitArray.Length + " enemies.");
+				Debug.Log ("Explosion collided with something");
 			}
 
 			for(int i = 0; i < enemyHitArray.Length; i++) {
@@ -32,11 +31,6 @@ public class Explosion : Attack {
 					Debug.Log("Explosion: DamageEnemy");
 				}
 			}
-			Destroy(this.gameObject);
 		}
-	}
-
-	public override void OnTriggerEnter(Collider other) {
-		base.OnTriggerEnter(other);
 	}
 }
