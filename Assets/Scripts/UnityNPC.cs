@@ -7,10 +7,27 @@ public class UnityNPC : Interactable {
 	private bool talking = false;
 
 	public string name = "Nobody";
+	public string startConvID;
+
+	private uConversation conv;
+	private uConversationNode curNode;
 
 	// Use this for initialization
 	void Start () {
+//		foreach(uConversation c in LoadResources.Instance.Conversations) {
+//			if(c.getName().Equals(name)) {
+//				conv = c;
+//				break;
+//			}
+//		}
 
+//		for(int i = 0; i < conv.getNodeList().Count; i++) {
+//			uConversationNode node = conv.getNodeList()[i];
+//			Debug.Log(i + ". " + node.getText());
+//		}
+
+		curNode = uConversationNode.getNodeByStringID(startConvID);
+		Debug.Log("Start Node: " + curNode.getText());
 	}
 	
 	// Update is called once per frame
@@ -44,7 +61,7 @@ public class UnityNPC : Interactable {
 	protected override void Interact ()
 	{
 		talking = !talking;
-		Debug.Log(talking);
+//		curNode = conv.
 		return;
 	}
 }
