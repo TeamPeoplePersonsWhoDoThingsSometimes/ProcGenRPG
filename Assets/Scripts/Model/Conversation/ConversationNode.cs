@@ -113,7 +113,6 @@ public class uConversationNode {
 	}
 
 	public uConversationNode(ConversationNode proto) {
-		text = "";
 		alternatives = new Dictionary<long, Alternative>();
 		blocks = new List<StatusBlock>();
 		uid = proto.Uid;
@@ -121,6 +120,12 @@ public class uConversationNode {
 			ID = proto.Name;
 		} else {
 			ID = "" + uid;
+		}
+
+		if (proto.Text != "null") {
+			text = proto.Text;
+		} else {
+			text = "";
 		}
 
 		foreach (Connection c in proto.ConnectionsList) {
