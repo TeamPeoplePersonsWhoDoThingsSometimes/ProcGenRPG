@@ -37,7 +37,6 @@ public class PlayerControl : MonoBehaviour {
 		playerAnim.SetBool("ShootBow", false);
 		playerAnim.SetBool("ShootHandgun", false);
 		playerAnim.SetBool("ShootMediumGun", false);
-		playerAnim.SetBool("DaggerSlash", false);
 
 		/***** Updates booleans to check what attack player is in *****/
 		swordAttack1 = playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Base.Slash1") || playerAnim.GetCurrentAnimatorStateInfo(1).IsName("RightHandLayer.SlashWalking");
