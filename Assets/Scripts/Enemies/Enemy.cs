@@ -50,6 +50,7 @@ public class Enemy : MonoBehaviour {
 
 	private float seed1 = 0f;
 	private float seed2 = 0f;
+	private int count = 0;
 
 	protected void Awake() {
 		if (!badassSet) {
@@ -184,26 +185,27 @@ public class Enemy : MonoBehaviour {
 				transform.position -= (transform.position - lastPos)/2f;
 			}
 			if (currentEffect == Effect.Bugged) {
-				if ((Time.frameCount % 15) == 0) { //walks in a random direction, changes direction every 15 frames
-					seed1 = Random.Range(-0.5f,0.5f);
-					seed2 = Random.Range(-0.5f,0.5f);
+				if ((count % 15) == 0) { //walks in a random direction, changes direction every 15 frames
+					seed1 = Random.value *  - 0.5f;
+					seed2 = Random.value *  - 0.5f;
 				}
-				transform.position += new Vector3(seed1 * 0.1f, 0f, seed2 * 0.1f);
+				transform.position += new Vector3(seed1 * 0.6f, 0f, seed2 * 0.6f);
+				count++;
+			}
+			if (currentEffect == Effect.Weakened) {
+				GameObject temp = (GameObject)Instantiate(hitInfo,this.transform.position, hitInfo.transform.rotation);
+				temp.GetComponent<TextMesh>().renderer.material.color = Color.cyan;
 			}
 			if (currentEffect == Effect.Virus) {
-				Collider[] hitColliders = Physics.OverlapSphere(transform.position, 10f);
+				Collider[] hitColliders = Physics.OverlapSphere(transform.position, 1f);
 				int i = 0;
 				while (i < hitColliders.Length) {
-					if (hitColliders[i].gameObject.GetComponent<Enemy>()!=null && !hitColliders[i].gameObject.Equals(this.gameObject)){
+					if (hitColliders[i].gameObject.GetComponent<Enemy>()!=null){
 							Enemy temp = (Enemy) hitColliders[i].gameObject.GetComponent<Enemy>();
 							temp.GetDamaged(Effect.Virus, effectValue, effectTime);
+							temp.GetDamaged(Effect.Deteriorating, effectValue, effectTime);
 					}
 				i++;
-				}
-				if(Time.frameCount % 50 == 0) {
-					GetDamaged(effectValue, false);
-					GameObject tempbyte = (GameObject) GameObject.Instantiate(Utility.GetByteObject(), transform.position, Quaternion.identity);
-					tempbyte.GetComponent<Byte>().val = (int)effectValue*100;
 				}
 			} 
 			if (currentEffect == Effect.Stun) {
@@ -359,6 +361,9 @@ public class Enemy : MonoBehaviour {
 		healthBarTime = 2f;
 		GetComponent<Animator>().SetTrigger("Hurt");
 		GameObject temp = (GameObject)Instantiate(hitInfo,this.transform.position, hitInfo.transform.rotation);
+		if (currentEffect == Effect.Weakened) {
+			damage = damage * 1.5f;
+		}
 		if (!detectedPlayer) {
 			hp -= damage*4;
 			temp.GetComponent<TextMesh>().renderer.material.color = Color.blue;
@@ -368,10 +373,6 @@ public class Enemy : MonoBehaviour {
 			temp.GetComponent<TextMesh>().renderer.material.color = Color.yellow;
 			temp.GetComponent<TextMesh>().text = "" + damage*2 + "!";
 		} else {
-			if (currentEffect == Effect.Weakened) {
-				damage = damage * effectValue;
-				temp.GetComponent<TextMesh>().renderer.material.color = Color.cyan;
-			}
 			hp -= damage;
 			temp.GetComponent<TextMesh>().text = "" + damage;
 		}
