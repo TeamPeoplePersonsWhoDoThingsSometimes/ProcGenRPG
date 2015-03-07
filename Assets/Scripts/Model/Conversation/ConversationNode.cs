@@ -87,20 +87,29 @@ public class uConversationNode {
 	private Dictionary<long, Alternative> alternatives;
 	private long uid;
 	private string text;
-	
+	private string ID;
+
+	private void cacheIds() {
+		idMap.Add (uid, this);
+		strIdMap.Add (ID, this);
+	}
 	
 	public uConversationNode() {
 		text = "";
 		uid = getNextUID();
+		ID = "" + uid;
 		alternatives = new Dictionary<long, Alternative>();
 		blocks = new List<StatusBlock>();
+		cacheIds ();
 	}
 	
 	public uConversationNode(string message) {
 		alternatives = new Dictionary<long, Alternative>();
 		text = message;
 		uid = getNextUID();
+		ID = "" + uid;
 		blocks = new List<StatusBlock>();
+		cacheIds ();
 	}
 
 	public uConversationNode(ConversationNode proto) {
@@ -108,6 +117,11 @@ public class uConversationNode {
 		alternatives = new Dictionary<long, Alternative>();
 		blocks = new List<StatusBlock>();
 		uid = proto.Uid;
+		if (proto.Name != "null") {
+			ID = proto.Name;
+		} else {
+			ID = "" + uid;
+		}
 
 		foreach (Connection c in proto.ConnectionsList) {
 			Alternative alt = new Alternative(c.NodeId, c.Text);
@@ -117,6 +131,8 @@ public class uConversationNode {
 		foreach (StatusBlockProtocol s in proto.BlocksList) {
 			blocks.Add(new StatusBlock(s));
 		}
+
+		cacheIds ();
 	}
 
 //	public uConversationNode chooseAlternative(string id) {
