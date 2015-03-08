@@ -9,6 +9,11 @@ public class UnityNPC : Interactable {
 	public string name = "Nobody";
 	public string startConvID;
 
+	public Text nameUI1, nameUI2;
+	public Text curText;
+	public GameObject buttonPrefab;
+	public GameObject buttonHolder;
+
 	private uConversation conv;
 	private uConversationNode curNode;
 
@@ -27,16 +32,17 @@ public class UnityNPC : Interactable {
 //		}
 
 		curNode = uConversationNode.getNodeByStringID(startConvID);
-		Debug.Log("Start Node: " + curNode.getText());
+		nameUI1.text = name;
+		nameUI2.text = name;
+		curText.text = curNode.getText();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (this.CanInteract()) {
-			transform.GetChild(2).gameObject.SetActive(true);
-			transform.GetChild(2).GetChild(0).GetComponent<Text>().text = name;
+			nameUI2.enabled = true;
 		} else {
-			transform.GetChild(2).gameObject.SetActive(false);
+			nameUI2.enabled = false;
 		}
 
 		PlayerControl.immobile = talking;
