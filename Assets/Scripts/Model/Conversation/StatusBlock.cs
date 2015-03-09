@@ -34,6 +34,16 @@ public class StatusBlock {
 			statuses.Add (factory.getStatusCheckableFromProtocol(s));
 		}
 	}
+
+	public bool StatusesMet() {
+		bool forreturn = true;
+		foreach(StatusCheckable sc in getStatuses()) {
+			if(!sc.isStatusMet()) {
+				forreturn = false;
+			}
+		}
+		return forreturn;
+	}
 	
 	public void newCommand() {
 		blockCommands.Add(new SpawnCommand());
@@ -45,6 +55,10 @@ public class StatusBlock {
 	
 	public List<SpawnCommand> getCommands() {
 		return blockCommands;
+	}
+
+	public List<StatusCheckable> getStatuses() {
+		return statuses;
 	}
 
 	public override string ToString() {

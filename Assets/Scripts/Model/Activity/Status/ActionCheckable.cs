@@ -30,6 +30,12 @@ public class ActionCheckable : StatusCheckable {
 		return false;
 	}
 
+	public bool isStatusMet() {
+		if (currentAmount >= quantity)
+			return true;
+		return false;
+	}
+
 	/**
 	 * Set this status checkable with the information from the given protocol
 	 */

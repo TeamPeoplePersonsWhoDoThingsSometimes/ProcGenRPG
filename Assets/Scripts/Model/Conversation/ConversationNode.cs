@@ -140,9 +140,39 @@ public class uConversationNode {
 		cacheIds ();
 	}
 
-//	public uConversationNode chooseAlternative(string id) {
-//
-//	}
+	public List<string> getAlternativeStrings() {
+		List<string> forreturn = new List<string>();
+		foreach(Alternative a in getAlternatives().Values) {
+			if(!forreturn.Contains(a.getText())) {
+				forreturn.Add(a.getText());
+			}
+		}
+		return forreturn;
+	}
+
+	public uConversationNode GoToAlternative(string s) {
+		foreach(Alternative a in getAlternatives().Values) {
+			uConversationNode tempNode = uConversationNode.getNodeByID(a.getUID());
+			Debug.Log(a.getText() + " " + tempNode.getBlocks().Count);
+			if(s.Equals(a.getText()) && tempNode.ABlockSatisfied()) {
+				return tempNode;
+			}
+		}
+		Debug.LogError("No proper conversation path to follow!");
+		return null;
+	}
+
+	public bool ABlockSatisfied() {
+		foreach(StatusBlock sb in getBlocks()) {
+			if(sb.StatusesMet()) {
+				return true;
+			}
+		}
+		if(getBlocks().Count == 0) {
+			return true;
+		}
+		return false;
+	}
 	
 	public string textProperty() {
 		return text;
