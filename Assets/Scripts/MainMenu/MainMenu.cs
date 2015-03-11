@@ -49,11 +49,7 @@ public class MainMenu : MonoBehaviour {
 		case MenuState.Main:
 			mainContainer.SetActive(true);
 			splashContainer.SetActive(false);
-			if(Camera.main.GetComponent<ChromaticAbberation>().scale > 2) {
-				Camera.main.GetComponent<ChromaticAbberation>().scale--;
-			} else {
-				Camera.main.GetComponent<ChromaticAbberation>().scale = 0.3f;
-			}
+			//DO CHROMABB EFFECT
 			break;
 
 
@@ -61,10 +57,8 @@ public class MainMenu : MonoBehaviour {
 	}
 
 	void TransitionToMain() {
-		Camera.main.GetComponent<ChromaticAbberation>().scale++;
-		if(Camera.main.GetComponent<ChromaticAbberation>().scale > 30) {
-			curState = MenuState.Main;
-		}
+		//DO CHROMABB EFFECT
+		curState = MenuState.Main;
 	}
 
 	public void PlayPressed() {

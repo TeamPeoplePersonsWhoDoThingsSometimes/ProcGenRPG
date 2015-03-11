@@ -143,7 +143,8 @@ public class uConversationNode {
 	public List<string> getAlternativeStrings() {
 		List<string> forreturn = new List<string>();
 		foreach(Alternative a in getAlternatives().Values) {
-			if(!forreturn.Contains(a.getText())) {
+			Debug.Log("BLA: " + a.getText());
+			if(!forreturn.Contains(a.getText()) && uConversationNode.getNodeByID(a.getUID()).ABlockSatisfied()) {
 				forreturn.Add(a.getText());
 			}
 		}
@@ -151,15 +152,15 @@ public class uConversationNode {
 	}
 
 	public uConversationNode GoToAlternative(string s) {
+		uConversationNode forreturn = null;
 		foreach(Alternative a in getAlternatives().Values) {
 			uConversationNode tempNode = uConversationNode.getNodeByID(a.getUID());
-			Debug.Log(a.getText() + " " + tempNode.getBlocks().Count);
-			if(s.Equals(a.getText()) && tempNode.ABlockSatisfied()) {
-				return tempNode;
+			Debug.Log(a.getText() + " -> " + tempNode.getText());
+			if(((forreturn != null && forreturn.blocks.Count < tempNode.blocks.Count) || (forreturn == null)) && s.Equals(a.getText()) && tempNode.ABlockSatisfied()) {
+				forreturn = tempNode;
 			}
 		}
-		Debug.LogError("No proper conversation path to follow!");
-		return null;
+		return forreturn;
 	}
 
 	public bool ABlockSatisfied() {

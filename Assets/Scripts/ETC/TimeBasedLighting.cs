@@ -15,6 +15,6 @@ public class TimeBasedLighting : MonoBehaviour {
 	void Update () {
 		transform.Rotate(new Vector3(0f, speed * 10f * Time.deltaTime, 0f), Space.World);
 		float t = Mathf.PingPong(Time.time, speed * 10f) / (10f/speed);
-		light.color = Color.Lerp(morning, night,t);
+		GetComponent<Light>().color = Color.Lerp(morning, night,t);
 	}
 }

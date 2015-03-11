@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityStandardAssets.ImageEffects;
 
 public class FollowPlayer : MonoBehaviour {
 
@@ -16,6 +17,8 @@ public class FollowPlayer : MonoBehaviour {
 	private float zoom = 2f;
 
 	private Player p;
+	private float prevHealth = 1;
+
 	// Use this for initialization
 	void Start () {
 		offset = this.transform.position - Player.playerPos.position;
@@ -57,12 +60,10 @@ public class FollowPlayer : MonoBehaviour {
 		if(!PlayerCanvas.inConsole) {
 			if(Input.GetAxis("Mouse ScrollWheel") > 0 && zoom < 4f) {
 				transform.GetChild(0).transform.localPosition = new Vector3(transform.GetChild(0).transform.localPosition.x, transform.GetChild(0).transform.localPosition.y - 0.5f, transform.GetChild(0).transform.localPosition.z + 0.5f);
-				transform.GetChild(1).transform.localPosition = new Vector3(transform.GetChild(1).transform.localPosition.x, transform.GetChild(1).transform.localPosition.y - 0.5f, transform.GetChild(1).transform.localPosition.z + 0.5f);
 				zoom += 0.1f;
 			} else if (Input.GetAxis("Mouse ScrollWheel") < 0 && zoom > 1f) {
 				zoom -= 0.1f;
 				transform.GetChild(0).transform.localPosition = new Vector3(transform.GetChild(0).transform.localPosition.x, transform.GetChild(0).transform.localPosition.y + 0.5f, transform.GetChild(0).transform.localPosition.z - 0.5f);
-				transform.GetChild(1).transform.localPosition = new Vector3(transform.GetChild(1).transform.localPosition.x, transform.GetChild(1).transform.localPosition.y + 0.5f, transform.GetChild(1).transform.localPosition.z - 0.5f);
 			}
 			Vector3 lookDirection1 = (Player.playerPos.position + new Vector3(0,2,0) + Player.playerPos.forward*(1/zoom)) - transform.GetChild(0).transform.position;
 			Vector3 lookDirection2 = (Player.playerPos.position + new Vector3(0,2,0) + Player.playerPos.forward*(1/zoom)) - transform.GetChild(1).transform.position;
@@ -70,14 +71,21 @@ public class FollowPlayer : MonoBehaviour {
 			Quaternion lookRotation2 = Quaternion.LookRotation(lookDirection2);
 			if(Input.GetAxis("Mouse ScrollWheel") == 0) {
 				transform.GetChild(0).transform.rotation = Quaternion.RotateTowards(transform.GetChild(0).transform.rotation, lookRotation1, 0.1f);
-				transform.GetChild(1).transform.rotation = Quaternion.RotateTowards(transform.GetChild(1).transform.rotation, lookRotation2, 0.1f);
 			} else {
 				transform.GetChild(0).transform.rotation = Quaternion.RotateTowards(transform.GetChild(0).transform.rotation, lookRotation1, 1f);
-				transform.GetChild(1).transform.rotation = Quaternion.RotateTowards(transform.GetChild(1).transform.rotation, lookRotation2, 1f);
 			}
 		}
 
-		damaged.localScale = Vector3.one * Mathf.Max(4f * p.GetIntegrityPercentage(), 1f);
+		if(prevHealth > p.GetIntegrityPercentage()) {
+			damaged.localScale = Vector3.one;
+			Camera.main.GetComponent<VignetteAndChromaticAberration>().blur = 2*(1-p.GetIntegrityPercentage());
+			Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration = Mathf.Max(2f, 10*(1-p.GetIntegrityPercentage())) + ((1-p.GetIntegrityPercentage())*Random.Range(-1f,5f));
+		} else if (prevHealth < p.GetIntegrityPercentage()) {
+			damaged.localScale = Vector3.MoveTowards(damaged.localScale, Vector3.one * Mathf.Max(4f * p.GetIntegrityPercentage(), 1f), Time.deltaTime);
+			Camera.main.GetComponent<VignetteAndChromaticAberration>().blur = Mathf.MoveTowards(Camera.main.GetComponent<VignetteAndChromaticAberration>().blur, 0f, Time.deltaTime);
+			Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration = Mathf.MoveTowards(Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration, 2f, Time.deltaTime);
+		}
+		prevHealth = p.GetIntegrityPercentage();
 
 	}
 

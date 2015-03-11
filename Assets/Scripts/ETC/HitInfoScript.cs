@@ -17,7 +17,7 @@ public class HitInfoScript : MonoBehaviour {
 		this.transform.eulerAngles = camRot.eulerAngles;
 		localTime += Time.deltaTime;
 		if(localTime < 0.1f) {
-			rigidbody.AddForce(new Vector3(Random.value, 2f, Random.value), ForceMode.VelocityChange);
+			GetComponent<Rigidbody>().AddForce(new Vector3(Random.value, 2f, Random.value), ForceMode.VelocityChange);
 		}
 		transform.Rotate(0f,50*Time.deltaTime,0f);
 		GetComponent<TextMesh>().color = new Color(1,1,1,Mathf.Abs(Mathf.Min(-2, -localTime) + 4)/2f);

@@ -24,13 +24,13 @@ public class Byte : MonoBehaviour {
 		timeOffset += Time.deltaTime;
 
 		if(timeOffset < 0.1f) {
-			rigidbody.AddForce(new Vector3(Random.value*8f - 4, Random.value*2f, Random.value*8f - 4), ForceMode.VelocityChange);
+			GetComponent<Rigidbody>().AddForce(new Vector3(Random.value*8f - 4, Random.value*2f, Random.value*8f - 4), ForceMode.VelocityChange);
 		}
 
 		if ((timeOffset > 1 && Vector3.Distance(Player.playerPos.position, this.transform.position) < 10f) || timeOffset > 2) {
 			this.transform.position = Vector3.MoveTowards(this.transform.position, Player.playerPos.position + new Vector3(0,1,0),20*Time.deltaTime);
-			this.rigidbody.useGravity = false;
-			this.collider.enabled = false;
+			this.GetComponent<Rigidbody>().useGravity = false;
+			this.GetComponent<Collider>().enabled = false;
 		}
 
 		if(timeOffset > 1 && Vector3.Distance(Player.playerPos.position + new Vector3(0,1,0), this.transform.position) < 1f) {

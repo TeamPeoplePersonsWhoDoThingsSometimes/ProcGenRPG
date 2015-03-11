@@ -5,7 +5,7 @@ public class HexplosionAttack: Attack {
 
 	protected void Start () {
 		Color c = new Color(Random.value, Random.value, Random.value);
-		renderer.material.color = c;
+		GetComponent<Renderer>().material.color = c;
 		GetComponent<LineRenderer>().SetColors(c, Color.white);
 	}
 

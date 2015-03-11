@@ -194,7 +194,7 @@ public class Enemy : MonoBehaviour {
 			}
 			if (currentEffect == Effect.Weakened) {
 				GameObject temp = (GameObject)Instantiate(hitInfo,this.transform.position, hitInfo.transform.rotation);
-				temp.GetComponent<TextMesh>().renderer.material.color = Color.cyan;
+				temp.GetComponent<TextMesh>().GetComponent<Renderer>().material.color = Color.cyan;
 			}
 			if (currentEffect == Effect.Virus) {
 				Collider[] hitColliders = Physics.OverlapSphere(transform.position, 1f);
@@ -246,7 +246,7 @@ public class Enemy : MonoBehaviour {
 		/*** Handle Moving towards player and attacking ***/
 		if (Vector3.Distance(Player.playerPos.position, transform.position) > 3f && !retreating) {
 			GetComponent<Animator>().SetTrigger("PlayerSpotted");
-			rigidbody.MovePosition(Vector3.MoveTowards(transform.position, Player.playerPos.position + new Vector3(0,1,0), 0.1f));
+			GetComponent<Rigidbody>().MovePosition(Vector3.MoveTowards(transform.position, Player.playerPos.position + new Vector3(0,1,0), 0.1f));
 			transform.LookAt(Player.playerPos.position + new Vector3(0,1,0));
 		} else if (Vector3.Distance(Player.playerPos.position, transform.position) <= 3f && !retreating) {
 			transform.LookAt(Player.playerPos.position + new Vector3(0,1,0));
@@ -310,7 +310,7 @@ public class Enemy : MonoBehaviour {
 			knockbackTime = 0;
 			Vector3 dir = transform.position - knockbackPos;
 			dir.y = 0f;
-			rigidbody.AddForceAtPosition(dir*knockbackVal,knockbackPos, ForceMode.VelocityChange);
+			GetComponent<Rigidbody>().AddForceAtPosition(dir*knockbackVal,knockbackPos, ForceMode.VelocityChange);
 //			rigidbody.velocity = dir*knockbackVal;
 		}
 	}
@@ -342,13 +342,13 @@ public class Enemy : MonoBehaviour {
 	}
 
 	void FixedUpdate () {
-		if(rigidbody.IsSleeping()) {
-			rigidbody.WakeUp();
+		if(GetComponent<Rigidbody>().IsSleeping()) {
+			GetComponent<Rigidbody>().WakeUp();
 		}
 	}
 
 	protected virtual void DoIdle() {
-		rigidbody.MoveRotation(Quaternion.Euler(transform.eulerAngles + new Vector3(0,10*Time.deltaTime,0f)));
+		GetComponent<Rigidbody>().MoveRotation(Quaternion.Euler(transform.eulerAngles + new Vector3(0,10*Time.deltaTime,0f)));
 	}
 
 	public void DoKnockback(Vector3 pos, float knockback) {
@@ -366,11 +366,11 @@ public class Enemy : MonoBehaviour {
 		}
 		if (!detectedPlayer) {
 			hp -= damage*4;
-			temp.GetComponent<TextMesh>().renderer.material.color = Color.blue;
+			temp.GetComponent<TextMesh>().GetComponent<Renderer>().material.color = Color.blue;
 			temp.GetComponent<TextMesh>().text = "*" + damage*4 + "*";
 		} else if (crit) {
 			hp -= damage*2;
-			temp.GetComponent<TextMesh>().renderer.material.color = Color.yellow;
+			temp.GetComponent<TextMesh>().GetComponent<Renderer>().material.color = Color.yellow;
 			temp.GetComponent<TextMesh>().text = "" + damage*2 + "!";
 		} else {
 			hp -= damage;

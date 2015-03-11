@@ -55,6 +55,7 @@ public class UnityNPC : Interactable {
 //		Debug.Log(curNode.getAlternativeStrings()[responseChosen.transform.GetSiblingIndex()]);
 		if(responseChosen.transform.GetChild(0).GetComponent<Text>().text.Equals("Goodbye")) {
 			curNode = uConversationNode.getNodeByStringID(startConvID);
+			UpdateUI();
 			talking = false;
 		} else {
 			curNode = curNode.GoToAlternative(curNode.getAlternativeStrings()[responseChosen.transform.GetSiblingIndex()]);

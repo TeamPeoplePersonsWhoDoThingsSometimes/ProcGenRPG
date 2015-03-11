@@ -7,7 +7,6 @@ public class Player : MonoBehaviour {
 
 	public List<Item> inventory = new List<Item>();
 	public GameObject[] playerArmor; //0: head, 1: chest, 2: arms, 3: legs
-	public List<Item> quickAccessItems = new List<Item>();
 	private Weapon activeWeapon;
 	private Hack activeHack;
 	private GameObject weaponRef;
@@ -79,7 +78,6 @@ public class Player : MonoBehaviour {
 		activeHack = (Hack)inventory[1];
 
 		//sets up quickaccessitems and makes the canvas update the inventory ui
-		quickAccessItems = new List<Item>(inventory);
 		PlayerCanvas.UpdateInventory();
 	}
 
@@ -115,11 +113,11 @@ public class Player : MonoBehaviour {
 
 	//Called whenever the player presses a number to quick select
 	public void SetActiveItem (int val) {
-		if(quickAccessItems.Count >= val + 1) {
+		if(inventory.Count >= val + 1) {
 			DirectObject equiped = null;
 
-			if(quickAccessItems[val].GetType().IsSubclassOf(typeof(Weapon))) { 
-				activeWeapon = (Weapon)quickAccessItems[val];
+			if(inventory[val].GetType().IsSubclassOf(typeof(Weapon))) { 
+				activeWeapon = (Weapon)inventory[val];
 				for(int i = 0; i < playerInventoryRef.transform.childCount; i++) {
 					if(playerInventoryRef.transform.GetChild(i).GetComponent<Weapon>() != null
 					   && playerInventoryRef.transform.GetChild(i).GetComponent<Weapon>().Equals(activeWeapon)) {
@@ -137,7 +135,7 @@ public class Player : MonoBehaviour {
 					}
 				}
 			} else {
-				activeHack = (Hack)quickAccessItems[val];
+				activeHack = (Hack)inventory[val];
 				equiped = activeHack.getDirectObject();
 			}
 
@@ -227,10 +225,10 @@ public class Player : MonoBehaviour {
 	//Called by any attack that hits the player
 	public void GetDamaged(float damage, bool crit) {
 		GameObject temp = (GameObject)Instantiate(hitInfo,this.transform.position + new Vector3(0,1,0), hitInfo.transform.rotation);
-		temp.GetComponent<TextMesh>().renderer.material.color = Color.red;
+		temp.GetComponent<TextMesh>().GetComponent<Renderer>().material.color = Color.red;
 		if (crit) {
 			integrity -= damage*2;
-			temp.GetComponent<TextMesh>().renderer.material.color = Color.black;
+			temp.GetComponent<TextMesh>().GetComponent<Renderer>().material.color = Color.black;
 			temp.GetComponent<TextMesh>().text = "" + damage*2 + "!";
 		} else {
 			integrity -= damage;
@@ -260,8 +258,13 @@ public class Player : MonoBehaviour {
 		GameObject temp = (GameObject) Instantiate(item, Vector3.zero, Quaternion.identity);
 		inventory.Add(temp.GetComponent<Item>());
 		temp.transform.parent = playerInventoryRef.transform;
-		if(quickAccessItems.Count < 10 && (temp.GetComponent<Weapon>() != null || temp.GetComponent<Hack>() != null)) {
-			quickAccessItems.Add(temp.GetComponent<Item>());
+		if(inventory.Count < 10 && (temp.GetComponent<Weapon>() != null || temp.GetComponent<Hack>() != null)) {
+			inventory.Add(temp.GetComponent<Item>());
+		} else if (inventory.Capacity < 11) {
+			inventory.Capacity = 11;
+			inventory[10] = temp.GetComponent<Item>();
+		} else {
+			inventory.Add(temp.GetComponent<Item>());
 		}
 
 		if(temp.GetComponent<Hack>() == null) {
@@ -365,6 +368,16 @@ public class Player : MonoBehaviour {
 			headRef.transform.GetChild(0).localPosition = Vector3.zero;
 			headRef.transform.GetChild(0).localEulerAngles = Vector3.zero;
 			headRef.transform.GetChild(0).localScale = Vector3.one;
+		}
+	}
+
+	public List<Item> quickAccessItems {
+		get {
+			List<Item> temp = new List<Item>();
+			for(int i = 0; i < 10 && i < inventory.Count; i++) {
+				temp.Add(inventory[i]);
+			}
+			return temp;
 		}
 	}
 

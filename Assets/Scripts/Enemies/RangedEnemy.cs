@@ -29,7 +29,7 @@ public class RangedEnemy : Enemy {
 		base.Update ();
 
 		if (movingToDest) {
-			rigidbody.MovePosition (Vector3.MoveTowards (transform.position, dest, 0.2f));
+			GetComponent<Rigidbody>().MovePosition (Vector3.MoveTowards (transform.position, dest, 0.2f));
 		}
 
 		if(transform.position.y > 1) {

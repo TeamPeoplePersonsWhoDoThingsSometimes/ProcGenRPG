@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
+using UnityStandardAssets.ImageEffects;
 
 public class PlayerCanvas : MonoBehaviour {
 
@@ -209,11 +210,13 @@ public class PlayerCanvas : MonoBehaviour {
 		if(updateInventoryUI) {
 			int i;
 			for (i = 0; i < playerRef.inventory.Count && i < 21; i++) {
-				inventoryItemContainer.transform.GetChild(i).GetComponent<Image>().sprite = GetSprite(playerRef.inventory[i].RarityVal);
-				inventoryItemContainer.transform.GetChild(i).GetComponent<Image>().color = Color.white;
-				inventoryItemContainer.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = playerRef.inventory[i].icon;
-				inventoryItemContainer.transform.GetChild(i).GetChild(0).GetComponent<Image>().color = Color.white;
-				inventoryItemContainer.transform.GetChild(i).GetComponent<EventTrigger>().enabled = true;
+				if(playerRef.inventory[i] != null) {
+					inventoryItemContainer.transform.GetChild(i).GetComponent<Image>().sprite = GetSprite(playerRef.inventory[i].RarityVal);
+					inventoryItemContainer.transform.GetChild(i).GetComponent<Image>().color = Color.white;
+					inventoryItemContainer.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = playerRef.inventory[i].icon;
+					inventoryItemContainer.transform.GetChild(i).GetChild(0).GetComponent<Image>().color = Color.white;
+					inventoryItemContainer.transform.GetChild(i).GetComponent<EventTrigger>().enabled = true;
+				}
 			}
 			if(i < 21)
 			{
@@ -294,9 +297,10 @@ public class PlayerCanvas : MonoBehaviour {
 			hackStatsInfo.text = playerRef.GetHack().InfoString();
 
 			/*** Handles Blur effect ***/
-			mainCam.camera.enabled = false;
-			mainCamWithEffects.camera.enabled = true;
-			mainCamWithEffects.GetComponent<Blur>().blur = Mathf.MoveTowards(mainCamWithEffects.GetComponent<Blur>().blur, 5, Time.deltaTime*5f);
+			if(mainCam.GetComponent<VignetteAndChromaticAberration>().intensity < 3f) {
+				mainCam.GetComponent<VignetteAndChromaticAberration>().intensity += Time.deltaTime*2f;
+				mainCam.GetComponent<DepthOfField>().useFocalTransform = false;
+			}
 
 			/*** Handles dragging logic ***/
 			if(Input.GetMouseButtonDown(0)) {
@@ -312,20 +316,19 @@ public class PlayerCanvas : MonoBehaviour {
 			minimap.SetActive(true);
 
 			/*** Handles un-blurring ***/
-			mainCamWithEffects.GetComponent<Blur>().blur = Mathf.MoveTowards(mainCamWithEffects.GetComponent<Blur>().blur, 0, Time.deltaTime*5f);
-			if(mainCamWithEffects.GetComponent<Blur>().blur == 0) {
-				mainCam.camera.enabled = true;
-				mainCamWithEffects.camera.enabled = false;
+			if(mainCam.GetComponent<VignetteAndChromaticAberration>().intensity > 0) {
+				mainCam.GetComponent<VignetteAndChromaticAberration>().intensity -= Time.deltaTime*2f;
+				mainCam.GetComponent<DepthOfField>().useFocalTransform = true;
 			}
 
 		}
 
 		if(cinematicMode) {
-			minimap.camera.enabled = false;
-			uiCam.camera.enabled = false;
+			minimap.GetComponent<Camera>().enabled = false;
+			uiCam.GetComponent<Camera>().enabled = false;
 		} else {
-			minimap.camera.enabled = true;
-			uiCam.camera.enabled = true;
+			minimap.GetComponent<Camera>().enabled = true;
+			uiCam.GetComponent<Camera>().enabled = true;
 		}
 
 		if(mouseOverInventoryItem != -1 && !dragDelta.Equals(Vector2.zero) && mouseOverInventoryItem != mouseDragInventoryItem) {
@@ -414,12 +417,17 @@ public class PlayerCanvas : MonoBehaviour {
 
 	public void HandleInventoryMouseEndDrag(int index) {
 		if(readyToDrop) {
-			inventoryItemContainer.transform.GetChild(index).GetComponent<RectTransform>().anchoredPosition = inventoryItemContainer.transform.GetChild(mouseOverInventoryItem).GetComponent<RectTransform>().anchoredPosition;
+//			inventoryItemContainer.transform.GetChild(index).GetComponent<RectTransform>().anchoredPosition = inventoryItemContainer.transform.GetChild(mouseOverInventoryItem).GetComponent<RectTransform>().anchoredPosition;
+//			inventoryItemContainer.transform.GetChild(mouseOverInventoryItem).GetComponent<RectTransform>().anchoredPosition = dragStart;
+			Item tempItem = playerRef.inventory[index];
+			playerRef.inventory[index] = playerRef.inventory[mouseOverInventoryItem];
+			playerRef.inventory[mouseOverInventoryItem] = tempItem;
+			updateInventoryUI = true;
 //			inventoryItemContainer.transform.GetChild(index).SetSiblingIndex(mouseOverInventoryItem);
-			inventoryItemContainer.transform.GetChild(mouseOverInventoryItem).GetComponent<RectTransform>().anchoredPosition = dragStart;
-		} else {
-			inventoryItemContainer.transform.GetChild(index).GetComponent<RectTransform>().anchoredPosition = dragStart;
+//			inventoryItemContainer.transform.GetChild(mouseOverInventoryItem-1).SetSiblingIndex(index);
 		}
+
+		inventoryItemContainer.transform.GetChild(index).GetComponent<RectTransform>().anchoredPosition = dragStart;
 		inventoryItemContainer.transform.GetChild(index).GetComponent<CanvasGroup>().blocksRaycasts = true;
 		dragDelta = Vector2.zero;
 		dragStart = Vector2.zero;
