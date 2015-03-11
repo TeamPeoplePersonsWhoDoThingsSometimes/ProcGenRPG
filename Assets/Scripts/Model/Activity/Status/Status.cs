@@ -48,6 +48,11 @@ public class Status : ActionEventListener {
 	private int tier;
 
 	/**
+	 * The player's current level
+	 */
+	private int level;
+
+	/**
 	 * Privatize the constructor to revoke access per the singelton
 	 * implementation
 	 */
@@ -63,6 +68,13 @@ public class Status : ActionEventListener {
 	 */
 	public override void onAction(IAction action) {
 		Debug.Log ("Register action: " + action.getActionType () + " on " + action.getDirectObject ().getIdentifier () + " of type " + action.getDirectObject ().getTypeIdentifier ());
+
+		if (action.getActionType ().Equals (ActionType.LEVEL_UP)) {
+			string newVersion = action.getDirectObject().getTypeIdentifier();
+			tier = Player.getMajor(newVersion);
+			level = Player.getMiddle(newVersion) * 10 + Player.getMinor(newVersion);
+		}
+
 		recentActions.Enqueue (action);
 		if (recentActions.Count > ACTION_STORAGE) {
 			recentActions.Dequeue();
@@ -83,6 +95,20 @@ public class Status : ActionEventListener {
 		int kills = 0;
 		enemiesKilled.TryGetValue (enemy, out kills);
 		return kills;
+	}
+
+	/**
+	 * Gets the player's current level (Middle and Minor composite)
+	 */
+	public int getLevel() {
+		return level;
+	}
+
+	/**
+	 * Gets the player's current tier (Major version)
+	 */
+	public int getTier() {
+		return tier;
 	}
 
 	/**

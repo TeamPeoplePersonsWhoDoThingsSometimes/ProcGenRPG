@@ -31,6 +31,22 @@ public class Player : MonoBehaviour {
 
 	private static GameObject hitInfo;
 
+	public static int getMajor(string version) {
+		return int.Parse (version.Split('.') [0]);
+	}
+
+	public static int getMiddle(string version) {
+		return int.Parse (version.Split ('.') [1]);
+	}
+
+	public static int getMinor(string version) {
+		return int.Parse (version.Split ('.') [2]);
+	}
+
+	public DirectObject getDirectObject() {
+		return new DirectObject ("Player", version);
+	}
+
 	void Start () {
 		//Need to figure out a better way to load the hitinfo prefab
 		hitInfo = Resources.Load<GameObject>("Info/HitInfo");
@@ -203,7 +219,7 @@ public class Player : MonoBehaviour {
 		}
 		bytesToNextVersion = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*levelUpSpeedScale;
 
-		ActionEventInvoker.primaryInvoker.invokeAction (new PlayerAction (new DirectObject ("Level Up", version), ActionType.LEVEL_UP));//TODO level up checks are broken with this setup, rectify differences on builder-side
+		ActionEventInvoker.primaryInvoker.invokeAction (new PlayerAction (this.getDirectObject(), ActionType.LEVEL_UP));
 	}
 
 	public int GetBytes() {

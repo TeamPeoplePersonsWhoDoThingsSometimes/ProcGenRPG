@@ -60,18 +60,14 @@ public class MasterDriver : MonoBehaviour {
 		}
 		return name;
 	}
-	
+
 	public Object getItemFromProtobuf(DirectObjectProtocol proto) {
 		string name = proto.Name;
 		
 		foreach (GameObject o in weapons) {
 			Item i = o.GetComponent<Item>();
 			if (i.gameObject.name.Equals(name)) {
-				GameObject ret = o;
-				Weapon w = o.GetComponent<Weapon>();
-				w.version = "" + proto.ItemInformation.Version;
-				w.name = proto.Type;
-				return ret;
+				return o;
 			}
 		}
 		

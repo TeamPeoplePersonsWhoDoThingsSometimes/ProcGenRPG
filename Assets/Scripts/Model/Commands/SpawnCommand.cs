@@ -8,6 +8,8 @@ public class SpawnCommand {
 	private int range;
 	private int quantity;//when area spawns were a thing, this needed to be dependant on direct objects, which is why this is initialized wierdly
 	private GameObject objectToSpawn;
+	private string objectName;
+	private string version;
 
 	//preserve default
 	public SpawnCommand() {
@@ -22,10 +24,8 @@ public class SpawnCommand {
 		specification = proto.SpawnSpecification;
 
 		if (proto.HasItem) {
-			GameObject obj = LoadResources.Instance.CommonItemDrop;
-			ItemDropObject drop = obj.GetComponent<ItemDropObject>();
-			drop.item = (GameObject)MasterDriver.Instance.getItemFromProtobuf(proto.Item);
-			objectToSpawn = drop.gameObject;
+			objectToSpawn = (GameObject)MasterDriver.Instance.getItemFromProtobuf(proto.Item);
+			objectName = proto.Item.Type;
 			quantity = proto.Item.Amount;
         }
 		
@@ -33,6 +33,7 @@ public class SpawnCommand {
 			objectToSpawn = (GameObject)MasterDriver.Instance.getEnemyFromProtobuf(proto.Enemy);
 			quantity = proto.Enemy.Amount;
 		}
+
 	}
 	
 	public MapType getSpawnArea() {
@@ -55,13 +56,21 @@ public class SpawnCommand {
 	}
 
 	public GameObject spawnObject(Vector3 position) {
-		GameObject obj = (GameObject)GameObject.Instantiate (objectToSpawn, position, Quaternion.identity);
+		GameObject obj = null;
 	
-		Enemy newEnemy = obj.GetComponent<Enemy> ();
+		Enemy newEnemy = objectToSpawn.GetComponent<Enemy> ();
 		if (newEnemy != null) {
 			Enemy originalEnemy = objectToSpawn.GetComponent<Enemy>();
 			newEnemy.setBadass(originalEnemy.IsBadass());
-			obj = newEnemy.gameObject;
+			obj = (GameObject)GameObject.Instantiate (objectToSpawn.gameObject, position, Quaternion.identity);
+		}
+
+		Item newItem = objectToSpawn.GetComponent<Item> ();
+		if (newItem != null) {
+			ItemDropObject drop = LoadResources.Instance.CommonItemDrop.GetComponent<ItemDropObject>();
+			newItem.name = objectName;
+			drop.item = objectToSpawn.gameObject;
+			obj = (GameObject)GameObject.Instantiate (objectToSpawn.gameObject, position, Quaternion.identity);
 		}
 
 		return obj;
