@@ -20,8 +20,12 @@ public class StatusCheckableFactory
 			return act;
 		} else if (protocol.HasLevel) {
 			LevelCheckable level = new LevelCheckable ();
-			level.setFromProtocol(protocol);
+			level.setFromProtocol (protocol);
 			return level;
+		} else if (protocol.HasTier) {
+			TierCheckable tier = new TierCheckable ();
+			tier.setFromProtocol (protocol);
+			return tier;
 		}
 
 		MasterDriver.Instance.log ("Could not load Status Checkable from protobuf, status type may not be implemented yet.");

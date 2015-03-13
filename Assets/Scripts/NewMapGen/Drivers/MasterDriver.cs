@@ -73,7 +73,7 @@ public class MasterDriver : MonoBehaviour {
 		
 		foreach (GameObject o in hacks) {
 			Item i = o.GetComponent<Item>();
-			if (i.name.Equals(name)) {
+			if (i.gameObject.name.Equals(name)) {
 				return o;
 			}
 		}
@@ -86,8 +86,7 @@ public class MasterDriver : MonoBehaviour {
 		
 		foreach (TileSet t in tileSets) {
 			foreach (Enemy o in t.enemyTypes) {
-				if (o.name.Equals(name)) {
-					o.setBadass(proto.Type.Equals("Badass"));
+				if (o.gameObject.name.Equals(name)) {
 					return o.gameObject;
 				}
 			}

@@ -27,6 +27,16 @@ public class ActionCheckable : StatusCheckable {
 			currentAmount++;
 		if (currentAmount >= quantity)
 			return true;
+
+		//Level actions require special checks
+		if (checkAction.getActionType ().Equals (ActionType.LEVEL_UP) && action.getActionType().Equals(ActionType.LEVEL_UP)) {
+			string newVersion = action.getDirectObject().getTypeIdentifier();
+			int level = Player.getMiddle(newVersion) * 10 + Player.getMinor(newVersion);
+			if (level >= int.Parse(checkAction.getDirectObject().getTypeIdentifier())) {
+				return true;
+			}
+		}
+
 		return false;
 	}
 

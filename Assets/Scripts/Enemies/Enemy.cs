@@ -44,8 +44,7 @@ public class Enemy : MonoBehaviour {
 	private Vector3 lastPos;
 
 	public DirectObject getDirectObject() {
-		int modifierEnd = name.IndexOf (" ");
-		return new DirectObject (name.Substring((modifierEnd == -1 ? 0: modifierEnd + 1)), (isBadass? "Badass" : "Basic" ));
+		return new DirectObject (gameObject.name, (isBadass? "Badass" : "Basic" ));
 	}
 
 	private float seed1 = 0f;

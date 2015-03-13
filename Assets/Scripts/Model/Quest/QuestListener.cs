@@ -44,8 +44,15 @@ public class QuestListener : ActionEventListener {
 	
 	// Update is called once per frame
 	public override void onAction (IAction action) {
+		List<Quest> started = new List<Quest> ();
 		foreach (Quest q in quests) {
-			q.startQuestIfMetByAction(action);
+			if (q.startQuestIfMetByAction(action)) {
+				started.Add (q);
+			}
+		}
+
+		foreach (Quest q in started) {
+			quests.Remove (q);
 		}
 	}
 }

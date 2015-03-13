@@ -10,6 +10,7 @@ public class SpawnCommand {
 	private GameObject objectToSpawn;
 	private string objectName;
 	private string version;
+	private bool badass;
 
 	//preserve default
 	public SpawnCommand() {
@@ -31,7 +32,12 @@ public class SpawnCommand {
 		
 		if(proto.HasEnemy) {
 			objectToSpawn = (GameObject)MasterDriver.Instance.getEnemyFromProtobuf(proto.Enemy);
+			badass = proto.Enemy.Type.Equals("Badass");
 			quantity = proto.Enemy.Amount;
+		}
+
+		if (objectToSpawn == null) {
+			MasterDriver.Instance.log("Could not find spawnable object for specifications: \n" + proto);
 		}
 
 	}
@@ -63,16 +69,18 @@ public class SpawnCommand {
 			Enemy originalEnemy = objectToSpawn.GetComponent<Enemy>();
 			GameObject newObject = (GameObject)GameObject.Instantiate (objectToSpawn.gameObject, position, Quaternion.identity);
 			newEnemy = newObject.GetComponent<Enemy>();
-			newEnemy.setBadass(originalEnemy.IsBadass());
+			newEnemy.setBadass(badass);
 			obj = newObject;
 		}
 
 		Item newItem = objectToSpawn.GetComponent<Item> ();
 		if (newItem != null) {
 			ItemDropObject drop = LoadResources.Instance.CommonItemDrop.GetComponent<ItemDropObject>();
+			GameObject newObject = (GameObject)GameObject.Instantiate (objectToSpawn.gameObject, position, Quaternion.identity);
+			newItem = newObject.GetComponent<Item>();
 			newItem.name = objectName;
 			drop.item = objectToSpawn.gameObject;
-			obj = (GameObject)GameObject.Instantiate (objectToSpawn.gameObject, position, Quaternion.identity);
+			obj = newObject;
 		}
 
 		return obj;

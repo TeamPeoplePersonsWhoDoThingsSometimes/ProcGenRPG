@@ -143,9 +143,9 @@ public class Quest : ActionEventListener {
 	 * Starts this quest by registering the quest with the event invoker
 	 * if it is not already started
 	 */
-	public void startQuestIfMetByAction(IAction act) {
+	public bool startQuestIfMetByAction(IAction act) {
 		if (currentStep != 0)
-			return;
+			return false;
 
 		steps [0].updateStatusChecks (act);
 
@@ -155,7 +155,9 @@ public class Quest : ActionEventListener {
 			group = MasterDriver.Instance.CurrentMap.findNearestBiome(MasterDriver.Instance.CurrentArea, biomeType);
 			stepQuest ();
 			Debug.Log ("Start Quest: " + this.name);
+			return true;
 		}
+		return false;
 	}
 
 	/**
