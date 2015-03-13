@@ -58,12 +58,12 @@ public class FollowPlayer : MonoBehaviour {
 		}
 
 		if(!PlayerCanvas.inConsole) {
-			if(Input.GetAxis("Mouse ScrollWheel") > 0 && zoom < 4f) {
-				transform.GetChild(0).transform.localPosition = new Vector3(transform.GetChild(0).transform.localPosition.x, transform.GetChild(0).transform.localPosition.y - 0.5f, transform.GetChild(0).transform.localPosition.z + 0.5f);
+			if(Input.GetAxis("Mouse ScrollWheel") > 0 && zoom < 6.5f) {
+				transform.GetChild(0).transform.localPosition = Vector3.MoveTowards(transform.GetChild(0).transform.localPosition, new Vector3(transform.GetChild(0).transform.localPosition.x, transform.GetChild(0).transform.localPosition.y - 0.5f, transform.GetChild(0).transform.localPosition.z + 0.5f), Time.deltaTime*30f);
 				zoom += 0.1f;
 			} else if (Input.GetAxis("Mouse ScrollWheel") < 0 && zoom > 1f) {
 				zoom -= 0.1f;
-				transform.GetChild(0).transform.localPosition = new Vector3(transform.GetChild(0).transform.localPosition.x, transform.GetChild(0).transform.localPosition.y + 0.5f, transform.GetChild(0).transform.localPosition.z - 0.5f);
+				transform.GetChild(0).transform.localPosition = Vector3.MoveTowards(transform.GetChild(0).transform.localPosition, new Vector3(transform.GetChild(0).transform.localPosition.x, transform.GetChild(0).transform.localPosition.y + 0.5f, transform.GetChild(0).transform.localPosition.z - 0.5f), Time.deltaTime*30f);
 			}
 			Vector3 lookDirection1 = (Player.playerPos.position + new Vector3(0,2,0) + Player.playerPos.forward*(1/zoom)) - transform.GetChild(0).transform.position;
 			Vector3 lookDirection2 = (Player.playerPos.position + new Vector3(0,2,0) + Player.playerPos.forward*(1/zoom)) - transform.GetChild(1).transform.position;

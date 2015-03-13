@@ -20,6 +20,7 @@ public class ItemDropObject : MonoBehaviour {
 	void OnCollisionEnter(Collision other) {
 		if(other.gameObject.tag.Equals("Player")) {
 			other.gameObject.GetComponent<Player>().PickUpItem(item);
+			Destroy(this.item);
 			Destroy(this.gameObject);
 		}
 	}

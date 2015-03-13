@@ -31,10 +31,14 @@ public class Weapon : Item {
 	// Use this for initialization
 	protected void Start () {
 		thisDamage = damage;
+		if(version.Split(',').Length != 3) {
+			version = "1.0.0";
+		}
 	}
 	
 	// Update is called once per frame
 	protected virtual void Update () {
+		Debug.Log(gameObject.name);
 		bytesToLevelUp = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*(int)(levelUpSpeedScale*10000);
 		attackSpeedTime += Time.deltaTime;
 		while (bytes > bytesToLevelUp) {
