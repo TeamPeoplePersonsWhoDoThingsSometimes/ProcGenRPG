@@ -130,17 +130,22 @@ public class Quest : ActionEventListener {
 	private AreaGroup group;
 
 	/**
+	 * 
+	 */
+	public void executeInitialQuestCommand() {
+		if (!initSpawns) {
+			steps[0].executeCommands(MasterDriver.Instance.CurrentArea.getGroup());
+			initSpawns = true;
+		}
+	}
+
+	/**
 	 * Starts this quest by registering the quest with the event invoker
 	 * if it is not already started
 	 */
 	public void startQuestIfMetByAction(IAction act) {
 		if (currentStep != 0)
 			return;
-
-		if (!initSpawns) {
-			steps[0].executeCommands(MasterDriver.Instance.CurrentArea.getGroup());
-			initSpawns = true;
-		}
 
 		steps [0].updateStatusChecks (act);
 

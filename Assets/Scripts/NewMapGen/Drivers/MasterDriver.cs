@@ -172,6 +172,8 @@ public class MasterDriver : MonoBehaviour {
 
         //currentMap.debugDisplayMap();
 
+		questListener.initializeQuests ();
+
         Debug.Log("Startup time: " + Time.realtimeSinceStartup);
 	}
 

@@ -377,6 +377,8 @@ public class Enemy : MonoBehaviour {
 			temp.GetComponent<TextMesh>().text = "" + damage;
 		}
 		detectedPlayer = true;
+
+		ActionEventInvoker.primaryInvoker.invokeAction (new PlayerAction (this.getDirectObject (), ActionType.ATTACK));
 	}
 
 	public void GetDamaged(Effect attackEffect, float effectValue, float effectTime) {

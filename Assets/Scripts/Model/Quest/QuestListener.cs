@@ -35,6 +35,12 @@ public class QuestListener : ActionEventListener {
 		}
 		
 	}
+
+	public void initializeQuests() {
+		foreach (Quest q in quests) {
+			q.executeInitialQuestCommand();
+		}
+	}
 	
 	// Update is called once per frame
 	public override void onAction (IAction action) {

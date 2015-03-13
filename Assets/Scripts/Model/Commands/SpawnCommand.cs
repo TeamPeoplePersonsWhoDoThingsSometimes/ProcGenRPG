@@ -61,8 +61,10 @@ public class SpawnCommand {
 		Enemy newEnemy = objectToSpawn.GetComponent<Enemy> ();
 		if (newEnemy != null) {
 			Enemy originalEnemy = objectToSpawn.GetComponent<Enemy>();
+			GameObject newObject = (GameObject)GameObject.Instantiate (objectToSpawn.gameObject, position, Quaternion.identity);
+			newEnemy = newObject.GetComponent<Enemy>();
 			newEnemy.setBadass(originalEnemy.IsBadass());
-			obj = (GameObject)GameObject.Instantiate (objectToSpawn.gameObject, position, Quaternion.identity);
+			obj = newObject;
 		}
 
 		Item newItem = objectToSpawn.GetComponent<Item> ();
