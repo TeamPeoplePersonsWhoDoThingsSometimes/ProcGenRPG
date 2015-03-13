@@ -82,7 +82,7 @@ public class SpawnCommand {
 			newItem = newObject.GetComponent<Item>();
 			newItem.name = objectName;
 			drop.item = newObject;
-			obj = newObject;
+			obj = newDrop;
 		}
 
 		return obj;
