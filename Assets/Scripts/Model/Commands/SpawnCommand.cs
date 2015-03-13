@@ -76,10 +76,12 @@ public class SpawnCommand {
 		Item newItem = objectToSpawn.GetComponent<Item> ();
 		if (newItem != null) {
 			ItemDropObject drop = LoadResources.Instance.CommonItemDrop.GetComponent<ItemDropObject>();
-			GameObject newObject = (GameObject)GameObject.Instantiate (objectToSpawn.gameObject, position, Quaternion.identity);
+			GameObject newDrop = (GameObject)GameObject.Instantiate (drop.gameObject, position, Quaternion.identity);
+			GameObject newObject = (GameObject)GameObject.Instantiate (objectToSpawn, position, Quaternion.identity);
+			newObject.SetActive(false);
 			newItem = newObject.GetComponent<Item>();
 			newItem.name = objectName;
-			drop.item = objectToSpawn.gameObject;
+			drop.item = newObject;
 			obj = newObject;
 		}
 
