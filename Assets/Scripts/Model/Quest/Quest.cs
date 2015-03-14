@@ -19,6 +19,40 @@ public class Quest : ActionEventListener {
 			commands = c;
 		}
 
+		public string getName() {
+			return this.name;
+		}
+
+		public string getDescription() {
+			return this.description;
+		}
+
+		public float getPercentComplete() {
+			if(statuses.Count > 1) {
+				int totalStatuses = statuses.Count;
+				int tempCount = 0;
+				foreach (StatusCheckable s in statuses.Keys) {
+					bool test;
+					statuses.TryGetValue(s, out test);
+					if (test)
+						tempCount++;
+				}
+				return ((float)tempCount/(float)totalStatuses);
+			} else if (statuses.Count == 1) {
+				foreach(KeyValuePair<StatusCheckable, bool> kvp in statuses) {
+					if(kvp.Key.GetType().Equals(typeof(ActionCheckable))) {
+						ActionCheckable ac = (ActionCheckable)kvp.Key;
+						return ac.GetPercentComplete();
+					} else {
+						return 0;
+					}
+				}
+			} else {
+				return -1f;
+			}
+			return 0f;
+		}
+
 		public Step(StatusStepProtocol proto) {
 			name = proto.Name;
 			description = proto.Description;
@@ -114,6 +148,8 @@ public class Quest : ActionEventListener {
 	 */
 	private int currentStep;
 
+	private bool isStarted = false;
+
 	/**
 	 * Quest name
 	 */
@@ -128,6 +164,23 @@ public class Quest : ActionEventListener {
 	 * The area group this quest takes place in
 	 */
 	private AreaGroup group;
+
+	public float getPercentComplete() {
+		float tempCount = 0;
+		float numSteps = 0;
+		for (int i = 1; i < steps.Length; i++) {
+			float tempPercent = steps[i].getPercentComplete();
+			if(tempPercent != -1) {
+				tempCount += tempPercent;
+				numSteps++;
+			}
+		}
+		return tempCount/(float)steps.Length;
+	}
+
+	public float getCurStepPercentage() {
+		return steps[currentStep].getPercentComplete();
+	}
 
 	/**
 	 * 
@@ -155,9 +208,28 @@ public class Quest : ActionEventListener {
 			group = MasterDriver.Instance.CurrentMap.findNearestBiome(MasterDriver.Instance.CurrentArea, biomeType);
 			stepQuest ();
 			Debug.Log ("Start Quest: " + this.name);
+			this.isStarted = true;
+			PlayerCanvas.updateQuestUI = true;
 			return true;
 		}
 		return false;
+	}
+
+	public bool isQuestStarted() {
+		Debug.Log("Checking if " + this.name + " has started: " + isStarted);
+		return currentStep != 0;
+	}
+
+	public string getName() {
+		return this.name;
+	}
+
+	public string getCurrentStepName() {
+		return this.steps[this.currentStep].getName();
+	}
+
+	public string getCurrentStepDescription() {
+		return this.steps[this.currentStep].getDescription();
 	}
 
 	/**

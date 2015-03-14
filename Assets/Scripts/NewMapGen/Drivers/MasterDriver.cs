@@ -152,6 +152,10 @@ public class MasterDriver : MonoBehaviour {
 
     }
 
+	public QuestListener MasterQuestListener() {
+		return questListener;
+	}
+
 	// Use this for initialization
 	void Start ()
     {

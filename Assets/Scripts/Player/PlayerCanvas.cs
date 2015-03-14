@@ -12,7 +12,7 @@ public class PlayerCanvas : MonoBehaviour {
 	public Sprite common, uncommon, rare, anomaly;
 
 	public static List<GameObject> enemieswithhealthbars;
-	public static bool updateInventoryUI;
+	public static bool updateInventoryUI, updateQuestUI = true;
 
 	public GameObject enemyhealthbarprefab;
 
@@ -52,6 +52,9 @@ public class PlayerCanvas : MonoBehaviour {
 	private GameObject enemyHealthBars;
 
 	private GameObject inventoryItemContainer, mouseOverInfo;
+
+	private Text questInfo;
+	private GameObject questButton, questButtonHolder;
 	
 	private Vector2 dragDelta = Vector2.zero;
 	private Vector2 mousePressedLocation;
@@ -133,6 +136,11 @@ public class PlayerCanvas : MonoBehaviour {
 		inventoryItemContainer = GameObject.Find("InventoryItemContainer");
 		mouseOverInfo = GameObject.Find("MouseOverInfo");
 
+		questInfo = GameObject.Find("QuestInfo").GetComponent<Text>();
+		questButton = GameObject.Find("QuestButtonPrefab");
+		questButton.SetActive(false);
+		questButtonHolder = GameObject.Find("QuestButtonHolder");
+
 		playerName.text = playerRef.GetName();
 	}
 	
@@ -179,6 +187,15 @@ public class PlayerCanvas : MonoBehaviour {
 	}
 
 	void Update () {
+		/* Weird bug fix?! */
+		if(Vector2.Distance(strengthButton.GetComponent<RectTransform>().anchoredPosition, new Vector2(-1.2f, 30.5f)) > 1) {
+			strengthButton.GetComponent<RectTransform>().anchoredPosition = new Vector2(-1.2f, 30.5f);
+			defenseButton.GetComponent<RectTransform>().anchoredPosition = new Vector2(-1.2f, 16.4f);
+			efficiencyButton.GetComponent<RectTransform>().anchoredPosition = new Vector2(-1.2f, 2f);
+			securityButton.GetComponent<RectTransform>().anchoredPosition = new Vector2(-1.2f, -12.3f);
+			encryptionButton.GetComponent<RectTransform>().anchoredPosition = new Vector2(-1.2f, -26.4f);
+		}
+
 		/*** Updates QuickAccessItems ***/
 		for(int i = 0; i < playerRef.quickAccessItems.Count; i++) {
 			if(playerRef.quickAccessItems[i] != null) {
@@ -227,6 +244,53 @@ public class PlayerCanvas : MonoBehaviour {
 				}
 			}
 			updateInventoryUI = false;
+		}
+
+		/*** Quest UI ***/
+		if(updateQuestUI) {
+			int tempCounter = 0;
+			int i = 0;
+			List<Quest> activeQuests = MasterDriver.Instance.MasterQuestListener().getActiveQuests();
+			if(activeQuests.Count > 0) {
+				for (; i < questButtonHolder.transform.childCount && tempCounter < activeQuests.Count; i++) {
+					if (questButtonHolder.transform.GetChild(i).gameObject.activeSelf) {
+						questButtonHolder.transform.GetChild(i).GetChild(0).GetComponent<Text>().text = activeQuests[tempCounter].getName();
+						tempCounter++;
+					}
+				}
+			
+				while (tempCounter < activeQuests.Count) {
+					GameObject temp = (GameObject)GameObject.Instantiate(questButton);
+					temp.GetComponent<RectTransform>().SetParent(questButtonHolder.transform,false);
+					temp.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+					temp.GetComponent<RectTransform>().localScale = Vector3.one;
+					temp.SetActive(true);
+					temp.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, -25 - 58*(i-1));
+					questButtonHolder.transform.GetChild(i).GetChild(0).GetComponent<Text>().text = activeQuests[tempCounter].getName() + ": " + (int)(activeQuests[tempCounter].getPercentComplete()*100) + "%";
+					tempCounter++;
+					i++;
+				}
+
+				while (i < questButtonHolder.transform.childCount) {
+					if(!questButtonHolder.transform.GetChild(questButtonHolder.transform.childCount-1).gameObject.activeSelf) {
+						break;
+					}
+					Destroy(questButtonHolder.transform.GetChild(questButtonHolder.transform.childCount-1).gameObject);
+				}
+
+				for(int j = 1; j < questButtonHolder.transform.childCount; j++) {
+					if(j == 1) {
+						Quest temp = MasterDriver.Instance.MasterQuestListener().getActiveQuests()[j - 1];
+						questButtonHolder.transform.GetChild(j).GetComponent<Button>().interactable = false;
+						string stepDesc = temp.getCurrentStepDescription();
+						questInfo.text = temp.getCurrentStepName() + " (" + (int)(temp.getCurStepPercentage()*100) + "%):\n\n" + stepDesc;
+					} else {
+						questButtonHolder.transform.GetChild(j).GetComponent<Button>().interactable = true;
+					}
+				}
+			}
+
+			updateQuestUI = false;
 		}
 
 		/*** Shows WeaponXP bar ***/
@@ -340,8 +404,19 @@ public class PlayerCanvas : MonoBehaviour {
 	}
 
 
-
-
+	public void HandleQuestSelect(GameObject obj) {
+		questButtonHolder.transform.GetChild(obj.transform.GetSiblingIndex()).GetComponent<Button>().interactable = false;
+		for(int j = 0; j < questButtonHolder.transform.childCount; j++) {
+			if(j != obj.transform.GetSiblingIndex()) {
+				questButtonHolder.transform.GetChild(j).GetComponent<Button>().interactable = true;
+			}
+		}
+		Debug.Log("HEREEEE" + (obj.transform.GetSiblingIndex()-1) + " " + MasterDriver.Instance.MasterQuestListener().getActiveQuests().Count);
+		Quest temp = MasterDriver.Instance.MasterQuestListener().getActiveQuests()[obj.transform.GetSiblingIndex()-1];
+		string stepDesc = temp.getCurrentStepDescription();
+		questInfo.text = temp.getCurrentStepName() + " (" + (int)(temp.getCurStepPercentage()*100) + "%):\n\n" + stepDesc;
+	}
+	
 	/*** Button handlers ***/
 	public void HandleDefenseClick() {
 		Player.algorithmPoints--;
