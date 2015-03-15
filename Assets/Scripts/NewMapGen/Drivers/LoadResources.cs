@@ -47,7 +47,6 @@ public class LoadResources : MonoBehaviour {
 		//Runtime load operations
 		//Note: Quests are loaded in the questListener constructor
 		loadConversations ();
-		Debug.Log ("test");
     }
 
 	private void loadConversations() {

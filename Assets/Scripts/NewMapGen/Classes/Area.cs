@@ -306,6 +306,29 @@ public class Area
         return temp;
     }
 
+	public Area[] getNeighborsForMapGen() {
+		Area[] temp = new Area[4];
+
+		if (north && parentMap.withinMapBounds(position.up))
+		{
+			temp[0] = parentMap.getArea(position.up);
+		}
+		if (east && parentMap.withinMapBounds(position.right))
+		{
+			temp[1] = parentMap.getArea(position.right);
+		}
+		if (south && parentMap.withinMapBounds(position.down))
+		{
+			temp[2] = parentMap.getArea(position.down);
+		}
+		if (west && parentMap.withinMapBounds(position.left))
+		{
+			temp[3] = parentMap.getArea(position.left);
+		}
+
+		return temp;
+	}
+
     public void setGroup(AreaGroup g)
     {
         group = g;

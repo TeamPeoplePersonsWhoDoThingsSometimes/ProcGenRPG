@@ -143,7 +143,6 @@ public class uConversationNode {
 	public List<string> getAlternativeStrings() {
 		List<string> forreturn = new List<string>();
 		foreach(Alternative a in getAlternatives().Values) {
-			Debug.Log("BLA: " + a.getText());
 			if(!forreturn.Contains(a.getText()) && uConversationNode.getNodeByID(a.getUID()).ABlockSatisfied()) {
 				forreturn.Add(a.getText());
 			}

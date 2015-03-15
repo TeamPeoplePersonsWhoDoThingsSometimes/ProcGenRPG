@@ -186,6 +186,8 @@ public class MasterDriver : MonoBehaviour {
         currentArea.releaseData();
         Point temp;
 
+		FollowPlayer.Travel();
+
         //Get next map to move to.
         switch (dir)
         {

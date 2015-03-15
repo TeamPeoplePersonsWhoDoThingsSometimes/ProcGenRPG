@@ -40,6 +40,10 @@ public class ActionCheckable : StatusCheckable {
 		return false;
 	}
 
+	public IAction getRequiredAction() {
+		return checkAction;
+	}
+
 	public float GetPercentComplete() {
 		return ((float)currentAmount/(float)quantity);
 	}

@@ -11,12 +11,14 @@ public class Quest : ActionEventListener {
 		private string description;
 		private Dictionary<StatusCheckable, bool> statuses;
 		private List<SpawnCommand> commands;
+		private List<Point> spawnLocations;
 
 		public Step(string n, string d, Dictionary<StatusCheckable, bool> s, List<SpawnCommand> c) {
 			name = n;
 			description = d;
 			statuses = s;
 			commands = c;
+			spawnLocations = new List<Point>();
 		}
 
 		public string getName() {
@@ -69,21 +71,35 @@ public class Quest : ActionEventListener {
 			foreach (SpawnCommandProtocol c in commandProtocols) {
 				commands.Add(new SpawnCommand(c));
 			}
+
+			spawnLocations = new List<Point>();
 		}
 
 		public bool isStepFinished() {
-			foreach (StatusCheckable s in statuses.Keys) {
+			StatusCheckable[] s = new StatusCheckable[statuses.Keys.Count];
+			statuses.Keys.CopyTo(s,0);
+			for (int i = 0; i < s.Length; i++) {
 				bool test;
-				statuses.TryGetValue(s, out test);
+				statuses.TryGetValue(s[i], out test);
 				if (!test)
 					return false;
+				else {
+					if(s[i].GetType().Equals(typeof(ActionCheckable))) {
+						ActionCheckable ac = ((ActionCheckable)s[i]);
+						if(spawnLocations.Count == commands.Count && ac.getRequiredAction().getActionType() == ActionType.KILL || ac.getRequiredAction().getActionType() == ActionType.PICKED_UP_OBJECT) {
+							WorldMap.RemoveStarAt(spawnLocations[i].x,spawnLocations[i].y);
+						}
+					}
+				}
 			}
 			return true;
 		}
 
 		public void executeCommands(AreaGroup group) {
 			foreach (SpawnCommand s in commands) {
-				group.executeSpawnCommand(s);
+				spawnLocations.Add(group.executeSpawnCommand(s));
+				//TODO: Figure out a better way to do this world map stuff?
+				WorldMap.AddQuest(this.description);
 			}
 		}
 
@@ -229,7 +245,11 @@ public class Quest : ActionEventListener {
 	}
 
 	public string getCurrentStepDescription() {
-		return this.steps[this.currentStep].getDescription();
+		if(this.currentStep < this.steps.Length) {
+			return this.steps[this.currentStep].getDescription();
+		} else {
+			return "Compelete";
+		}
 	}
 
 	/**
@@ -254,6 +274,7 @@ public class Quest : ActionEventListener {
 		
 		if (currentStep >= steps.Length) {
 			Debug.Log("Quest Complete!");
+
 			deregister();
 			return;
 		}

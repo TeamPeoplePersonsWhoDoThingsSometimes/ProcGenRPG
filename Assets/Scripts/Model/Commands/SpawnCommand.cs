@@ -12,6 +12,8 @@ public class SpawnCommand {
 	private string version;
 	private bool badass;
 
+	private Point spawnedLocation;
+
 	//preserve default
 	public SpawnCommand() {
 		spawnArea = MapType.CITY;

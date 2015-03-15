@@ -42,7 +42,7 @@ public class PlayerCanvas : MonoBehaviour {
 
 	public static bool inConsole = false;
 
-	private GameObject minimap, mainCam, mainCamWithEffects, uiCam;
+	private GameObject minimap, mainCam, worldCam, uiCam;
 	private Vector3 playerCanvasOffset;
 
 	private RectTransform quickAccessBar, activeWeaponIcon, activeHackIcon;
@@ -79,7 +79,7 @@ public class PlayerCanvas : MonoBehaviour {
 		minimap = GameObject.Find("MiniMapCam");
 		mainCam = GameObject.Find("Main Camera");
 		uiCam = GameObject.Find("UICam");
-		mainCamWithEffects = GameObject.Find("Main Camera With Effects");
+		worldCam = GameObject.Find("WorldMapCam");
 
 		playerAnim = GameObject.Find("PlayerObj").GetComponent<Animator>();
 		playerRef = GameObject.Find("PlayerObj").GetComponent<Player>();
@@ -101,11 +101,14 @@ public class PlayerCanvas : MonoBehaviour {
 		weaponXPGroup = GameObject.Find("WeaponXP").GetComponent<RectTransform>();
 		curWeapon = GameObject.Find("WeaponName").GetComponent<Text>();
 		weaponXPImg = GameObject.Find("WeaponByteXP").GetComponent<Image>();
-		tempWeaponXPVal = playerRef.GetWeapon().GetBytes();
-		curWeapon.text = playerRef.GetWeapon().GetName();
+		if(playerRef.GetWeapon() != null) {
+			tempWeaponXPVal = playerRef.GetWeapon().GetBytes();
+			curWeapon.text = playerRef.GetWeapon().GetName();
+		}
 		weaponXPPercentage = GameObject.Find("WeaponXPPercentage").GetComponent<Text>();
 
 		strengthButton = GameObject.Find("StrengthButton").GetComponent<Button>();
+		Debug.Log("FUCKING HERE" + strengthButton);
 		defenseButton = GameObject.Find("DefenseButton").GetComponent<Button>();
 		efficiencyButton = GameObject.Find("EfficiencyButton").GetComponent<Button>();
 		securityButton = GameObject.Find("SecurityButton").GetComponent<Button>();
@@ -140,8 +143,6 @@ public class PlayerCanvas : MonoBehaviour {
 		questButton = GameObject.Find("QuestButtonPrefab");
 		questButton.SetActive(false);
 		questButtonHolder = GameObject.Find("QuestButtonHolder");
-
-		playerName.text = playerRef.GetName();
 	}
 	
 	// Update is called once per frame
@@ -200,10 +201,10 @@ public class PlayerCanvas : MonoBehaviour {
 		for(int i = 0; i < playerRef.quickAccessItems.Count; i++) {
 			if(playerRef.quickAccessItems[i] != null) {
 				quickAccessBar.transform.GetChild(i).GetComponent<Image>().sprite = GetSprite(playerRef.quickAccessItems[i].RarityVal);
-				if(playerRef.GetWeapon().Equals(playerRef.quickAccessItems[i])) {
+				if(playerRef.GetWeapon() != null && playerRef.GetWeapon().Equals(playerRef.quickAccessItems[i])) {
 					activeWeaponIcon.SetParent(quickAccessBar.GetChild(i), false);
 				}
-				if(playerRef.GetHack().Equals(playerRef.quickAccessItems[i])) {
+				if(playerRef.GetHack() != null && playerRef.GetHack().Equals(playerRef.quickAccessItems[i])) {
 					activeHackIcon.SetParent(quickAccessBar.GetChild(i), false);
 				}
 				quickAccessBar.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = playerRef.quickAccessItems[i].icon;
@@ -315,6 +316,7 @@ public class PlayerCanvas : MonoBehaviour {
 
 		/*** Updates xp bar and draws background yellow xp scale ***/
 		byteXP.rectTransform.localScale = new Vector3(playerRef.XPPercentage(), 1f, 1f);
+		playerName.text = playerRef.GetName();
 		if(byteXPSmooth.rectTransform.localScale.x < playerRef.XPPercentage()) {
 			byteXPSmooth.rectTransform.localScale = new Vector3(Mathf.MoveTowards(byteXPSmooth.rectTransform.localScale.x,playerRef.XPPercentage(),Time.deltaTime/10f), 1f, 1f);
 		} else {
@@ -332,6 +334,7 @@ public class PlayerCanvas : MonoBehaviour {
 			/*** Disables minimap and allows interaction with UI ***/
 			minimap.SetActive(false);
 			consoleGUI.interactable = true;
+			worldCam.GetComponent<Camera>().enabled = false;
 
 			/*** Handles algorithm point allocation ***/
 			if (Player.algorithmPoints > 0) {
@@ -378,6 +381,7 @@ public class PlayerCanvas : MonoBehaviour {
 			/*** Handles non-console interaction, disallows interaction with console ***/
 			consoleGUI.interactable = false;
 			minimap.SetActive(true);
+			worldCam.GetComponent<Camera>().enabled = true;
 
 			/*** Handles un-blurring ***/
 			if(mainCam.GetComponent<VignetteAndChromaticAberration>().intensity > 0) {

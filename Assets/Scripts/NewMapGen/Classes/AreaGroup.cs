@@ -22,8 +22,12 @@ public class AreaGroup {
         areas = new List<Area>();
     }
 
-	public void executeSpawnCommand(SpawnCommand command) {
-        getRandomArea().executeSpawnCommand(command);
+	public Point executeSpawnCommand(SpawnCommand command) {
+		Area temp = getRandomArea();
+		temp.executeSpawnCommand(command);
+		//TODO: Find a better place for this!!!!!!
+		WorldMap.AddStarAt(temp.position.x, temp.position.y);
+		return temp.position;
 	}
 
     //Adds the Area to this AreaGroup, and sets it's type to be this group's type.

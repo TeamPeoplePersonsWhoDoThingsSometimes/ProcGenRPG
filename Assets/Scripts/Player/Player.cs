@@ -63,9 +63,11 @@ public class Player : MonoBehaviour {
 
 		//setting up inventory
 		inventory = new List<Item>();
-		inventory.Add(weaponRef.transform.GetChild(0).GetComponent<Item>());
-		for (int i = 0; i < playerInventoryRef.transform.childCount; i++) {
-			inventory.Add(playerInventoryRef.transform.GetChild(i).GetComponent<Item>());
+		if(weaponRef.transform.childCount != 0) {
+			inventory.Add(weaponRef.transform.GetChild(0).GetComponent<Item>());
+			for (int i = 0; i < playerInventoryRef.transform.childCount; i++) {
+				inventory.Add(playerInventoryRef.transform.GetChild(i).GetComponent<Item>());
+			}
 		}
 
 		//setting up playerarmor
@@ -90,8 +92,8 @@ public class Player : MonoBehaviour {
 
 		//setting up initial weapon and hack (not the best way to do this since
 		//it requires that the first item in the inventory prefab needs to be a hack
-		activeWeapon = (Weapon)inventory[0];
-		activeHack = (Hack)inventory[1];
+		//activeWeapon = (Weapon)inventory[0];
+		//activeHack = (Hack)inventory[1];
 
 		//sets up quickaccessitems and makes the canvas update the inventory ui
 		PlayerCanvas.UpdateInventory();
@@ -218,7 +220,7 @@ public class Player : MonoBehaviour {
 			version = (int.Parse(version.Split('.')[0])*1 + 1) + ".0.0";
 		}
 		bytesToNextVersion = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*levelUpSpeedScale;
-
+		Debug.Log("NEW VERSION: " + version);
 		ActionEventInvoker.primaryInvoker.invokeAction (new PlayerAction (this.getDirectObject(), ActionType.LEVEL_UP));
 	}
 
@@ -286,6 +288,7 @@ public class Player : MonoBehaviour {
 		if(temp.GetComponent<Hack>() == null) {
 			temp.SetActive(false);
 		}
+
 		PlayerCanvas.UpdateInventory();
 
 		if(item.GetComponent<Armor>() != null) {

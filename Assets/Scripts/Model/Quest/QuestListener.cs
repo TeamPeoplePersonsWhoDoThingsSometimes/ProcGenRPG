@@ -40,7 +40,11 @@ public class QuestListener : ActionEventListener {
 	public void initializeQuests() {
 		foreach (Quest q in quests) {
 			q.executeInitialQuestCommand();
+			if(q.isQuestStarted()) {
+				activeQuests.Add(q);
+			}
 		}
+		PlayerCanvas.updateQuestUI = true;
 	}
 
 	public List<Quest> getActiveQuests() {

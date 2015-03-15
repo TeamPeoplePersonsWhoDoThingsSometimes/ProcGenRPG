@@ -19,6 +19,8 @@ public class FollowPlayer : MonoBehaviour {
 	private Player p;
 	private float prevHealth = 1;
 
+	public static float traveling;
+
 	// Use this for initialization
 	void Start () {
 		offset = this.transform.position - Player.playerPos.position;
@@ -87,6 +89,11 @@ public class FollowPlayer : MonoBehaviour {
 		}
 		prevHealth = p.GetIntegrityPercentage();
 
+		if(traveling > 0f) {
+			traveling -= Time.deltaTime*5f;
+			Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration = 100*traveling;
+		}
+
 	}
 
 	/**
@@ -94,6 +101,10 @@ public class FollowPlayer : MonoBehaviour {
 	 */
 	public void SetToPlayer() {
 		transform.parent.position = Player.playerPos.position;
+	}
+
+	public static void Travel() {
+		traveling = 5f;
 	}
 
 }
