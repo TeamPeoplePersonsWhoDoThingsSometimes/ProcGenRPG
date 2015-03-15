@@ -40,6 +40,10 @@ public class ActionCheckable : StatusCheckable {
 		return false;
 	}
 
+	public float GetPercentComplete() {
+		return ((float)currentAmount/(float)quantity);
+	}
+
 	public bool isStatusMet() {
 		if (currentAmount >= quantity)
 			return true;

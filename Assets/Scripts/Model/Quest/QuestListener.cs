@@ -15,6 +15,7 @@ public class QuestListener : ActionEventListener {
 	 * All the quests operated by this listener
 	 */
 	private List<Quest> quests;
+	private List<Quest> activeQuests;
 	
 	/**
 	 * Default constructor, registers the quest listener and loads all the quests from the quest file
@@ -22,7 +23,7 @@ public class QuestListener : ActionEventListener {
 	public QuestListener() {
 		register();
 		quests = new List<Quest> ();
-		
+		activeQuests = new List<Quest> ();
 		//first read the package from the file, then unwrap it
 		System.IO.FileStream fs = new System.IO.FileStream (QuestFile, System.IO.FileMode.Open);
 		QuestPackage package = QuestPackage.ParseFrom (fs);
@@ -41,6 +42,10 @@ public class QuestListener : ActionEventListener {
 			q.executeInitialQuestCommand();
 		}
 	}
+
+	public List<Quest> getActiveQuests() {
+		return activeQuests;
+	}
 	
 	// Update is called once per frame
 	public override void onAction (IAction action) {
@@ -48,9 +53,9 @@ public class QuestListener : ActionEventListener {
 		foreach (Quest q in quests) {
 			if (q.startQuestIfMetByAction(action)) {
 				started.Add (q);
+				activeQuests.Add (q);
 			}
 		}
-
 		foreach (Quest q in started) {
 			quests.Remove (q);
 		}

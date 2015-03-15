@@ -75,6 +75,8 @@ public class Status : ActionEventListener {
 			level = Player.getMiddle(newVersion) * 10 + Player.getMinor(newVersion);
 		}
 
+		PlayerCanvas.updateQuestUI = true;
+
 		recentActions.Enqueue (action);
 		if (recentActions.Count > ACTION_STORAGE) {
 			recentActions.Dequeue();
