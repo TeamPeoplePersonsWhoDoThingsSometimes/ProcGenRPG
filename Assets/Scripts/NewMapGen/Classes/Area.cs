@@ -230,7 +230,7 @@ public class Area
 
             foreach(Tile t in objects)
             {
-                t.gameObject.active = false;
+                t.gameObject.SetActive(false);
             }
 
             isHidden = true;

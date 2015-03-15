@@ -78,6 +78,10 @@ public class Room {
 				g.SetActive(true);
 			}
 
+            foreach (GameObject g in generateEnemies(random)) {
+                objects.Add(g);
+            }
+
             isGenerated = true;
             isShowing = true;
         }
@@ -242,6 +246,33 @@ public class Room {
         }
 
     }*/
+
+    private GameObject[] generateEnemies(System.Random rand)
+    {
+        GameObject[] enemies = new GameObject[rand.Next(3,7)];
+
+        List<Enemy> types;
+
+        switch (parent.getBiome()) {
+            case (Biome.C):
+            case (Biome.PYTHON):
+            case (Biome.HTML):
+                types = LoadResources.Instance.grassyPath.GetComponent<TileSet>().enemyTypes;
+                break;
+            default:
+                throw new System.Exception("Uninitialized Area Type!");
+        }
+
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            Enemy temp = types[rand.Next(0, types.Count - 1)];
+            Vector3 pos = 10 * new Vector3(rand.Next(botLeft.x, topRight.x), 0.5f, rand.Next(botLeft.y, topRight.y));
+            Debug.Log("Enemy position: " + pos);
+            enemies[i] = ((Enemy) GameObject.Instantiate(temp, pos, Quaternion.identity)).gameObject;
+        }
+
+        return enemies;
+    }
 
     #endregion
 
