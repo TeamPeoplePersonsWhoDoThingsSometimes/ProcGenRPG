@@ -95,19 +95,20 @@ public static partial class QuestProtobuf {
         "GAMgASgJIpkBChBDb252ZXJzYXRpb25Ob2RlEgwKBHRleHQYASACKAkSDAoE" + 
         "bmFtZRgCIAIoCRILCgN1aWQYAyACKAMSCQoBWBgEIAIoBRIJCgFZGAUgAigF" + 
         "EiAKC2Nvbm5lY3Rpb25zGAYgAygLMgsuQ29ubmVjdGlvbhIkCgZibG9ja3MY" + 
-        "ByADKAsyFC5TdGF0dXNCbG9ja1Byb3RvY29sIlQKCkNvbm5lY3Rpb24SDgoG" + 
+        "ByADKAsyFC5TdGF0dXNCbG9ja1Byb3RvY29sImYKCkNvbm5lY3Rpb24SDgoG" + 
         "bm9kZUlkGAEgAigDEgwKBHRleHQYAiACKAkSKAoPcmVxdWlyZW1lbnRTZXRz" + 
-        "GAMgAygLMg8uUmVxdWlyZW1lbnRTZXQiQAoOUmVxdWlyZW1lbnRTZXQSLgoM" + 
-        "cmVxdWlyZW1lbnRzGAEgAygLMhguU3RhdHVzQ2hlY2thYmxlUHJvdG9jb2wq" + 
-        "pQEKCkFjdGlvblR5cGUSCAoES0lMTBAAEg0KCU1PVkVfQVJFQRABEhUKEUFQ" + 
-        "UFJPQUNIRURfT0JKRUNUEAISFAoQUElDS0VEX1VQX09CSkVDVBADEgwKCExF" + 
-        "VkVMX1VQEAUSDgoKRVFVSVBfSVRFTRAGEgwKCFVTRV9JVEVNEAcSCgoGQVRU" + 
-        "QUNLEAgSGQoVQ09OVkVSU0FUSU9OX05PREVfSElUEAkqNgoFQmlvbWUSEAoM" + 
-        "Tk9UX0FTU0lHTkVEEAASCgoGUFlUSE9OEAESBQoBQxACEggKBEhUTUwQAyoq" + 
-        "CgdNYXBUeXBlEggKBENJVFkQABIICgRQQVRIEAESCwoHRFVOR0VPThACKjUK" + 
-        "GlNwYXduQXJlYVR5cGVTcGVjaWZpY2F0aW9uEgkKBUxPQ0FMEAASDAoIRElT" + 
-        "VEFOQ0UQASosChJMZXZlbFNwZWNpZmljYXRpb24SCwoHTUlOSU1VTRABEgkK" + 
-        "BUVYQUNUEAJCIQofc3RzcXVlc3RidWlsZGVyLnByb3RvY29sYnVmZmVycw==");
+        "GAMgAygLMg8uUmVxdWlyZW1lbnRTZXQSEAoIcHJpb3JpdHkYBCABKAUiQAoO" + 
+        "UmVxdWlyZW1lbnRTZXQSLgoMcmVxdWlyZW1lbnRzGAEgAygLMhguU3RhdHVz" + 
+        "Q2hlY2thYmxlUHJvdG9jb2wqpQEKCkFjdGlvblR5cGUSCAoES0lMTBAAEg0K" + 
+        "CU1PVkVfQVJFQRABEhUKEUFQUFJPQUNIRURfT0JKRUNUEAISFAoQUElDS0VE" + 
+        "X1VQX09CSkVDVBADEgwKCExFVkVMX1VQEAUSDgoKRVFVSVBfSVRFTRAGEgwK" + 
+        "CFVTRV9JVEVNEAcSCgoGQVRUQUNLEAgSGQoVQ09OVkVSU0FUSU9OX05PREVf" + 
+        "SElUEAkqNgoFQmlvbWUSEAoMTk9UX0FTU0lHTkVEEAASCgoGUFlUSE9OEAES" + 
+        "BQoBQxACEggKBEhUTUwQAyoqCgdNYXBUeXBlEggKBENJVFkQABIICgRQQVRI" + 
+        "EAESCwoHRFVOR0VPThACKjUKGlNwYXduQXJlYVR5cGVTcGVjaWZpY2F0aW9u" + 
+        "EgkKBUxPQ0FMEAASDAoIRElTVEFOQ0UQASosChJMZXZlbFNwZWNpZmljYXRp" + 
+        "b24SCwoHTUlOSU1VTRABEgkKBUVYQUNUEAJCIQofc3RzcXVlc3RidWlsZGVy" + 
+        "LnByb3RvY29sYnVmZmVycw==");
     pbd::FileDescriptor.InternalDescriptorAssigner assigner = delegate(pbd::FileDescriptor root) {
       descriptor = root;
       internal__static_QuestPackage__Descriptor = Descriptor.MessageTypes[0];
@@ -177,7 +178,7 @@ public static partial class QuestProtobuf {
       internal__static_Connection__Descriptor = Descriptor.MessageTypes[16];
       internal__static_Connection__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::Connection, global::Connection.Builder>(internal__static_Connection__Descriptor,
-              new string[] { "NodeId", "Text", "RequirementSets", });
+              new string[] { "NodeId", "Text", "RequirementSets", "Priority", });
       internal__static_RequirementSet__Descriptor = Descriptor.MessageTypes[17];
       internal__static_RequirementSet__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::RequirementSet, global::RequirementSet.Builder>(internal__static_RequirementSet__Descriptor,
@@ -6659,8 +6660,8 @@ public sealed partial class ConversationNode : pb::GeneratedMessage<Conversation
 public sealed partial class Connection : pb::GeneratedMessage<Connection, Connection.Builder> {
   private Connection() { }
   private static readonly Connection defaultInstance = new Connection().MakeReadOnly();
-  private static readonly string[] _connectionFieldNames = new string[] { "nodeId", "requirementSets", "text" };
-  private static readonly uint[] _connectionFieldTags = new uint[] { 8, 26, 18 };
+  private static readonly string[] _connectionFieldNames = new string[] { "nodeId", "priority", "requirementSets", "text" };
+  private static readonly uint[] _connectionFieldTags = new uint[] { 8, 32, 26, 18 };
   public static Connection DefaultInstance {
     get { return defaultInstance; }
   }
@@ -6713,6 +6714,16 @@ public sealed partial class Connection : pb::GeneratedMessage<Connection, Connec
     return requirementSets_[index];
   }
   
+  public const int PriorityFieldNumber = 4;
+  private bool hasPriority;
+  private int priority_;
+  public bool HasPriority {
+    get { return hasPriority; }
+  }
+  public int Priority {
+    get { return priority_; }
+  }
+  
   public override bool IsInitialized {
     get {
       if (!hasNodeId) return false;
@@ -6731,10 +6742,13 @@ public sealed partial class Connection : pb::GeneratedMessage<Connection, Connec
       output.WriteInt64(1, field_names[0], NodeId);
     }
     if (hasText) {
-      output.WriteString(2, field_names[2], Text);
+      output.WriteString(2, field_names[3], Text);
     }
     if (requirementSets_.Count > 0) {
-      output.WriteMessageArray(3, field_names[1], requirementSets_);
+      output.WriteMessageArray(3, field_names[2], requirementSets_);
+    }
+    if (hasPriority) {
+      output.WriteInt32(4, field_names[1], Priority);
     }
     UnknownFields.WriteTo(output);
   }
@@ -6754,6 +6768,9 @@ public sealed partial class Connection : pb::GeneratedMessage<Connection, Connec
       }
       foreach (global::RequirementSet element in RequirementSetsList) {
         size += pb::CodedOutputStream.ComputeMessageSize(3, element);
+      }
+      if (hasPriority) {
+        size += pb::CodedOutputStream.ComputeInt32Size(4, Priority);
       }
       size += UnknownFields.SerializedSize;
       memoizedSerializedSize = size;
@@ -6889,6 +6906,9 @@ public sealed partial class Connection : pb::GeneratedMessage<Connection, Connec
       if (other.requirementSets_.Count != 0) {
         result.requirementSets_.Add(other.requirementSets_);
       }
+      if (other.HasPriority) {
+        Priority = other.Priority;
+      }
       this.MergeUnknownFields(other.UnknownFields);
       return this;
     }
@@ -6942,6 +6962,10 @@ public sealed partial class Connection : pb::GeneratedMessage<Connection, Connec
           }
           case 26: {
             input.ReadMessageArray(tag, field_name, result.requirementSets_, global::RequirementSet.DefaultInstance, extensionRegistry);
+            break;
+          }
+          case 32: {
+            result.hasPriority = input.ReadInt32(ref result.priority_);
             break;
           }
         }
@@ -7036,6 +7060,26 @@ public sealed partial class Connection : pb::GeneratedMessage<Connection, Connec
     public Builder ClearRequirementSets() {
       PrepareBuilder();
       result.requirementSets_.Clear();
+      return this;
+    }
+    
+    public bool HasPriority {
+      get { return result.hasPriority; }
+    }
+    public int Priority {
+      get { return result.Priority; }
+      set { SetPriority(value); }
+    }
+    public Builder SetPriority(int value) {
+      PrepareBuilder();
+      result.hasPriority = true;
+      result.priority_ = value;
+      return this;
+    }
+    public Builder ClearPriority() {
+      PrepareBuilder();
+      result.hasPriority = false;
+      result.priority_ = 0;
       return this;
     }
   }

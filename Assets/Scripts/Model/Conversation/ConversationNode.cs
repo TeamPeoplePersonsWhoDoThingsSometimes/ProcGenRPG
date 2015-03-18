@@ -9,6 +9,7 @@ public class uConversationNode {
 		private uConversationNode target;
 		private long uid;//the target uid, needed during instantiation when target is not yet built
 		Dictionary<List<StatusCheckable>, string> onAlternativeEvents;
+		private int priority;
 		
 		public Alternative(long uid) {
 			this.uid = uid;
@@ -39,6 +40,35 @@ public class uConversationNode {
 		public void setTarget(uConversationNode node) {
 			uid = node.uid;
 			target = node;
+		}
+
+		public int getPriority() {
+			return priority;
+		}
+
+		public void setPriority(int p) {
+			priority = p;
+		}
+
+		public bool isValidAlternative() {
+
+			foreach (KeyValuePair<List<StatusCheckable>, string> e in onAlternativeEvents) {
+				List<StatusCheckable> block = e.Key;
+
+				bool passed = true;
+				foreach (StatusCheckable status in block) {
+					if (!status.isStatusMet()) {
+						passed = false;
+					}
+				}
+
+				if (passed = true) {
+					return true;
+				}
+			}
+
+			return false;
+
 		}
 
 		public override bool Equals(System.Object other) {
@@ -130,6 +160,11 @@ public class uConversationNode {
 
 		foreach (Connection c in proto.ConnectionsList) {
 			Alternative alt = new Alternative(c.NodeId, c.Text);
+			if (c.HasPriority) {
+				alt.setPriority(c.Priority);
+			} else {
+				alt.setPriority(0);
+			}
 			alternatives.Add(alt.getUID(), alt);
 		}
 		
@@ -221,6 +256,26 @@ public class uConversationNode {
      */
 	public Dictionary<long, Alternative> getAlternatives() {
 		return alternatives;
+	}
+
+	/**
+	 * Gets the highest valid priority alternative
+	 */
+	public Alternative getPrioritizedAlternative() {
+		int highPriority = 0;
+		Alternative highAlternative = null;
+
+		foreach (KeyValuePair<long, Alternative> e in alternatives) {
+			Alternative a = e.Value;
+			if (a.isValidAlternative()) {
+				if (highAlternative == null || highPriority == 0 || a.getPriority() < highPriority) {
+					highPriority = a.getPriority();
+					highAlternative = a;
+				}
+			}
+		}
+
+		return highAlternative;
 	}
 	
 	/**
