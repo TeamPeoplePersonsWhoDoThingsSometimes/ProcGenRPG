@@ -17,6 +17,7 @@ public class Enemy : MonoBehaviour {
 	public float attackScale = 1f;
 	public float attackSpeedScale = 1f;
 	public float healthRegenScale = 1f;
+	public float byteDropScale = 1f;
 
 	public Effect currentEffect;
 	private float effectTime;
@@ -261,7 +262,7 @@ public class Enemy : MonoBehaviour {
 
 	protected virtual void HandleDeath() {
 	/*** Death ****/
-		int tempByteVal = (int)maxHP*1000;
+		int tempByteVal = (int)(maxHP*1000*byteDropScale);
 		int curByteVal = 0;
 		int byteVal = Mathf.Max(tempByteVal/5, 5000);
 		while (curByteVal < tempByteVal) {

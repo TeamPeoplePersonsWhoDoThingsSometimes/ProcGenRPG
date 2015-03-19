@@ -36,7 +36,7 @@ public class Chest : Interactable {
 
 		if (this.CanInteract()) {
 			transform.GetChild(0).gameObject.SetActive(true);
-			transform.GetChild(0).GetChild(0).GetComponent<Text>().text = "Press " + Player.useKey + " to open";
+			transform.GetChild(0).GetChild(0).GetComponent<Text>().text = "Press " + PersistentInfo.useKey + " to open";
 		} else {
 			transform.GetChild(0).gameObject.SetActive(false);
 		}
@@ -44,7 +44,7 @@ public class Chest : Interactable {
 
 	// KARTIK do the thing!
 	protected override void Interact() {
-		if (Player.useKey != KeyCode.None && Input.GetKeyDown(Player.useKey)) {
+		if (PersistentInfo.useKey != KeyCode.None && Input.GetKeyDown(PersistentInfo.useKey)) {
 			int tempByteVal = (int)(Random.value*(maxBytes-minBytes) + minBytes);
 			int curByteVal = 0;
 			int byteVal = Mathf.Max(tempByteVal/5, 5000);

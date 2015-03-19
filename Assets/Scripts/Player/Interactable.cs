@@ -21,9 +21,9 @@ public abstract class Interactable : MonoBehaviour {
 	protected void OnTriggerStay(Collider other) {
 		if (other.gameObject.GetComponent<Player>() != null) {
 			canInteract = true;
-			if (Player.useKey == null) {
+			if (PersistentInfo.useKey == null) {
 				Debug.LogError("Player use key is not set");
-			} else if (Input.GetKeyDown(Player.useKey)) {
+			} else if (Input.GetKeyDown(PersistentInfo.useKey)) {
 				if(Time.frameCount - lastFrame > frameOffset) {
 					Interact();
 					lastFrame = Time.frameCount;

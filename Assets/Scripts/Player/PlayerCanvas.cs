@@ -108,7 +108,6 @@ public class PlayerCanvas : MonoBehaviour {
 		weaponXPPercentage = GameObject.Find("WeaponXPPercentage").GetComponent<Text>();
 
 		strengthButton = GameObject.Find("StrengthButton").GetComponent<Button>();
-		Debug.Log("FUCKING HERE" + strengthButton);
 		defenseButton = GameObject.Find("DefenseButton").GetComponent<Button>();
 		efficiencyButton = GameObject.Find("EfficiencyButton").GetComponent<Button>();
 		securityButton = GameObject.Find("SecurityButton").GetComponent<Button>();
@@ -248,7 +247,7 @@ public class PlayerCanvas : MonoBehaviour {
 		}
 
 		/*** Quest UI ***/
-		if(updateQuestUI) {
+		if(updateQuestUI && MasterDriver.Instance != null) {
 			int tempCounter = 0;
 			int i = 0;
 			List<Quest> activeQuests = MasterDriver.Instance.MasterQuestListener().getActiveQuests();

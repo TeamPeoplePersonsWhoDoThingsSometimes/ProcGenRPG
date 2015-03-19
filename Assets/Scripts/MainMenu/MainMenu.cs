@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityStandardAssets.ImageEffects;
 
 public class MainMenu : MonoBehaviour {
 
@@ -49,7 +50,11 @@ public class MainMenu : MonoBehaviour {
 		case MenuState.Main:
 			mainContainer.SetActive(true);
 			splashContainer.SetActive(false);
-			//DO CHROMABB EFFECT
+			if(Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration > 5) {
+				Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration -= Time.deltaTime*5000;
+			} else {
+				Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration = 5;
+			}
 			break;
 
 
@@ -57,8 +62,12 @@ public class MainMenu : MonoBehaviour {
 	}
 
 	void TransitionToMain() {
-		//DO CHROMABB EFFECT
-		curState = MenuState.Main;
+		if(Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration < 1000) {
+			Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration += Time.deltaTime*10000;
+		} else {
+			curState = MenuState.Main;
+			transitioningToMain = false;
+		}
 	}
 
 	public void PlayPressed() {

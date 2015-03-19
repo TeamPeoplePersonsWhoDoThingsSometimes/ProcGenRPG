@@ -28,7 +28,7 @@ public class Byte : MonoBehaviour {
 		}
 
 		if ((timeOffset > 1 && Vector3.Distance(Player.playerPos.position, this.transform.position) < 10f) || timeOffset > 2) {
-			this.transform.position = Vector3.MoveTowards(this.transform.position, Player.playerPos.position + new Vector3(0,1,0),20*Time.deltaTime);
+			this.transform.position = Vector3.MoveTowards(this.transform.position, Player.playerPos.position + new Vector3(0,1,0),50*Time.deltaTime);
 			this.GetComponent<Rigidbody>().useGravity = false;
 			this.GetComponent<Collider>().enabled = false;
 		}

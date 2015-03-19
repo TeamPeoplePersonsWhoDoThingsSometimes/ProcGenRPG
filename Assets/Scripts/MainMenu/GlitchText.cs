@@ -22,7 +22,8 @@ public class GlitchText : MonoBehaviour {
 		if(transform.childCount == 2) {
 			transform.GetChild(1).GetComponent<Text>().color = new Color(0, 0, 0, Mathf.Abs(Mathf.Cos(Time.time*2f)));
 		}
-		if(Time.frameCount%randTime == 0) {
+		if(Time.frameCount%randTime == 0 && GetComponent<RectTransform>().anchoredPosition.x > -250 && GetComponent<RectTransform>().anchoredPosition.x < 250
+		   && GetComponent<RectTransform>().anchoredPosition.y > -250 && GetComponent<RectTransform>().anchoredPosition.y < 250) {
 			GlitchAudio();
 			float randval = Random.Range(0.9f,1.1f);
 			float randval2 = Random.Range(0.9f,1.1f);

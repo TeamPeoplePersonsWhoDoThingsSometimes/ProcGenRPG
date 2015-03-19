@@ -3,8 +3,6 @@ using System.Collections.Generic;
 
 public class Player : MonoBehaviour {
 
-	public static KeyCode forwardKey = KeyCode.W, backKey = KeyCode.S, useKey = KeyCode.F, rollKey = KeyCode.Space;
-
 	public List<Item> inventory = new List<Item>();
 	public GameObject[] playerArmor; //0: head, 1: chest, 2: arms, 3: legs
 	private Weapon activeWeapon;
@@ -220,7 +218,6 @@ public class Player : MonoBehaviour {
 			version = (int.Parse(version.Split('.')[0])*1 + 1) + ".0.0";
 		}
 		bytesToNextVersion = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*levelUpSpeedScale;
-		Debug.Log("NEW VERSION: " + version);
 		ActionEventInvoker.primaryInvoker.invokeAction (new PlayerAction (this.getDirectObject(), ActionType.LEVEL_UP));
 	}
 
@@ -274,7 +271,6 @@ public class Player : MonoBehaviour {
 
 	public void PickUpItem(GameObject item) {
 		GameObject temp = (GameObject) Instantiate(item, Vector3.zero, Quaternion.identity);
-		inventory.Add(temp.GetComponent<Item>());
 		temp.transform.parent = playerInventoryRef.transform;
 		if(inventory.Count < 10 && (temp.GetComponent<Weapon>() != null || temp.GetComponent<Hack>() != null)) {
 			inventory.Add(temp.GetComponent<Item>());
@@ -293,6 +289,14 @@ public class Player : MonoBehaviour {
 
 		if(item.GetComponent<Armor>() != null) {
 			EquipArmor(temp);
+		}
+
+		if(activeWeapon == null && item.GetComponent<Weapon>() != null) {
+			SetActiveItem(0);
+		}
+
+		if(activeHack == null && item.GetComponent<Hack>() != null) {
+			SetActiveItem(1);
 		}
 
 		ActionEventInvoker.primaryInvoker.invokeAction (new PlayerAction (temp.GetComponent<Item> ().getDirectObject (), ActionType.PICKED_UP_OBJECT));

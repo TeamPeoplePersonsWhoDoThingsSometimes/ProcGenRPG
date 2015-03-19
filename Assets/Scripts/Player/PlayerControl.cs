@@ -194,7 +194,7 @@ public class PlayerControl : MonoBehaviour {
 		float screenX = Screen.width;
 		float screenY = Screen.height;
 		float angle;
-		if(playerAnim.GetFloat("Speed") < 0.1f && !immobile) {
+		if(Mathf.Abs(playerAnim.GetFloat("Speed")) < 0.1f && !immobile) {
 			if (mousePosY < screenY/2) {
 				angle = Mathf.Rad2Deg * Mathf.Atan(((mousePosX/screenX*2) - 1)/((mousePosY/screenY*2) - 1)) + 180;
 			} else {

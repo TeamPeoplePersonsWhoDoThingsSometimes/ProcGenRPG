@@ -26,8 +26,10 @@ public class WorldMap : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		genAreas = new List<Area>();
-		genAreas.Add(MasterDriver.Instance.CurrentArea);
-		GenTilesAroundArea(MasterDriver.Instance.CurrentArea, tilePrefab);
+		if(MasterDriver.Instance != null) {
+			genAreas.Add(MasterDriver.Instance.CurrentArea);
+			GenTilesAroundArea(MasterDriver.Instance.CurrentArea, tilePrefab);
+		}
 	}
 
 	void GenTilesAroundArea(Area a, GameObject g) {
@@ -97,45 +99,49 @@ public class WorldMap : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Vector3 mapPos = new Vector3(worldMapCam.transform.localPosition.x + (-(MasterDriver.Instance.CurrentArea.position.x - 5)*5), -50f, worldMapCam.transform.localPosition.z + 10.5f + (-(MasterDriver.Instance.CurrentArea.position.y - 5)*5));
-		this.transform.localPosition = Vector3.MoveTowards(this.transform.localPosition, mapPos, Time.deltaTime*10f);
-
-		worldMapCam.transform.parent.localEulerAngles = new Vector3(0f,FollowPlayer.rotate,0f);
-
-		foreach(KeyValuePair<GameObject, string> kvp in questStars) {
-			if(!kvp.Key.activeSelf) {
-				kvp.Key.transform.SetParent(this.transform, false);
-				kvp.Key.SetActive(true);
+		if(MasterDriver.Instance != null) {
+			Vector3 mapPos = new Vector3(worldMapCam.transform.localPosition.x + (-(MasterDriver.Instance.CurrentArea.position.x - 5)*5), -50f, worldMapCam.transform.localPosition.z + 10.5f + (-(MasterDriver.Instance.CurrentArea.position.y - 5)*5));
+			this.transform.localPosition = Vector3.MoveTowards(this.transform.localPosition, mapPos, Time.deltaTime*10f);
+			foreach(KeyValuePair<GameObject, string> kvp in questStars) {
+				if(!kvp.Key.activeSelf) {
+					kvp.Key.transform.SetParent(this.transform, false);
+					kvp.Key.SetActive(true);
+				}
+				kvp.Key.transform.Rotate(0f,Time.deltaTime*20f,0f);
 			}
-			kvp.Key.transform.Rotate(0f,Time.deltaTime*20f,0f);
-		}
-
-		if(Input.GetKeyDown(KeyCode.M) && !PlayerCanvas.inConsole) {
-			mapOpen = !mapOpen;
-		}
-
-		if (mapOpen && worldMapCam.rect.width < 0.7f) {
-			worldMapCam.rect = new Rect(worldMapCam.rect.x + Time.deltaTime/10f, worldMapCam.rect.y - Time.deltaTime, worldMapCam.rect.width + Time.deltaTime, worldMapCam.rect.height + Time.deltaTime);
-		} else if (!mapOpen && worldMapCam.rect.width > 0.13f) {
-			worldMapCam.rect = new Rect(worldMapCam.rect.x - Time.deltaTime/10f, worldMapCam.rect.y + Time.deltaTime, worldMapCam.rect.width - Time.deltaTime, worldMapCam.rect.height - Time.deltaTime);
-		} else if (mapOpen) {
 			
-		} else if (!mapOpen) {
-			worldMapCam.rect = new Rect(0.01f, 0.79f, 0.13f, 0.2f);
-		}
-
-		RaycastHit inf;
-//		Vector3 mousePos = new Vector3(Input.mousePosition.x/Screen.width, Input.mousePosition.y/Screen.height);
-//		Debug.Log(worldMapCam.ViewportPointToRay(mousePos));
-		Debug.DrawRay(worldMapCam.ScreenPointToRay(Input.mousePosition).origin, worldMapCam.ScreenPointToRay(Input.mousePosition).direction*20f);
-		if(mapOpen && Physics.Raycast(new Ray(worldMapCam.ScreenPointToRay(Input.mousePosition).origin, worldMapCam.ScreenPointToRay(Input.mousePosition).direction*20f), out inf)) {
-			if(inf.collider.gameObject.name.Contains("questStar")) {
-				questPanelPrefab.GetComponent<RectTransform>().anchoredPosition = Input.mousePosition/(Screen.width/150f) - new Vector3(0,80,0);
-				questPanelPrefab.transform.GetChild(0).GetComponent<Text>().text = questStars[inf.collider.gameObject];
+			if(Input.GetKeyDown(KeyCode.M) && !PlayerCanvas.inConsole) {
+				mapOpen = !mapOpen;
+			}
+			
+			if (mapOpen && worldMapCam.rect.width < 0.7f) {
+				worldMapCam.rect = new Rect(worldMapCam.rect.x + Time.deltaTime/10f, worldMapCam.rect.y - Time.deltaTime, worldMapCam.rect.width + Time.deltaTime, worldMapCam.rect.height + Time.deltaTime);
+			} else if (!mapOpen && worldMapCam.rect.width > 0.13f) {
+				worldMapCam.rect = new Rect(worldMapCam.rect.x - Time.deltaTime/10f, worldMapCam.rect.y + Time.deltaTime, worldMapCam.rect.width - Time.deltaTime, worldMapCam.rect.height - Time.deltaTime);
+			} else if (mapOpen) {
+				
+			} else if (!mapOpen) {
+				worldMapCam.rect = new Rect(0.01f, 0.79f, 0.13f, 0.2f);
+			}
+			
+			RaycastHit inf;
+			//		Vector3 mousePos = new Vector3(Input.mousePosition.x/Screen.width, Input.mousePosition.y/Screen.height);
+			//		Debug.Log(worldMapCam.ViewportPointToRay(mousePos));
+			Debug.DrawRay(worldMapCam.ScreenPointToRay(Input.mousePosition).origin, worldMapCam.ScreenPointToRay(Input.mousePosition).direction*20f);
+			if(mapOpen && Physics.Raycast(new Ray(worldMapCam.ScreenPointToRay(Input.mousePosition).origin, worldMapCam.ScreenPointToRay(Input.mousePosition).direction*20f), out inf)) {
+				if(inf.collider.gameObject.name.Contains("questStar")) {
+					questPanelPrefab.GetComponent<RectTransform>().anchoredPosition = Input.mousePosition/(Screen.width/150f) - new Vector3(0,80,0);
+					questPanelPrefab.transform.GetChild(0).GetComponent<Text>().text = questStars[inf.collider.gameObject];
+				}
+			} else {
+				questPanelPrefab.GetComponent<RectTransform>().anchoredPosition = Vector3.one*10000f;
 			}
 		} else {
-			questPanelPrefab.GetComponent<RectTransform>().anchoredPosition = Vector3.one*10000f;
+			Vector3 mapPos = new Vector3(worldMapCam.transform.localPosition.x, -50f, worldMapCam.transform.localPosition.z + 10.5f);
+			this.transform.localPosition = Vector3.MoveTowards(this.transform.localPosition, mapPos, Time.deltaTime*10f);
 		}
+
+		worldMapCam.transform.parent.localEulerAngles = new Vector3(0f,FollowPlayer.rotate,0f);
 		
 	}
 
