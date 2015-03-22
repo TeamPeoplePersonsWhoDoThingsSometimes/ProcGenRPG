@@ -8,17 +8,25 @@ public class uConversationNode {
 		string text;
 		private uConversationNode target;
 		private long uid;//the target uid, needed during instantiation when target is not yet built
-		Dictionary<List<StatusCheckable>, string> onAlternativeEvents;
+		List<List<StatusCheckable>> alternativeRequirment;
 		private int priority;
 		
 		public Alternative(long uid) {
 			this.uid = uid;
 			text = "";
+			alternativeRequirment = new List<List<StatusCheckable>>();
 		}
-
+		
 		public Alternative(long uid, string t) {
 			this.uid = uid;
 			text = t;
+			alternativeRequirment = new List<List<StatusCheckable>>();
+		}
+		
+		public Alternative(long uid, string t, List<List<StatusCheckable>> reqs) {
+			this.uid = uid;
+			text = t;
+			alternativeRequirment = reqs;
 		}
 		
 		public string getText() {
@@ -52,8 +60,7 @@ public class uConversationNode {
 
 		public bool isValidAlternative() {
 
-			foreach (KeyValuePair<List<StatusCheckable>, string> e in onAlternativeEvents) {
-				List<StatusCheckable> block = e.Key;
+			foreach (List<StatusCheckable> block in alternativeRequirment) {
 
 				bool passed = true;
 				foreach (StatusCheckable status in block) {
@@ -159,7 +166,19 @@ public class uConversationNode {
 		}
 
 		foreach (Connection c in proto.ConnectionsList) {
-			Alternative alt = new Alternative(c.NodeId, c.Text);
+			List<List<StatusCheckable>> reqs = new List<List<StatusCheckable>>();
+
+			foreach (RequirementSet block in c.RequirementSetsList) {
+				StatusCheckableFactory factory = new StatusCheckableFactory();
+				List<StatusCheckable> checks = new List<StatusCheckable>();
+				foreach (StatusCheckableProtocol p in block.RequirementsList) {
+					checks.Add(factory.getStatusCheckableFromProtocol(p));
+				}
+				reqs.Add(checks);
+			}
+
+			Alternative alt = new Alternative(c.NodeId, c.Text, reqs);
+
 			if (c.HasPriority) {
 				alt.setPriority(c.Priority);
 			} else {
