@@ -9,6 +9,8 @@ public class PlayerControl : MonoBehaviour {
 
 	public static bool immobile = false;
 
+	public static bool rolling = false;
+
 	private bool comboTime = false;
 
 	private bool swordAttack1, swordAttack2, swordAttack3;
@@ -18,6 +20,8 @@ public class PlayerControl : MonoBehaviour {
 	private static Player playerref;
 	
 	private static LineRenderer rangedIndicator;
+
+	private float mouseAngle = 0f;
 	
 	// Use this for initialization
 	void Start () {
@@ -42,6 +46,7 @@ public class PlayerControl : MonoBehaviour {
 		swordAttack1 = playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Base.Slash1") || playerAnim.GetCurrentAnimatorStateInfo(1).IsName("RightHandLayer.SlashWalking");
 		swordAttack2 = playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Base.Slash2");
 		swordAttack3 = playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Base.Slash3");
+		rolling = playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Base.Roll");
 
 		/****** Set movement variables *****/
 		if(!immobile) {
@@ -193,17 +198,48 @@ public class PlayerControl : MonoBehaviour {
 		float mousePosY = Input.mousePosition.y + Screen.height/10f;
 		float screenX = Screen.width;
 		float screenY = Screen.height;
-		float angle;
-		if(Mathf.Abs(playerAnim.GetFloat("Speed")) < 0.1f && !immobile) {
-			if (mousePosY < screenY/2) {
-				angle = Mathf.Rad2Deg * Mathf.Atan(((mousePosX/screenX*2) - 1)/((mousePosY/screenY*2) - 1)) + 180;
-			} else {
-				angle = Mathf.Rad2Deg * Mathf.Atan(((mousePosX/screenX*2) - 1)/((mousePosY/screenY*2) - 1));
-			}
-			transform.eulerAngles = new Vector3(0f, angle + camTransform.eulerAngles.y, 0f);
-		} else {
-			transform.eulerAngles = new Vector3(0f, camTransform.eulerAngles.y, 0f);
+		if (mousePosY < screenY/2 && !rolling) {
+			mouseAngle = Mathf.Rad2Deg * Mathf.Atan(((mousePosX/screenX*2) - 1)/((mousePosY/screenY*2) - 1)) + 180;
+		} else if (!rolling) {
+			mouseAngle = Mathf.Rad2Deg * Mathf.Atan(((mousePosX/screenX*2) - 1)/((mousePosY/screenY*2) - 1));
 		}
+		float tempRot = 0f;
+		if(Mathf.Abs(playerAnim.GetFloat("Speed")) < 0.1f && !immobile) {
+			if(rolling) {
+				tempRot = Mathf.MoveTowardsAngle(transform.eulerAngles.y, mouseAngle + camTransform.eulerAngles.y + 15f, Time.deltaTime*200f);
+			} else {
+				tempRot = Mathf.MoveTowardsAngle(transform.eulerAngles.y, mouseAngle + camTransform.eulerAngles.y, Time.deltaTime*200f);
+			}
+		} else {
+			if(rolling) {
+				tempRot = Mathf.MoveTowardsAngle(transform.eulerAngles.y, camTransform.eulerAngles.y + 15f, Time.deltaTime*200f);
+			} else {
+				tempRot = Mathf.MoveTowardsAngle(transform.eulerAngles.y, camTransform.eulerAngles.y, Time.deltaTime*200f);
+			}
+		}
+		transform.eulerAngles = new Vector3(0f, tempRot, 0f);
+
+//		if(Mathf.Abs(playerAnim.GetFloat("Speed")) < 0.1f && !immobile) {
+//			if (mousePosY < screenY/2 && !rolling) {
+//				mouseAngle = Mathf.Rad2Deg * Mathf.Atan(((mousePosX/screenX*2) - 1)/((mousePosY/screenY*2) - 1)) + 180;
+//			} else if (!rolling) {
+//				mouseAngle = Mathf.Rad2Deg * Mathf.Atan(((mousePosX/screenX*2) - 1)/((mousePosY/screenY*2) - 1));
+//			}
+//			if(rolling) {
+//				transform.eulerAngles = Vector3.RotateTowards(transform.eulerAngles, new Vector3(0f, mouseAngle + camTransform.eulerAngles.y + 15f, 0f), Time.deltaTime*150f,0f);
+//			} else {
+//				transform.eulerAngles = Vector3.RotateTowards(transform.eulerAngles, new Vector3(0f, mouseAngle + camTransform.eulerAngles.y, 0f), Time.deltaTime*150f,0f);
+//				Debug.Log(transform.eulerAngles);
+//			}
+//		} else {
+//			if(rolling) {
+//				transform.eulerAngles = Vector3.RotateTowards(transform.eulerAngles, new Vector3(0f, camTransform.eulerAngles.y + 15f, 0f), Time.deltaTime*150f,0f);
+//			} else {
+//				transform.eulerAngles = Vector3.RotateTowards(transform.eulerAngles, new Vector3(0f, camTransform.eulerAngles.y, 0f), Time.deltaTime*15000f,0f);
+//			}
+//		}
+
+
 
 		if(transform.position.y > 0) {
 			transform.position = new Vector3(transform.position.x,0,transform.position.z);

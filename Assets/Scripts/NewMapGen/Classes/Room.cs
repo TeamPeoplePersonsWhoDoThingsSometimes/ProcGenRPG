@@ -248,24 +248,36 @@ public class Room {
     }*/
 
     private GameObject[] generateEnemies(System.Random rand)
-    {
-        GameObject[] enemies = new GameObject[rand.Next(3,7)];
-
+	{
         List<Enemy> types;
+		List<float> typeChances;
+		List<int> tempEnemyList = new List<int>();
 
         switch (parent.getBiome()) {
             case (Biome.C):
             case (Biome.PYTHON):
             case (Biome.HTML):
                 types = LoadResources.Instance.grassyPath.GetComponent<TileSet>().enemyTypes;
+				typeChances = LoadResources.Instance.grassyPath.GetComponent<TileSet>().enemyTypeChances;
                 break;
             default:
                 throw new System.Exception("Uninitialized Area Type!");
         }
 
+		int numEnemies = 0;
+		for(int j = 0; j < typeChances.Count; j++) {
+			for(int i = 0; i < 5; i++) {
+				if(rand.NextDouble() < ((double)typeChances[j])) {
+					numEnemies++;
+					tempEnemyList.Add(j);
+				}
+			}
+		}
+		GameObject[] enemies = new GameObject[numEnemies];
+
         for (int i = 0; i < enemies.Length; i++)
         {
-            Enemy temp = types[rand.Next(0, types.Count - 1)];
+            Enemy temp = types[tempEnemyList[i]];
             Vector3 pos = 10 * new Vector3(rand.Next(botLeft.x, topRight.x), 0.5f, rand.Next(botLeft.y, topRight.y));
             Debug.Log("Enemy position: " + pos);
             enemies[i] = ((Enemy) GameObject.Instantiate(temp, pos, Quaternion.identity)).gameObject;

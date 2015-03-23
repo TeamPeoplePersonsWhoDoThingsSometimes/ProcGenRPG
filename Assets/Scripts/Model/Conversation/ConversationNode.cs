@@ -206,14 +206,16 @@ public class uConversationNode {
 
 	public uConversationNode GoToAlternative(string s) {
 		uConversationNode forreturn = null;
-		foreach(Alternative a in getAlternatives().Values) {
-			uConversationNode tempNode = uConversationNode.getNodeByID(a.getUID());
-			Debug.Log(a.getText() + " -> " + tempNode.getText());
-			if(((forreturn != null && forreturn.blocks.Count < tempNode.blocks.Count) || (forreturn == null)) && s.Equals(a.getText()) && tempNode.ABlockSatisfied()) {
-				forreturn = tempNode;
-			}
-		}
-		return forreturn;
+//		foreach(Alternative a in getAlternatives().Values) {
+//			uConversationNode tempNode = uConversationNode.getNodeByID(a.getUID());
+//			Debug.Log(a.getText() + " -> " + tempNode.getText());
+//			if(((forreturn != null && forreturn.getPrioritizedAlternative < tempNode.blocks.Count) || (forreturn == null)) && s.Equals(a.getText()) && tempNode.ABlockSatisfied()) {
+//			if(s.Equals(a.getText())) {
+//				Alternative a = getPrioritizedAlternative();
+//				forreturn = tempNode;
+//			}
+//		}
+		return getNodeByID((getPrioritizedAlternative(s).getUID()));
 	}
 
 	public bool ABlockSatisfied() {
@@ -280,13 +282,13 @@ public class uConversationNode {
 	/**
 	 * Gets the highest valid priority alternative
 	 */
-	public Alternative getPrioritizedAlternative() {
+	public Alternative getPrioritizedAlternative(string text) {
 		int highPriority = 0;
 		Alternative highAlternative = null;
 
 		foreach (KeyValuePair<long, Alternative> e in alternatives) {
 			Alternative a = e.Value;
-			if (a.isValidAlternative()) {
+			if (a.getText().Equals(text) && a.isValidAlternative()) {
 				if (highAlternative == null || highPriority == 0 || a.getPriority() < highPriority) {
 					highPriority = a.getPriority();
 					highAlternative = a;

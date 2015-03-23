@@ -6,6 +6,8 @@ public class ElkCloner : Boss {
 	private float smallAttackingTime;
 	private GameObject smallAttack;
 
+	private float angryTime;
+
 	protected override void DoIdle () {
 		base.DoIdle ();
 	}
@@ -30,17 +32,23 @@ public class ElkCloner : Boss {
 
 	protected void Update() {
 		base.Update();
+
+		if(!GetComponent<Rigidbody>().constraints.Equals(RigidbodyConstraints.FreezeAll)) {
+			GetComponent<Rigidbody>().AddForce(Vector3.down*1000f);
+		}
 	
-		if(smallAttackingTime > 0 && Time.frameCount % 10 == 0) {
-			GameObject temp = (GameObject)Instantiate(smallAttack, transform.position + transform.forward*Random.value*5f + transform.right*Random.value*5f, Quaternion.identity);
-			temp.GetComponent<Attack>().SetDamage(this.baseAttackDamage);
+		if(smallAttackingTime > 0) {
+			if(Time.frameCount % 10 == 0) {
+				GameObject temp = (GameObject)Instantiate(smallAttack, transform.position + transform.forward*Random.value*5f + transform.right*Random.value*5f, Quaternion.identity);
+				temp.GetComponent<Attack>().SetDamage(this.baseAttackDamage);
+			}
 			smallAttackingTime -= Time.deltaTime;
 		}
 	}
 
 	protected override void HandleDetectedPlayer () {
 		transform.LookAt(Player.playerPos.position + new Vector3(0,2,0));
-		transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y, transform.eulerAngles.z);
+		transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y, 0f);
 	}
 
 	protected override void HandleEffect ()
@@ -67,7 +75,7 @@ public class ElkCloner : Boss {
 	{
 		if (phaseName.Equals("SmallAttack")) {
 			smallAttack = phaseObject;
-			smallAttackingTime = 0.1f;
+			smallAttackingTime = 0.5f;
 		}
 	}
 
@@ -85,6 +93,12 @@ public class ElkCloner : Boss {
 	{
 		if(phaseName.Equals("GetMad")) {
 
+		}
+	}
+
+	void OnCollisionEnter(Collision other) {
+		if(other.gameObject.tag.Equals("Ground")) {
+			GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
 		}
 	}
 }
