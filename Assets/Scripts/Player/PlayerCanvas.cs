@@ -359,8 +359,12 @@ public class PlayerCanvas : MonoBehaviour {
 			playerSecurityText.text = "Security: " + Player.security;
 
 			/*** Gets info string for current weapon and hack ***/
-			weaponStatsInfo.text = playerRef.GetWeapon().InfoString();
-			hackStatsInfo.text = playerRef.GetHack().InfoString();
+			if(playerRef.GetWeapon() != null) {
+				weaponStatsInfo.text = playerRef.GetWeapon().InfoString();
+			}
+			if(playerRef.GetHack() != null) {
+				hackStatsInfo.text = playerRef.GetHack().InfoString();
+			}
 
 			/*** Handles Blur effect ***/
 			if(mainCam.GetComponent<VignetteAndChromaticAberration>().intensity < 3f) {

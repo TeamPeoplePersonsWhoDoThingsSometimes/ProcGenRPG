@@ -60,6 +60,10 @@ public class uConversationNode {
 
 		public bool isValidAlternative() {
 
+			if(alternativeRequirment.Count == 0) {
+				return true;
+			}
+
 			foreach (List<StatusCheckable> block in alternativeRequirment) {
 
 				bool passed = true;
@@ -69,7 +73,7 @@ public class uConversationNode {
 					}
 				}
 
-				if (passed = true) {
+				if (passed) {
 					return true;
 				}
 			}
@@ -285,9 +289,10 @@ public class uConversationNode {
 	public Alternative getPrioritizedAlternative(string text) {
 		int highPriority = 0;
 		Alternative highAlternative = null;
-
+		Debug.Log("HUR: " + text);
 		foreach (KeyValuePair<long, Alternative> e in alternatives) {
 			Alternative a = e.Value;
+			Debug.Log("Checking " + e.Value.getText() + " " + a.isValidAlternative());
 			if (a.getText().Equals(text) && a.isValidAlternative()) {
 				if (highAlternative == null || highPriority == 0 || a.getPriority() < highPriority) {
 					highPriority = a.getPriority();

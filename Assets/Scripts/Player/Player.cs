@@ -90,8 +90,10 @@ public class Player : MonoBehaviour {
 
 		//setting up initial weapon and hack (not the best way to do this since
 		//it requires that the first item in the inventory prefab needs to be a hack
-		//activeWeapon = (Weapon)inventory[0];
-		//activeHack = (Hack)inventory[1];
+		if(inventory.Count > 1) {
+			activeWeapon = (Weapon)inventory[0];
+			activeHack = (Hack)inventory[1];
+		}
 
 		//sets up quickaccessitems and makes the canvas update the inventory ui
 		PlayerCanvas.UpdateInventory();

@@ -103,4 +103,8 @@ public class MainMenu : MonoBehaviour {
 		QualitySettings.SetQualityLevel((int)slide.GetComponent<Slider>().value, true);
 		slide.transform.parent.GetChild(1).GetComponent<Text>().text = QualitySettings.names[QualitySettings.GetQualityLevel()];
 	}
+
+	public void NewGameClicked() {
+		Application.LoadLevel(1);
+	}
 }

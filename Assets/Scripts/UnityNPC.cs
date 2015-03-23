@@ -17,6 +17,8 @@ public class UnityNPC : Interactable {
 	private uConversation conv;
 	private uConversationNode curNode;
 
+	private bool cityNotbuiltyet = true;
+
 	// Use this for initialization
 	void Start () {
 //		foreach(uConversation c in LoadResources.Instance.Conversations) {
@@ -49,6 +51,7 @@ public class UnityNPC : Interactable {
 			}
 			numResponses++;
 		}
+
 	}
 
 	public void ResponseClicked(GameObject responseChosen) {
@@ -59,6 +62,7 @@ public class UnityNPC : Interactable {
 			talking = false;
 		} else {
 			curNode = curNode.GoToAlternative(curNode.getAlternativeStrings()[responseChosen.transform.GetSiblingIndex()]);
+			ActionEventInvoker.primaryInvoker.invokeAction(new ActionCheckable());
 			UpdateUI();
 		}
 	}
@@ -93,6 +97,12 @@ public class UnityNPC : Interactable {
 	
 	// Update is called once per frame
 	void Update () {
+
+		if(cityNotbuiltyet && !Player.playerPos.position.Equals(Vector3.zero)) {
+			transform.position = Player.playerPos.position + Vector3.forward*2f;
+			cityNotbuiltyet = false;
+		}
+
 		if (this.CanInteract()) {
 			nameUI2.enabled = true;
 		} else {

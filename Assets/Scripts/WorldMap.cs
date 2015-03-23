@@ -10,7 +10,7 @@ public class WorldMap : MonoBehaviour {
 	public GameObject tilePrefab, starPrefab, connectorPrefab, questPanelPrefab;
 	public Material safe, dangerous, quest;
 
-	public float rotateSpeed;
+	private float rotateSpeed;
 
 	private List<Area> genAreas;
 	private static Dictionary<GameObject, string> questStars;
@@ -102,12 +102,14 @@ public class WorldMap : MonoBehaviour {
 		if(MasterDriver.Instance != null) {
 			Vector3 mapPos = new Vector3(worldMapCam.transform.localPosition.x + (-(MasterDriver.Instance.CurrentArea.position.x - 5)*5), -50f, worldMapCam.transform.localPosition.z + 10.5f + (-(MasterDriver.Instance.CurrentArea.position.y - 5)*5));
 			this.transform.localPosition = Vector3.MoveTowards(this.transform.localPosition, mapPos, Time.deltaTime*10f);
-			foreach(KeyValuePair<GameObject, string> kvp in questStars) {
-				if(!kvp.Key.activeSelf) {
-					kvp.Key.transform.SetParent(this.transform, false);
-					kvp.Key.SetActive(true);
+			if(questStars != null) {
+				foreach(KeyValuePair<GameObject, string> kvp in questStars) {
+					if(!kvp.Key.activeSelf) {
+						kvp.Key.transform.SetParent(this.transform, false);
+						kvp.Key.SetActive(true);
+					}
+					kvp.Key.transform.Rotate(0f,Time.deltaTime*20f,0f);
 				}
-				kvp.Key.transform.Rotate(0f,Time.deltaTime*20f,0f);
 			}
 			
 			if(Input.GetKeyDown(KeyCode.M) && !PlayerCanvas.inConsole) {
@@ -142,6 +144,8 @@ public class WorldMap : MonoBehaviour {
 		}
 
 		worldMapCam.transform.parent.localEulerAngles = new Vector3(0f,FollowPlayer.rotate,0f);
+
+		worldMapCam.enabled = !PlayerCanvas.cinematicMode;
 		
 	}
 
