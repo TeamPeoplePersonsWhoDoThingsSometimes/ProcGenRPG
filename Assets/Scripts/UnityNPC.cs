@@ -62,7 +62,7 @@ public class UnityNPC : Interactable {
 			talking = false;
 		} else {
 			curNode = curNode.GoToAlternative(curNode.getAlternativeStrings()[responseChosen.transform.GetSiblingIndex()]);
-			ActionEventInvoker.primaryInvoker.invokeAction(new ActionCheckable());
+			ActionEventInvoker.primaryInvoker.invokeAction(new PlayerAction(curNode.getDirectObject(), ActionType.CONVERSATION_NODE_HIT));
 			UpdateUI();
 		}
 	}

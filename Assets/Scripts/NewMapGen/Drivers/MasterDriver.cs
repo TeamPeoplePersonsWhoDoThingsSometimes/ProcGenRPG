@@ -83,7 +83,7 @@ public class MasterDriver : MonoBehaviour {
 	
 	public Object getEnemyFromProtobuf(DirectObjectProtocol proto) {
 		string name = proto.Name;
-		
+		Debug.Log("Finding enemy: " + name);
 		foreach (TileSet t in tileSets) {
 			foreach (Enemy o in t.enemyTypes) {
 				if (o.gameObject.name.Equals(name)) {

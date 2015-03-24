@@ -10,6 +10,7 @@ public class Portal : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
+		Debug.Log(Application.loadedLevel);
 		if(other.tag.Equals("Player") && Application.loadedLevel == 2) {
 			loadScene = Application.LoadLevelAsync(3);
 			loadScene.allowSceneActivation = false;
@@ -25,7 +26,7 @@ public class Portal : MonoBehaviour {
 			Camera.main.GetComponent<ColorCorrectionCurves>().greenChannel.MoveKey(0,new Keyframe(0,loadAmount*1.1f));
 			Camera.main.GetComponent<ColorCorrectionCurves>().blueChannel.MoveKey(0,new Keyframe(0,loadAmount*1.1f));
 			Camera.main.GetComponent<ColorCorrectionCurves>().UpdateParameters();
-			Debug.Log(Camera.main.GetComponent<ColorCorrectionCurves>().redChannel.keys[1].value + " " + Camera.main.GetComponent<ColorCorrectionCurves>().redChannel.keys[0].value);
+				Debug.Log(Camera.main.GetComponent<ColorCorrectionCurves>().redChannel.keys[1].value + " " + Camera.main.GetComponent<ColorCorrectionCurves>().redChannel.keys[0].value);
 			if(loadAmount >= 0.9f) {
 				loadScene.allowSceneActivation = true;
 			}

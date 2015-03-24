@@ -496,6 +496,7 @@ public class IntroScript : MonoBehaviour {
 	public void PressedEnter() {
 		if(input.text.Length > 2) {
 			animating = true;
+			PersistentInfo.playerName = input.text;
 		}
 	}
 }

@@ -37,6 +37,12 @@ public class ActionCheckable : StatusCheckable {
 			}
 		}
 
+		if(checkAction.getActionType().Equals(ActionType.CONVERSATION_NODE_HIT) && action.getActionType().Equals(ActionType.CONVERSATION_NODE_HIT)) {
+			if(checkAction.getDirectObject().getTypeIdentifier().Equals(action.getDirectObject().getTypeIdentifier())) {
+				return true;
+			}
+		}
+
 		return false;
 	}
 

@@ -241,14 +241,18 @@ public class Quest : ActionEventListener {
 	}
 
 	public string getCurrentStepName() {
-		return this.steps[this.currentStep].getName();
+		if(this.currentStep > this.steps.Length) {
+			return this.steps[this.currentStep-1].getName();
+		} else {
+			return this.steps[this.currentStep].getName();
+		}
 	}
 
 	public string getCurrentStepDescription() {
 		if(this.currentStep < this.steps.Length) {
 			return this.steps[this.currentStep].getDescription();
 		} else {
-			return "Compelete";
+			return "Complete";
 		}
 	}
 

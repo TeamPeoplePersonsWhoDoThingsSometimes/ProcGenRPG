@@ -303,6 +303,10 @@ public class uConversationNode {
 
 		return highAlternative;
 	}
+
+	public DirectObject getDirectObject() {
+		return new DirectObject(this.ID, this.ID);
+	}
 	
 	/**
      * Remove the alternative associated with the given choice
