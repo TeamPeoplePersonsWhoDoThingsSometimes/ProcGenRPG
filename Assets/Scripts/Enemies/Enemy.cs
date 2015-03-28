@@ -246,8 +246,8 @@ public class Enemy : MonoBehaviour {
 		/*** Handle Moving towards player and attacking ***/
 		if (Vector3.Distance(Player.playerPos.position, transform.position) > 3f && !retreating) {
 			GetComponent<Animator>().SetTrigger("PlayerSpotted");
-			GetComponent<Rigidbody>().MovePosition(Vector3.MoveTowards(transform.position, Player.playerPos.position + new Vector3(0,1,0), 0.1f));
 			transform.LookAt(Player.playerPos.position + new Vector3(0,1,0));
+			transform.Translate(new Vector3(transform.forward.x, 0f, transform.forward.z)*Time.deltaTime*2f, Space.World);
 		} else if (Vector3.Distance(Player.playerPos.position, transform.position) <= 3f && !retreating) {
 			transform.LookAt(Player.playerPos.position + new Vector3(0,1,0));
 			tempAttackSpeed -= Time.deltaTime;
