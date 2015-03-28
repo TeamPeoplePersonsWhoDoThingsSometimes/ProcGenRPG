@@ -159,23 +159,24 @@ public class MasterDriver : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-		if (generateBuilderDataOnLaunch) {
-			generateBuilderData();
-		}
-		
-		questListener = new QuestListener ();
-		
+        if (generateBuilderDataOnLaunch)
+        {
+            generateBuilderData();
+        }
+
+        questListener = new QuestListener();
+
         currentMap = new Map();
         currentArea = currentMap.getArea(5, 5);
 
-		currentArea.getGroup ().generateAreas ();
+        currentArea.getGroup().generateAreas();
         currentArea.showArea();
         Point spawnPoint = currentArea.defaultSpawn;
         player.transform.position = new Vector3(spawnPoint.x, player.transform.position.y, spawnPoint.y);
 
         //currentMap.debugDisplayMap();
 
-		questListener.initializeQuests ();
+        questListener.initializeQuests();
 
         Debug.Log("Startup time: " + Time.realtimeSinceStartup);
 	}
@@ -209,7 +210,7 @@ public class MasterDriver : MonoBehaviour {
                 break;
         }
 
-		currentArea.getGroup ().generateAreas ();
+		//currentArea.getGroup ().generateAreas ();
         currentArea.showArea();
 		log ("Moved to area: " + currentArea.position);
 

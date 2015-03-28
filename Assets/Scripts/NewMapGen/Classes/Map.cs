@@ -85,6 +85,8 @@ public class Map
         createAreaMap(areaData);
 
         generateAreaGroups();
+
+        makeCity(getArea(origin));
         
     }
 
@@ -594,6 +596,82 @@ public class Map
             }
         }
 
+    }
+
+    //Connects the Area to the Area in the given direction.
+    private void connectArea(Area a, Direction dir)
+    {
+        Point pos = a.position;
+
+        switch (dir)
+        {
+            case Direction.UP:
+                getArea(pos.up).south = true;
+                a.north = true;
+                break;
+            case Direction.RIGHT:
+                getArea(pos.right).west = true;
+                a.east = true;
+                break;
+            case Direction.DOWN:
+                getArea(pos.down).north = true;
+                a.south = true;
+                break;
+            case Direction.LEFT:
+                getArea(pos.left).east = true;
+                a.west = true;
+                break;
+            default:
+                break;
+        }
+    }
+
+    //Disconnects this Area from all surrounding Areas.
+    private void disconnectArea(Area a)
+    {
+        Area[] temp = a.getNeighborsForMapGen();
+
+        for (int i = 0; i < temp.Length; i++)
+        {
+            if (temp[i] != null)
+            {
+                switch (i)
+                {
+                    case 0:
+                        //North
+                        temp[i].south = false;
+                        a.north = false;
+                        break;
+                    case 1:
+                        //East
+                        temp[i].west = false;
+                        a.east = false;
+                        break;
+                    case 2:
+                        //South
+                        temp[i].north = false;
+                        a.south = false;
+                        break;
+                    case 3:
+                        //West
+                        temp[i].east = false;
+                        a.west = false;
+                        break;
+                    default:
+                        //This will never happen.
+                        break;
+                }
+            }
+        }
+    }
+
+    //Makes this Area into a City.
+    private void makeCity(Area a)
+    {
+        a.isCity = true;
+        //Area temp = getArea(a.position.down);
+        //disconnectArea(temp);
+        //connectArea(temp, Direction.UP);
     }
 
     #endregion

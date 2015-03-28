@@ -9,8 +9,6 @@ public class Area
 
     //TODO: Multithreaded Area generation, when the player is in an adjacent Area. To reduce load times.
 
-    //TODO: Create a function that randomly assigns a quest to one of its Rooms.
-
     #endregion
 
 
@@ -24,6 +22,8 @@ public class Area
     public bool east;
     public bool south;
     public bool west;
+
+    public bool isCity = false;
 
 
     //This area's position on the map.
@@ -51,6 +51,8 @@ public class Area
 
     private List<Tile> objects;
     public List<Tile> portals;
+
+    private GameObject city;
 
     private int areaSeed;
 
@@ -88,7 +90,7 @@ public class Area
     //Generates the 2D array and Rooms List needed to show this area.
     public void generateArea()
     {
-        if (!isGenerated)
+        if (!isGenerated && !isCity)
         {
             //Default Area Generation.
             AreaGen.defaultGen(this, areaSeed, out tiles, out rooms, out corridors);
@@ -105,100 +107,112 @@ public class Area
     //Creates GameObjects of the 2D array, and displays them. Or if they're already created, just display them.
     public void showArea()
     {
-        //Don't make GameObjects, if this area is already created.
-        if (!isCreated)
+        if (!isCity)
         {
-            //Ensure that this area has been generated. If not, do the generation now.
-            if (!isGenerated)
+            //Don't make GameObjects, if this area is already created.
+            if (!isCreated)
             {
-                generateArea();
-            }
-
-            //Determine the TileSet to be used.
-            TileSet mySet;
-            switch (group.biome)
-            {
-                    //In the case of any of these Biomes, use the grassyPath Tile set, until we get new tile sets.
-                case(Biome.C):
-                case(Biome.HTML):
-                case(Biome.PYTHON):
-                    mySet = LoadResources.Instance.grassyPath.GetComponent<TileSet>();
-                    break;
-                default:
-                    throw new System.MissingFieldException("Area does not have an Area Group!");
-            }
-
-            objects = new List<Tile>();
-            portals = new List<Tile>();
-
-            GameObject parent = new GameObject();
-            parent.name = "Area Parent";
-
-            //Create the GameObjects by iterating through the information.
-            for (int i = 0; i < tiles.GetLength(0); i++)
-            {
-                for (int j = 0; j < tiles.GetLength(1); j++)
+                //Ensure that this area has been generated. If not, do the generation now.
+                if (!isGenerated)
                 {
-                    //Do GameObject creation here.
-                    if (tiles[i, j] != null)
+                    generateArea();
+                }
+
+                //Determine the TileSet to be used.
+                TileSet mySet;
+                switch (group.biome)
+                {
+                    //In the case of any of these Biomes, use the grassyPath Tile set, until we get new tile sets.
+                    case (Biome.C):
+                    case (Biome.HTML):
+                    case (Biome.PYTHON):
+                        mySet = LoadResources.Instance.grassyPath.GetComponent<TileSet>();
+                        break;
+                    default:
+                        throw new System.MissingFieldException("Area does not have an Area Group!");
+                }
+
+                objects = new List<Tile>();
+                portals = new List<Tile>();
+
+                GameObject parent = new GameObject();
+                parent.name = "Area Parent";
+
+                //Create the GameObjects by iterating through the information.
+                for (int i = 0; i < tiles.GetLength(0); i++)
+                {
+                    for (int j = 0; j < tiles.GetLength(1); j++)
                     {
-
-                        if (tiles[i, j].isTile)
+                        //Do GameObject creation here.
+                        if (tiles[i, j] != null)
                         {
-                            //Create Tile Object
-							Tile temp = (Tile) GameObject.Instantiate(mySet.tiles[0],
-                                new Vector3(i * 10, mySet.tiles[0].y, j * 10), Quaternion.identity);
 
-                            temp.transform.parent = parent.transform;
-                            temp.x = i;
-                            temp.y = j;
-
-                            objects.Add(temp);
-                        }
-                        else if (tiles[i,j].isBorder)
-                        {
-                            //Create Wall Object
-                            Tile temp = (Tile) GameObject.Instantiate(mySet.tiles[1],
-                                new Vector3(i * 10, mySet.tiles[1].y, j * 10), Quaternion.identity);
-
-                            temp.transform.parent = parent.transform;
-                            temp.x = i;
-                            temp.y = j;
-
-                            objects.Add(temp);
-                        }
-                        else if (tiles[i,j].isPortal)
-                        {
-                            //Create Portal Object.
-                            Tile temp = (Tile) GameObject.Instantiate(LoadResources.Instance.portal,
-                                new Vector3(i * 10, LoadResources.Instance.portal.y, j * 10), Quaternion.identity);
-
-                            switch (tiles[i, j].portalDirection)
+                            if (tiles[i, j].isTile)
                             {
-                                case (Direction.UP):
-                                    break;
-                                case (Direction.LEFT):
-                                    temp.transform.eulerAngles = new Vector3(0, 270, 0);
-                                    break;
-                                case (Direction.DOWN):
-                                    temp.transform.eulerAngles = new Vector3(0, 180, 0);
-                                    break;
-                                case (Direction.RIGHT):
-                                    temp.transform.eulerAngles = new Vector3(0, 90, 0);
-                                    break;
+                                //Create Tile Object
+                                Tile temp = (Tile)GameObject.Instantiate(mySet.tiles[0],
+                                    new Vector3(i * 10, mySet.tiles[0].y, j * 10), Quaternion.identity);
+
+                                temp.transform.parent = parent.transform;
+                                temp.x = i;
+                                temp.y = j;
+
+                                objects.Add(temp);
                             }
+                            else if (tiles[i, j].isBorder)
+                            {
+                                //Create Wall Object
+                                Tile temp = (Tile)GameObject.Instantiate(mySet.tiles[1],
+                                    new Vector3(i * 10, mySet.tiles[1].y, j * 10), Quaternion.identity);
 
-                            temp.gameObject.GetComponent<Portal>().dir = tiles[i, j].portalDirection;
-                            temp.x = i;
-                            temp.y = j;
+                                temp.transform.parent = parent.transform;
+                                temp.x = i;
+                                temp.y = j;
 
-                            objects.Add(temp);
-                            portals.Add(temp);
+                                objects.Add(temp);
+                            }
+                            else if (tiles[i, j].isPortal)
+                            {
+                                //Create Portal Object.
+                                Tile temp = (Tile)GameObject.Instantiate(LoadResources.Instance.portal,
+                                    new Vector3(i * 10, LoadResources.Instance.portal.y, j * 10), Quaternion.identity);
+
+                                switch (tiles[i, j].portalDirection)
+                                {
+                                    case (Direction.UP):
+                                        break;
+                                    case (Direction.LEFT):
+                                        temp.transform.eulerAngles = new Vector3(0, 270, 0);
+                                        break;
+                                    case (Direction.DOWN):
+                                        temp.transform.eulerAngles = new Vector3(0, 180, 0);
+                                        break;
+                                    case (Direction.RIGHT):
+                                        temp.transform.eulerAngles = new Vector3(0, 90, 0);
+                                        break;
+                                }
+
+                                temp.gameObject.GetComponent<Portal>().dir = tiles[i, j].portalDirection;
+                                temp.x = i;
+                                temp.y = j;
+
+                                objects.Add(temp);
+                                portals.Add(temp);
+                            }
                         }
                     }
                 }
-            }
 
+                isHidden = false;
+            }
+        }
+        else //else this is a city, so instantiate THE CITY PREFAB! MUAHAHA!
+        {
+            //TODO: Add the portals to the portal List here!
+            GameObject temp = (GameObject) GameObject.Instantiate(LoadResources.Instance.city, new Vector3(0,0,0), Quaternion.identity);
+            city = temp;
+
+            isGenerated = true;
             isHidden = false;
         }
 
@@ -240,7 +254,7 @@ public class Area
     //Nulls the data of this Area for garbage collection.
     public void releaseData()
     {
-        if (isGenerated)
+        if (isGenerated && !isCity)
         {
             foreach(Tile t in objects)
             {
@@ -267,6 +281,11 @@ public class Area
             {
                 isGenerated = true;
             }
+        }
+        else if (isGenerated && isCity)
+        {
+            GameObject.Destroy(city);
+            city = null;
         }
     }
 

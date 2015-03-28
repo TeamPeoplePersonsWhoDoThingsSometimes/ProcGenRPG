@@ -16,7 +16,6 @@ public class LoadResources : MonoBehaviour {
 
     public GameObject grassyPath;
     public GameObject dungeon;
-    public GameObject city;
 
 	public GameObject CommonItemDrop;
 	public GameObject UncommonItemDrop;
@@ -24,6 +23,8 @@ public class LoadResources : MonoBehaviour {
 	public GameObject Chest;
 
     public Tile portal;
+
+    public GameObject city;
 
 	[HideInInspector]
 	public List<uConversation> Conversations;
