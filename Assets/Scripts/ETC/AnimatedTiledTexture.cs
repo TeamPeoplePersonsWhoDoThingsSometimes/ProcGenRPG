@@ -8,7 +8,8 @@ class AnimatedTiledTexture : MonoBehaviour
 	public float framesPerSecond = 10f;
 	public bool randFrame = false;
 	public bool randStart = false;
-	
+	public float scale = 1f;
+
 	//the current frame to display
 	private int index = 0;
 	
@@ -21,7 +22,7 @@ class AnimatedTiledTexture : MonoBehaviour
 		
 		//set the tile size of the texture (in UV units), based on the rows and columns
 		Vector2 size = new Vector2(1f / columns, 1f / rows);
-		GetComponent<Renderer>().sharedMaterial.SetTextureScale("_MainTex", size);
+		GetComponent<Renderer>().sharedMaterial.SetTextureScale("_MainTex", size * scale);
 	}
 	
 	private IEnumerator updateTiling() {

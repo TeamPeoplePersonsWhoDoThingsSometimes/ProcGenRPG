@@ -107,4 +107,8 @@ public class MainMenu : MonoBehaviour {
 	public void NewGameClicked() {
 		Application.LoadLevel(1);
 	}
+
+	public void CreditsClicked() {
+		GetComponent<Animator>().SetTrigger("MainToCredits");
+	}
 }

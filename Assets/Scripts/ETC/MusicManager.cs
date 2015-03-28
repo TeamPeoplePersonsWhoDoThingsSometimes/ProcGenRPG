@@ -28,8 +28,8 @@ public class MusicManager : MonoBehaviour {
 				}
 			}
 		}
-		normal.volume = Mathf.MoveTowards(normal.volume, Mathf.Min(1, Mathf.Max(0.25f,tempDist/35f)), 0.01f);
-		combat.volume = Mathf.MoveTowards(combat.volume, Mathf.Min(1, Mathf.Max(0.1f,1 - tempDist/35f)), 0.01f);
+		normal.volume = Mathf.MoveTowards(normal.volume, Mathf.Min(1, Mathf.Max(0.1f,tempDist/35f)), 0.01f);
+		combat.volume = Mathf.MoveTowards(combat.volume, Mathf.Min(1, Mathf.Max(0f,1 - tempDist/35f)), 0.01f);
 
 		if(Time.frameCount % 500 == 0) {
 			FindEnemies();

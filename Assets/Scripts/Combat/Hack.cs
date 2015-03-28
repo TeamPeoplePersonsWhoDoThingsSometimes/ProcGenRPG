@@ -45,6 +45,14 @@ public class Hack : Item {
 		}
 	}
 
+	public float GetPercentReload() {
+		if(tempFiringRate <= 0) {
+			return 0;
+		} else {
+			return (firingRate - tempFiringRate)/firingRate;
+		}
+	}
+
 	/**
 	 * What should happen when the hack is active
 	 */

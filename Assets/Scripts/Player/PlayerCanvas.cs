@@ -206,7 +206,15 @@ public class PlayerCanvas : MonoBehaviour {
 				if(playerRef.GetHack() != null && playerRef.GetHack().Equals(playerRef.quickAccessItems[i])) {
 					activeHackIcon.SetParent(quickAccessBar.GetChild(i), false);
 				}
+
+				if(playerRef.quickAccessItems[i].GetComponent<Hack>() != null) {
+					quickAccessBar.transform.GetChild(i).FindChild("HackReload").GetComponent<RectTransform>().localScale = new Vector3(1, playerRef.quickAccessItems[i].GetComponent<Hack>().GetPercentReload(),1f);
+				} else {
+					quickAccessBar.transform.GetChild(i).FindChild("HackReload").GetComponent<RectTransform>().localScale = new Vector3(1f,0f,1f);
+				}
 				quickAccessBar.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = playerRef.quickAccessItems[i].icon;
+			} else {
+				quickAccessBar.transform.GetChild(i).FindChild("HackReload").GetComponent<RectTransform>().localScale = new Vector3(1f,0f,1f);
 			}
 		}
 
