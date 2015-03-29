@@ -13,11 +13,14 @@ public class MainMenu : MonoBehaviour {
 	private MenuState curState = MenuState.Splash;
 	private GameObject splashContainer, mainContainer;
 
+	private float chromAbbAmount;
+
 	// Use this for initialization
 	void Start () {
 		dotBG = GameObject.Find("DOTBGPREFAB").GetComponent<Image>();
 		splashContainer = GameObject.Find("SplashContainer");
 		mainContainer = GameObject.Find("MainContainer");
+		chromAbbAmount = Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration;
 	}
 	
 	// Update is called once per frame
@@ -50,20 +53,24 @@ public class MainMenu : MonoBehaviour {
 		case MenuState.Main:
 			mainContainer.SetActive(true);
 			splashContainer.SetActive(false);
-			if(Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration > 5) {
-				Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration -= Time.deltaTime*5000;
+			if(chromAbbAmount > 5) {
+				chromAbbAmount -= Time.deltaTime*5000;
 			} else {
-				Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration = 5;
+				chromAbbAmount = 5;
 			}
 			break;
 
 
 		}
+
+		if(QualitySettings.GetQualityLevel() > (int)QualityLevel.Good) {
+			Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration = chromAbbAmount;
+		}
 	}
 
 	void TransitionToMain() {
-		if(Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration < 1000) {
-			Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration += Time.deltaTime*10000;
+		if(chromAbbAmount < 1000) {
+			chromAbbAmount += Time.deltaTime*10000;
 		} else {
 			curState = MenuState.Main;
 			transitioningToMain = false;

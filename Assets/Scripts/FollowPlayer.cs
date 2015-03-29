@@ -80,18 +80,24 @@ public class FollowPlayer : MonoBehaviour {
 
 		if(prevHealth > p.GetIntegrityPercentage()) {
 			damaged.localScale = Vector3.one;
-			Camera.main.GetComponent<VignetteAndChromaticAberration>().blur = 2*(1-p.GetIntegrityPercentage());
-			Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration = Mathf.Max(2f, 10*(1-p.GetIntegrityPercentage())) + ((1-p.GetIntegrityPercentage())*Random.Range(-1f,5f));
+			if(QualitySettings.GetQualityLevel() > (int)QualityLevel.Good) {
+				Camera.main.GetComponent<VignetteAndChromaticAberration>().blur = 2*(1-p.GetIntegrityPercentage());
+				Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration = Mathf.Max(2f, 10*(1-p.GetIntegrityPercentage())) + ((1-p.GetIntegrityPercentage())*Random.Range(-1f,5f));
+			}
 		} else if (prevHealth < p.GetIntegrityPercentage()) {
 			damaged.localScale = Vector3.MoveTowards(damaged.localScale, Vector3.one * Mathf.Max(4f * p.GetIntegrityPercentage(), 1f), Time.deltaTime);
-			Camera.main.GetComponent<VignetteAndChromaticAberration>().blur = Mathf.MoveTowards(Camera.main.GetComponent<VignetteAndChromaticAberration>().blur, 0f, Time.deltaTime);
-			Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration = Mathf.MoveTowards(Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration, 2f, Time.deltaTime);
+			if(QualitySettings.GetQualityLevel() > (int)QualityLevel.Good) {
+				Camera.main.GetComponent<VignetteAndChromaticAberration>().blur = Mathf.MoveTowards(Camera.main.GetComponent<VignetteAndChromaticAberration>().blur, 0f, Time.deltaTime);
+				Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration = Mathf.MoveTowards(Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration, 2f, Time.deltaTime);
+			}
 		}
 		prevHealth = p.GetIntegrityPercentage();
 
 		if(traveling > 0f) {
 			traveling -= Time.deltaTime*5f;
-			Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration = 100*traveling;
+			if(QualitySettings.GetQualityLevel() > (int)QualityLevel.Good) {
+				Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration = 100*traveling;
+			}
 		}
 
 	}

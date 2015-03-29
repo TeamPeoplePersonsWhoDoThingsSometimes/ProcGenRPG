@@ -461,12 +461,14 @@ public class IntroScript : MonoBehaviour {
 		animSpeed = Mathf.MoveTowards(animSpeed, speed, Time.deltaTime*(typeIndex/500f));
 		if(animating) {
 			classText.GetComponent<RectTransform>().parent.Translate(Vector3.up/7f*animSpeed);
-			if(Time.frameCount % 142 == 0 || Time.frameCount % 144 == 0 || Time.frameCount % 177 == 0) {
-				Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration = 40f;
-			} else {
-				Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration = animSpeed/7f;
+			if(QualitySettings.GetQualityLevel() > (int)QualityLevel.Good) {
+				if(Time.frameCount % 142 == 0 || Time.frameCount % 144 == 0 || Time.frameCount % 177 == 0) {
+					Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration = 40f;
+				} else {
+					Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration = animSpeed/7f;
+				}
+				Camera.main.GetComponent<MotionBlur>().blurAmount = animSpeed/50f;
 			}
-			Camera.main.GetComponent<MotionBlur>().blurAmount = animSpeed/50f;
 		}
 
 		if(animating && classText.text.Length > 8000) {
@@ -474,7 +476,9 @@ public class IntroScript : MonoBehaviour {
 			classText.text = "";
 			classText.GetComponent<RectTransform>().parent.GetComponent<CanvasGroup>().alpha = 0;
 			classText.GetComponent<RectTransform>().parent.parent.GetChild(1).GetComponent<CanvasGroup>().alpha = 1;
-			Camera.main.GetComponent<MotionBlur>().blurAmount = 0.5f;
+			if(QualitySettings.GetQualityLevel() > (int)QualityLevel.Good) {
+				Camera.main.GetComponent<MotionBlur>().blurAmount = 0.5f;
+			}
 		}
 
 		if(!animating && classText.GetComponent<RectTransform>().parent.parent.GetChild(1).GetComponent<CanvasGroup>().alpha == 1) {
@@ -486,7 +490,9 @@ public class IntroScript : MonoBehaviour {
 				loadNextLevel = Application.LoadLevelAsync(2);
 				loadNextLevel.allowSceneActivation = false;
 			}
-			Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration = Mathf.Max(Random.value*50f, 10f);
+			if(QualitySettings.GetQualityLevel() > (int)QualityLevel.Good) {
+				Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration = Mathf.Max(Random.value*50f, 10f);
+			}
 			classText.GetComponent<RectTransform>().parent.parent.GetChild(1).GetChild(2).GetComponent<Text>().fontSize = (int)Mathf.Max(Random.value*14f,10f);
 		}
 		if(Camera.main.fieldOfView < 59f) {

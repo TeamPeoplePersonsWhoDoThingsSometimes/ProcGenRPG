@@ -67,9 +67,9 @@ public class Player : MonoBehaviour {
 		inventory = new List<Item>();
 		if(weaponRef.transform.childCount != 0) {
 			inventory.Add(weaponRef.transform.GetChild(0).GetComponent<Item>());
-			for (int i = 0; i < playerInventoryRef.transform.childCount; i++) {
-				inventory.Add(playerInventoryRef.transform.GetChild(i).GetComponent<Item>());
-			}
+		}
+		for (int i = 0; i < playerInventoryRef.transform.childCount; i++) {
+			inventory.Add(playerInventoryRef.transform.GetChild(i).GetComponent<Item>());
 		}
 
 		//setting up playerarmor
@@ -97,6 +97,8 @@ public class Player : MonoBehaviour {
 		if(inventory.Count > 1) {
 			activeWeapon = (Weapon)inventory[0];
 			activeHack = (Hack)inventory[1];
+			SetActiveItem(0);
+			SetActiveItem(1);
 		}
 
 		//sets up quickaccessitems and makes the canvas update the inventory ui
@@ -406,6 +408,7 @@ public class Player : MonoBehaviour {
 			for(int i = 0; i < 10 && i < inventory.Count; i++) {
 				temp.Add(inventory[i]);
 			}
+//			Debug.Log(temp);
 			return temp;
 		}
 	}
