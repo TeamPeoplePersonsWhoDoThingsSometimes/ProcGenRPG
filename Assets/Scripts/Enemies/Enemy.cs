@@ -52,6 +52,8 @@ public class Enemy : MonoBehaviour {
 	private float seed2 = 0f;
 	private int count = 0;
 
+	private float speedRandomness;
+
 	protected void Awake() {
 		if (!badassSet) {
 			setBadass (Random.value < badassChance);
@@ -92,6 +94,8 @@ public class Enemy : MonoBehaviour {
 		currentEffect = Effect.None;
 
 		PlayerCanvas.RegisterEnemyHealthBar(this.gameObject);
+
+		speedRandomness = Random.value*5f;
 	}
 
 	public string GetVersion() {
@@ -238,7 +242,7 @@ public class Enemy : MonoBehaviour {
 			retreating = true;
 			transform.LookAt(Player.playerPos.position + new Vector3(0,1,0));
 			transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y + 180f, 0f);
-			transform.Translate(new Vector3(transform.forward.x, 0f, transform.forward.z)*Time.deltaTime*2f, Space.World);
+			transform.Translate(new Vector3(transform.forward.x, 0f, transform.forward.z)*Time.deltaTime*(2f + speedRandomness), Space.World);
 		} else {
 			retreating = false;
 		}
@@ -247,7 +251,7 @@ public class Enemy : MonoBehaviour {
 		if (Vector3.Distance(Player.playerPos.position, transform.position) > 3f && !retreating) {
 			GetComponent<Animator>().SetTrigger("PlayerSpotted");
 			transform.LookAt(Player.playerPos.position + new Vector3(0,1,0));
-			transform.Translate(new Vector3(transform.forward.x, 0f, transform.forward.z)*Time.deltaTime*2f, Space.World);
+			transform.Translate(new Vector3(transform.forward.x, 0f, transform.forward.z)*Time.deltaTime*(2f + speedRandomness), Space.World);
 		} else if (Vector3.Distance(Player.playerPos.position, transform.position) <= 3f && !retreating) {
 			transform.LookAt(Player.playerPos.position + new Vector3(0,1,0));
 			tempAttackSpeed -= Time.deltaTime;

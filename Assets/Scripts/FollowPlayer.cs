@@ -14,17 +14,23 @@ public class FollowPlayer : MonoBehaviour {
 	private float rotateSpeed;
 	private Transform centerCamRef;
 
-	private float zoom = 2f;
+	private float zoom = 20f;
 
 	private Player p;
 	private float prevHealth = 1;
 
 	public static float traveling;
 
+	private bool finalBoss = false;
+
 	// Use this for initialization
 	void Start () {
 		offset = this.transform.position - Player.playerPos.position;
 		p = GameObject.Find("PlayerObj").GetComponent<Player>();
+
+		if(GameObject.Find("FINALBOSS") != null) {
+			finalBoss = true;
+		}
 	}
 	
 	// Update is called once per frame
@@ -60,15 +66,17 @@ public class FollowPlayer : MonoBehaviour {
 		}
 
 		if(!PlayerCanvas.inConsole) {
-			if(Input.GetAxis("Mouse ScrollWheel") > 0 && zoom < 6.5f) {
+			if(Input.GetAxis("Mouse ScrollWheel") > 0 && zoom < 24) {
 				transform.GetChild(0).transform.localPosition = Vector3.MoveTowards(transform.GetChild(0).transform.localPosition, new Vector3(transform.GetChild(0).transform.localPosition.x, transform.GetChild(0).transform.localPosition.y - 0.5f, transform.GetChild(0).transform.localPosition.z + 0.5f), Time.deltaTime*30f);
 				zoom += 0.1f;
-			} else if (Input.GetAxis("Mouse ScrollWheel") < 0 && zoom > 1f) {
+			} else if ((Input.GetAxis("Mouse ScrollWheel") < 0 || finalBoss) && zoom > 1f) {
 				zoom -= 0.1f;
 				transform.GetChild(0).transform.localPosition = Vector3.MoveTowards(transform.GetChild(0).transform.localPosition, new Vector3(transform.GetChild(0).transform.localPosition.x, transform.GetChild(0).transform.localPosition.y + 0.5f, transform.GetChild(0).transform.localPosition.z - 0.5f), Time.deltaTime*30f);
+			} else if(finalBoss && zoom <= 1f) {
+				finalBoss = false;
 			}
-			Vector3 lookDirection1 = (Player.playerPos.position + new Vector3(0,2,0) + Player.playerPos.forward*(1/zoom)) - transform.GetChild(0).transform.position;
-			Vector3 lookDirection2 = (Player.playerPos.position + new Vector3(0,2,0) + Player.playerPos.forward*(1/zoom)) - transform.GetChild(1).transform.position;
+			Vector3 lookDirection1 = (Player.playerPos.position + new Vector3(0,2,0) + Player.playerPos.forward*(10/zoom)) - transform.GetChild(0).transform.position;
+			Vector3 lookDirection2 = (Player.playerPos.position + new Vector3(0,2,0) + Player.playerPos.forward*(10/zoom)) - transform.GetChild(1).transform.position;
 			Quaternion lookRotation1 = Quaternion.LookRotation(lookDirection1);
 			Quaternion lookRotation2 = Quaternion.LookRotation(lookDirection2);
 			if(Input.GetAxis("Mouse ScrollWheel") == 0) {
