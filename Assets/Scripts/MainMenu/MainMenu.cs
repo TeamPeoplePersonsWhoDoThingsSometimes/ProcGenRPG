@@ -15,6 +15,9 @@ public class MainMenu : MonoBehaviour {
 
 	private float chromAbbAmount;
 
+	private bool reMapping;
+	private Button curButtonForRemap;
+
 	// Use this for initialization
 	void Start () {
 		dotBG = GameObject.Find("DOTBGPREFAB").GetComponent<Image>();
@@ -65,6 +68,23 @@ public class MainMenu : MonoBehaviour {
 
 		if(QualitySettings.GetQualityLevel() > (int)QualityLevel.Good) {
 			Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration = chromAbbAmount;
+		}
+
+		if(reMapping) {
+			KeyCode temp = KeyCode.None;
+			foreach(KeyCode k in (KeyCode[])System.Enum.GetValues(typeof(KeyCode))) {
+				if(Input.GetKey(k)) {
+					temp = k;
+				}
+			}
+			if(temp != KeyCode.None) {
+				if(curButtonForRemap.gameObject.name.Equals("UpButton")) {
+					PersistentInfo.forwardKey = temp;
+					curButtonForRemap.transform.GetChild(0).GetComponent<Text>().text = temp.ToString();
+				}
+				reMapping = false;
+				curButtonForRemap = null;
+			}
 		}
 	}
 
@@ -117,5 +137,11 @@ public class MainMenu : MonoBehaviour {
 
 	public void CreditsClicked() {
 		GetComponent<Animator>().SetTrigger("MainToCredits");
+	}
+
+	public void KeyRemapButtonPressed(Button button) {
+		button.transform.GetChild(0).GetComponent<Text>().text = "?";
+		curButtonForRemap = button;
+		reMapping = true;
 	}
 }
