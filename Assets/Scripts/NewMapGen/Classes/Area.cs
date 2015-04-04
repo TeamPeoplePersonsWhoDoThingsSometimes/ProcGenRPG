@@ -77,7 +77,6 @@ public class Area
         west = W;
 
         rooms = new List<Room>();
-
     }
 
     #endregion
@@ -348,11 +347,24 @@ public class Area
 
     public void executeSpawnCommand(SpawnCommand sc)
     {
-        questArea = true;
+		questArea = true;
+
+		//TODO: Find a better place for this!!!!!!
+		WorldMap.AddStarAt(position.x, position.y);
 
         System.Random rand = new System.Random();
         rooms[rand.Next(rooms.Count)].generateQuestMaterial(sc);
     }
+
+	public List<SpawnedObject> getSpawnedObjects() {
+		List<SpawnedObject> spawnedObjectData = new List<SpawnedObject> ();
+
+		foreach (Room r in rooms) {
+			spawnedObjectData.AddRange (r.getSpawnedObjects(this));
+		}
+
+		return spawnedObjectData;
+	}
 
     #endregion
 

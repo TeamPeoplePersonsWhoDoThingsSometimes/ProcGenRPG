@@ -25,8 +25,6 @@ public class AreaGroup {
 	public Point executeSpawnCommand(SpawnCommand command) {
 		Area temp = getRandomArea();
 		temp.executeSpawnCommand(command);
-		//TODO: Find a better place for this!!!!!!
-		WorldMap.AddStarAt(temp.position.x, temp.position.y);
 		return temp.position;
 	}
 

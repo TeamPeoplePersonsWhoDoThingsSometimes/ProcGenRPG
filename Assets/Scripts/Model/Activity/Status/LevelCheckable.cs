@@ -38,4 +38,16 @@ public class LevelCheckable : StatusCheckable {
 		
 		Debug.Log ("Built Level checkable: " + checkLevel);
 	}
+
+	/**
+	 * Set this status checkable with the given saveData
+	 */
+	public void setFromData (StatusSave saveData) {}
+	
+	/**
+	 * Set the given save data proto with the information from this status
+	 */
+	public void setBuilderWithData (ref StatusSave.Builder saveData) {
+		saveData.Count = 0;
+	}
 }

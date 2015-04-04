@@ -45,6 +45,40 @@ public class Player : MonoBehaviour {
 		return new DirectObject ("Player", version);
 	}
 
+	public PlayerStatus getPlayerStatus() {
+		PlayerStatus.Builder builder = PlayerStatus.CreateBuilder ();
+
+		GlobalPosition.Builder positionBuilder = GlobalPosition.CreateBuilder ();
+		positionBuilder.SetAreaX (MasterDriver.Instance.CurrentArea.position.x);
+		positionBuilder.SetAreaY (MasterDriver.Instance.CurrentArea.position.y);
+		positionBuilder.SetLocalX ((int)gameObject.transform.position.x);
+		positionBuilder.SetLocalY ((int)gameObject.transform.position.z);
+		builder.SetPlayerPosition (positionBuilder.Build ());
+
+		InventoryData.Builder inventoryBuilder = InventoryData.CreateBuilder ();
+		foreach (Item i in inventory) {
+			inventoryBuilder.AddObject(i.getDirectObject().getDirectObjectAsProtobuf());
+		}
+		builder.SetInventory (inventoryBuilder.Build ());
+
+		builder.SetVersion (version);
+
+		return builder.Build ();
+	}
+
+	public void setPlayerStatus(PlayerStatus status) {
+		gameObject.transform.position = new Vector3 (status.PlayerPosition.LocalX, gameObject.transform.position.y, status.PlayerPosition.LocalY);
+
+		InventoryData inv = status.Inventory;
+		inventory.Clear ();
+		foreach (DirectObjectProtocol item in inv.ObjectList) {
+			GameObject obj = (GameObject)MasterDriver.Instance.getItemFromProtobuf(item);
+			inventory.Add(obj.GetComponent<Item>());
+		}
+
+		version = status.Version;
+	}
+
 	void Start () {
 		if(PersistentInfo.playerName != null && !PersistentInfo.playerName.Equals("")) {
 			this.name = PersistentInfo.playerName;

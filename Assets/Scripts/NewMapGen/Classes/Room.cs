@@ -227,6 +227,30 @@ public class Room {
 		}
     }
 
+	public List<SpawnedObject> getSpawnedObjects(Area area) {
+		List<SpawnedObject> spawnDataList = new List<SpawnedObject> ();
+
+		foreach (GameObject obj in spawnedObjects) {
+			if (obj == null) continue;//skip destroyed objects
+			
+			Enemy enemy = obj.GetComponent<Enemy>();
+			if (enemy != null) {
+				spawnDataList.Add(enemy.getSpawnedObjectInformation(area));
+			}
+
+			ItemDropObject itemDrop = obj.GetComponent<ItemDropObject>();
+			if (itemDrop != null) {
+				GameObject item = itemDrop.item;
+				if (item != null) {
+					spawnDataList.Add(item.GetComponent<Item>().getSpawnedObjectInformation(area));
+				}
+			}
+		}
+
+		return spawnDataList;
+
+	}
+
     #endregion
 
 
