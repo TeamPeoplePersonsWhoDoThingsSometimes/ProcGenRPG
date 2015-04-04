@@ -6,7 +6,6 @@ public class Room {
 
     //A rectangular space within an Area.
 
-    //TODO: Create a function and varible that requires Quest Material to be generated in this Room.
 
     #region Variables
 
@@ -79,6 +78,11 @@ public class Room {
 			}
 
             foreach (GameObject g in generateEnemies(random)) {
+                objects.Add(g);
+            }
+
+            foreach (GameObject g in generateChests())
+            {
                 objects.Add(g);
             }
 
@@ -302,12 +306,31 @@ public class Room {
         for (int i = 0; i < enemies.Length; i++)
         {
             Enemy temp = types[tempEnemyList[i]];
-            Vector3 pos = 10 * new Vector3(rand.Next(botLeft.x, topRight.x), 0.5f, rand.Next(botLeft.y, topRight.y));
+            Vector3 pos = 10 * new Vector3(rand.Next(botLeft.x, topRight.x), 0.3f, rand.Next(botLeft.y, topRight.y));
             Debug.Log("Enemy position: " + pos);
             enemies[i] = ((Enemy) GameObject.Instantiate(temp, pos, Quaternion.identity)).gameObject;
         }
 
         return enemies;
+    }
+
+    private List<GameObject> generateChests()
+    {
+        System.Random rand = new System.Random();
+        List<GameObject> lst = new List<GameObject>();
+
+        GameObject chest = LoadResources.Instance.Chest;
+        for (int i = 0; i < 3; i++)
+        {
+            if (rand.NextDouble() < 0.07)
+            {
+                Vector3 pos = 10 * new Vector3(rand.Next(botLeft.x + 1, topRight.x - 1), 0.1f, rand.Next(botLeft.y + 1, topRight.y - 1));
+                GameObject temp = (GameObject)GameObject.Instantiate(chest, pos, Quaternion.identity);
+                lst.Add(temp);
+            }
+        }
+
+        return lst;
     }
 
     #endregion

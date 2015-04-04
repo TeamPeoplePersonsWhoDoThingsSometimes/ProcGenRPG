@@ -142,6 +142,11 @@ public class PlayerCanvas : MonoBehaviour {
 		questButton = GameObject.Find("QuestButtonPrefab");
 		questButton.SetActive(false);
 		questButtonHolder = GameObject.Find("QuestButtonHolder");
+
+		if(QualitySettings.GetQualityLevel() <= (int)QualityLevel.Good) {
+			Camera.main.GetComponent<VignetteAndChromaticAberration>().enabled = false;
+			Camera.main.GetComponent<DepthOfField>().enabled = false;
+		}
 	}
 	
 	// Update is called once per frame
@@ -206,7 +211,15 @@ public class PlayerCanvas : MonoBehaviour {
 				if(playerRef.GetHack() != null && playerRef.GetHack().Equals(playerRef.quickAccessItems[i])) {
 					activeHackIcon.SetParent(quickAccessBar.GetChild(i), false);
 				}
+
+				if(playerRef.quickAccessItems[i].GetComponent<Hack>() != null) {
+					quickAccessBar.transform.GetChild(i).FindChild("HackReload").GetComponent<RectTransform>().localScale = new Vector3(1, playerRef.quickAccessItems[i].GetComponent<Hack>().GetPercentReload(),1f);
+				} else {
+					quickAccessBar.transform.GetChild(i).FindChild("HackReload").GetComponent<RectTransform>().localScale = new Vector3(1f,0f,1f);
+				}
 				quickAccessBar.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = playerRef.quickAccessItems[i].icon;
+			} else {
+				quickAccessBar.transform.GetChild(i).FindChild("HackReload").GetComponent<RectTransform>().localScale = new Vector3(1f,0f,1f);
 			}
 		}
 
@@ -367,9 +380,11 @@ public class PlayerCanvas : MonoBehaviour {
 			}
 
 			/*** Handles Blur effect ***/
-			if(mainCam.GetComponent<VignetteAndChromaticAberration>().intensity < 3f) {
-				mainCam.GetComponent<VignetteAndChromaticAberration>().intensity += Time.deltaTime*2f;
-				mainCam.GetComponent<DepthOfField>().useFocalTransform = false;
+			if(QualitySettings.GetQualityLevel() > (int)QualityLevel.Good) {
+				if(mainCam.GetComponent<VignetteAndChromaticAberration>().intensity < 3f) {
+					mainCam.GetComponent<VignetteAndChromaticAberration>().intensity += Time.deltaTime*2f;
+					mainCam.GetComponent<DepthOfField>().useFocalTransform = false;
+				}
 			}
 
 			/*** Handles dragging logic ***/
@@ -387,9 +402,11 @@ public class PlayerCanvas : MonoBehaviour {
 			worldCam.GetComponent<Camera>().enabled = true;
 
 			/*** Handles un-blurring ***/
-			if(mainCam.GetComponent<VignetteAndChromaticAberration>().intensity > 0) {
-				mainCam.GetComponent<VignetteAndChromaticAberration>().intensity -= Time.deltaTime*2f;
-				mainCam.GetComponent<DepthOfField>().useFocalTransform = true;
+			if(QualitySettings.GetQualityLevel() > (int)QualityLevel.Good) {
+				if(mainCam.GetComponent<VignetteAndChromaticAberration>().intensity > 0) {
+					mainCam.GetComponent<VignetteAndChromaticAberration>().intensity -= Time.deltaTime*2f;
+					mainCam.GetComponent<DepthOfField>().useFocalTransform = true;
+				}
 			}
 
 		}
@@ -418,7 +435,7 @@ public class PlayerCanvas : MonoBehaviour {
 				questButtonHolder.transform.GetChild(j).GetComponent<Button>().interactable = true;
 			}
 		}
-		Debug.Log("HEREEEE" + (obj.transform.GetSiblingIndex()-1) + " " + MasterDriver.Instance.MasterQuestListener().getActiveQuests().Count);
+//		Debug.Log("HEREEEE" + (obj.transform.GetSiblingIndex()-1) + " " + MasterDriver.Instance.MasterQuestListener().getActiveQuests().Count);
 		Quest temp = MasterDriver.Instance.MasterQuestListener().getActiveQuests()[obj.transform.GetSiblingIndex()-1];
 		string stepDesc = temp.getCurrentStepDescription();
 		questInfo.text = temp.getCurrentStepName() + " (" + (int)(temp.getCurStepPercentage()*100) + "%):\n\n" + stepDesc;

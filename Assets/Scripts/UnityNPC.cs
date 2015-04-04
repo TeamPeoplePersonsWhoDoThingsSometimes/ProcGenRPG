@@ -4,7 +4,7 @@ using System.Collections;
 
 public class UnityNPC : Interactable {
 
-	private bool talking = false;
+	public bool talking = false;
 
 	public string name = "Nobody";
 	public string startConvID;
@@ -112,15 +112,19 @@ public class UnityNPC : Interactable {
 		PlayerControl.immobile = talking;
 
 		if(talking) {
-			transform.GetChild(0).GetComponent<Camera>().enabled = true;
-			transform.GetChild(1).GetComponent<Camera>().enabled = true;
+			if(transform.GetChild(0).GetComponent<Camera>() != null) {
+				transform.GetChild(0).GetComponent<Camera>().enabled = true;
+				transform.GetChild(1).GetComponent<Camera>().enabled = true;
+				transform.GetChild(2).GetChild(0).GetChild(0).gameObject.SetActive(true);
+				transform.GetChild(2).eulerAngles = new Vector3(0,180f,0f);
+			}
 			nameUI2.enabled = false;
-			transform.GetChild(2).GetChild(0).GetChild(0).gameObject.SetActive(true);
-			transform.GetChild(2).eulerAngles = new Vector3(0,180f,0f);
 			PlayerCanvas.cinematicMode = true;
 		} else {
-			transform.GetChild(0).GetComponent<Camera>().enabled = false;
-			transform.GetChild(1).GetComponent<Camera>().enabled = false;
+			if(transform.GetChild(0).GetComponent<Camera>() != null) {
+				transform.GetChild(0).GetComponent<Camera>().enabled = false;
+				transform.GetChild(1).GetComponent<Camera>().enabled = false;
+			}
 			transform.GetChild(2).GetChild(0).GetChild(0).gameObject.SetActive(false);
 			transform.GetChild(2).rotation = Quaternion.RotateTowards(transform.GetChild(2).rotation, Quaternion.Euler(new Vector3(transform.GetChild(2).eulerAngles.x, FollowPlayer.rotate, transform.GetChild(2).eulerAngles.z)), Time.deltaTime*50f);
 			PlayerCanvas.cinematicMode = false;

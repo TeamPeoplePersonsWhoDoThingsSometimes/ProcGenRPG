@@ -5,6 +5,7 @@ public class ElkClonerSmallAttack : Attack {
 
 	private float timer = 0.1f;
 	private float randomVal;
+	public bool followPlayer = true;
 
 	protected override void Start ()
 	{
@@ -15,11 +16,15 @@ public class ElkClonerSmallAttack : Attack {
 	protected override void Update ()
 	{
 		timer -= Time.deltaTime;
-		if(timer > 0f) {
-			transform.LookAt(Vector3.up);
-			GetComponent<Rigidbody>().AddForce(new Vector3(randomVal*2f, 100f, randomVal*2f));
+		if(followPlayer) {
+			if(timer > 0f) {
+				transform.LookAt(Vector3.up);
+				GetComponent<Rigidbody>().AddForce(new Vector3(randomVal*2f, 100f, randomVal*2f));
+			} else {
+				transform.LookAt(Player.playerPos.position + new Vector3(0,1,0));
+				GetComponent<Rigidbody>().AddForce(transform.forward*200f, ForceMode.Acceleration);
+			}
 		} else {
-			transform.LookAt(Player.playerPos.position + new Vector3(0,1,0));
 			GetComponent<Rigidbody>().AddForce(transform.forward*200f, ForceMode.Acceleration);
 		}
 	}

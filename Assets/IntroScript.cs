@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using UnityStandardAssets.ImageEffects;
 
 public class IntroScript : MonoBehaviour {
@@ -13,9 +14,6 @@ public class IntroScript : MonoBehaviour {
 	private int typeIndex;
 
 	private bool animating;
-
-	public RectTransform loadingBar;
-	private float localLoadingValue;
 
 	private int speed = 1;
 	private float animSpeed = 1;
@@ -463,8 +461,14 @@ public class IntroScript : MonoBehaviour {
 		animSpeed = Mathf.MoveTowards(animSpeed, speed, Time.deltaTime*(typeIndex/500f));
 		if(animating) {
 			classText.GetComponent<RectTransform>().parent.Translate(Vector3.up/7f*animSpeed);
-			Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration = animSpeed/7f;
-			Camera.main.GetComponent<MotionBlur>().blurAmount = animSpeed/50f;
+			if(QualitySettings.GetQualityLevel() > (int)QualityLevel.Good) {
+				if(Time.frameCount % 142 == 0 || Time.frameCount % 144 == 0 || Time.frameCount % 177 == 0) {
+					Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration = 40f;
+				} else {
+					Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration = animSpeed/7f;
+				}
+				Camera.main.GetComponent<MotionBlur>().blurAmount = animSpeed/50f;
+			}
 		}
 
 		if(animating && classText.text.Length > 8000) {
@@ -472,7 +476,9 @@ public class IntroScript : MonoBehaviour {
 			classText.text = "";
 			classText.GetComponent<RectTransform>().parent.GetComponent<CanvasGroup>().alpha = 0;
 			classText.GetComponent<RectTransform>().parent.parent.GetChild(1).GetComponent<CanvasGroup>().alpha = 1;
-			Camera.main.GetComponent<MotionBlur>().blurAmount = 0.5f;
+			if(QualitySettings.GetQualityLevel() > (int)QualityLevel.Good) {
+				Camera.main.GetComponent<MotionBlur>().blurAmount = 0.5f;
+			}
 		}
 
 		if(!animating && classText.GetComponent<RectTransform>().parent.parent.GetChild(1).GetComponent<CanvasGroup>().alpha == 1) {
@@ -482,14 +488,15 @@ public class IntroScript : MonoBehaviour {
 		if(Camera.main.fieldOfView < 60f) {
 			if(loadNextLevel == null) {
 				loadNextLevel = Application.LoadLevelAsync(2);
-			} else {
 				loadNextLevel.allowSceneActivation = false;
-				localLoadingValue = Mathf.MoveTowards(localLoadingValue, loadNextLevel.progress, Time.deltaTime/2f);
-				loadingBar.localScale = new Vector3(localLoadingValue, 1f,1f);
-				if(localLoadingValue >= 0.9f) {
-					loadNextLevel.allowSceneActivation = true;
-				}
 			}
+			if(QualitySettings.GetQualityLevel() > (int)QualityLevel.Good) {
+				Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration = Mathf.Max(Random.value*50f, 10f);
+			}
+			classText.GetComponent<RectTransform>().parent.parent.GetChild(1).GetChild(2).GetComponent<Text>().fontSize = (int)Mathf.Max(Random.value*14f,10f);
+		}
+		if(Camera.main.fieldOfView < 59f) {
+			loadNextLevel.allowSceneActivation = true;
 		}
 	}
 
@@ -497,6 +504,9 @@ public class IntroScript : MonoBehaviour {
 		if(input.text.Length > 2) {
 			animating = true;
 			PersistentInfo.playerName = input.text;
+		} else {
+//			EventSystem.current.SetSelectedGameObject(input.gameObject);
+			input.OnPointerClick(new PointerEventData(EventSystem.current));
 		}
 	}
 }

@@ -13,11 +13,17 @@ public class MainMenu : MonoBehaviour {
 	private MenuState curState = MenuState.Splash;
 	private GameObject splashContainer, mainContainer;
 
+	private float chromAbbAmount;
+
+	private bool reMapping;
+	private Button curButtonForRemap;
+
 	// Use this for initialization
 	void Start () {
 		dotBG = GameObject.Find("DOTBGPREFAB").GetComponent<Image>();
 		splashContainer = GameObject.Find("SplashContainer");
 		mainContainer = GameObject.Find("MainContainer");
+		chromAbbAmount = Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration;
 	}
 	
 	// Update is called once per frame
@@ -50,20 +56,41 @@ public class MainMenu : MonoBehaviour {
 		case MenuState.Main:
 			mainContainer.SetActive(true);
 			splashContainer.SetActive(false);
-			if(Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration > 5) {
-				Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration -= Time.deltaTime*5000;
+			if(chromAbbAmount > 5) {
+				chromAbbAmount -= Time.deltaTime*5000;
 			} else {
-				Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration = 5;
+				chromAbbAmount = 5;
 			}
 			break;
 
 
 		}
+
+		if(QualitySettings.GetQualityLevel() > (int)QualityLevel.Good) {
+			Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration = chromAbbAmount;
+		}
+
+		if(reMapping) {
+			KeyCode temp = KeyCode.None;
+			foreach(KeyCode k in (KeyCode[])System.Enum.GetValues(typeof(KeyCode))) {
+				if(Input.GetKey(k)) {
+					temp = k;
+				}
+			}
+			if(temp != KeyCode.None) {
+				if(curButtonForRemap.gameObject.name.Equals("UpButton")) {
+					PersistentInfo.forwardKey = temp;
+					curButtonForRemap.transform.GetChild(0).GetComponent<Text>().text = temp.ToString();
+				}
+				reMapping = false;
+				curButtonForRemap = null;
+			}
+		}
 	}
 
 	void TransitionToMain() {
-		if(Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration < 1000) {
-			Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration += Time.deltaTime*10000;
+		if(chromAbbAmount < 1000) {
+			chromAbbAmount += Time.deltaTime*10000;
 		} else {
 			curState = MenuState.Main;
 			transitioningToMain = false;
@@ -106,5 +133,15 @@ public class MainMenu : MonoBehaviour {
 
 	public void NewGameClicked() {
 		Application.LoadLevel(1);
+	}
+
+	public void CreditsClicked() {
+		GetComponent<Animator>().SetTrigger("MainToCredits");
+	}
+
+	public void KeyRemapButtonPressed(Button button) {
+		button.transform.GetChild(0).GetComponent<Text>().text = "?";
+		curButtonForRemap = button;
+		reMapping = true;
 	}
 }

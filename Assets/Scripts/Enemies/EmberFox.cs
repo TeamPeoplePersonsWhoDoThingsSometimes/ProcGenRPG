@@ -6,9 +6,12 @@ public class EmberFox : Enemy {
 	private bool patrolForward = true, turningLeft = false, turningRight = false;
 	private float distanceTurned = 0f, distancePatrolled = 0f;
 
+	public bool detectOnSpawn;
+
 	// Use this for initialization
 	void Start () {
 		base.Start();
+		detectedPlayer = detectOnSpawn;
 	}
 	
 	// Update is called once per frame

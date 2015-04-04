@@ -182,7 +182,6 @@ public class MasterDriver : MonoBehaviour {
 
 			//currentMap.debugDisplayMap();
 			questListener.initializeQuests ();
-			
 		}
 
 		currentArea.showArea ();
@@ -227,7 +226,7 @@ public class MasterDriver : MonoBehaviour {
                 break;
         }
 
-		currentArea.getGroup ().generateAreas ();
+		//currentArea.getGroup ().generateAreas ();
         currentArea.showArea();
 		log ("Moved to area: " + currentArea.position);
 

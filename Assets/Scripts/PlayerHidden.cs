@@ -22,9 +22,9 @@ public class PlayerHidden : MonoBehaviour {
 			}
 		}
 
-		if(TutorialComment.enableUI) {
+		if(TutorialComment.enableUI && this.transform.GetChild(0).GetComponent<VignetteAndChromaticAberration>() != null) {
 			this.transform.GetChild(0).GetComponent<VignetteAndChromaticAberration>().enabled = false;
-		} else {
+		} else if (this.transform.GetChild(0).GetComponent<VignetteAndChromaticAberration>() != null) {
 			this.transform.GetChild(0).GetComponent<VignetteAndChromaticAberration>().enabled = true;
 		}
 	}

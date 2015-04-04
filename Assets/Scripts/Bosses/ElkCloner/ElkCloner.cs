@@ -5,6 +5,7 @@ public class ElkCloner : Boss {
 	
 	private float smallAttackingTime;
 	private GameObject smallAttack;
+	private GameObject angryAttack;
 
 	private float angryTime;
 
@@ -12,10 +13,18 @@ public class ElkCloner : Boss {
 		base.DoIdle ();
 	}
 
+	protected void Start() {
+		base.Start();
+
+		GetComponent<ParticleSystem>().enableEmission = false;
+	}
+
 	protected override void HandleDeath () {
 		if (maxHP > 500f) {
-			GameObject elk1 = (GameObject)Instantiate(this.gameObject, transform.position + transform.right, Quaternion.identity);
-			GameObject elk2 = (GameObject)Instantiate(this.gameObject, transform.position - transform.right, Quaternion.identity);
+			GameObject elk1 = (GameObject)Instantiate(this.gameObject, transform.position + transform.right*5f, Quaternion.identity);
+			GameObject elk2 = (GameObject)Instantiate(this.gameObject, transform.position - transform.right*5f, Quaternion.identity);
+			elk1.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+			elk2.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
 			elk1.GetComponent<Enemy>().maxHP = this.maxHP/5f;
 			elk2.GetComponent<Enemy>().maxHP = this.maxHP/5f;
 			elk1.transform.localScale = this.transform.localScale/1.4f;
@@ -43,6 +52,19 @@ public class ElkCloner : Boss {
 				temp.GetComponent<Attack>().SetDamage(this.baseAttackDamage);
 			}
 			smallAttackingTime -= Time.deltaTime;
+		}
+
+		if(angryTime > 0) {
+			GetComponent<ParticleSystem>().startColor = Color.red;
+			angryTime -= Time.deltaTime;
+		} else if(angryTime < 0 && angryTime != -100f) {
+			for(int i = 0; i < 40; i++) {
+				GameObject tempAttack = (GameObject)Instantiate(angryAttack, transform.position - new Vector3(0,1,0), Quaternion.Euler(new Vector3(0,360f/40f*i,0f)));
+				tempAttack.GetComponent<Attack>().SetDamage(this.baseAttackDamage*10f);
+			}
+			angryTime = -100f;
+		} else {
+			GetComponent<ParticleSystem>().startColor = Color.blue;
 		}
 	}
 
@@ -77,6 +99,10 @@ public class ElkCloner : Boss {
 			smallAttack = phaseObject;
 			smallAttackingTime = 0.5f;
 		}
+		if(phaseName.Equals("GetMad")) {
+			angryAttack = phaseObject;
+			angryTime = 3f;
+		}
 	}
 
 	public override void PhaseMove (string phaseName)
@@ -92,7 +118,7 @@ public class ElkCloner : Boss {
 	public override void PhaseOther (string phaseName, GameObject phaseObject)
 	{
 		if(phaseName.Equals("GetMad")) {
-
+			GetComponent<ParticleSystem>().enableEmission = true;
 		}
 	}
 
