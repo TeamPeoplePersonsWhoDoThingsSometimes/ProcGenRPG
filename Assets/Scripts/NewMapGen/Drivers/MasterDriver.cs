@@ -261,6 +261,11 @@ public class MasterDriver : MonoBehaviour {
                 player.transform.position = new Vector3(currentPortal.transform.position.x - 8, player.transform.position.y, currentPortal.transform.position.z);
                 break;
         }
+
+		//Fire Movement Event
+		DirectObject obj = new DirectObject ("Area", currentArea.position.x + " " + currentArea.position.y);
+		PlayerAction action = new PlayerAction (obj, ActionType.MOVE_AREA);
+		ActionEventInvoker.primaryInvoker.invokeAction (action);
     }
 	
 
