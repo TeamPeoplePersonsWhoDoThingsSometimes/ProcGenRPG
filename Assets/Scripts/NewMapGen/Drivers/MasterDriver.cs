@@ -19,7 +19,9 @@ public class MasterDriver : MonoBehaviour {
 	private static QuestListener questListener;*/
 	
 	private const string builderDataStore = "./Assets/Resources/builder.data";
-	
+
+	private const string saveGameFile = "./save.sav";
+
 	/*********************************
 	 * Public instance data, should be used for settings only
 	*********************************/
@@ -29,6 +31,9 @@ public class MasterDriver : MonoBehaviour {
 	 * to the quest builder about possible actions
 	 */
 	public bool generateBuilderDataOnLaunch;
+
+	public bool saveGame;
+	public bool loadGame;
 	
 	public TileSet[] tileSets;
 	public GameObject[] weapons;
@@ -37,7 +42,7 @@ public class MasterDriver : MonoBehaviour {
 	public GameObject player;
 
 	private QuestListener questListener;
-	
+
 	/*********************************
 	 * Static methods
 	*********************************/
@@ -159,26 +164,37 @@ public class MasterDriver : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-        if (generateBuilderDataOnLaunch)
-        {
-            generateBuilderData();
-        }
+		if (generateBuilderDataOnLaunch) {
+			generateBuilderData();
+		}
 
-        questListener = new QuestListener();
+		if (loadGame) {
+			load ();
+		} else {
+			questListener = new QuestListener ();
 
-        currentMap = new Map();
-        currentArea = currentMap.getArea(5, 5);
+			currentMap = new Map ();
+			currentArea = currentMap.getArea (5, 5);
 
-        currentArea.getGroup().generateAreas();
-        currentArea.showArea();
-        Point spawnPoint = currentArea.defaultSpawn;
-        player.transform.position = new Vector3(spawnPoint.x, player.transform.position.y, spawnPoint.y);
+			currentArea.getGroup ().generateAreas ();
+			Point spawnPoint = currentArea.defaultSpawn;
+			player.transform.position = new Vector3 (spawnPoint.x, player.transform.position.y, spawnPoint.y);
 
-        //currentMap.debugDisplayMap();
+			//currentMap.debugDisplayMap();
+			questListener.initializeQuests ();
+		}
 
-        questListener.initializeQuests();
+		currentArea.showArea ();
 
         Debug.Log("Startup time: " + Time.realtimeSinceStartup);
+	}
+
+	void Update()
+	{
+		if (saveGame) {
+			saveGame = false;
+			save();
+		}
 	}
 
     //Changes the current Area to the Area in the input Direction.
@@ -245,12 +261,109 @@ public class MasterDriver : MonoBehaviour {
                 player.transform.position = new Vector3(currentPortal.transform.position.x - 8, player.transform.position.y, currentPortal.transform.position.z);
                 break;
         }
+<<<<<<< HEAD
 
 		FMOD_StudioSystem.instance.PlayOneShot("event:/environment/portal",Player.playerPos.position);
         
+=======
+>>>>>>> origin/master
 
+		//Fire Movement Event
+		DirectObject obj = new DirectObject ("Area", currentArea.position.x + " " + currentArea.position.y);
+		PlayerAction action = new PlayerAction (obj, ActionType.MOVE_AREA);
+		ActionEventInvoker.primaryInvoker.invokeAction (action);
     }
 	
 
     //TODO: Create startNewGame and loadGame methods.
+
+	public void save() {
+		PlayerStatus playerData = player.GetComponentInChildren<Player> ().getPlayerStatus ();
+		List<QuestSave> questData = questListener.getQuestData ();
+		List<SpawnedObject> spawnedObjects = currentMap.getAllSpawnedObjects ();
+		int seed = currentMap.getSeed ();
+
+		SavePackage.Builder packageBuilder = SavePackage.CreateBuilder ();
+		packageBuilder.SetPlayer (playerData);
+		packageBuilder.AddRangeQuestData (questData);
+		packageBuilder.AddRangeSpawnedObjects (spawnedObjects);
+		packageBuilder.SetSeed (seed);
+
+		SavePackage package = packageBuilder.Build ();
+
+		try {
+			FileStream fs = new FileStream (saveGameFile, FileMode.Create);
+			package.WriteTo(fs);
+			fs.Flush();
+			fs.Close();
+		} catch (IOException excep) {
+			log("IO ERROR: COULD NOT SAVE GAME DATA");
+		}
+	}
+
+	public void load() {
+		SavePackage package;
+
+		try {
+			FileStream fs = new FileStream (saveGameFile, FileMode.Open);
+			package = SavePackage.ParseFrom(fs);
+			fs.Flush();
+			fs.Close();
+		} catch (IOException excep) {
+			IOException dummy = excep;
+			log("IO ERROR: COULD NOT LOAD GAME DATA");
+			return;
+		}
+
+		//WORLD GENERATION
+		currentMap = new Map (package.Seed);
+
+		//QUESTS
+		List<QuestSave> questSaves = new List<QuestSave> ();
+		questSaves.AddRange(package.QuestDataList);
+		questListener = new QuestListener (questSaves);
+
+		//PLAYER STATUS
+		currentArea = currentMap.getArea (package.Player.PlayerPosition.AreaX, package.Player.PlayerPosition.AreaY);
+		player.GetComponentInChildren<Player> ().setPlayerStatus (package.Player);
+		currentArea.getGroup ().generateAreas ();
+		player.transform.position = new Vector3 (0.0f, player.transform.position.y, 0.0f);//global shift
+
+		//best way I could find to get children in unity?
+		Transform[] playerChildren = player.GetComponentsInChildren<Transform> ();
+		Transform camera = null;
+		foreach (Transform t in playerChildren) {
+			if (t.gameObject.name.Equals("CamRotate")) {
+				camera = t;
+			}
+		}
+
+		camera.position = new Vector3 (package.Player.PlayerPosition.LocalX, camera.position.y, package.Player.PlayerPosition.LocalY);
+		
+
+		//SPAWNED OBJECTS
+		List<SpawnedObject> spawnedObjects = new List<SpawnedObject> ();
+		spawnedObjects.AddRange(package.SpawnedObjectsList);
+		foreach (SpawnedObject o in spawnedObjects) {
+			GlobalPosition pos = o.ObjectPosition;
+			Area area = currentMap.getArea(pos.AreaX, pos.AreaY);
+			GameObject obj;
+
+			if (o.HasEnemyAttributes) {
+				obj = (GameObject)getEnemyFromProtobuf(o.ObjectData);
+				//TODO set enemy health
+			} else {
+				obj = (GameObject)getItemFromProtobuf(o.ObjectData);
+			}
+
+			obj = GameObject.Instantiate(obj);
+
+			obj.transform.position.Set(pos.LocalX, obj.transform.position.y, pos.LocalY);
+
+			if (area != currentArea) {
+				obj.SetActive(false);
+			}
+		}
+
+	}
 }

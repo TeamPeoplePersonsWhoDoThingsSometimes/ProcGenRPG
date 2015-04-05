@@ -4,7 +4,7 @@ using System.Collections;
 public class SpawnCommand {
 
 	private MapType spawnArea;
-	private SpawnAreaTypeSpecification specification;//LOCAL is the range within the current area, DISTANCE is the area-to-area distance range
+	private SpawnAreaTypeSpecification specification;//LOCAL means the spawn should occur in a room in the current area
 	private int range;
 	private int quantity;//when area spawns were a thing, this needed to be dependant on direct objects, which is why this is initialized wierdly
 	private GameObject objectToSpawn;
@@ -42,6 +42,10 @@ public class SpawnCommand {
 			MasterDriver.Instance.log("Could not find spawnable object for specifications: \n" + proto);
 		}
 
+	}
+
+	public SpawnAreaTypeSpecification getSpawnSpecification() {
+		return specification;
 	}
 	
 	public MapType getSpawnArea() {

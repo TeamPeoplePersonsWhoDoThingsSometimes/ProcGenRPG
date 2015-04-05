@@ -76,4 +76,13 @@ public class ActionCheckable : StatusCheckable {
 
 		Debug.Log ("Built action checkable: " + checkAction.getActionType () + "," + checkAction.getDirectObject ().getIdentifier () + "," + checkAction.getDirectObject ().getTypeIdentifier () + "," + quantity);
 	}
+
+	public void setFromData (StatusSave saveData) {
+		currentAmount = saveData.Count;
+	}
+
+	public void setBuilderWithData(ref StatusSave.Builder saveData) {
+		saveData.SetCount (currentAmount);
+	}
+
 }

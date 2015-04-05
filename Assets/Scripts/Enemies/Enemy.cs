@@ -48,6 +48,25 @@ public class Enemy : MonoBehaviour {
 		return new DirectObject (gameObject.name, (isBadass? "Badass" : "Basic" ));
 	}
 
+	public SpawnedObject getSpawnedObjectInformation(Area area) {
+		SpawnedObject.Builder builder = SpawnedObject.CreateBuilder ();
+		
+		GlobalPosition.Builder pBuilder = GlobalPosition.CreateBuilder ();
+		pBuilder.SetAreaX (area.position.x);
+		pBuilder.SetAreaY (area.position.y);
+		pBuilder.SetLocalX ((int)gameObject.transform.position.x);
+		pBuilder.SetLocalY ((int)gameObject.transform.position.z);
+		builder.SetObjectPosition (pBuilder.Build ());
+		
+		builder.SetObjectData (getDirectObject().getDirectObjectAsProtobuf());
+
+		EnemyData.Builder eBuilder = EnemyData.CreateBuilder ();
+		eBuilder.SetHealthRemaining ((int)hp);
+		builder.SetEnemyAttributes (eBuilder.Build ());
+
+		return builder.Build ();
+	}
+
 	private float seed1 = 0f;
 	private float seed2 = 0f;
 	private int count = 0;

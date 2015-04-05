@@ -97,7 +97,12 @@ public class Quest : ActionEventListener {
 
 		public void executeCommands(AreaGroup group) {
 			foreach (SpawnCommand s in commands) {
-				spawnLocations.Add(group.executeSpawnCommand(s));
+				if (s.getSpawnSpecification().Equals(SpawnAreaTypeSpecification.LOCAL)) {
+					spawnLocations.Add(MasterDriver.Instance.CurrentArea.position);
+					MasterDriver.Instance.CurrentArea.executeSpawnCommand(s);
+				} else {
+					spawnLocations.Add(group.executeSpawnCommand(s));
+				}
 				//TODO: Figure out a better way to do this world map stuff?
 				WorldMap.AddQuest(this.description);
 			}
@@ -124,6 +129,51 @@ public class Quest : ActionEventListener {
 					}
 				}
 			}
+		}
+
+		/**
+		 * Sets this step with the given quest information
+		 */
+		public void setStepWithQuestInfomation(QuestSave saveData) {
+			Dictionary<StatusCheckable, bool> pairing = new Dictionary<StatusCheckable, bool> ();
+			List<StatusSave> statusCheckSaves = new List<StatusSave> ();
+			statusCheckSaves.AddRange(saveData.CurrentStepDataList);
+			int counter = 0;
+			foreach (KeyValuePair<StatusCheckable, bool> pair in statuses) {
+				pair.Key.setFromData(statusCheckSaves[counter]);
+				pairing.Add(pair.Key, statusCheckSaves[counter].AlreadyMet);
+				counter++;
+			}
+
+			statuses = pairing;
+
+			List<PointProto> pointProtos = new List<PointProto> ();
+			pointProtos.AddRange(saveData.CurrentStepSpawnLocationsList);
+			spawnLocations.Clear ();
+			foreach (PointProto p in pointProtos) {
+				spawnLocations.Add (new Point(p.X, p.Y));
+			}
+		}
+
+		/**
+		 * Sets teh given quest save data protobuf with this step information
+		 */
+		public void setQuestWithStepInformation(ref QuestSave.Builder builder) {
+
+			foreach (KeyValuePair<StatusCheckable, bool> pair in statuses) {
+				StatusSave.Builder sBuilder = StatusSave.CreateBuilder();
+				sBuilder.SetAlreadyMet(pair.Value);
+				pair.Key.setBuilderWithData(ref sBuilder);
+				builder.AddCurrentStepData(sBuilder.Build ());
+      		}
+
+			foreach (Point p in spawnLocations) {
+				PointProto.Builder pBuilder = PointProto.CreateBuilder ();
+				pBuilder.SetX(p.x);
+				pBuilder.SetY(p.y);
+				builder.AddCurrentStepSpawnLocations(pBuilder.Build ());
+			}
+
 		}
 	}
 
@@ -195,7 +245,11 @@ public class Quest : ActionEventListener {
 	}
 
 	public float getCurStepPercentage() {
-		return steps[currentStep].getPercentComplete();
+		if (currentStep >= steps.Length) {
+			return steps [currentStep - 1].getPercentComplete ();
+		} else {
+			return steps [currentStep].getPercentComplete ();
+		}
 	}
 
 	/**
@@ -236,12 +290,20 @@ public class Quest : ActionEventListener {
 		return currentStep != 0;
 	}
 
+	public bool isQuestFinished() {
+		return currentStep >= steps.Length;
+	}
+
+	public bool isQuestInProgress() {
+		return isQuestStarted () && !isQuestFinished ();
+	}
+
 	public string getName() {
 		return this.name;
 	}
 
 	public string getCurrentStepName() {
-		if(this.currentStep > this.steps.Length) {
+		if(this.currentStep >= this.steps.Length) {
 			return this.steps[this.currentStep-1].getName();
 		} else {
 			return this.steps[this.currentStep].getName();
@@ -284,5 +346,20 @@ public class Quest : ActionEventListener {
 		}
 
 		steps [currentStep].executeCommands (group);
+	}
+
+	public void setQuestState(QuestSave save) {
+		currentStep = save.Step;
+		steps [currentStep].setStepWithQuestInfomation (save);
+	}
+
+	public QuestSave getQuestData() {
+		QuestSave.Builder builder = QuestSave.CreateBuilder ();
+		builder.SetName (name);
+		builder.SetStep (currentStep);
+
+		steps [currentStep].setQuestWithStepInformation (ref builder);
+
+		return builder.Build ();
 	}
 }

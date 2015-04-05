@@ -392,6 +392,15 @@ public class Map
         return startFrom.getGroup();
     }
 
+	public List<SpawnedObject> getAllSpawnedObjects() {
+		List<SpawnedObject> spawnedObjects = new List<SpawnedObject> ();
+
+		foreach (Area a in areaMap) {
+			spawnedObjects.AddRange (a.getSpawnedObjects());
+		}
+
+		return spawnedObjects;
+	}
 
     //Returns the seed for this Map.
     public int getSeed()
