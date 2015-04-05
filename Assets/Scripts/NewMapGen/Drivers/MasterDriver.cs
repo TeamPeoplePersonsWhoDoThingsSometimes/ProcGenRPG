@@ -245,6 +245,8 @@ public class MasterDriver : MonoBehaviour {
                 player.transform.position = new Vector3(currentPortal.transform.position.x - 8, player.transform.position.y, currentPortal.transform.position.z);
                 break;
         }
+
+		FMOD_StudioSystem.instance.PlayOneShot("event:/environment/portal",Player.playerPos.position);
         
 
     }

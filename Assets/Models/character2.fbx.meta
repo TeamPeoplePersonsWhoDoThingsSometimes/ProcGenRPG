@@ -143,6 +143,13 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: .108465604
+        functionName: PlaySwordSlashSound
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1
@@ -262,6 +269,13 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: .0555555969
+        functionName: PlaySwordSlashSound
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1
@@ -366,6 +380,13 @@ ModelImporter:
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 3
+        messageOptions: 0
+      - time: .435575157
+        functionName: PlaySwordSlashSound
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
         messageOptions: 0
       - time: .52320677
         functionName: Attack
@@ -593,6 +614,13 @@ ModelImporter:
         messageOptions: 0
       - time: .573839724
         functionName: SetComboTime
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: .0978835523
+        functionName: PlaySwordSlashSound
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

@@ -22,6 +22,7 @@ public class FollowPlayer : MonoBehaviour {
 	public static float traveling;
 
 	private bool finalBoss = false;
+	private static bool finalBossDying = false;
 
 	// Use this for initialization
 	void Start () {
@@ -108,6 +109,10 @@ public class FollowPlayer : MonoBehaviour {
 			}
 		}
 
+		if(finalBossDying) {
+			Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration = Random.value*10;
+		}
+
 	}
 
 	/**
@@ -119,6 +124,10 @@ public class FollowPlayer : MonoBehaviour {
 
 	public static void Travel() {
 		traveling = 5f;
+	}
+
+	public static void FinalBossDying() {
+		finalBossDying = true;
 	}
 
 }

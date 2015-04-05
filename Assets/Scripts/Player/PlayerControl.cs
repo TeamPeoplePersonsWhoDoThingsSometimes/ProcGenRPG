@@ -22,6 +22,8 @@ public class PlayerControl : MonoBehaviour {
 	private static LineRenderer rangedIndicator;
 
 	private float mouseAngle = 0f;
+
+	private float groundY = 0f;
 	
 	// Use this for initialization
 	void Start () {
@@ -46,6 +48,11 @@ public class PlayerControl : MonoBehaviour {
 		swordAttack1 = playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Base.Slash1") || playerAnim.GetCurrentAnimatorStateInfo(1).IsName("RightHandLayer.SlashWalking");
 		swordAttack2 = playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Base.Slash2");
 		swordAttack3 = playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Base.Slash3");
+
+		if(!rolling && playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Base.Roll")) {
+			FMOD_StudioSystem.instance.PlayOneShot("event:/player/playerRoll", transform.position);
+		}
+
 		rolling = playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Base.Roll");
 
 		/****** Set movement variables *****/
@@ -180,7 +187,6 @@ public class PlayerControl : MonoBehaviour {
 					playerAnim.SetBool("ShootMediumGun", false);
 				}
 			} else if(playerref.GetWeapon() != null && playerref.GetWeapon().Type().Equals(WeaponType.Dagger)) {
-				Debug.Log("HERE");
 				if(Input.GetMouseButton(0)) {
 					playerAnim.SetBool("DaggerSlash",true);
 				} else {
@@ -241,8 +247,8 @@ public class PlayerControl : MonoBehaviour {
 
 
 
-		if(transform.position.y > 0) {
-			transform.position = new Vector3(transform.position.x,0,transform.position.z);
+		if(transform.position.y > groundY) {
+			transform.position = new Vector3(transform.position.x,groundY,transform.position.z);
 		}
 }
 
@@ -251,6 +257,20 @@ public class PlayerControl : MonoBehaviour {
 	 */
 	void SetComboTime() {
 		comboTime = !comboTime;
+	}
+
+	public void PlayFootStepSound() {
+		FMOD_StudioSystem.instance.PlayOneShot("event:/player/playerFootsteps",transform.position);
+	}
+
+	public void PlaySwordSlashSound() {
+		FMOD_StudioSystem.instance.PlayOneShot("event:/weapons/lightsaber",transform.position);
+	}
+
+	void OnCollisionEnter(Collision other) {
+		if(other.gameObject.tag.Equals("Ground") && groundY == 0) {
+			groundY = transform.position.y;
+		}
 	}
 
 }

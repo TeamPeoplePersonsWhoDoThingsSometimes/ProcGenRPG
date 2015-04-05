@@ -12,5 +12,11 @@ public class NullBeam : Hack {
 		GameObject tempAttack = (GameObject)Instantiate(attack, Player.playerPos.position + Player.playerPos.forward*attack.transform.localScale.x/1.95f + new Vector3(0f, 2f), Quaternion.LookRotation(shootRight ? Player.playerPos.right : Player.playerPos.forward));
 		tempAttack.GetComponent<Attack>().SetDamage(damage);
 		tempAttack.GetComponent<Attack>().SetCrit(critChance);
+
+		if(name.Equals("NullBolt")) {
+			FMOD_StudioSystem.instance.PlayOneShot("event:/weapons/nullBolt", Player.playerPos.position);
+		} else {
+			FMOD_StudioSystem.instance.PlayOneShot("event:/weapons/nullBeam", Player.playerPos.position);
+		}
 	}
 }

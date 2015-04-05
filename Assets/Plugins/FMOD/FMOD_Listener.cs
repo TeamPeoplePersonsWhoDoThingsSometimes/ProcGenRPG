@@ -69,7 +69,7 @@ public class FMOD_Listener : MonoBehaviour
 		else if (Application.platform == RuntimePlatform.OSXPlayer ||
 			Application.platform == RuntimePlatform.OSXDashboardPlayer)
 		{
-			bankPath = Application.dataPath + "/Data/StreamingAssets";
+			bankPath = Application.dataPath + "/Resources/Data/StreamingAssets";
 		}
 		else if (Application.platform == RuntimePlatform.IPhonePlayer)
 		{
