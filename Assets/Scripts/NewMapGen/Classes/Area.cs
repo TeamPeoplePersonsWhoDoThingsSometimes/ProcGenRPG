@@ -41,6 +41,17 @@ public class Area
 			return rooms[0].center * 10;
 		}
 	}
+
+	//used to access rooms to add spawned objects to the area via the first room
+	//note that this means that we cannot guarantee that spawned objects belong to the
+	//room in which they appear
+	public Room basicRoom
+	{
+		get
+		{
+			return rooms[0];
+		}
+	}
     
     //The Map which this Area is a part of.
     private Map parentMap;

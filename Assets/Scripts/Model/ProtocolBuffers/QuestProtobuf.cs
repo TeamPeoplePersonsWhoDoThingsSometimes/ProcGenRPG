@@ -94,56 +94,57 @@ public static partial class QuestProtobuf {
         "b3RvY29sIpIBChJTdGF0dXNTdGVwUHJvdG9jb2wSDAoEbmFtZRgBIAIoCRIT" + 
         "CgtkZXNjcmlwdGlvbhgCIAIoCRIwCg5zdGF0dXNlc0luU3RlcBgDIAMoCzIY" + 
         "LlN0YXR1c0NoZWNrYWJsZVByb3RvY29sEicKCGNvbW1hbmRzGAQgAygLMhUu" + 
-        "U3Bhd25Db21tYW5kUHJvdG9jb2wihgEKF1N0YXR1c0NoZWNrYWJsZVByb3Rv" + 
+        "U3Bhd25Db21tYW5kUHJvdG9jb2wikwEKF1N0YXR1c0NoZWNrYWJsZVByb3Rv" + 
         "Y29sEh8KBmFjdGlvbhgBIAEoCzIPLkFjdGlvblByb3RvY29sEhsKBHRpZXIY" + 
         "AiABKAsyDS5UaWVyUHJvdG9jb2wSDgoGYW1vdW50GAMgASgFEh0KBWxldmVs" + 
-        "GAQgASgLMg4uTGV2ZWxQcm90b2NvbCIcCgxUaWVyUHJvdG9jb2wSDAoEdGll" + 
-        "chgBIAIoBSIeCg1MZXZlbFByb3RvY29sEg0KBWxldmVsGAEgAigFIlIKDkFj" + 
-        "dGlvblByb3RvY29sEhkKBHR5cGUYASACKA4yCy5BY3Rpb25UeXBlEiUKBnRh" + 
-        "cmdldBgCIAEoCzIVLkRpcmVjdE9iamVjdFByb3RvY29sIoUBChREaXJlY3RP" + 
-        "YmplY3RQcm90b2NvbBIMCgR0eXBlGAEgASgJEgwKBG5hbWUYAiACKAkSGQoD" + 
-        "bWFwGAMgASgLMgwuTWFwUHJvdG9jb2wSDgoGYW1vdW50GAQgASgFEiYKD2l0" + 
-        "ZW1JbmZvcm1hdGlvbhgFIAEoCzINLkl0ZW1Qcm90b2NvbCJDCgtNYXBQcm90" + 
-        "b2NvbBILCgN1aWQYASACKAMSGAoQZ2VuZXJhdGVJZk5lZWRlZBgCIAIoCBIN" + 
-        "CgVyYW5nZRgDIAIoASJHCgxJdGVtUHJvdG9jb2wSDwoHdmVyc2lvbhgBIAIo" + 
-        "BRImCglsZXZlbFNwZWMYAiACKA4yEy5MZXZlbFNwZWNpZmljYXRpb24iOwoT" + 
-        "Q29udmVyc2F0aW9uUGFja2FnZRIkCg1jb252ZXJzYXRpb25zGAEgAygLMg0u" + 
-        "Q29udmVyc2F0aW9uIlIKDENvbnZlcnNhdGlvbhIjCghhbGxOb2RlcxgBIAMo" + 
-        "CzIRLkNvbnZlcnNhdGlvbk5vZGUSDAoEbmFtZRgCIAEoCRIPCgdjcmVhdG9y" + 
-        "GAMgASgJIpkBChBDb252ZXJzYXRpb25Ob2RlEgwKBHRleHQYASACKAkSDAoE" + 
-        "bmFtZRgCIAIoCRILCgN1aWQYAyACKAMSCQoBWBgEIAIoBRIJCgFZGAUgAigF" + 
-        "EiAKC2Nvbm5lY3Rpb25zGAYgAygLMgsuQ29ubmVjdGlvbhIkCgZibG9ja3MY" + 
-        "ByADKAsyFC5TdGF0dXNCbG9ja1Byb3RvY29sImYKCkNvbm5lY3Rpb24SDgoG" + 
-        "bm9kZUlkGAEgAigDEgwKBHRleHQYAiACKAkSKAoPcmVxdWlyZW1lbnRTZXRz" + 
-        "GAMgAygLMg8uUmVxdWlyZW1lbnRTZXQSEAoIcHJpb3JpdHkYBCABKAUiQAoO" + 
-        "UmVxdWlyZW1lbnRTZXQSLgoMcmVxdWlyZW1lbnRzGAEgAygLMhguU3RhdHVz" + 
-        "Q2hlY2thYmxlUHJvdG9jb2wigQEKC1NhdmVQYWNrYWdlEh0KBnBsYXllchgB" + 
-        "IAIoCzINLlBsYXllclN0YXR1cxIMCgRzZWVkGAIgAigFEh0KCXF1ZXN0RGF0" + 
-        "YRgDIAMoCzIKLlF1ZXN0U2F2ZRImCg5zcGF3bmVkT2JqZWN0cxgEIAMoCzIO" + 
-        "LlNwYXduZWRPYmplY3QiTgoOR2xvYmFsUG9zaXRpb24SDQoFYXJlYVgYAiAC" + 
-        "KAUSDQoFYXJlYVkYAyACKAUSDgoGbG9jYWxYGAQgAigFEg4KBmxvY2FsWRgF" + 
-        "IAIoBSIiCgpQb2ludFByb3RvEgkKAXgYASACKAUSCQoBeRgCIAIoBSJ9CglR" + 
-        "dWVzdFNhdmUSDAoEbmFtZRgBIAIoCRIMCgRzdGVwGAIgAigFEi4KGWN1cnJl" + 
-        "bnRTdGVwU3Bhd25Mb2NhdGlvbnMYAyADKAsyCy5Qb2ludFByb3RvEiQKD2N1" + 
-        "cnJlbnRTdGVwRGF0YRgEIAMoCzILLlN0YXR1c1NhdmUiLwoKU3RhdHVzU2F2" + 
-        "ZRISCgphbHJlYWR5TWV0GAEgAigIEg0KBWNvdW50GAIgAigFIogBCg1TcGF3" + 
-        "bmVkT2JqZWN0EicKDm9iamVjdFBvc2l0aW9uGAEgAigLMg8uR2xvYmFsUG9z" + 
-        "aXRpb24SKQoKb2JqZWN0RGF0YRgCIAIoCzIVLkRpcmVjdE9iamVjdFByb3Rv" + 
-        "Y29sEiMKD2VuZW15QXR0cmlidXRlcxgDIAEoCzIKLkVuZW15RGF0YSIkCglF" + 
-        "bmVteURhdGESFwoPaGVhbHRoUmVtYWluaW5nGAEgAigFImsKDFBsYXllclN0" + 
-        "YXR1cxInCg5wbGF5ZXJQb3NpdGlvbhgBIAIoCzIPLkdsb2JhbFBvc2l0aW9u" + 
-        "EiEKCWludmVudG9yeRgCIAIoCzIOLkludmVudG9yeURhdGESDwoHdmVyc2lv" + 
-        "bhgDIAIoCSI2Cg1JbnZlbnRvcnlEYXRhEiUKBm9iamVjdBgBIAMoCzIVLkRp" + 
-        "cmVjdE9iamVjdFByb3RvY29sKqUBCgpBY3Rpb25UeXBlEggKBEtJTEwQABIN" + 
-        "CglNT1ZFX0FSRUEQARIVChFBUFBST0FDSEVEX09CSkVDVBACEhQKEFBJQ0tF" + 
-        "RF9VUF9PQkpFQ1QQAxIMCghMRVZFTF9VUBAFEg4KCkVRVUlQX0lURU0QBhIM" + 
-        "CghVU0VfSVRFTRAHEgoKBkFUVEFDSxAIEhkKFUNPTlZFUlNBVElPTl9OT0RF" + 
-        "X0hJVBAJKjYKBUJpb21lEhAKDE5PVF9BU1NJR05FRBAAEgoKBlBZVEhPThAB" + 
-        "EgUKAUMQAhIICgRIVE1MEAMqKgoHTWFwVHlwZRIICgRDSVRZEAASCAoEUEFU" + 
-        "SBABEgsKB0RVTkdFT04QAio1ChpTcGF3bkFyZWFUeXBlU3BlY2lmaWNhdGlv" + 
-        "bhIJCgVMT0NBTBAAEgwKCERJU1RBTkNFEAEqLAoSTGV2ZWxTcGVjaWZpY2F0" + 
-        "aW9uEgsKB01JTklNVU0QARIJCgVFWEFDVBACQiEKH3N0c3F1ZXN0YnVpbGRl" + 
-        "ci5wcm90b2NvbGJ1ZmZlcnM=");
+        "GAQgASgLMg4uTGV2ZWxQcm90b2NvbBILCgNub3QYBSABKAgiHAoMVGllclBy" + 
+        "b3RvY29sEgwKBHRpZXIYASACKAUiHgoNTGV2ZWxQcm90b2NvbBINCgVsZXZl" + 
+        "bBgBIAIoBSJSCg5BY3Rpb25Qcm90b2NvbBIZCgR0eXBlGAEgAigOMgsuQWN0" + 
+        "aW9uVHlwZRIlCgZ0YXJnZXQYAiABKAsyFS5EaXJlY3RPYmplY3RQcm90b2Nv" + 
+        "bCKFAQoURGlyZWN0T2JqZWN0UHJvdG9jb2wSDAoEdHlwZRgBIAEoCRIMCgRu" + 
+        "YW1lGAIgAigJEhkKA21hcBgDIAEoCzIMLk1hcFByb3RvY29sEg4KBmFtb3Vu" + 
+        "dBgEIAEoBRImCg9pdGVtSW5mb3JtYXRpb24YBSABKAsyDS5JdGVtUHJvdG9j" + 
+        "b2wiQwoLTWFwUHJvdG9jb2wSCwoDdWlkGAEgAigDEhgKEGdlbmVyYXRlSWZO" + 
+        "ZWVkZWQYAiACKAgSDQoFcmFuZ2UYAyACKAEiRwoMSXRlbVByb3RvY29sEg8K" + 
+        "B3ZlcnNpb24YASACKAUSJgoJbGV2ZWxTcGVjGAIgAigOMhMuTGV2ZWxTcGVj" + 
+        "aWZpY2F0aW9uIjsKE0NvbnZlcnNhdGlvblBhY2thZ2USJAoNY29udmVyc2F0" + 
+        "aW9ucxgBIAMoCzINLkNvbnZlcnNhdGlvbiJSCgxDb252ZXJzYXRpb24SIwoI" + 
+        "YWxsTm9kZXMYASADKAsyES5Db252ZXJzYXRpb25Ob2RlEgwKBG5hbWUYAiAB" + 
+        "KAkSDwoHY3JlYXRvchgDIAEoCSKZAQoQQ29udmVyc2F0aW9uTm9kZRIMCgR0" + 
+        "ZXh0GAEgAigJEgwKBG5hbWUYAiACKAkSCwoDdWlkGAMgAigDEgkKAVgYBCAC" + 
+        "KAUSCQoBWRgFIAIoBRIgCgtjb25uZWN0aW9ucxgGIAMoCzILLkNvbm5lY3Rp" + 
+        "b24SJAoGYmxvY2tzGAcgAygLMhQuU3RhdHVzQmxvY2tQcm90b2NvbCJmCgpD" + 
+        "b25uZWN0aW9uEg4KBm5vZGVJZBgBIAIoAxIMCgR0ZXh0GAIgAigJEigKD3Jl" + 
+        "cXVpcmVtZW50U2V0cxgDIAMoCzIPLlJlcXVpcmVtZW50U2V0EhAKCHByaW9y" + 
+        "aXR5GAQgASgFIkAKDlJlcXVpcmVtZW50U2V0Ei4KDHJlcXVpcmVtZW50cxgB" + 
+        "IAMoCzIYLlN0YXR1c0NoZWNrYWJsZVByb3RvY29sIoEBCgtTYXZlUGFja2Fn" + 
+        "ZRIdCgZwbGF5ZXIYASACKAsyDS5QbGF5ZXJTdGF0dXMSDAoEc2VlZBgCIAIo" + 
+        "BRIdCglxdWVzdERhdGEYAyADKAsyCi5RdWVzdFNhdmUSJgoOc3Bhd25lZE9i" + 
+        "amVjdHMYBCADKAsyDi5TcGF3bmVkT2JqZWN0Ik4KDkdsb2JhbFBvc2l0aW9u" + 
+        "Eg0KBWFyZWFYGAIgAigFEg0KBWFyZWFZGAMgAigFEg4KBmxvY2FsWBgEIAIo" + 
+        "BRIOCgZsb2NhbFkYBSACKAUiIgoKUG9pbnRQcm90bxIJCgF4GAEgAigFEgkK" + 
+        "AXkYAiACKAUifQoJUXVlc3RTYXZlEgwKBG5hbWUYASACKAkSDAoEc3RlcBgC" + 
+        "IAIoBRIuChljdXJyZW50U3RlcFNwYXduTG9jYXRpb25zGAMgAygLMgsuUG9p" + 
+        "bnRQcm90bxIkCg9jdXJyZW50U3RlcERhdGEYBCADKAsyCy5TdGF0dXNTYXZl" + 
+        "Ii8KClN0YXR1c1NhdmUSEgoKYWxyZWFkeU1ldBgBIAIoCBINCgVjb3VudBgC" + 
+        "IAIoBSKIAQoNU3Bhd25lZE9iamVjdBInCg5vYmplY3RQb3NpdGlvbhgBIAIo" + 
+        "CzIPLkdsb2JhbFBvc2l0aW9uEikKCm9iamVjdERhdGEYAiACKAsyFS5EaXJl" + 
+        "Y3RPYmplY3RQcm90b2NvbBIjCg9lbmVteUF0dHJpYnV0ZXMYAyABKAsyCi5F" + 
+        "bmVteURhdGEiJAoJRW5lbXlEYXRhEhcKD2hlYWx0aFJlbWFpbmluZxgBIAIo" + 
+        "BSJ9CgxQbGF5ZXJTdGF0dXMSJwoOcGxheWVyUG9zaXRpb24YASACKAsyDy5H" + 
+        "bG9iYWxQb3NpdGlvbhIhCglpbnZlbnRvcnkYAiACKAsyDi5JbnZlbnRvcnlE" + 
+        "YXRhEg8KB3ZlcnNpb24YAyACKAkSEAoIcm90YXRpb24YBCACKAUiNgoNSW52" + 
+        "ZW50b3J5RGF0YRIlCgZvYmplY3QYASADKAsyFS5EaXJlY3RPYmplY3RQcm90" + 
+        "b2NvbCqlAQoKQWN0aW9uVHlwZRIICgRLSUxMEAASDQoJTU9WRV9BUkVBEAES" + 
+        "FQoRQVBQUk9BQ0hFRF9PQkpFQ1QQAhIUChBQSUNLRURfVVBfT0JKRUNUEAMS" + 
+        "DAoITEVWRUxfVVAQBRIOCgpFUVVJUF9JVEVNEAYSDAoIVVNFX0lURU0QBxIK" + 
+        "CgZBVFRBQ0sQCBIZChVDT05WRVJTQVRJT05fTk9ERV9ISVQQCSo2CgVCaW9t" + 
+        "ZRIQCgxOT1RfQVNTSUdORUQQABIKCgZQWVRIT04QARIFCgFDEAISCAoESFRN" + 
+        "TBADKioKB01hcFR5cGUSCAoEQ0lUWRAAEggKBFBBVEgQARILCgdEVU5HRU9O" + 
+        "EAIqNQoaU3Bhd25BcmVhVHlwZVNwZWNpZmljYXRpb24SCQoFTE9DQUwQABIM" + 
+        "CghESVNUQU5DRRABKiwKEkxldmVsU3BlY2lmaWNhdGlvbhILCgdNSU5JTVVN" + 
+        "EAESCQoFRVhBQ1QQAkIhCh9zdHNxdWVzdGJ1aWxkZXIucHJvdG9jb2xidWZm" + 
+        "ZXJz");
     pbd::FileDescriptor.InternalDescriptorAssigner assigner = delegate(pbd::FileDescriptor root) {
       descriptor = root;
       internal__static_QuestPackage__Descriptor = Descriptor.MessageTypes[0];
@@ -173,7 +174,7 @@ public static partial class QuestProtobuf {
       internal__static_StatusCheckableProtocol__Descriptor = Descriptor.MessageTypes[6];
       internal__static_StatusCheckableProtocol__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::StatusCheckableProtocol, global::StatusCheckableProtocol.Builder>(internal__static_StatusCheckableProtocol__Descriptor,
-              new string[] { "Action", "Tier", "Amount", "Level", });
+              new string[] { "Action", "Tier", "Amount", "Level", "Not", });
       internal__static_TierProtocol__Descriptor = Descriptor.MessageTypes[7];
       internal__static_TierProtocol__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::TierProtocol, global::TierProtocol.Builder>(internal__static_TierProtocol__Descriptor,
@@ -249,7 +250,7 @@ public static partial class QuestProtobuf {
       internal__static_PlayerStatus__Descriptor = Descriptor.MessageTypes[25];
       internal__static_PlayerStatus__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::PlayerStatus, global::PlayerStatus.Builder>(internal__static_PlayerStatus__Descriptor,
-              new string[] { "PlayerPosition", "Inventory", "Version", });
+              new string[] { "PlayerPosition", "Inventory", "Version", "Rotation", });
       internal__static_InventoryData__Descriptor = Descriptor.MessageTypes[26];
       internal__static_InventoryData__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::InventoryData, global::InventoryData.Builder>(internal__static_InventoryData__Descriptor,
@@ -2890,8 +2891,8 @@ public sealed partial class StatusStepProtocol : pb::GeneratedMessage<StatusStep
 public sealed partial class StatusCheckableProtocol : pb::GeneratedMessage<StatusCheckableProtocol, StatusCheckableProtocol.Builder> {
   private StatusCheckableProtocol() { }
   private static readonly StatusCheckableProtocol defaultInstance = new StatusCheckableProtocol().MakeReadOnly();
-  private static readonly string[] _statusCheckableProtocolFieldNames = new string[] { "action", "amount", "level", "tier" };
-  private static readonly uint[] _statusCheckableProtocolFieldTags = new uint[] { 10, 24, 34, 18 };
+  private static readonly string[] _statusCheckableProtocolFieldNames = new string[] { "action", "amount", "level", "not", "tier" };
+  private static readonly uint[] _statusCheckableProtocolFieldTags = new uint[] { 10, 24, 34, 40, 18 };
   public static StatusCheckableProtocol DefaultInstance {
     get { return defaultInstance; }
   }
@@ -2952,6 +2953,16 @@ public sealed partial class StatusCheckableProtocol : pb::GeneratedMessage<Statu
     get { return level_ ?? global::LevelProtocol.DefaultInstance; }
   }
   
+  public const int NotFieldNumber = 5;
+  private bool hasNot;
+  private bool not_;
+  public bool HasNot {
+    get { return hasNot; }
+  }
+  public bool Not {
+    get { return not_; }
+  }
+  
   public override bool IsInitialized {
     get {
       if (HasAction) {
@@ -2974,13 +2985,16 @@ public sealed partial class StatusCheckableProtocol : pb::GeneratedMessage<Statu
       output.WriteMessage(1, field_names[0], Action);
     }
     if (hasTier) {
-      output.WriteMessage(2, field_names[3], Tier);
+      output.WriteMessage(2, field_names[4], Tier);
     }
     if (hasAmount) {
       output.WriteInt32(3, field_names[1], Amount);
     }
     if (hasLevel) {
       output.WriteMessage(4, field_names[2], Level);
+    }
+    if (hasNot) {
+      output.WriteBool(5, field_names[3], Not);
     }
     UnknownFields.WriteTo(output);
   }
@@ -3003,6 +3017,9 @@ public sealed partial class StatusCheckableProtocol : pb::GeneratedMessage<Statu
       }
       if (hasLevel) {
         size += pb::CodedOutputStream.ComputeMessageSize(4, Level);
+      }
+      if (hasNot) {
+        size += pb::CodedOutputStream.ComputeBoolSize(5, Not);
       }
       size += UnknownFields.SerializedSize;
       memoizedSerializedSize = size;
@@ -3140,6 +3157,9 @@ public sealed partial class StatusCheckableProtocol : pb::GeneratedMessage<Statu
       if (other.HasLevel) {
         MergeLevel(other.Level);
       }
+      if (other.HasNot) {
+        Not = other.Not;
+      }
       this.MergeUnknownFields(other.UnknownFields);
       return this;
     }
@@ -3212,6 +3232,10 @@ public sealed partial class StatusCheckableProtocol : pb::GeneratedMessage<Statu
             }
             input.ReadMessage(subBuilder, extensionRegistry);
             Level = subBuilder.BuildPartial();
+            break;
+          }
+          case 40: {
+            result.hasNot = input.ReadBool(ref result.not_);
             break;
           }
         }
@@ -3361,6 +3385,26 @@ public sealed partial class StatusCheckableProtocol : pb::GeneratedMessage<Statu
       PrepareBuilder();
       result.hasLevel = false;
       result.level_ = null;
+      return this;
+    }
+    
+    public bool HasNot {
+      get { return result.hasNot; }
+    }
+    public bool Not {
+      get { return result.Not; }
+      set { SetNot(value); }
+    }
+    public Builder SetNot(bool value) {
+      PrepareBuilder();
+      result.hasNot = true;
+      result.not_ = value;
+      return this;
+    }
+    public Builder ClearNot() {
+      PrepareBuilder();
+      result.hasNot = false;
+      result.not_ = false;
       return this;
     }
   }
@@ -10154,8 +10198,8 @@ public sealed partial class EnemyData : pb::GeneratedMessage<EnemyData, EnemyDat
 public sealed partial class PlayerStatus : pb::GeneratedMessage<PlayerStatus, PlayerStatus.Builder> {
   private PlayerStatus() { }
   private static readonly PlayerStatus defaultInstance = new PlayerStatus().MakeReadOnly();
-  private static readonly string[] _playerStatusFieldNames = new string[] { "inventory", "playerPosition", "version" };
-  private static readonly uint[] _playerStatusFieldTags = new uint[] { 18, 10, 26 };
+  private static readonly string[] _playerStatusFieldNames = new string[] { "inventory", "playerPosition", "rotation", "version" };
+  private static readonly uint[] _playerStatusFieldTags = new uint[] { 18, 10, 32, 26 };
   public static PlayerStatus DefaultInstance {
     get { return defaultInstance; }
   }
@@ -10206,11 +10250,22 @@ public sealed partial class PlayerStatus : pb::GeneratedMessage<PlayerStatus, Pl
     get { return version_; }
   }
   
+  public const int RotationFieldNumber = 4;
+  private bool hasRotation;
+  private int rotation_;
+  public bool HasRotation {
+    get { return hasRotation; }
+  }
+  public int Rotation {
+    get { return rotation_; }
+  }
+  
   public override bool IsInitialized {
     get {
       if (!hasPlayerPosition) return false;
       if (!hasInventory) return false;
       if (!hasVersion) return false;
+      if (!hasRotation) return false;
       if (!PlayerPosition.IsInitialized) return false;
       if (!Inventory.IsInitialized) return false;
       return true;
@@ -10227,7 +10282,10 @@ public sealed partial class PlayerStatus : pb::GeneratedMessage<PlayerStatus, Pl
       output.WriteMessage(2, field_names[0], Inventory);
     }
     if (hasVersion) {
-      output.WriteString(3, field_names[2], Version);
+      output.WriteString(3, field_names[3], Version);
+    }
+    if (hasRotation) {
+      output.WriteInt32(4, field_names[2], Rotation);
     }
     UnknownFields.WriteTo(output);
   }
@@ -10247,6 +10305,9 @@ public sealed partial class PlayerStatus : pb::GeneratedMessage<PlayerStatus, Pl
       }
       if (hasVersion) {
         size += pb::CodedOutputStream.ComputeStringSize(3, Version);
+      }
+      if (hasRotation) {
+        size += pb::CodedOutputStream.ComputeInt32Size(4, Rotation);
       }
       size += UnknownFields.SerializedSize;
       memoizedSerializedSize = size;
@@ -10381,6 +10442,9 @@ public sealed partial class PlayerStatus : pb::GeneratedMessage<PlayerStatus, Pl
       if (other.HasVersion) {
         Version = other.Version;
       }
+      if (other.HasRotation) {
+        Rotation = other.Rotation;
+      }
       this.MergeUnknownFields(other.UnknownFields);
       return this;
     }
@@ -10444,6 +10508,10 @@ public sealed partial class PlayerStatus : pb::GeneratedMessage<PlayerStatus, Pl
           }
           case 26: {
             result.hasVersion = input.ReadString(ref result.version_);
+            break;
+          }
+          case 32: {
+            result.hasRotation = input.ReadInt32(ref result.rotation_);
             break;
           }
         }
@@ -10554,6 +10622,26 @@ public sealed partial class PlayerStatus : pb::GeneratedMessage<PlayerStatus, Pl
       PrepareBuilder();
       result.hasVersion = false;
       result.version_ = "";
+      return this;
+    }
+    
+    public bool HasRotation {
+      get { return result.hasRotation; }
+    }
+    public int Rotation {
+      get { return result.Rotation; }
+      set { SetRotation(value); }
+    }
+    public Builder SetRotation(int value) {
+      PrepareBuilder();
+      result.hasRotation = true;
+      result.rotation_ = value;
+      return this;
+    }
+    public Builder ClearRotation() {
+      PrepareBuilder();
+      result.hasRotation = false;
+      result.rotation_ = 0;
       return this;
     }
   }

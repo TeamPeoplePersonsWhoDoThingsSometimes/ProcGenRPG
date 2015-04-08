@@ -5,6 +5,7 @@ public class TierCheckable : StatusCheckable {
 	
 	public TierCheckable() {
 		checkTier = 0;
+		not = false;
 	}
 	
 	public TierCheckable(int tier) {
@@ -12,8 +13,17 @@ public class TierCheckable : StatusCheckable {
 	}
 	
 	private int checkTier;
-	
+	private bool not;
+
 	public bool isStatusMet(IAction action) {
+		bool positiveMet = isStatusMetInterior (action);
+		if (not) {
+			return !positiveMet;
+		}
+		return positiveMet;
+	}
+
+	private bool isStatusMetInterior(IAction action) {
 		if (action.getActionType ().Equals (ActionType.LEVEL_UP)) {
 			string newVersion = action.getDirectObject().getTypeIdentifier();
 			int level = Player.getMiddle(newVersion) * 10 + Player.getMinor(newVersion);
@@ -23,8 +33,16 @@ public class TierCheckable : StatusCheckable {
 		}
 		return false;
 	}
-	
+
 	public bool isStatusMet() {
+		bool positiveMet = isStatusMetInterior ();
+		if (not) {
+			return !positiveMet;
+		}
+		return positiveMet;
+	}
+
+	private bool isStatusMetInterior() {
 		if (checkTier <= Status.playerStatus.getLevel())
 			return true;
 		return false;
@@ -35,7 +53,13 @@ public class TierCheckable : StatusCheckable {
 	 */
 	public void setFromProtocol (StatusCheckableProtocol protocol) {
 		checkTier = protocol.Tier.Tier;
-		
+
+		if (protocol.HasNot) {
+			not = protocol.Not;
+		} else {
+			not = false;
+		}
+
 		Debug.Log ("Built Tier checkable: " + checkTier);
 	}
 

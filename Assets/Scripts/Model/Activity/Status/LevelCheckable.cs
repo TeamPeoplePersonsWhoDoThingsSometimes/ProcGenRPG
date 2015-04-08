@@ -12,8 +12,17 @@ public class LevelCheckable : StatusCheckable {
 	}
 	
 	private int checkLevel;
-	
+	private bool not;
+
 	public bool isStatusMet(IAction action) {
+		bool positiveMet = isStatusMetInterior (action);
+		if (not) {
+			return !positiveMet;
+		}
+		return positiveMet;
+	}
+	
+	private bool isStatusMetInterior(IAction action) {
 		if (action.getActionType ().Equals (ActionType.LEVEL_UP)) {
 			string newVersion = action.getDirectObject().getTypeIdentifier();
 			int level = Player.getMiddle(newVersion) * 10 + Player.getMinor(newVersion);
@@ -23,8 +32,16 @@ public class LevelCheckable : StatusCheckable {
 		}
 		return false;
 	}
-	
+
 	public bool isStatusMet() {
+		bool positiveMet = isStatusMetInterior ();
+		if (not) {
+			return !positiveMet;
+		}
+		return positiveMet;
+	}
+
+	private bool isStatusMetInterior() {
 		if (checkLevel <= Status.playerStatus.getLevel())
 			return true;
 		return false;
@@ -35,6 +52,12 @@ public class LevelCheckable : StatusCheckable {
 	 */
 	public void setFromProtocol (StatusCheckableProtocol protocol) {
 		checkLevel = protocol.Level.Level;
+
+		if (protocol.HasNot) {
+			not = protocol.Not;
+		} else {
+			not = false;
+		}
 		
 		Debug.Log ("Built Level checkable: " + checkLevel);
 	}

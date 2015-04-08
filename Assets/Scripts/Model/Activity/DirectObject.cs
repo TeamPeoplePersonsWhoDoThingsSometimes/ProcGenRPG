@@ -7,7 +7,7 @@ public class DirectObject {
 	private string type;
 
 	public DirectObject(string id, string typeId) {
-		name = trimCloneTag(id);
+		name = trimCloneTag(trimCloneTag(id));//because sometime there are 2 clone tags and because last week crunchtime this is the easy fix
 		type = typeId;
 	}
 
@@ -51,7 +51,7 @@ public class DirectObject {
 	 */
 	private string trimCloneTag(string name) {
 		string newString = name;
-		if (name.EndsWith("(Clone)")) {
+		if (name.ToLower().EndsWith("(clone)")) {
 			newString = newString.Substring(0, newString.Length - 7);
 		}
 		return newString;

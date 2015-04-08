@@ -87,7 +87,7 @@ public class SpawnCommand {
 			newObject.SetActive(false);
 			newItem = newObject.GetComponent<Item>();
 			newItem.name = objectName;
-			drop.item = newObject;
+			newDrop.GetComponent<ItemDropObject>().item = newObject;
 			obj = newDrop;
 		}
 
