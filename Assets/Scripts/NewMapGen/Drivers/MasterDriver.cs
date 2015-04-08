@@ -261,12 +261,8 @@ public class MasterDriver : MonoBehaviour {
                 player.transform.position = new Vector3(currentPortal.transform.position.x - 8, player.transform.position.y, currentPortal.transform.position.z);
                 break;
         }
-<<<<<<< HEAD
 
 		FMOD_StudioSystem.instance.PlayOneShot("event:/environment/portal",Player.playerPos.position);
-        
-=======
->>>>>>> origin/master
 
 		//Fire Movement Event
 		DirectObject obj = new DirectObject ("Area", currentArea.position.x + " " + currentArea.position.y);

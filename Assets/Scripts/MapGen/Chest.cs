@@ -53,7 +53,10 @@ public class Chest : Interactable {
 				tmp.GetComponent<Byte>().val = byteVal;
 				curByteVal += byteVal;
 			}
-			Destroy(this.gameObject);
+			transform.GetChild(1).GetComponent<Animator>().SetTrigger("Open");
+
+			Destroy(transform.GetChild(0).gameObject);
+			Destroy(this);
 		}
 	}
 

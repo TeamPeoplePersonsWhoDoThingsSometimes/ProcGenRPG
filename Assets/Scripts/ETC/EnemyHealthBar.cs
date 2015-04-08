@@ -11,6 +11,12 @@ public class EnemyHealthBar : MonoBehaviour {
 		if(trackingEnemy != null) {
 			this.transform.GetChild(4).GetComponent<Text>().text = trackingEnemy.GetComponent<Enemy>().name;
 			this.transform.GetChild(1).GetChild(0).GetComponent<Text>().text = trackingEnemy.GetComponent<Enemy>().GetVersion();
+			if(trackingEnemy.GetComponent<FinalBoss>() != null) {
+				GameObject temp = Instantiate(this.transform.GetChild(4).gameObject);
+				temp.GetComponent<RectTransform>().SetParent(this.transform, false);
+				temp.GetComponent<RectTransform>().anchoredPosition = new Vector2(this.transform.GetChild(4).GetComponent<RectTransform>().anchoredPosition.x,this.transform.GetChild(4).GetComponent<RectTransform>().anchoredPosition.y - 0.1f);
+				temp.GetComponent<Text>().text = "MemLeaks: " + 0;
+			}
 		}
 	}
 	
@@ -51,6 +57,10 @@ public class EnemyHealthBar : MonoBehaviour {
 				this.GetComponent<RectTransform>().anchoredPosition = new Vector2(4f,-0.4f);
 				this.GetComponent<RectTransform>().localScale = new Vector3(3.5f,3f,2f);
 				this.transform.GetChild(3).GetComponent<RectTransform>().localScale = new Vector3(trackingEnemy.GetComponent<Enemy>().GetHealthPercentage(), 1,1);
+			}
+
+			if (trackingEnemy.GetComponent<FinalBoss>() != null) {
+				transform.GetChild(5).GetComponent<Text>().text = "MemLeaks: " + FinalBoss.memLeaksCount;
 			}
 
 			/*** Destroy healthbar if tracking enemy is null ***/

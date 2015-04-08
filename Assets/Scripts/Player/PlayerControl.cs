@@ -211,16 +211,18 @@ public class PlayerControl : MonoBehaviour {
 		}
 		float tempRot = 0f;
 		if(Mathf.Abs(playerAnim.GetFloat("Speed")) < 0.1f && !immobile) {
+			Cursor.lockState = CursorLockMode.None;
 			if(rolling) {
-				tempRot = Mathf.MoveTowardsAngle(transform.eulerAngles.y, mouseAngle + camTransform.eulerAngles.y + 15f, Time.deltaTime*200f);
+				tempRot = Mathf.MoveTowardsAngle(transform.eulerAngles.y, mouseAngle + camTransform.eulerAngles.y + 15f, Time.deltaTime*500f);
 			} else {
-				tempRot = Mathf.MoveTowardsAngle(transform.eulerAngles.y, mouseAngle + camTransform.eulerAngles.y, Time.deltaTime*200f);
+				tempRot = Mathf.MoveTowardsAngle(transform.eulerAngles.y, mouseAngle + camTransform.eulerAngles.y, Time.deltaTime*500f);
 			}
 		} else {
+			Cursor.lockState = CursorLockMode.Locked;
 			if(rolling) {
-				tempRot = Mathf.MoveTowardsAngle(transform.eulerAngles.y, camTransform.eulerAngles.y + 15f, Time.deltaTime*200f);
+				tempRot = Mathf.MoveTowardsAngle(transform.eulerAngles.y, camTransform.eulerAngles.y + 15f, Time.deltaTime*500f);
 			} else {
-				tempRot = Mathf.MoveTowardsAngle(transform.eulerAngles.y, camTransform.eulerAngles.y, Time.deltaTime*200f);
+				tempRot = Mathf.MoveTowardsAngle(transform.eulerAngles.y, camTransform.eulerAngles.y, Time.deltaTime*500f);
 			}
 		}
 		transform.eulerAngles = new Vector3(0f, tempRot, 0f);

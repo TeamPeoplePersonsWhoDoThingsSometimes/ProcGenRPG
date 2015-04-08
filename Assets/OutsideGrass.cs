@@ -19,7 +19,7 @@ public class OutsideGrass : MonoBehaviour {
 		
 		if(Time.frameCount%40 == 0) {
 			for(int i = 0; i < randomVals.Length; i++) {
-				randomVals[i] = Random.value*2f - 2f;
+				randomVals[i] = Random.value*5f - 2.5f;
 			}
 		}
 

@@ -396,7 +396,10 @@ public class PlayerCanvas : MonoBehaviour {
 				dragDelta = (new Vector2(Input.mousePosition.x, Input.mousePosition.y)) - mousePressedLocation;
 			}
 
+			Cursor.visible = true;
 		} else {
+			Cursor.visible = false;
+
 			/*** Handles non-console interaction, disallows interaction with console ***/
 			consoleGUI.interactable = false;
 			minimap.SetActive(true);
