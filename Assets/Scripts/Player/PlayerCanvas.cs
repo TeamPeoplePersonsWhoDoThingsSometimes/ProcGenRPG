@@ -396,9 +396,9 @@ public class PlayerCanvas : MonoBehaviour {
 				dragDelta = (new Vector2(Input.mousePosition.x, Input.mousePosition.y)) - mousePressedLocation;
 			}
 
-			Cursor.visible = true;
+//			Cursor.visible = true;
 		} else {
-			Cursor.visible = false;
+//			Cursor.visible = false;
 
 			/*** Handles non-console interaction, disallows interaction with console ***/
 			consoleGUI.interactable = false;

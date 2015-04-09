@@ -245,6 +245,7 @@ public class Player : MonoBehaviour {
 			activeWeapon.AddBytes(val);
 		}
 		bytesToNextVersion = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*levelUpSpeedScale;
+		version = ((int.Parse(version.Split('.')[0]))*1) + "." + ((int.Parse(version.Split('.')[1]))*1) + "." + ((int.Parse(version.Split('.')[2])) + 1);
 		while (xpBytes >= bytesToNextVersion) {
 			LevelUp();
 		}
@@ -254,13 +255,13 @@ public class Player : MonoBehaviour {
 		xpBytes -= bytesToNextVersion;
 		//INCREASE PLAYER STATS
 		algorithmPoints += 2;
-		if(int.Parse(version.Split('.')[2]) + 1 < 10) {
-			version = ((int.Parse(version.Split('.')[0]))*1) + "." + ((int.Parse(version.Split('.')[1]))*1) + "." + ((int.Parse(version.Split('.')[2])) + 1);
-		} else if(int.Parse(version.Split('.')[1]) + 1 < 10) {
+//		if(int.Parse(version.Split('.')[2]) + 1 < 10) {
+//			version = ((int.Parse(version.Split('.')[0]))*1) + "." + ((int.Parse(version.Split('.')[1]))*1) + "." + ((int.Parse(version.Split('.')[2])) + 1);
+//		} else if(int.Parse(version.Split('.')[1]) + 1 < 10) {
 			version = ((int.Parse(version.Split('.')[0]))*1) + "." + ((int.Parse(version.Split('.')[1])*1) + 1) + ".0";
-		} else {
-			version = (int.Parse(version.Split('.')[0])*1 + 1) + ".0.0";
-		}
+//		} else {
+//			version = (int.Parse(version.Split('.')[0])*1 + 1) + ".0.0";
+//		}
 		bytesToNextVersion = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*levelUpSpeedScale;
 		ActionEventInvoker.primaryInvoker.invokeAction (new PlayerAction (this.getDirectObject(), ActionType.LEVEL_UP));
 	}

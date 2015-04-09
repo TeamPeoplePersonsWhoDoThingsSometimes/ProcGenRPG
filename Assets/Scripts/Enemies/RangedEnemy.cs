@@ -67,6 +67,7 @@ public class RangedEnemy : Enemy {
 			transform.LookAt(Player.playerPos.position + new Vector3(0,1,0));
 			transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y + 180f, 0f);
 			transform.Translate(new Vector3(transform.forward.x, 0f, transform.forward.z)*Time.deltaTime*2f, Space.World);
+			Debug.Log("HERE");
 		} else {
 			retreating = false;
 		}

@@ -31,8 +31,8 @@ public class ElkCloner : Boss {
 			elk2.transform.localScale = this.transform.localScale/1.4f;
 			elk1.GetComponent<Enemy>().baseAttackDamage = 1f;
 			elk2.GetComponent<Enemy>().baseAttackDamage = 1f;
-			elk1.GetComponent<Enemy>().maxVersion = Utility.IntToVersion(Utility.VersionToInt(this.version) - 10);
-			elk2.GetComponent<Enemy>().maxVersion = Utility.IntToVersion(Utility.VersionToInt(this.version) - 10);
+			elk1.GetComponent<Enemy>().maxVersion = Utility.ModVersionBy(this.version,-1);
+			elk2.GetComponent<Enemy>().maxVersion = Utility.ModVersionBy(this.version,-1);
 			elk1.GetComponent<Enemy>().minVersion = elk1.GetComponent<Enemy>().maxVersion;
 			elk2.GetComponent<Enemy>().minVersion = elk2.GetComponent<Enemy>().maxVersion;
 		}

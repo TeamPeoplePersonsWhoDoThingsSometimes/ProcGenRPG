@@ -106,6 +106,7 @@ public class Area
     //Creates GameObjects of the 2D array, and displays them. Or if they're already created, just display them.
     public void showArea()
     {
+		Debug.Log("HERE");
         if (!isCity)
         {
             //Don't make GameObjects, if this area is already created.

@@ -89,17 +89,19 @@ public class Enemy : MonoBehaviour {
 			byteObject = Resources.Load<GameObject>("Info/Byte");
 		}
 
-		int minversionInt = Utility.VersionToInt(minVersion);
-		int maxversionInt = Utility.VersionToInt(maxVersion);
-		int minRange = Mathf.Min(Mathf.Max(minversionInt, Utility.VersionToInt(Player.version) - 5), maxversionInt);
-		int maxRange = Mathf.Max(Mathf.Min(Utility.VersionToInt(Player.version) + 5, maxversionInt), minversionInt);
+		int minversionInt = Utility.ComparableVersionInt(minVersion);
+		int maxversionInt = Utility.ComparableVersionInt(maxVersion);
+		int minRange = Mathf.Min(Mathf.Max(minversionInt, Utility.ComparableVersionInt(Player.version) - 5), maxversionInt);
+		int maxRange = Mathf.Max(Mathf.Min(Utility.ComparableVersionInt(Player.version) + 5, maxversionInt), minversionInt);
 
 		int versionInt = Random.Range(minRange,maxRange);
-		this.maxHP *= (int)((versionInt/100f)*(healthScale+1));
-		this.baseAttackDamage *= (versionInt/100f)*(attackScale+1);
-		this.baseHealthRegen *= (versionInt/100f)*(healthRegenScale+1);
-		this.baseAttackSpeed /= (versionInt/100f)*(attackSpeedScale+1);
-		this.version = Utility.IntToVersion(versionInt);
+		Debug.Log("my versionint is: " + versionInt);
+		this.maxHP *= (int)((versionInt/10f)*(healthScale+1));
+		Debug.Log("my maxhp is: " + this.maxHP);
+		this.baseAttackDamage *= (versionInt/10f)*(attackScale+1);
+		this.baseHealthRegen *= (versionInt/10f)*(healthRegenScale+1);
+		this.baseAttackSpeed /= (versionInt/10f)*(attackSpeedScale+1);
+		this.version = Utility.ComparableVersionString(versionInt);
 		hp = maxHP;
 		if(possibleItemDrops.Count != possibleItemDropsChance.Count) {
 			Debug.LogWarning("Hey dummy! You need to have equal number of item drops and item drop chances!");

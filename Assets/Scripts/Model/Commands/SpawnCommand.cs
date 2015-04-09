@@ -69,26 +69,29 @@ public class SpawnCommand {
 
 	public GameObject spawnObject(Vector3 position) {
 		GameObject obj = null;
-	
-		Enemy newEnemy = objectToSpawn.GetComponent<Enemy> ();
-		if (newEnemy != null) {
-			Enemy originalEnemy = objectToSpawn.GetComponent<Enemy>();
-			GameObject newObject = (GameObject)GameObject.Instantiate (objectToSpawn.gameObject, position, Quaternion.identity);
-			newEnemy = newObject.GetComponent<Enemy>();
-			newEnemy.setBadass(badass);
-			obj = newObject;
-		}
+		if(objectToSpawn != null) {
+			Enemy newEnemy = objectToSpawn.GetComponent<Enemy> ();
+			if (newEnemy != null) {
+				Enemy originalEnemy = objectToSpawn.GetComponent<Enemy>();
+				GameObject newObject = (GameObject)GameObject.Instantiate (objectToSpawn.gameObject, position, Quaternion.identity);
+				newEnemy = newObject.GetComponent<Enemy>();
+				newEnemy.setBadass(badass);
+				obj = newObject;
+			}
 
-		Item newItem = objectToSpawn.GetComponent<Item> ();
-		if (newItem != null) {
-			ItemDropObject drop = LoadResources.Instance.CommonItemDrop.GetComponent<ItemDropObject>();
-			GameObject newDrop = (GameObject)GameObject.Instantiate (drop.gameObject, position, Quaternion.identity);
-			GameObject newObject = (GameObject)GameObject.Instantiate (objectToSpawn, position, Quaternion.identity);
-			newObject.SetActive(false);
-			newItem = newObject.GetComponent<Item>();
-			newItem.name = objectName;
-			drop.item = newObject;
-			obj = newDrop;
+			Item newItem = objectToSpawn.GetComponent<Item> ();
+			if (newItem != null) {
+				ItemDropObject drop = LoadResources.Instance.CommonItemDrop.GetComponent<ItemDropObject>();
+				GameObject newDrop = (GameObject)GameObject.Instantiate (drop.gameObject, position, Quaternion.identity);
+				GameObject newObject = (GameObject)GameObject.Instantiate (objectToSpawn, position, Quaternion.identity);
+				newObject.SetActive(false);
+				newItem = newObject.GetComponent<Item>();
+				newItem.name = objectName;
+				drop.item = newObject;
+				obj = newDrop;
+			}
+		} else {
+			Debug.LogError("Object to spawn was null!");
 		}
 
 		return obj;

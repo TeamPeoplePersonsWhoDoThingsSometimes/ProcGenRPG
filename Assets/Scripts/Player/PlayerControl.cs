@@ -144,6 +144,7 @@ public class PlayerControl : MonoBehaviour {
 
 				if (Input.GetMouseButtonDown(0) && !swordAttack2 && !swordAttack2) {
 					playerAnim.SetBool("Slash1", true);
+					Debug.Log(playerAnim.GetFloat("Speed"));
 					comboTime = false;
 				}
 			} else if (playerref.GetWeapon() != null && playerref.GetWeapon().Type().Equals(WeaponType.Bow)) {
