@@ -14,7 +14,7 @@ public class FollowPlayer : MonoBehaviour {
 	private float rotateSpeed;
 	private Transform centerCamRef;
 
-	private float zoom = 20f;
+	public static float zoom = 20f;
 
 	private Player p;
 	private float prevHealth = 1;

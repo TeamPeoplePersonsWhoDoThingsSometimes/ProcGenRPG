@@ -38,7 +38,7 @@ public class Weapon : Item {
 	
 	// Update is called once per frame
 	protected virtual void Update () {
-		bytesToLevelUp = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*(int)(levelUpSpeedScale*10000);
+		bytesToLevelUp = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*(int)(levelUpSpeedScale*10000));
 		attackSpeedTime += Time.deltaTime;
 		while (bytes > bytesToLevelUp) {
 			LevelUp();
@@ -69,13 +69,14 @@ public class Weapon : Item {
 		thisDamage += levelUpScale;
 
 		//handle changing the version string
-		if(int.Parse(version.Split('.')[2]) + 1 < 10) {
-			version = ((int.Parse(version.Split('.')[0]))*1) + "." + ((int.Parse(version.Split('.')[1]))*1) + "." + ((int.Parse(version.Split('.')[2])) + 1);
-		} else if(int.Parse(version.Split('.')[1]) + 1 < 10) {
-			version = ((int.Parse(version.Split('.')[0]))*1) + "." + ((int.Parse(version.Split('.')[1])*1) + 1) + ".0";
-		} else {
-			version = (int.Parse(version.Split('.')[0])*1 + 1) + ".0.0";
-		}
+//		if(int.Parse(version.Split('.')[2]) + 1 < 10) {
+//			version = ((int.Parse(version.Split('.')[0]))*1) + "." + ((int.Parse(version.Split('.')[1]))*1) + "." + ((int.Parse(version.Split('.')[2])) + 1);
+//		} else if(int.Parse(version.Split('.')[1]) + 1 < 10) {
+//			version = ((int.Parse(version.Split('.')[0]))*1) + "." + ((int.Parse(version.Split('.')[1])*1) + 1) + ".0";
+//		} else {
+//			version = (int.Parse(version.Split('.')[0])*1 + 1) + ".0.0";
+//		}
+		version = ((int.Parse(version.Split('.')[0]))*1) + "." + ((int.Parse(version.Split('.')[1])*1) + 1) + ".0";
 
 		//set new bytestolevelup variable
 		bytesToLevelUp = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*(int)(levelUpSpeedScale*10000);
@@ -115,6 +116,7 @@ public class Weapon : Item {
 
 	public void AddBytes(int val) {
 		bytes += val;
+		version = ((int.Parse(version.Split('.')[0]))*1) + "." + ((int.Parse(version.Split('.')[1]))*1) + "." + ((int.Parse(version.Split('.')[2])) + 1);
 	}
 
 	public WeaponType Type() {

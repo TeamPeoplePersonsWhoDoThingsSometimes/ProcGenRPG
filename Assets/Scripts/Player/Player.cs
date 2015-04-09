@@ -251,6 +251,26 @@ public class Player : MonoBehaviour {
 		}
 	}
 
+	public void DeleteItem(int index) {
+		if(inventory[index].GetType().IsSubclassOf(typeof(Weapon))) {
+			Weapon tempWeapon = (Weapon)inventory[index];
+			for(int i = 0; i < (Utility.ComparableVersionInt(tempWeapon.version)/10); i++) {
+				GameObject tempbyte = (GameObject) GameObject.Instantiate(Utility.GetByteObject(), transform.position + Vector3.up, Quaternion.identity);
+				tempbyte.GetComponent<Byte>().val = 10000;
+			}
+		}
+
+		if(activeWeapon == inventory[index]) {
+			activeWeapon = null;
+		}
+		if(activeHack == inventory[index]) {
+			activeHack = null;
+		}
+
+		inventory.RemoveAt(index);
+		PlayerCanvas.updateInventoryUI = true;
+	}
+
 	private void LevelUp() {
 		xpBytes -= bytesToNextVersion;
 		//INCREASE PLAYER STATS
@@ -311,6 +331,7 @@ public class Player : MonoBehaviour {
 			rma -= amount;
 			return true;
 		} else {
+			GetDamaged(1,false);
 			return false;
 		}
 	}

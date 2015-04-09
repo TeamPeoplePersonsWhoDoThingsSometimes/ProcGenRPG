@@ -35,7 +35,7 @@ public class EnemyHealthBar : MonoBehaviour {
 			/*** Sets position and scale of healthbar on screenspace ***/
 			if(trackingEnemy.GetComponent<Boss>() == null) {
 				Vector3 tempPos = Camera.main.WorldToViewportPoint(trackingEnemy.transform.position);
-				float tempScale = Mathf.Clamp(15f/Vector3.Distance(Player.playerPos.position,trackingEnemy.transform.position), 1f, 1.75f);
+				float tempScale = Mathf.Clamp(15f/Vector3.Distance(Player.playerPos.position,trackingEnemy.transform.position)*(FollowPlayer.zoom/20f), 1.5f, 3f);
 				this.GetComponent<RectTransform>().anchoredPosition = new Vector2(13.62f*tempPos.x - tempScale*0.7f, 0.5f-7.4f*(1-tempPos.y));
 				this.GetComponent<RectTransform>().localScale = new Vector3(tempScale, tempScale, tempScale);
 				this.transform.GetChild(3).GetComponent<RectTransform>().localScale = new Vector3(trackingEnemy.GetComponent<Enemy>().GetHealthPercentage(), 1,1);
