@@ -44,6 +44,11 @@ public class AreaGroup {
 		}
 	}
 
+    public void removeArea(Area a)
+    {
+        areas.Remove(a);
+    }
+
     //Returns a random Area from this AreaGroup.
     private Area getRandomArea()
     {

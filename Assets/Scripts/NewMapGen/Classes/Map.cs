@@ -681,6 +681,7 @@ public class Map
         //Area temp = getArea(a.position.down);
         //disconnectArea(temp);
         //connectArea(temp, Direction.UP);
+        a.getGroup().removeArea(a);
     }
 
     #endregion
