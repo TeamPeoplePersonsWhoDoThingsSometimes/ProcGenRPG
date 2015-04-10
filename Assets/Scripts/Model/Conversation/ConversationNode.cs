@@ -245,6 +245,7 @@ public class uConversationNode {
 		}
 		
 		foreach (StatusBlockProtocol s in proto.BlocksList) {
+			Debug.Log("LOADING: " + this.text);
 			StatusBlock block = new StatusBlock(s);
 
 			foreach (StatusCheckable check in block.getStatuses()) {

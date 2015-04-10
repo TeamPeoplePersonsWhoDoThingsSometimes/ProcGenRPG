@@ -38,6 +38,9 @@ public class UnityNPC : Interactable {
 		curNode = uConversationNode.getNodeByStringID(startConvID);
 		nameUI1.text = name;
 		nameUI2.text = name;
+		if(curNode == null) {
+			Debug.Log(this.name + " cannot find their conversation!");
+		}
 		curText.text = curNode.getText();
 		int numResponses = 0;
 		foreach(string s in curNode.getAlternativeStrings()) {
