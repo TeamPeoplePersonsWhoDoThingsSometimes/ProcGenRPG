@@ -167,7 +167,8 @@ public class MainMenu : MonoBehaviour {
 		}
 	}
 
-	public void PlayPressed() {
+	public void PlayPressed(int saveLoc) {
+		PersistentInfo.saveFile = saveLoc;
 		GetComponent<Animator>().SetTrigger("GoToLoad");
 	}
 

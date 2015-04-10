@@ -20,7 +20,9 @@ public class MasterDriver : MonoBehaviour {
 	
 	private const string builderDataStore = "./Assets/Resources/builder.data";
 
-	private const string saveGameFile = "./save.sav";
+	private const string saveGameFile1 = "./save1.sav";
+	private const string saveGameFile2 = "./save2.sav";
+	private const string saveGameFile3 = "./save3.sav";
 
 	/*********************************
 	 * Public instance data, should be used for settings only
@@ -240,6 +242,7 @@ public class MasterDriver : MonoBehaviour {
 
 		//currentArea.getGroup ().generateAreas ();
         currentArea.showArea();
+		save();
 		log ("Moved to area: " + currentArea.position);
 
         //Get reversed direction.
@@ -285,7 +288,7 @@ public class MasterDriver : MonoBehaviour {
 
     //TODO: Create startNewGame and loadGame methods.
 
-	public void save() {
+	public void save(int file) {
 		PlayerStatus playerData = player.GetComponentInChildren<Player> ().getPlayerStatus ();
 
 		List<QuestSave> questData = questListener.getQuestData ();
@@ -301,7 +304,14 @@ public class MasterDriver : MonoBehaviour {
 		SavePackage package = packageBuilder.Build ();
 
 		try {
-			FileStream fs = new FileStream (saveGameFile, FileMode.Create);
+			FileStream fs;
+			if(file == 1) {
+				fs = new FileStream (saveGameFile1, FileMode.Create);
+			} else if(file == 2) {
+				fs = new FileStream (saveGameFile2, FileMode.Create);
+			} else {
+				fs = new FileStream (saveGameFile3, FileMode.Create);
+			}
 			package.WriteTo(fs);
 			fs.Flush();
 			fs.Close();
@@ -310,11 +320,18 @@ public class MasterDriver : MonoBehaviour {
 		}
 	}
 
-	public void load() {
+	public void load(int file) {
 		SavePackage package;
 
 		try {
-			FileStream fs = new FileStream (saveGameFile, FileMode.Open);
+			FileStream fs;
+			if(file == 1) {
+				fs = new FileStream (saveGameFile1, FileMode.Open);
+			} else if(file == 2) {
+				fs = new FileStream (saveGameFile2, FileMode.Open);
+			} else {
+				fs = new FileStream (saveGameFile3, FileMode.Open);
+			}
 			package = SavePackage.ParseFrom(fs);
 			fs.Flush();
 			fs.Close();

@@ -49,6 +49,8 @@ public class TutorialComment : MonoBehaviour {
 			ERROR = GameObject.Find("STACKOVERFLOW");
 			ERROR.SetActive(false);
 		}
+
+		ReplaceKeyStrings();
 	}
 	
 	// Update is called once per frame
@@ -80,7 +82,7 @@ public class TutorialComment : MonoBehaviour {
 			ERRORTIME += Time.deltaTime;
 			if(ERRORTIME > 0.5f) {
 				ERROR.SetActive(true);
-				text = "/* PRESS %SPRINTKEY% TO RUN */";
+				text = "/* PRESS " + PersistentInfo.sprintKey.ToString() + " TO RUN */";
 				ERRORTIME = 0f;
 			}
 		}
@@ -124,5 +126,14 @@ public class TutorialComment : MonoBehaviour {
 			GUI.DrawTexture(new Rect(pos.x-20f, pos.y, pos.width + 40f, pos.height), textBG);
 			GUI.Label(pos, text); 
 		}
+	}
+
+	void ReplaceKeyStrings() {
+		text = text.Replace("%PRIMARYATTACK%","LEFT MOUSE");
+		text = text.Replace("%HACKKEY%","RIGHT MOUSE");
+		text = text.Replace("%ROLLKEY%",PersistentInfo.rollKey.ToString());
+		text = text.Replace("%CONSOLEKEY%",PersistentInfo.consoleOpenKey.ToString());
+		text = text.Replace("%MAPKEY%",PersistentInfo.mapKey.ToString());
+//		text = text.Replace("%SPRINTKEY%",PersistentInfo.mapKey.ToString());
 	}
 }
