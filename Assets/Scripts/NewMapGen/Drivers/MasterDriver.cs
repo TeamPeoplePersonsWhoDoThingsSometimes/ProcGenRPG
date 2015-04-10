@@ -183,7 +183,7 @@ public class MasterDriver : MonoBehaviour {
 			questListener = new QuestListener ();
 
 			currentMap = new Map ();
-			currentArea = currentMap.getArea (7, 7);
+			currentArea = currentMap.getArea (4, 4);
             try
             {
                 currentArea.getGroup().generateAreas();
@@ -195,7 +195,7 @@ public class MasterDriver : MonoBehaviour {
                 //nah...
             }
 
-			//currentMap.debugDisplayMap();
+			currentMap.debugDisplayMap();
 			questListener.initializeQuests ();
 		}
 
