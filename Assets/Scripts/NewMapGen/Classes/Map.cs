@@ -72,8 +72,8 @@ public class Map
         this.seed = seed;
 
         //Set up arrays.
-        areaMap = new Area[15, 15];
-        origin = new Point(7, 7);
+        areaMap = new Area[7, 7];
+        origin = new Point(4, 4);
 
         //Do generations with a Vertex array.
         Vertex[,] areaData = new Vertex[areaMap.GetLength(0),areaMap.GetLength(1)];
@@ -365,7 +365,7 @@ public class Map
     public AreaGroup findNearestBiome(Area startFrom, Biome search)
     {
         //Queue of Areas to check.
-        Queue<Area> queue = new Queue<Area>();
+        /*Queue<Area> queue = new Queue<Area>();
 		List<Area> visited = new List<Area> ();
 
         queue.Enqueue(startFrom);
@@ -389,7 +389,8 @@ public class Map
             
         }
 
-        return startFrom.getGroup();
+        return startFrom.getGroup();*/
+		return startFrom.getGroup ();//lolmegahacks- this keeps quests close by
     }
 
 	public List<SpawnedObject> getAllSpawnedObjects() {
