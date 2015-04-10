@@ -39,7 +39,7 @@ public class UnityNPC : Interactable {
 		curText.text = curNode.getText();
 		int numResponses = 0;
 		foreach(string s in curNode.getAlternativeStrings()) {
-			Debug.Log(s);
+			Debug.Log("Alternatives: " + s);
 			if(numResponses > 0) {
 				GameObject newButton = (GameObject)Instantiate(buttonPrefab);
 				newButton.GetComponent<RectTransform>().SetParent(buttonHolder.transform,false);

@@ -50,7 +50,7 @@ public class NumAreasCheckable : StatusCheckable {
 			not = false;
 		}
 		
-		Debug.Log ("Built Num Areas checkable: " + areas);
+//		Debug.Log ("Built Num Areas checkable: " + areas);
 	}
 	
 	/**

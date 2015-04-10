@@ -59,7 +59,7 @@ public class uConversationNode {
 		}
 
 		public bool isValidAlternative() {
-
+			Debug.Log("Checking Alternative: " + this.text + " " + alternativeRequirment.Count);
 			if(alternativeRequirment.Count == 0) {
 				return true;
 			}
@@ -77,6 +77,8 @@ public class uConversationNode {
 					return true;
 				}
 			}
+
+			Debug.Log("Checking Alternative: " + this.text + " is FALSE");
 
 			return false;
 
@@ -201,8 +203,7 @@ public class uConversationNode {
 	public List<string> getAlternativeStrings() {
 		List<string> forreturn = new List<string>();
 		foreach(Alternative a in getAlternatives().Values) {
-			if(!forreturn.Contains(a.getText()) && uConversationNode.getNodeByID(a.getUID()).ABlockSatisfied()
-			   && a.isValidAlternative()) {
+			if(!forreturn.Contains(a.getText()) && a.isValidAlternative()) {
 				forreturn.Add(a.getText());
 			}
 		}
@@ -224,8 +225,10 @@ public class uConversationNode {
 	}
 
 	public bool ABlockSatisfied() {
+		Debug.Log("ABOUT TO CHECK BLOCKS: " + getBlocks().Count);
 		foreach(StatusBlock sb in getBlocks()) {
 			if(sb.StatusesMet()) {
+				Debug.Log("HERE" + this.text);
 				return true;
 			}
 		}
@@ -290,10 +293,10 @@ public class uConversationNode {
 	public Alternative getPrioritizedAlternative(string text) {
 		int highPriority = 0;
 		Alternative highAlternative = null;
-		Debug.Log("HUR: " + text);
+//		Debug.Log("HUR: " + text);
 		foreach (KeyValuePair<long, Alternative> e in alternatives) {
 			Alternative a = e.Value;
-			Debug.Log("Checking " + e.Value.getText() + " " + a.isValidAlternative());
+//			Debug.Log("Checking " + e.Value.getText() + " " + a.isValidAlternative());
 			if (a.getText().Equals(text) && a.isValidAlternative()) {
 				if (highAlternative == null || highPriority == 0 || a.getPriority() < highPriority) {
 					highPriority = a.getPriority();

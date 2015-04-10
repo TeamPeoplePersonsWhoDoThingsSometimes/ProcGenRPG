@@ -99,7 +99,7 @@ public class ActionCheckable : StatusCheckable {
 		checkAction = new PlayerAction (protocol.Action);
 		currentAmount = 0;
 
-		Debug.Log ("Built action checkable: " + checkAction.getActionType () + "," + checkAction.getDirectObject ().getIdentifier () + "," + checkAction.getDirectObject ().getTypeIdentifier () + "," + quantity);
+//		Debug.Log ("Built action checkable: " + checkAction.getActionType () + "," + checkAction.getDirectObject ().getIdentifier () + "," + checkAction.getDirectObject ().getTypeIdentifier () + "," + quantity);
 	}
 
 	public void setFromData (StatusSave saveData) {

@@ -200,7 +200,7 @@ public class Quest : ActionEventListener {
 		for(int i = 0; i < stepProtocols.Count; i++) {
 			steps[i] = new Step(stepProtocols[i]);
 		}
-		Debug.Log ("Built quest, steps: " + this.steps.Length);
+//		Debug.Log ("Built quest, steps: " + this.steps.Length);
 		initSpawns = false;
 	}
 
@@ -274,12 +274,12 @@ public class Quest : ActionEventListener {
 
 		steps [0].updateStatusChecks (act);
 
-		Debug.Log ("Check Quest: " + this.name);
+//		Debug.Log ("Check Quest: " + this.name);
 		if (steps [0].isStepFinished ()) {
 			register();
 			group = MasterDriver.Instance.CurrentMap.findNearestBiome(MasterDriver.Instance.CurrentArea, biomeType);
 			stepQuest ();
-			Debug.Log ("Start Quest: " + this.name);
+//			Debug.Log ("Start Quest: " + this.name);
 			this.isStarted = true;
 			PlayerCanvas.updateQuestUI = true;
 			return true;
@@ -288,7 +288,7 @@ public class Quest : ActionEventListener {
 	}
 
 	public bool isQuestStarted() {
-		Debug.Log("Checking if " + this.name + " has started: " + isStarted);
+//		Debug.Log("Checking if " + this.name + " has started: " + isStarted);
 		return currentStep != 0;
 	}
 
