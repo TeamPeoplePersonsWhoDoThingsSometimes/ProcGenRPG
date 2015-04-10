@@ -13,8 +13,8 @@ public enum Effect {
 
 public class Attack : MonoBehaviour {
 
-	private float thisDamage;
-	private float critChance;
+	protected float thisDamage;
+	protected float critChance;
 
 	public bool damagePlayer;
 	public bool damageEnemy;
