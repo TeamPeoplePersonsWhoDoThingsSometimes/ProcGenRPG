@@ -65,10 +65,26 @@ public class Player : MonoBehaviour {
 
 		builder.SetVersion (version);
 
+		List<Point> visitedAreas = Status.playerStatus.getVisitedAreas ();
+		foreach (Point p in visitedAreas) {
+			PointProto.Builder pBuilder = PointProto.CreateBuilder();
+			pBuilder.SetX(p.x);
+			pBuilder.SetY(p.y);
+			builder.AddVisitedAreas(pBuilder.Build());
+		}
+
 		return builder.Build ();
 	}
 
 	public void setPlayerStatus(PlayerStatus status) {
+		List<Point> visitedAreas = new List<Point> ();
+		IList<PointProto> storedAreas = status.VisitedAreasList;
+		foreach (PointProto p in storedAreas) {
+			visitedAreas.Add(new Point(p.X, p.Y));
+		}
+
+		Status.playerStatus.setVisitedAreas (visitedAreas);
+
 		gameObject.transform.position = new Vector3 (status.PlayerPosition.LocalX, gameObject.transform.position.y, status.PlayerPosition.LocalY);
 
 		InventoryData inv = status.Inventory;

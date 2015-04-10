@@ -92,6 +92,14 @@ public class Status : ActionEventListener {
 		return visitedAreas.Contains (loc);
 	}
 
+	public List<Point> getVisitedAreas() {
+		return visitedAreas;
+	}
+
+	public void setVisitedAreas(List<Point> areas) {
+		visitedAreas = areas;
+	}
+
 	/**
 	 * Gets the amount of kills for the given string name of an enemy type
 	 */
