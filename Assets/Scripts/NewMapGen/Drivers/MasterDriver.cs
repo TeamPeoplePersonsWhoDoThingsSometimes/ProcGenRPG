@@ -177,7 +177,7 @@ public class MasterDriver : MonoBehaviour {
 		}
 
 		if (loadGame) {
-			load ();
+			load (PersistentInfo.saveFile);
 		} else {
 			questListener = new QuestListener ();
 
@@ -207,7 +207,7 @@ public class MasterDriver : MonoBehaviour {
 	{
 		if (saveGame) {
 			saveGame = false;
-			save();
+			save(PersistentInfo.saveFile);
 		}
 	}
 
@@ -242,7 +242,7 @@ public class MasterDriver : MonoBehaviour {
 
 		//currentArea.getGroup ().generateAreas ();
         currentArea.showArea();
-		save();
+		save(PersistentInfo.saveFile);
 		log ("Moved to area: " + currentArea.position);
 
         //Get reversed direction.
