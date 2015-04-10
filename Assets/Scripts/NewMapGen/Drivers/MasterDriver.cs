@@ -194,11 +194,11 @@ public class MasterDriver : MonoBehaviour {
                 //nah...
             }
 
-            currentArea.showArea();
-
 			//currentMap.debugDisplayMap();
 			questListener.initializeQuests ();
 		}
+
+    	currentArea.showArea();
 
         Debug.Log("Startup time: " + Time.realtimeSinceStartup);
 	}
