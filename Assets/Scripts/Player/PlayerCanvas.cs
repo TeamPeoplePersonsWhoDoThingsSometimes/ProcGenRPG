@@ -7,7 +7,7 @@ using UnityStandardAssets.ImageEffects;
 
 public class PlayerCanvas : MonoBehaviour {
 
-	public static bool cinematicMode;
+	public static bool cinematicMode, mapMode;
 
 	public Sprite common, uncommon, rare, anomaly;
 
@@ -417,9 +417,7 @@ public class PlayerCanvas : MonoBehaviour {
 				rightMouseButtonHeld = 0;
 			}
 
-			Cursor.visible = true;
 		} else {
-			Cursor.visible = false;
 
 			/*** Handles non-console interaction, disallows interaction with console ***/
 			consoleGUI.interactable = false;
@@ -450,6 +448,8 @@ public class PlayerCanvas : MonoBehaviour {
 		} else {
 			readyToDrop = false;
 		}
+
+		Cursor.visible = inConsole || cinematicMode || mapMode;
 	}
 
 

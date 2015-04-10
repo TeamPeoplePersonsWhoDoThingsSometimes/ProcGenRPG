@@ -176,7 +176,7 @@ public class MasterDriver : MonoBehaviour {
 			generateBuilderData();
 		}
 
-		if (loadGame) {
+		if (loadGame && PersistentInfo.saveFile != 0) {
 			load (PersistentInfo.saveFile);
 			loadGame = false;
 		} else {
@@ -206,7 +206,7 @@ public class MasterDriver : MonoBehaviour {
 
 	void Update()
 	{
-		if (saveGame) {
+		if (saveGame && PersistentInfo.saveFile != 0) {
 			saveGame = false;
 			save(PersistentInfo.saveFile);
 		}
@@ -284,13 +284,18 @@ public class MasterDriver : MonoBehaviour {
 		PlayerAction action = new PlayerAction (obj, ActionType.MOVE_AREA);
 		ActionEventInvoker.primaryInvoker.invokeAction (action);
 
-		save(PersistentInfo.saveFile);
+		if(PersistentInfo.saveFile == 0) {
+			save(PersistentInfo.saveFile);
+		}
     }
 	
 
     //TODO: Create startNewGame and loadGame methods.
 
 	public void save(int file) {
+		if(file == 0) {
+			return;
+		}
 		PlayerStatus playerData = player.GetComponentInChildren<Player> ().getPlayerStatus ();
 
 		List<QuestSave> questData = questListener.getQuestData ();
