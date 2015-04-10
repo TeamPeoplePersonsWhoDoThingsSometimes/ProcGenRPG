@@ -32,6 +32,8 @@ public class Player : MonoBehaviour {
 
 	private static GameObject hitInfo;
 
+	private float deathTimer = 0f;
+
 	public static int getMajor(string version) {
 		return int.Parse (version.Split('.') [0]);
 	}
@@ -192,6 +194,16 @@ public class Player : MonoBehaviour {
 
 		maxrma = (encryption/2f + 1)*20f;
 		maxIntegrity = (security/5f + 1)*100f;	
+
+		if(deathTimer > 0) {
+			deathTimer += Time.deltaTime;
+			if(deathTimer > 2f) {
+				transform.GetChild(0).gameObject.SetActive(true);
+				transform.GetChild(1).gameObject.SetActive(true);
+				xpBytes = 0;
+				MasterDriver.Instance.goToCity();
+			}
+		}
 	}
 
 	public void Attack (int combo) {
@@ -304,6 +316,15 @@ public class Player : MonoBehaviour {
 
 		inventory.RemoveAt(index);
 		PlayerCanvas.updateInventoryUI = true;
+	}
+
+	private void Die() {
+		levelUpParticles.startColor = Color.red;
+		levelUpParticles.Emit(1000000);
+		FMOD_StudioSystem.instance.PlayOneShot("event:/boss/bossAttackB", transform.position,PlayerPrefs.GetFloat("MasterVolume"));
+		deathTimer = 0.0001f;
+		transform.GetChild(0).gameObject.SetActive(false);
+		transform.GetChild(1).gameObject.SetActive(false);
 	}
 
 	private void LevelUp() {

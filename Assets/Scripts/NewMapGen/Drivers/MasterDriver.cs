@@ -215,6 +215,41 @@ public class MasterDriver : MonoBehaviour {
 		}
 	}
 
+	public void goToCity() {
+		currentArea.releaseData();
+		FollowPlayer.Travel();
+		currentArea = currentMap.getArea(4,4);
+		currentArea.showArea();
+		
+		//Get the portal we're coming out of.
+		int i = 0;
+		Tile currentPortal;
+		
+		do
+		{
+			currentPortal = currentArea.portals[i];
+			i++;
+		} while (currentPortal.gameObject.GetComponent<Portal>().dir != Direction.DOWN);
+		
+		player.transform.GetChild(0).transform.localPosition = Vector3.zero;
+		player.transform.GetChild(1).transform.localPosition = Vector3.zero;
+		
+
+		player.transform.position = new Vector3(currentPortal.transform.position.x, player.transform.position.y, currentPortal.transform.position.z - 8);
+		
+		
+		FMOD_StudioSystem.instance.PlayOneShot("event:/environment/portal",Player.playerPos.position, PlayerPrefs.GetFloat("MasterVolume"));
+		
+		//Fire Movement Event
+		DirectObject obj = new DirectObject ("Area", currentArea.position.x + " " + currentArea.position.y);
+		PlayerAction action = new PlayerAction (obj, ActionType.MOVE_AREA);
+		ActionEventInvoker.primaryInvoker.invokeAction (action);
+		
+		if(PersistentInfo.saveFile == 0) {
+			save(PersistentInfo.saveFile);
+		}
+	}
+
     //Changes the current Area to the Area in the input Direction.
     public void moveArea(Direction dir)
     {
