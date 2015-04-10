@@ -20,9 +20,9 @@ public class MasterDriver : MonoBehaviour {
 	
 	private const string builderDataStore = "./Assets/Resources/builder.data";
 
-	private const string saveGameFile1 = "./save1.sav";
-	private const string saveGameFile2 = "./save2.sav";
-	private const string saveGameFile3 = "./save3.sav";
+	public const string saveGameFile1 = "./save1.sav";
+	public const string saveGameFile2 = "./save2.sav";
+	public const string saveGameFile3 = "./save3.sav";
 
 	/*********************************
 	 * Public instance data, should be used for settings only
@@ -178,6 +178,7 @@ public class MasterDriver : MonoBehaviour {
 
 		if (loadGame) {
 			load (PersistentInfo.saveFile);
+			loadGame = false;
 		} else {
 			questListener = new QuestListener ();
 
@@ -242,7 +243,6 @@ public class MasterDriver : MonoBehaviour {
 
 		//currentArea.getGroup ().generateAreas ();
         currentArea.showArea();
-		save(PersistentInfo.saveFile);
 		log ("Moved to area: " + currentArea.position);
 
         //Get reversed direction.
@@ -283,6 +283,8 @@ public class MasterDriver : MonoBehaviour {
 		DirectObject obj = new DirectObject ("Area", currentArea.position.x + " " + currentArea.position.y);
 		PlayerAction action = new PlayerAction (obj, ActionType.MOVE_AREA);
 		ActionEventInvoker.primaryInvoker.invokeAction (action);
+
+		save(PersistentInfo.saveFile);
     }
 	
 
@@ -306,10 +308,13 @@ public class MasterDriver : MonoBehaviour {
 		try {
 			FileStream fs;
 			if(file == 1) {
+				PlayerPrefs.SetString("Load1",player.GetComponentInChildren<Player>().GetName());
 				fs = new FileStream (saveGameFile1, FileMode.Create);
 			} else if(file == 2) {
+				PlayerPrefs.SetString("Load2",player.GetComponentInChildren<Player>().name);
 				fs = new FileStream (saveGameFile2, FileMode.Create);
 			} else {
+				PlayerPrefs.SetString("Load3",player.GetComponentInChildren<Player>().name);
 				fs = new FileStream (saveGameFile3, FileMode.Create);
 			}
 			package.WriteTo(fs);

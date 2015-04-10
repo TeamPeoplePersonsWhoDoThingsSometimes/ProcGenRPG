@@ -108,6 +108,8 @@ public class Player : MonoBehaviour {
 	void Start () {
 		if(PersistentInfo.playerName != null && !PersistentInfo.playerName.Equals("")) {
 			this.name = PersistentInfo.playerName;
+		} else {
+			MasterDriver.Instance.loadGame = true;
 		}
 
 		levelUpParticles = GameObject.Find("LevelUpParticles").GetComponent<ParticleSystem>();

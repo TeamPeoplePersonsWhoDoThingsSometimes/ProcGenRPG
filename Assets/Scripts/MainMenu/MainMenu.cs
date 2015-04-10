@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.Audio;
 using UnityStandardAssets.ImageEffects;
+using System.IO;
 
 public class MainMenu : MonoBehaviour {
 
@@ -23,6 +24,8 @@ public class MainMenu : MonoBehaviour {
 
 	public AudioMixer mixer;
 
+	public Text load1,load2,load3;
+
 	// Use this for initialization
 	void Start () {
 		dotBG = GameObject.Find("DOTBGPREFAB").GetComponent<Image>();
@@ -31,6 +34,10 @@ public class MainMenu : MonoBehaviour {
 		chromAbbAmount = Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration;
 		volumeSlider.value = PlayerPrefs.GetFloat("MasterVolume");
 		qualitySlider.value = QualitySettings.GetQualityLevel();
+
+		load1.text = PlayerPrefs.GetString("Load1","EMPTY");
+		load2.text = PlayerPrefs.GetString("Load2","EMPTY");
+		load3.text = PlayerPrefs.GetString("Load3","EMPTY");
 	}
 	
 	// Update is called once per frame
@@ -167,8 +174,7 @@ public class MainMenu : MonoBehaviour {
 		}
 	}
 
-	public void PlayPressed(int saveLoc) {
-		PersistentInfo.saveFile = saveLoc;
+	public void PlayPressed() {
 		GetComponent<Animator>().SetTrigger("GoToLoad");
 	}
 
@@ -203,8 +209,23 @@ public class MainMenu : MonoBehaviour {
 		slide.transform.parent.GetChild(1).GetComponent<Text>().text = QualitySettings.names[QualitySettings.GetQualityLevel()];
 	}
 
-	public void NewGameClicked() {
-		Application.LoadLevel(1);
+	public void NewGameClicked(int saveLoc) {
+		PersistentInfo.saveFile = saveLoc;
+		try {
+			FileStream fs;
+			if(saveLoc == 1) {
+				fs = new FileStream (MasterDriver.saveGameFile1, FileMode.Open);
+			} else if(saveLoc == 2) {
+				fs = new FileStream (MasterDriver.saveGameFile2, FileMode.Open);
+			} else {
+				fs = new FileStream (MasterDriver.saveGameFile3, FileMode.Open);
+			}
+			fs.Flush();
+			fs.Close();
+			Application.LoadLevel(3);
+		} catch (IOException excep) {
+			Application.LoadLevel(1);
+		}
 	}
 
 	public void CreditsFinished() {
