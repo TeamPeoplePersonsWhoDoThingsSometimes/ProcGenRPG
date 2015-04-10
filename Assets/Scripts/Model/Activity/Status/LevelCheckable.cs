@@ -73,4 +73,7 @@ public class LevelCheckable : StatusCheckable {
 	public void setBuilderWithData (ref StatusSave.Builder saveData) {
 		saveData.Count = 0;
 	}
+
+	public void setActive() {
+	}
 }

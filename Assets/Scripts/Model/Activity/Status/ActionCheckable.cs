@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ActionCheckable : StatusCheckable {
+public class ActionCheckable : ActionEventListener, StatusCheckable  {
 
 	public ActionCheckable() {
 		checkAction = null;
@@ -21,6 +21,10 @@ public class ActionCheckable : StatusCheckable {
 	private int quantity;
 	private int currentAmount;
 	private bool not;
+
+	public override void onAction(IAction action) {
+		isStatusMet (action);
+	}
 
 	public bool isStatusMet(IAction action) {
 		bool positiveMet = isStatusMetInterior (action);
@@ -110,6 +114,10 @@ public class ActionCheckable : StatusCheckable {
 
 	public void setBuilderWithData(ref StatusSave.Builder saveData) {
 		saveData.SetCount (currentAmount);
+	}
+
+	public void setActive() {
+		register ();
 	}
 
 }

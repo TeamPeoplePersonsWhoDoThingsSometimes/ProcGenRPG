@@ -78,5 +78,8 @@ public class QuestFinishedCheckable : StatusCheckable {
 	public void setBuilderWithData(ref StatusSave.Builder saveData) {
 		saveData.SetCount (0);
 	}
+
+	public void setActive() {
+	}
 	
 }

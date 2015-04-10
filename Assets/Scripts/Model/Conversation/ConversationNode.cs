@@ -227,7 +227,9 @@ public class uConversationNode {
 				StatusCheckableFactory factory = new StatusCheckableFactory();
 				List<StatusCheckable> checks = new List<StatusCheckable>();
 				foreach (StatusCheckableProtocol p in block.RequirementsList) {
-					checks.Add(factory.getStatusCheckableFromProtocol(p));
+					StatusCheckable check = factory.getStatusCheckableFromProtocol(p);
+					check.setActive();
+					checks.Add(check);
 				}
 				reqs.Add(checks);
 			}
@@ -243,7 +245,13 @@ public class uConversationNode {
 		}
 		
 		foreach (StatusBlockProtocol s in proto.BlocksList) {
-			blocks.Add(new StatusBlock(s));
+			StatusBlock block = new StatusBlock(s);
+
+			foreach (StatusCheckable check in block.getStatuses()) {
+				check.setActive();
+			}
+
+			blocks.Add(block);
 		}
 		
 		strIdMap.Add (ID, this);

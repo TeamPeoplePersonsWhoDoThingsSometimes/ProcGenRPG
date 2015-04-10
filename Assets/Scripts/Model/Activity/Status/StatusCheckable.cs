@@ -28,4 +28,6 @@ public interface StatusCheckable {
 	 * Set the given save data proto with the information from this status
 	 */
 	void setBuilderWithData (ref StatusSave.Builder saveData);
+
+	void setActive();
 }
