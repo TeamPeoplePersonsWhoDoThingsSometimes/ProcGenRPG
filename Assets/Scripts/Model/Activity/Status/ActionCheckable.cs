@@ -7,6 +7,7 @@ public class ActionCheckable : StatusCheckable {
 		checkAction = null;
 		quantity = 1;
 		currentAmount = 0;
+		not = false;
 	}
 	
 	public ActionCheckable(IAction act) {
@@ -19,8 +20,17 @@ public class ActionCheckable : StatusCheckable {
 	
 	private int quantity;
 	private int currentAmount;
-	
+	private bool not;
+
 	public bool isStatusMet(IAction action) {
+		bool positiveMet = isStatusMetInterior (action);
+		if (not) {
+			return !positiveMet;
+		}
+		return positiveMet;
+	}
+
+	private bool isStatusMetInterior(IAction action) {
 		if (action.getActionType ().Equals (checkAction.getActionType ()) &&
 		    action.getDirectObject ().getIdentifier ().Equals (checkAction.getDirectObject ().getIdentifier ()) &&
 		    action.getDirectObject ().getTypeIdentifier ().Equals (checkAction.getDirectObject ().getTypeIdentifier ()))
@@ -55,6 +65,14 @@ public class ActionCheckable : StatusCheckable {
 	}
 
 	public bool isStatusMet() {
+		bool positiveMet = isStatusMetInterior ();
+		if (not) {
+			return !positiveMet;
+		}
+		return positiveMet;
+	}
+
+	private bool isStatusMetInterior() {
 		if (currentAmount >= quantity)
 			return true;
 		return false;
@@ -71,6 +89,13 @@ public class ActionCheckable : StatusCheckable {
 		} else {
 			quantity = 1;
 		}
+
+		if (protocol.HasNot) {
+			not = protocol.Not;
+		} else {
+			not = false;
+		}
+
 		checkAction = new PlayerAction (protocol.Action);
 		currentAmount = 0;
 

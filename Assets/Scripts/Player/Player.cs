@@ -55,6 +55,8 @@ public class Player : MonoBehaviour {
 		positionBuilder.SetLocalY ((int)gameObject.transform.position.z);
 		builder.SetPlayerPosition (positionBuilder.Build ());
 
+		builder.SetRotation ((int)MasterDriver.Instance.getCamera ().rotation.eulerAngles.y);
+
 		InventoryData.Builder inventoryBuilder = InventoryData.CreateBuilder ();
 		foreach (Item i in inventory) {
 			inventoryBuilder.AddObject(i.getDirectObject().getDirectObjectAsProtobuf());
@@ -73,7 +75,8 @@ public class Player : MonoBehaviour {
 		inventory.Clear ();
 		foreach (DirectObjectProtocol item in inv.ObjectList) {
 			GameObject obj = (GameObject)MasterDriver.Instance.getItemFromProtobuf(item);
-			inventory.Add(obj.GetComponent<Item>());
+			obj.GetComponent<Item>().name = item.Type;
+			PickUpItem(obj);
 		}
 
 		version = status.Version;

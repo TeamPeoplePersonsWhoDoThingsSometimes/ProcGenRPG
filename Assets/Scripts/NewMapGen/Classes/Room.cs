@@ -40,7 +40,9 @@ public class Room {
 	}
 
     List<GameObject> objects;
-	List<GameObject> spawnedObjects;
+	List<GameObject> spawnedObjects;//objects that were theorhetically spawned in this room- 
+									//note however that this may contain any objects spawned in this area
+									//see Area.basicRoom for more details
 
     Area parent;
 
@@ -233,6 +235,10 @@ public class Room {
 		}
     }
 
+	public void addSpawnedObject(GameObject obj) {
+		spawnedObjects.Add (obj);
+	}
+
 	public List<SpawnedObject> getSpawnedObjects(Area area) {
 		List<SpawnedObject> spawnDataList = new List<SpawnedObject> ();
 
@@ -248,7 +254,7 @@ public class Room {
 			if (itemDrop != null) {
 				GameObject item = itemDrop.item;
 				if (item != null) {
-					spawnDataList.Add(item.GetComponent<Item>().getSpawnedObjectInformation(area));
+					spawnDataList.Add(item.GetComponent<Item>().getSpawnedObjectInformation(area, itemDrop.transform));
 				}
 			}
 		}

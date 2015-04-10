@@ -350,7 +350,12 @@ public class Quest : ActionEventListener {
 
 	public void setQuestState(QuestSave save) {
 		currentStep = save.Step;
-		steps [currentStep].setStepWithQuestInfomation (save);
+
+		if (!isQuestFinished ()) {
+			steps [currentStep].setStepWithQuestInfomation (save);
+		} else {
+
+		}
 	}
 
 	public QuestSave getQuestData() {
@@ -358,7 +363,9 @@ public class Quest : ActionEventListener {
 		builder.SetName (name);
 		builder.SetStep (currentStep);
 
-		steps [currentStep].setQuestWithStepInformation (ref builder);
+		if (!isQuestFinished ()) {
+			steps [currentStep].setQuestWithStepInformation (ref builder);
+		}
 
 		return builder.Build ();
 	}
