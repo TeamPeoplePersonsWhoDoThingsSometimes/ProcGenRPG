@@ -30,6 +30,7 @@ public class WorldMap : MonoBehaviour {
 			genAreas.Add(MasterDriver.Instance.CurrentArea);
 			GenTilesAroundArea(MasterDriver.Instance.CurrentArea, tilePrefab);
 		}
+		tilePrefab.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.yellow;
 	}
 
 	void GenTilesAroundArea(Area a, GameObject g) {

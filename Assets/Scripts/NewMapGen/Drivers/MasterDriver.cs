@@ -177,6 +177,7 @@ public class MasterDriver : MonoBehaviour {
 			generateBuilderData();
 		}
 
+		bool atCity = false;
 		if (loadGame && PersistentInfo.saveFile != 0) {
 			load (PersistentInfo.saveFile);
 			loadGame = false;
@@ -189,18 +190,34 @@ public class MasterDriver : MonoBehaviour {
             {
                 currentArea.getGroup().generateAreas();
                 Point spawnPoint = currentArea.defaultSpawn;
+
                 player.transform.position = new Vector3(spawnPoint.x, player.transform.position.y, spawnPoint.y);
             }
             catch (System.Exception e)
             {
                 //nah...
+				atCity = true;
+				Debug.Log("IM AT THE CITY");
             }
-
+			Debug.Log("IM AT " + player.transform.position);
 			currentMap.debugDisplayMap();
 			questListener.initializeQuests ();
 		}
 
     	currentArea.showArea();
+
+		if(atCity) {
+			int i = 0;
+			Tile currentPortal;
+			do
+			{
+				currentPortal = currentArea.portals[i];
+				i++;
+			} while (currentPortal.gameObject.GetComponent<Portal>().dir != Direction.DOWN);
+			player.transform.GetChild(0).transform.localPosition = Vector3.zero;
+			player.transform.GetChild(1).transform.localPosition = Vector3.zero;
+			player.transform.position = new Vector3(currentPortal.transform.position.x, player.transform.position.y, currentPortal.transform.position.z - 8);
+		}
 
 		clearer = new QuestStarClearer ();
 
