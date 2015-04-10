@@ -68,7 +68,11 @@ public class MasterDriver : MonoBehaviour {
 
 	public Object getItemFromProtobuf(DirectObjectProtocol proto) {
 		string name = proto.Name;
-		
+
+		if (name == "Byte") {
+			return Utility.GetByteObject();
+		}
+
 		foreach (GameObject o in weapons) {
 			Item i = o.GetComponent<Item>();
 			if (i.gameObject.name.Equals(name)) {
@@ -121,11 +125,13 @@ public class MasterDriver : MonoBehaviour {
 		foreach (GameObject o in weapons) {
 			builder.AddWeapons(new DirectObject(o.name, o.GetComponent<Item>().name).getDirectObjectAsProtobuf());
 		}
-		
+
 		foreach (GameObject o in hacks) {
 			builder.AddHacks(new DirectObject(o.name, o.GetComponent<Item>().name).getDirectObjectAsProtobuf());
 		}
-		
+
+		builder.AddWeapons (new DirectObject ("Byte", "Byte").getDirectObjectAsProtobuf ());
+
 		FileStream fs = new FileStream (builderDataStore, FileMode.OpenOrCreate);
 		BuilderPackage pack = builder.Build();
 		pack.WriteTo(fs);
