@@ -30,6 +30,7 @@ public class MainMenu : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		Screen.SetResolution(1024,576,false);
 		dotBG = GameObject.Find("DOTBGPREFAB").GetComponent<Image>();
 		splashContainer = GameObject.Find("SplashContainer");
 		mainContainer = GameObject.Find("MainContainer");

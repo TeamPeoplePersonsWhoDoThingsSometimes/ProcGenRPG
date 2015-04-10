@@ -36,6 +36,7 @@ public class FinalBoss : Boss {
 			if(Input.GetKey(KeyCode.N) && Time.frameCount % 5 == 0) {
 				audioRef.time++;
 			}
+			audioRef.time = 59;
 		} else if(audioRef.time < 73) {
 			transform.GetChild(0).GetChild(2).Rotate(new Vector3(0,Time.deltaTime*(10f+((audioRef.time - 59)*50f)),0), Space.World);
 			transform.GetChild(0).GetChild(3).Rotate(new Vector3(0,-Time.deltaTime*(10f+((audioRef.time - 59)*50f)),0), Space.World);
@@ -119,7 +120,9 @@ public class FinalBoss : Boss {
 				if(dyingTime <= 0) {
 					transform.GetChild(0).gameObject.SetActive(false);
 				}
-
+				if(dyingTime > 10f) {
+					Application.LoadLevel(0);
+				}
 			}
 
 			base.Update();

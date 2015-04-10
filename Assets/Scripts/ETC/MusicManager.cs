@@ -18,6 +18,7 @@ public class MusicManager : MonoBehaviour {
 		if(transform.childCount > 1) {
 			combat = transform.GetChild(1).GetComponent<AudioSource>();
 		}
+		sBossMusic = bossMusic;
 
 	}
 	
@@ -61,5 +62,14 @@ public class MusicManager : MonoBehaviour {
 
 	public static void FadeOutAudio() {
 		fadeOut = true;
+	}
+
+	public AudioClip bossMusic;
+	private static AudioClip sBossMusic;
+
+	public static void GoToBoss() {
+		combat.enabled = false;
+		normal.clip = sBossMusic;
+		normal.Play();
 	}
 }

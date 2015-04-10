@@ -5,7 +5,7 @@ public class Player : MonoBehaviour {
 
 	public List<Item> inventory = new List<Item>();
 	public GameObject[] playerArmor; //0: head, 1: chest, 2: arms, 3: legs
-	private Weapon activeWeapon;
+	public Weapon activeWeapon;
 	private Hack activeHack;
 	private GameObject weaponRef;
 	private GameObject playerInventoryRef;
@@ -53,6 +53,7 @@ public class Player : MonoBehaviour {
 	}
 
 	public PlayerStatus getPlayerStatus() {
+		addActiveWeaponToInventoryToFront();
 		PlayerStatus.Builder builder = PlayerStatus.CreateBuilder ();
 
 		builder.SetName (name);
@@ -117,6 +118,12 @@ public class Player : MonoBehaviour {
 		version = status.Version;
 	}
 
+	private void addActiveWeaponToInventoryToFront() {
+		inventory.Insert(0,weaponRef.transform.GetChild(0).GetComponent<Item>());
+		Debug.Log(inventory[0]);
+//		PickUpItem(weaponRef.transform.GetChild(0).gameObject);
+	}
+
 	public void setPlayerStatus(PlayerStatus status) {
 		name = status.Name;
 
@@ -149,9 +156,11 @@ public class Player : MonoBehaviour {
 	}
 
 	void Start () {
+		weaponRef = GameObject.Find("PlayerWeaponObj");
+		Debug.Log("FJWELJF" + weaponRef.transform.childCount);
 		if(PersistentInfo.playerName != null && !PersistentInfo.playerName.Equals("")) {
 			this.name = PersistentInfo.playerName;
-		} else if(PersistentInfo.saveFile > 0) {
+		} else if(PersistentInfo.saveFile > 0 && !MasterDriver.bossLevel) {
 			MasterDriver.Instance.loadGame = true;
 		}
 
@@ -166,12 +175,12 @@ public class Player : MonoBehaviour {
 
 		//initializing the references to the player inventory, armor points, and weaponhand
 		playerInventoryRef = GameObject.Find("PlayerInventory");
-		weaponRef = GameObject.Find("PlayerWeaponObj");
 		playerPos = transform;
 		bytesToNextVersion = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*levelUpSpeedScale;
 
 		//setting up inventory
 		inventory = new List<Item>();
+		Debug.Log("FJWELJF" + weaponRef.transform.childCount);
 		if(weaponRef.transform.childCount != 0) {
 			inventory.Add(weaponRef.transform.GetChild(0).GetComponent<Item>());
 		}
@@ -210,6 +219,8 @@ public class Player : MonoBehaviour {
 
 		//sets up quickaccessitems and makes the canvas update the inventory ui
 		PlayerCanvas.UpdateInventory();
+
+		Debug.Log("WENTTOSTART");
 	}
 
 	void Update () {

@@ -14,6 +14,8 @@ public class MasterDriver : MonoBehaviour {
 	public static bool loadPlayerObjectData = false;
 	public static bool bossLevel = false;
 
+	public List<GameObject> tempInventory = new List<GameObject>();
+
 	/*public static Map CurrentMap;
 	public static Area CurrentArea;
 
@@ -98,6 +100,15 @@ public class MasterDriver : MonoBehaviour {
 		}
 		
 		return null;
+	}
+	public GameObject FinalBossPrefab;
+
+	public void goToFinalBoss() {
+		currentArea.releaseData();
+		GameObject.Instantiate(FinalBossPrefab);
+		GameObject.Find("LavaStuff?").SetActive(false);
+		player.transform.position = new Vector3(-314, 30.6f, 150f);
+		player.transform.GetChild(0).localPosition = Vector3.zero;
 	}
 	
 	public Object getEnemyFromProtobuf(DirectObjectProtocol proto) {
