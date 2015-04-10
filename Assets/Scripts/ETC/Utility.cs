@@ -18,13 +18,26 @@ public class Utility : MonoBehaviour {
 	}
 
 	public static int VersionToInt(string version) {
-		return ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])));
+//		return ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])));
+		return int.Parse(version.Split('.')[0] + version.Split('.')[1] + version.Split('.')[2]);
 	}
 
-	public static string IntToVersion(int version) {
-		string versionString = version.ToString();
-		string forreturn = versionString.Substring(0, 1) + "." + versionString.Substring(1, 1) + "." + versionString.Substring(2, 1);
-		return forreturn;
+	public static int ComparableVersionInt(string version) {
+		return int.Parse(version.Split('.')[0] + version.Split('.')[1]);
+	}
+
+	public static string ComparableVersionString(int version) {
+		int temp = version;
+		int temp2 = 1;
+		while(temp >= 10) {
+			temp /= 10;
+			temp2 *= 10;
+		}
+		return temp + "." + (version - temp2) + "." + Random.Range(0,9);
+	}
+
+	public static string ModVersionBy(string version, int value) {
+		return version.Split('.')[0] + "." + (int.Parse(version.Split('.')[1]) + value) + "." + version.Split('.')[2];
 	}
 
 	public static GameObject GetCommonItemDrop() {

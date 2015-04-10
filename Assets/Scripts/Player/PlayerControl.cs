@@ -144,6 +144,7 @@ public class PlayerControl : MonoBehaviour {
 
 				if (Input.GetMouseButtonDown(0) && !swordAttack2 && !swordAttack2) {
 					playerAnim.SetBool("Slash1", true);
+					Debug.Log(playerAnim.GetFloat("Speed"));
 					comboTime = false;
 				}
 			} else if (playerref.GetWeapon() != null && playerref.GetWeapon().Type().Equals(WeaponType.Bow)) {
@@ -204,26 +205,32 @@ public class PlayerControl : MonoBehaviour {
 		float mousePosY = Input.mousePosition.y + Screen.height/10f;
 		float screenX = Screen.width;
 		float screenY = Screen.height;
-		if (mousePosY < screenY/2 && !rolling) {
-			mouseAngle = Mathf.Rad2Deg * Mathf.Atan(((mousePosX/screenX*2) - 1)/((mousePosY/screenY*2) - 1)) + 180;
-		} else if (!rolling) {
-			mouseAngle = Mathf.Rad2Deg * Mathf.Atan(((mousePosX/screenX*2) - 1)/((mousePosY/screenY*2) - 1));
-		}
+//		Transform temp = 
+//		if (mousePosY < screenY/2 && !rolling) {
+//			mouseAngle = Mathf.Rad2Deg * Mathf.Atan(((mousePosX/screenX*2) - 1)/((mousePosY/screenY*2) - 1)) + 180;
+//		} else if (!rolling) {
+//			mouseAngle = Mathf.Rad2Deg * Mathf.Atan(((mousePosX/screenX*2) - 1)/((mousePosY/screenY*2) - 1));
+//		}
+//		mouseAngle = temp.eulerAngles.y;
 		float tempRot = 0f;
 		if(Mathf.Abs(playerAnim.GetFloat("Speed")) < 0.1f && !immobile) {
-			if(rolling) {
-				tempRot = Mathf.MoveTowardsAngle(transform.eulerAngles.y, mouseAngle + camTransform.eulerAngles.y + 15f, Time.deltaTime*200f);
-			} else {
-				tempRot = Mathf.MoveTowardsAngle(transform.eulerAngles.y, mouseAngle + camTransform.eulerAngles.y, Time.deltaTime*200f);
-			}
+//			Cursor.lockState = CursorLockMode.None;
+			transform.LookAt(MouseTracker.mouseHoverTransform);
+			transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y, 0f);
+//			if(rolling) {
+//				tempRot = Mathf.MoveTowardsAngle(transform.eulerAngles.y, mouseAngle + camTransform.eulerAngles.y + 15f, Time.deltaTime*500f);
+//			} else {
+//				tempRot = Mathf.MoveTowardsAngle(transform.eulerAngles.y, mouseAngle + camTransform.eulerAngles.y, Time.deltaTime*500f);
+//			}
 		} else {
+//			Cursor.lockState = CursorLockMode.Locked;
 			if(rolling) {
-				tempRot = Mathf.MoveTowardsAngle(transform.eulerAngles.y, camTransform.eulerAngles.y + 15f, Time.deltaTime*200f);
+				tempRot = Mathf.MoveTowardsAngle(transform.eulerAngles.y, camTransform.eulerAngles.y + 15f, Time.deltaTime*500f);
 			} else {
-				tempRot = Mathf.MoveTowardsAngle(transform.eulerAngles.y, camTransform.eulerAngles.y, Time.deltaTime*200f);
+				tempRot = Mathf.MoveTowardsAngle(transform.eulerAngles.y, camTransform.eulerAngles.y, Time.deltaTime*500f);
 			}
+			transform.eulerAngles = new Vector3(0f, tempRot, 0f);
 		}
-		transform.eulerAngles = new Vector3(0f, tempRot, 0f);
 
 //		if(Mathf.Abs(playerAnim.GetFloat("Speed")) < 0.1f && !immobile) {
 //			if (mousePosY < screenY/2 && !rolling) {

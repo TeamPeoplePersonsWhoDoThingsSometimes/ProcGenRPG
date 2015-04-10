@@ -35,14 +35,15 @@ public class TutorialComment : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		Debug.Log(Vector3.Distance(this.transform.position, Player.playerPos.position));
 		if(isPlayerTouching && isTouchingThis) {
-			Camera.main.GetComponent<ColorCorrectionCurves>().saturation = Mathf.MoveTowards(Camera.main.GetComponent<ColorCorrectionCurves>().saturation, 0f, Time.deltaTime*2f);
-			Camera.main.GetComponent<NoiseAndScratches>().grainIntensityMax = Mathf.MoveTowards(Camera.main.GetComponent<NoiseAndScratches>().grainIntensityMax, 0.5f, Time.deltaTime*2f);
-			Camera.main.GetComponent<NoiseAndScratches>().scratchIntensityMax = Mathf.MoveTowards(Camera.main.GetComponent<NoiseAndScratches>().scratchIntensityMax, 0.5f, Time.deltaTime*2f);
+			Camera.main.GetComponent<ColorCorrectionCurves>().saturation = Mathf.MoveTowards(Camera.main.GetComponent<ColorCorrectionCurves>().saturation, 0f, Time.deltaTime*5f);
+			Camera.main.GetComponent<NoiseAndScratches>().grainIntensityMax = Mathf.MoveTowards(Camera.main.GetComponent<NoiseAndScratches>().grainIntensityMax, 0.5f, Time.deltaTime*5f);
+			Camera.main.GetComponent<NoiseAndScratches>().scratchIntensityMax = Mathf.MoveTowards(Camera.main.GetComponent<NoiseAndScratches>().scratchIntensityMax, 0.5f, Time.deltaTime*5f);
 			float curFreq = 0f;
 			mixer.GetFloat("CutoffFreq", out curFreq);
 			mixer.SetFloat("CutoffFreq",Mathf.MoveTowards(curFreq,300,Time.deltaTime*10000f));
-		} else if (!isPlayerTouching) {
+		} else if (Vector3.Distance(this.transform.position, Player.playerPos.position) < 10 && !isPlayerTouching) {
 			Camera.main.GetComponent<ColorCorrectionCurves>().saturation = Mathf.MoveTowards(Camera.main.GetComponent<ColorCorrectionCurves>().saturation, 1f, Time.deltaTime*2f);
 			Camera.main.GetComponent<NoiseAndScratches>().grainIntensityMax = Mathf.MoveTowards(Camera.main.GetComponent<NoiseAndScratches>().grainIntensityMax, 0f, Time.deltaTime*2f);
 			Camera.main.GetComponent<NoiseAndScratches>().scratchIntensityMax = Mathf.MoveTowards(Camera.main.GetComponent<NoiseAndScratches>().scratchIntensityMax, 0f, Time.deltaTime*2f);

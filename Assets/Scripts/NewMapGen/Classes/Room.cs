@@ -76,7 +76,9 @@ public class Room {
             objects = RoomGen.generateRoom(random.Next(10));
 
 			foreach (GameObject g in spawnedObjects) {
-				g.SetActive(true);
+				if(g != null) {
+					g.SetActive(true);
+				}
 			}
 
             foreach (GameObject g in generateEnemies(random)) {
@@ -300,21 +302,28 @@ public class Room {
 
 		int numEnemies = 0;
 		for(int j = 0; j < typeChances.Count; j++) {
-			for(int i = 0; i < 5; i++) {
-				if(rand.NextDouble() < ((double)typeChances[j])) {
-					numEnemies++;
-					tempEnemyList.Add(j);
+			if(Utility.ComparableVersionInt(types[j].maxVersion) >= Utility.ComparableVersionInt(Player.version)
+			   && Utility.ComparableVersionInt(types[j].minVersion) <= Utility.ComparableVersionInt(Player.version)) {
+//				Debug.Log(Utility.ComparableVersionInt(types[j].minVersion) + "<=" + Utility.ComparableVersionInt(Player.version) + "\n"
+//				          + Utility.ComparableVersionInt(types[j].maxVersion) + ">=" + Utility.ComparableVersionInt(Player.version));
+				for(int i = 0; i < 5; i++) {
+					if(rand.NextDouble() < ((double)typeChances[j])) {
+						numEnemies++;
+						tempEnemyList.Add(j);
+					}
 				}
 			}
 		}
 		GameObject[] enemies = new GameObject[numEnemies];
+		Debug.Log("NUMENEMIES: " + numEnemies);
 
         for (int i = 0; i < enemies.Length; i++)
         {
             Enemy temp = types[tempEnemyList[i]];
             Vector3 pos = 10 * new Vector3(rand.Next(botLeft.x, topRight.x), 0.3f, rand.Next(botLeft.y, topRight.y));
-            Debug.Log("Enemy position: " + pos);
+//            Debug.Log("Enemy position: " + pos);
             enemies[i] = ((Enemy) GameObject.Instantiate(temp, pos, Quaternion.identity)).gameObject;
+			Debug.Log("Spawning " + enemies[i].name);
         }
 
         return enemies;

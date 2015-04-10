@@ -219,6 +219,8 @@ public class PlayerCanvas : MonoBehaviour {
 				}
 				quickAccessBar.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = playerRef.quickAccessItems[i].icon;
 			} else {
+				quickAccessBar.transform.GetChild(i).GetComponent<Image>().sprite = null;
+				quickAccessBar.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = null;
 				quickAccessBar.transform.GetChild(i).FindChild("HackReload").GetComponent<RectTransform>().localScale = new Vector3(1f,0f,1f);
 			}
 		}
@@ -252,6 +254,9 @@ public class PlayerCanvas : MonoBehaviour {
 			{
 				for(;i<21;i++)
 				{
+					inventoryItemContainer.transform.GetChild(i).GetComponent<Image>().sprite = null;
+					inventoryItemContainer.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = null;
+					inventoryItemContainer.transform.GetChild(i).GetChild(0).GetComponent<Image>().color = Color.clear;
 					inventoryItemContainer.transform.GetChild(i).GetComponent<Image>().color = Color.black;
 					inventoryItemContainer.transform.GetChild(i).GetComponent<EventTrigger>().enabled = false;
 				}
@@ -396,7 +401,26 @@ public class PlayerCanvas : MonoBehaviour {
 				dragDelta = (new Vector2(Input.mousePosition.x, Input.mousePosition.y)) - mousePressedLocation;
 			}
 
+			if(Input.GetMouseButton(1) && itemToBeDeleted != -1) {
+				rightMouseButtonHeld += Time.deltaTime;
+				Color temp = inventoryItemContainer.transform.GetChild(itemToBeDeleted).GetComponent<Image>().color;
+				inventoryItemContainer.transform.GetChild(itemToBeDeleted).GetComponent<Image>().color = new Color(temp.r+0.01f,temp.g-0.01f, temp.b-0.01f);
+				if(rightMouseButtonHeld > 2) {
+					playerRef.DeleteItem(itemToBeDeleted);
+					rightMouseButtonHeld = 0f;
+					itemToBeDeleted = 0;
+					HandleInventoryMouseOver(-1);
+				}
+			} else if(!Input.GetMouseButton(1) && itemToBeDeleted != -1) {
+//				inventoryItemContainer.transform.GetChild(itemToBeDeleted).GetComponent<Image>().color = Color.white;
+				itemToBeDeleted = 0;
+				rightMouseButtonHeld = 0;
+			}
+
+			Cursor.visible = true;
 		} else {
+			Cursor.visible = false;
+
 			/*** Handles non-console interaction, disallows interaction with console ***/
 			consoleGUI.interactable = false;
 			minimap.SetActive(true);
@@ -532,6 +556,13 @@ public class PlayerCanvas : MonoBehaviour {
 		dragDelta = Vector2.zero;
 		dragStart = Vector2.zero;
 		FMOD_StudioSystem.instance.PlayOneShot("event:/player/weaponEquip01",Player.playerPos.position);
+	}
+
+	private float rightMouseButtonHeld = 0f;
+	private int itemToBeDeleted = -1;
+
+	public void ItemPressed(int index) {
+		itemToBeDeleted = index;
 	}
 
 	public void PlayMouseOverSound() {

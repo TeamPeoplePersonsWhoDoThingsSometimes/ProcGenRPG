@@ -248,22 +248,43 @@ public class Player : MonoBehaviour {
 			activeWeapon.AddBytes(val);
 		}
 		bytesToNextVersion = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*levelUpSpeedScale;
+		version = ((int.Parse(version.Split('.')[0]))*1) + "." + ((int.Parse(version.Split('.')[1]))*1) + "." + ((int.Parse(version.Split('.')[2])) + 1);
 		while (xpBytes >= bytesToNextVersion) {
 			LevelUp();
 		}
+	}
+
+	public void DeleteItem(int index) {
+		if(inventory[index].GetType().IsSubclassOf(typeof(Weapon))) {
+			Weapon tempWeapon = (Weapon)inventory[index];
+			for(int i = 0; i < (Utility.ComparableVersionInt(tempWeapon.version)/10); i++) {
+				GameObject tempbyte = (GameObject) GameObject.Instantiate(Utility.GetByteObject(), transform.position + Vector3.up, Quaternion.identity);
+				tempbyte.GetComponent<Byte>().val = 10000;
+			}
+		}
+
+		if(activeWeapon == inventory[index]) {
+			activeWeapon = null;
+		}
+		if(activeHack == inventory[index]) {
+			activeHack = null;
+		}
+
+		inventory.RemoveAt(index);
+		PlayerCanvas.updateInventoryUI = true;
 	}
 
 	private void LevelUp() {
 		xpBytes -= bytesToNextVersion;
 		//INCREASE PLAYER STATS
 		algorithmPoints += 2;
-		if(int.Parse(version.Split('.')[2]) + 1 < 10) {
-			version = ((int.Parse(version.Split('.')[0]))*1) + "." + ((int.Parse(version.Split('.')[1]))*1) + "." + ((int.Parse(version.Split('.')[2])) + 1);
-		} else if(int.Parse(version.Split('.')[1]) + 1 < 10) {
+//		if(int.Parse(version.Split('.')[2]) + 1 < 10) {
+//			version = ((int.Parse(version.Split('.')[0]))*1) + "." + ((int.Parse(version.Split('.')[1]))*1) + "." + ((int.Parse(version.Split('.')[2])) + 1);
+//		} else if(int.Parse(version.Split('.')[1]) + 1 < 10) {
 			version = ((int.Parse(version.Split('.')[0]))*1) + "." + ((int.Parse(version.Split('.')[1])*1) + 1) + ".0";
-		} else {
-			version = (int.Parse(version.Split('.')[0])*1 + 1) + ".0.0";
-		}
+//		} else {
+//			version = (int.Parse(version.Split('.')[0])*1 + 1) + ".0.0";
+//		}
 		bytesToNextVersion = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*levelUpSpeedScale;
 		ActionEventInvoker.primaryInvoker.invokeAction (new PlayerAction (this.getDirectObject(), ActionType.LEVEL_UP));
 	}
@@ -313,6 +334,7 @@ public class Player : MonoBehaviour {
 			rma -= amount;
 			return true;
 		} else {
+			GetDamaged(1,false);
 			return false;
 		}
 	}

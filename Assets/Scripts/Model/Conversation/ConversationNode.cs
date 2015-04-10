@@ -201,7 +201,8 @@ public class uConversationNode {
 	public List<string> getAlternativeStrings() {
 		List<string> forreturn = new List<string>();
 		foreach(Alternative a in getAlternatives().Values) {
-			if(!forreturn.Contains(a.getText()) && uConversationNode.getNodeByID(a.getUID()).ABlockSatisfied()) {
+			if(!forreturn.Contains(a.getText()) && uConversationNode.getNodeByID(a.getUID()).ABlockSatisfied()
+			   && a.isValidAlternative()) {
 				forreturn.Add(a.getText());
 			}
 		}

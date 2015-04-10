@@ -77,9 +77,36 @@ public class MainMenu : MonoBehaviour {
 					temp = k;
 				}
 			}
-			if(temp != KeyCode.None) {
+
+			// Sanity check
+			if (PersistentInfo.dict == null) {
+				//Debug.LogError ("Key dictionary has not been initialized");
+			}
+
+			// Check if the requested key is already mapped
+			// Commented out, because somehow the dictionary isn't being initialized properly, or is being destroyed after initialization
+			/*
+			if (temp != KeyCode.None && PersistentInfo.dict.ContainsKey(temp)) {
+				Debug.Log ("That key is already mapped!");
+				curButtonForRemap = null;
+			}
+			*/
+			//else if (temp != KeyCode.None) {
+			if (temp != KeyCode.None) {
 				if(curButtonForRemap.gameObject.name.Equals("UpButton")) {
 					PersistentInfo.forwardKey = temp;
+					curButtonForRemap.transform.GetChild(0).GetComponent<Text>().text = temp.ToString();
+				}
+				else if (curButtonForRemap.gameObject.name.Equals("DownButton")) {
+					PersistentInfo.backKey = temp;
+					curButtonForRemap.transform.GetChild(0).GetComponent<Text>().text = temp.ToString();
+				}
+				else if (curButtonForRemap.gameObject.name.Equals("LeftButton")) {
+					PersistentInfo.leftKey = temp;
+					curButtonForRemap.transform.GetChild(0).GetComponent<Text>().text = temp.ToString();
+				}
+				else if (curButtonForRemap.gameObject.name.Equals("RightButton")) {
+					PersistentInfo.rightKey = temp;
 					curButtonForRemap.transform.GetChild(0).GetComponent<Text>().text = temp.ToString();
 				}
 				reMapping = false;

@@ -145,7 +145,7 @@ public class WorldMap : MonoBehaviour {
 
 		worldMapCam.transform.parent.localEulerAngles = new Vector3(0f,FollowPlayer.rotate,0f);
 
-		worldMapCam.enabled = !PlayerCanvas.cinematicMode;
+		worldMapCam.enabled = !PlayerCanvas.cinematicMode && !PlayerCanvas.inConsole;
 		
 	}
 

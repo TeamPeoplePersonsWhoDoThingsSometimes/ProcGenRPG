@@ -14,6 +14,7 @@ public class FinalBoss : Boss {
 	bool readyToFall = false, fallen = false;
 	float fallentime = 0f;
 	List<Enemy> spawnedMemLeaks;
+	public static int memLeaksCount;
 
 	// Use this for initialization
 	void Start () {
@@ -99,9 +100,11 @@ public class FinalBoss : Boss {
 
 			if(readyToFall) {
 				bool gonnaFall = true;
+				memLeaksCount = 0;
 				for(int i = 0; i < spawnedMemLeaks.Count; i++) {
 					if(spawnedMemLeaks[i] != null) {
 						gonnaFall = false;
+						memLeaksCount++;
 					}
 				}
 				if(gonnaFall) {
