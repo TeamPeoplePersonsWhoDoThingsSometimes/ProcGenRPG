@@ -57,7 +57,7 @@ public class PlayerControl : MonoBehaviour {
 
 		/****** Set movement variables *****/
 		if(!immobile) {
-			playerAnim.SetFloat("Speed",Input.GetAxis("Vertical"));
+			playerAnim.SetFloat("Speed",(Input.GetKey(PersistentInfo.forwardKey) ? 1 : 0));
 		} else {
 			playerAnim.SetFloat("Speed",0);
 		}
@@ -68,22 +68,23 @@ public class PlayerControl : MonoBehaviour {
 		}
 
 		/***** Rolling functionality ****/
-		if(Input.GetKey(KeyCode.Space)) {
+		if(Input.GetKey(PersistentInfo.rollKey)) {
 			playerAnim.SetBool("Roll", true);
 		} else {
 			playerAnim.SetBool("Roll", false);
 		}
 
 		/***** Running functionality ****/
-		if(playerAnim.GetFloat("Speed") > 0.5f && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))) {
+		if (playerAnim.GetFloat("Speed") > 0.5f && Input.GetKey(PersistentInfo.sprintKey)) {
 			if(playerAnim.speed < 1.5f) {
 				playerAnim.speed += Time.deltaTime/2f;
 			}
 		} else {
 			playerAnim.speed = 1;
 		}
-		GetComponent<CapsuleCollider>().height = 0.1787377f - 0.1f*playerAnim.GetFloat("ColliderHeight");
-		GetComponent<CapsuleCollider>().center = new Vector3(0,0.09f - 0.09f*playerAnim.GetFloat("ColliderY"), 0f);
+		//We don't want people rolling under buildings, so no collider shrinking on roll
+		//GetComponent<CapsuleCollider>().height = 0.1787377f - 0.1f*playerAnim.GetFloat("ColliderHeight");
+		//GetComponent<CapsuleCollider>().center = new Vector3(0,0.09f - 0.09f*playerAnim.GetFloat("ColliderY"), 0f);
 
 
 		/**** Simple front collision handler *****/
@@ -91,7 +92,7 @@ public class PlayerControl : MonoBehaviour {
 			RaycastHit info = new RaycastHit();
 			if(Physics.Raycast(new Ray(this.transform.position + new Vector3(0f, 1f, 0f), this.transform.forward), out info, playerAnim.GetFloat("Speed")*1.5f)) {
 				if(!info.collider.gameObject.name.Equals("Byte")) {
-					playerAnim.SetFloat("Speed",Mathf.Min(Input.GetAxis("Vertical"),0));
+					playerAnim.SetFloat("Speed",Mathf.Min((Input.GetKey(PersistentInfo.forwardKey) ? 1 : 0),0));
 				}
 			}
 		}
@@ -132,41 +133,41 @@ public class PlayerControl : MonoBehaviour {
 				playerAnim.SetBool("HoldingMediumGun", false);
 //				Debug.Log(swordAttack1 + " " + swordAttack2 + " " + swordAttack3);
 
-				if (Input.GetMouseButtonDown(0) && comboTime && !swordAttack1 && swordAttack2) {
+				if ((Input.GetMouseButtonDown(0) || Input.GetKeyDown(PersistentInfo.attackKey)) && comboTime && !swordAttack1 && swordAttack2) {
 					playerAnim.SetBool("Slash3", true);
 					comboTime = false;
 				}
 
-				if (Input.GetMouseButtonDown(0) && comboTime && swordAttack1 && !swordAttack2) {
+				if ((Input.GetMouseButtonDown(0) || Input.GetKeyDown(PersistentInfo.attackKey)) && comboTime && swordAttack1 && !swordAttack2) {
 					playerAnim.SetBool("Slash2", true);
 					comboTime = false;
 				}
 
-				if (Input.GetMouseButtonDown(0) && !swordAttack2 && !swordAttack2) {
+				if ((Input.GetMouseButtonDown(0) || Input.GetKeyDown(PersistentInfo.attackKey)) && !swordAttack2 && !swordAttack2) {
 					playerAnim.SetBool("Slash1", true);
 					Debug.Log(playerAnim.GetFloat("Speed"));
 					comboTime = false;
 				}
 			} else if (playerref.GetWeapon() != null && playerref.GetWeapon().Type().Equals(WeaponType.Bow)) {
 				playerAnim.SetBool("HoldingMediumGun", false);
-				if (Input.GetMouseButtonDown(0)) {
+				if ((Input.GetMouseButtonDown(0) || Input.GetKeyDown(PersistentInfo.attackKey))) {
 					if(playerAnim.GetFloat("Speed") < 0.2f) {
 						rangedIndicator.enabled = true;
 					}
 					playerAnim.SetBool("DrawArrow", true);
-				} else if (Input.GetMouseButtonUp(0)) {
+				} else if ((Input.GetMouseButtonUp(0) || Input.GetKeyUp(PersistentInfo.attackKey))) {
 					rangedIndicator.enabled = false;
 					playerAnim.SetBool("DrawArrow", false);
 					playerAnim.SetBool("ShootBow", true);
 				}
 
-				if(!Input.GetMouseButton(0)) {
+				if(!(Input.GetMouseButton(0) || Input.GetKey(PersistentInfo.attackKey))) {
 					rangedIndicator.enabled = false;
 					playerAnim.SetBool("DrawArrow", false);
 				}
 			} else if (playerref.GetWeapon() != null && playerref.GetWeapon().Type().Equals(WeaponType.Handgun)) {
 				playerAnim.SetBool("HoldingMediumGun", false);
-				if(Input.GetMouseButton(0)) {
+				if((Input.GetMouseButton(0) || Input.GetKey(PersistentInfo.attackKey))) {
 					playerAnim.SetBool("ShootHandgun", true);
 					rangedIndicator.enabled = true;
 					if(playerref.CanAttack()) {
@@ -180,22 +181,22 @@ public class PlayerControl : MonoBehaviour {
 				}
 			} else if (playerref.GetWeapon() != null && playerref.GetWeapon().Type().Equals(WeaponType.MediumGun)) {
 				playerAnim.SetBool("HoldingMediumGun", true);
-				if(Input.GetMouseButton(0) && playerref.CanAttack()) {
+				if((Input.GetMouseButton(0) || Input.GetKey(PersistentInfo.attackKey)) && playerref.CanAttack()) {
 					rangedIndicator.enabled = true;
 					playerAnim.SetBool("ShootMediumGun", true);
-				} else if (!Input.GetMouseButton(0)) {
+				} else if (!(Input.GetMouseButton(0) || Input.GetKey(PersistentInfo.attackKey))) {
 					rangedIndicator.enabled = false;
 					playerAnim.SetBool("ShootMediumGun", false);
 				}
 			} else if(playerref.GetWeapon() != null && playerref.GetWeapon().Type().Equals(WeaponType.Dagger)) {
-				if(Input.GetMouseButton(0)) {
+				if((Input.GetMouseButton(0) || Input.GetKey(PersistentInfo.attackKey))) {
 					playerAnim.SetBool("DaggerSlash",true);
 				} else {
 					playerAnim.SetBool("DaggerSlash",false);
 				}
 			}
 
-			if (playerref.GetHack() != null && Input.GetMouseButton(1)) {
+			if (playerref.GetHack() != null && (Input.GetMouseButton(1) || Input.GetKey(PersistentInfo.hackKey))) {
 				playerref.Hack();
 			}
 		}

@@ -42,14 +42,14 @@ public class FollowPlayer : MonoBehaviour {
 		rotate = transform.parent.eulerAngles.y;
 
 		if(!PlayerControl.immobile) {
-			if (Input.GetKey(KeyCode.D)) {
+			if (Input.GetKey(PersistentInfo.rightKey)) {
 				if(rotateSpeed <= 100f) {
 					rotateSpeed = 100f;
 				}
 				rotateSpeed = Mathf.MoveTowards(rotateSpeed, 300, 100*Time.deltaTime);
 				transform.parent.RotateAround(Player.playerPos.position, Player.playerPos.up, rotateSpeed*Time.deltaTime);
 			}
-			if (Input.GetKey(KeyCode.A)) {
+			if (Input.GetKey(PersistentInfo.leftKey)) {
 				if(rotateSpeed >= -100f) {
 					rotateSpeed = -100f;
 				}
@@ -58,7 +58,7 @@ public class FollowPlayer : MonoBehaviour {
 			}
 		}
 
-		if(!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D)) {
+		if(!Input.GetKey(PersistentInfo.leftKey) && !Input.GetKey(PersistentInfo.rightKey)) {
 			rotateSpeed = 0;
 		}
 

@@ -219,9 +219,18 @@ public class Area
         }
         else //else this is a city, so instantiate THE CITY PREFAB! MUAHAHA!
         {
+            portals = new List<Tile>();
             //TODO: Add the portals to the portal List here!
             GameObject temp = (GameObject) GameObject.Instantiate(LoadResources.Instance.city, new Vector3(0,0,0), Quaternion.identity);
             city = temp;
+            GameObject portalParent = temp.transform.GetChild(0).gameObject;
+            if (portalParent.name == "portals")
+            {
+                foreach (Tile p in portalParent.transform.GetComponentsInChildren<Tile>())
+                {
+                    portals.Add(p);
+                }
+            }
 
             isGenerated = true;
             isHidden = false;
@@ -379,9 +388,6 @@ public class Area
     public void executeSpawnCommand(SpawnCommand sc)
     {
 		questArea = true;
-
-		//TODO: Find a better place for this!!!!!!
-		WorldMap.AddStarAt(position.x, position.y);
 
         System.Random rand = new System.Random();
         rooms[rand.Next(rooms.Count)].generateQuestMaterial(sc);

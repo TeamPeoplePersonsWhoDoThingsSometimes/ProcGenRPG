@@ -97,14 +97,16 @@ public class Quest : ActionEventListener {
 
 		public void executeCommands(AreaGroup group) {
 			foreach (SpawnCommand s in commands) {
+				Point spawnedAt = null;
 				if (s.getSpawnSpecification().Equals(SpawnAreaTypeSpecification.LOCAL)) {
-					spawnLocations.Add(MasterDriver.Instance.CurrentArea.position);
+					spawnedAt = MasterDriver.Instance.CurrentArea.position;
 					MasterDriver.Instance.CurrentArea.executeSpawnCommand(s);
 				} else {
-					spawnLocations.Add(group.executeSpawnCommand(s));
+					spawnedAt = group.executeSpawnCommand(s);
 				}
-				//TODO: Figure out a better way to do this world map stuff?
-				WorldMap.AddQuest(this.description);
+
+				WorldMap.AddStarAt(spawnedAt.x, spawnedAt.y, this.description);
+				spawnLocations.Add(spawnedAt);
 			}
 		}
 
