@@ -34,13 +34,13 @@ public class WorldMap : MonoBehaviour {
 
 	void GenTilesAroundArea(Area a, GameObject g) {
 		Area[] neighbors = a.getNeighborsForMapGen();
-		if((a.position.x == 5 || a.position.x == 4 || a.position.x == 6) && (a.position.y == 5 || a.position.y == 4 || a.position.y == 6)) {
-			Debug.Log(a.position + ": " + a.north + " " + a.east + " " + a.south + " " + a.west);
-		}
+//		if((a.position.x == 5 || a.position.x == 4 || a.position.x == 6) && (a.position.y == 5 || a.position.y == 4 || a.position.y == 6)) {
+//			Debug.Log(a.position + ": " + a.north + " " + a.east + " " + a.south + " " + a.west);
+//		}
 		if (a.north && !genAreas.Contains(neighbors[0])) {
-			if((a.position.x == 5 || a.position.x == 4 || a.position.x == 6) && (a.position.y == 5 || a.position.y == 4 || a.position.y == 6)) {
-				Debug.Log(a.position + ": placing north");
-			}
+//			if((a.position.x == 5 || a.position.x == 4 || a.position.x == 6) && (a.position.y == 5 || a.position.y == 4 || a.position.y == 6)) {
+//				Debug.Log(a.position + ": placing north");
+//			}
 			GameObject temp = (GameObject)GameObject.Instantiate(tilePrefab);
 			temp.name = neighbors[0].position.ToString();
 			temp.transform.parent = tilePrefab.transform.parent;
@@ -49,9 +49,9 @@ public class WorldMap : MonoBehaviour {
 			GenTilesAroundArea(neighbors[0],temp);
 		}
 		if (a.east && !genAreas.Contains(neighbors[1])) {
-			if((a.position.x == 5 || a.position.x == 4 || a.position.x == 6) && (a.position.y == 5 || a.position.y == 4 || a.position.y == 6)) {
-				Debug.Log(a.position + ": placing east");
-			}
+//			if((a.position.x == 5 || a.position.x == 4 || a.position.x == 6) && (a.position.y == 5 || a.position.y == 4 || a.position.y == 6)) {
+//				Debug.Log(a.position + ": placing east");
+//			}
 			GameObject temp = (GameObject)GameObject.Instantiate(tilePrefab);
 			temp.name = neighbors[1].position.ToString();
 			temp.transform.parent = tilePrefab.transform.parent;
@@ -60,9 +60,9 @@ public class WorldMap : MonoBehaviour {
 			GenTilesAroundArea(neighbors[1],temp);
 		}
 		if (a.south && !genAreas.Contains(neighbors[2])) {
-			if((a.position.x == 5 || a.position.x == 4 || a.position.x == 6) && (a.position.y == 5 || a.position.y == 4 || a.position.y == 6)) {
-				Debug.Log(a.position + ": placing south");
-			}
+//			if((a.position.x == 5 || a.position.x == 4 || a.position.x == 6) && (a.position.y == 5 || a.position.y == 4 || a.position.y == 6)) {
+//				Debug.Log(a.position + ": placing south");
+//			}
 			GameObject temp = (GameObject)GameObject.Instantiate(tilePrefab);
 			temp.name = neighbors[2].position.ToString();
 			temp.transform.parent = tilePrefab.transform.parent;
@@ -71,9 +71,9 @@ public class WorldMap : MonoBehaviour {
 			GenTilesAroundArea(neighbors[2],temp);
 		}
 		if (a.west && !genAreas.Contains(neighbors[3])) {
-			if((a.position.x == 5 || a.position.x == 4 || a.position.x == 6) && (a.position.y == 5 || a.position.y == 4 || a.position.y == 6)) {
-				Debug.Log(a.position + ": placing west");
-			}
+//			if((a.position.x == 5 || a.position.x == 4 || a.position.x == 6) && (a.position.y == 5 || a.position.y == 4 || a.position.y == 6)) {
+//				Debug.Log(a.position + ": placing west");
+//			}
 			GameObject temp = (GameObject)GameObject.Instantiate(tilePrefab);
 			temp.name = neighbors[3].position.ToString();
 			temp.transform.parent = tilePrefab.transform.parent;
@@ -100,7 +100,7 @@ public class WorldMap : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(MasterDriver.Instance != null) {
-			Vector3 mapPos = new Vector3(worldMapCam.transform.localPosition.x + (-(MasterDriver.Instance.CurrentArea.position.x - 5)*5), -50f, worldMapCam.transform.localPosition.z + 10.5f + (-(MasterDriver.Instance.CurrentArea.position.y - 5)*5));
+			Vector3 mapPos = new Vector3(worldMapCam.transform.localPosition.x + (-(MasterDriver.Instance.CurrentArea.position.x - 4)*5), -50f, worldMapCam.transform.localPosition.z + 10.5f + (-(MasterDriver.Instance.CurrentArea.position.y - 4)*5));
 			this.transform.localPosition = Vector3.MoveTowards(this.transform.localPosition, mapPos, Time.deltaTime*10f);
 			if(questStars != null) {
 				foreach(KeyValuePair<GameObject, string> kvp in questStars) {
@@ -153,7 +153,9 @@ public class WorldMap : MonoBehaviour {
 		Debug.Log ("Place Star at: " + x + "," + z);
 		
 		GameObject temp = (GameObject)GameObject.Instantiate(instance.starPrefab);
-		temp.transform.localPosition = new Vector3((x - 5)*5,3f,-(z - 5)*5);
+		temp.transform.localPosition = new Vector3((x - 4)*5,3f,-(z - 4)*5);
+//		temp.transform.localPosition = new Vector3(0,3f,0);
+		Debug.Log("Placing star at: " + x + " " + z + "\nAKA: " + temp.transform.localPosition);
 		if(questStars == null) {
 			questStars = new Dictionary<GameObject, string>();
 		}
