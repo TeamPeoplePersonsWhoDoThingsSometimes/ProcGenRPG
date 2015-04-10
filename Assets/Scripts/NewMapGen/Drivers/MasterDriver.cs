@@ -268,7 +268,7 @@ public class MasterDriver : MonoBehaviour {
                 break;
         }
 
-		FMOD_StudioSystem.instance.PlayOneShot("event:/environment/portal",Player.playerPos.position);
+		FMOD_StudioSystem.instance.PlayOneShot("event:/environment/portal",Player.playerPos.position, PlayerPrefs.GetFloat("MasterVolume"));
 
 		//Fire Movement Event
 		DirectObject obj = new DirectObject ("Area", currentArea.position.x + " " + currentArea.position.y);

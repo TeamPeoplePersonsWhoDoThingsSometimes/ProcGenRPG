@@ -95,9 +95,9 @@ public class Enemy : MonoBehaviour {
 		int maxRange = Mathf.Max(Mathf.Min(Utility.ComparableVersionInt(Player.version) + 5, maxversionInt), minversionInt);
 
 		int versionInt = Random.Range(minRange,maxRange);
-		Debug.Log("my versionint is: " + versionInt);
+//		Debug.Log("my versionint is: " + versionInt);
 		this.maxHP *= (int)((versionInt/10f)*(healthScale+1));
-		Debug.Log("my maxhp is: " + this.maxHP);
+//		Debug.Log("my maxhp is: " + this.maxHP);
 		this.baseAttackDamage *= (versionInt/10f)*(attackScale+1);
 		this.baseHealthRegen *= (versionInt/10f)*(healthRegenScale+1);
 		this.baseAttackSpeed /= (versionInt/10f)*(attackSpeedScale+1);
@@ -387,7 +387,7 @@ public class Enemy : MonoBehaviour {
 	}
 
 	public void GetDamaged(float damage, bool crit) {
-		FMOD_StudioSystem.instance.PlayOneShot("event:/enemy/enemyCombatState",transform.position);
+		FMOD_StudioSystem.instance.PlayOneShot("event:/enemy/enemyCombatState",transform.position, PlayerPrefs.GetFloat("MasterVolume"));
 		healthBarTime = 2f;
 		if(GetComponent<Animator>() != null) {
 			GetComponent<Animator>().SetTrigger("Hurt");

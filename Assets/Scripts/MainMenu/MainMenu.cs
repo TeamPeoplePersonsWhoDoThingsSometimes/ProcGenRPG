@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 using UnityStandardAssets.ImageEffects;
 
 public class MainMenu : MonoBehaviour {
@@ -17,6 +18,9 @@ public class MainMenu : MonoBehaviour {
 
 	private bool reMapping;
 	private Button curButtonForRemap;
+	public Slider volumeSlider,qualitySlider;
+
+	public AudioMixer mixer;
 
 	// Use this for initialization
 	void Start () {
@@ -24,6 +28,8 @@ public class MainMenu : MonoBehaviour {
 		splashContainer = GameObject.Find("SplashContainer");
 		mainContainer = GameObject.Find("MainContainer");
 		chromAbbAmount = Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration;
+		volumeSlider.value = PlayerPrefs.GetFloat("MasterVolume");
+		qualitySlider.value = QualitySettings.GetQualityLevel();
 	}
 	
 	// Update is called once per frame
@@ -151,6 +157,7 @@ public class MainMenu : MonoBehaviour {
 	public void VolumeSliderChanged(GameObject slide) {
 		PlayerPrefs.SetFloat("MasterVolume", slide.GetComponent<Slider>().value);
 		slide.transform.parent.GetChild(1).GetComponent<Text>().text = ((int)(PlayerPrefs.GetFloat("MasterVolume")*100)).ToString() + "%";
+		mixer.SetFloat("Master",-80 + (PlayerPrefs.GetFloat("MasterVolume")*68f));
 	}
 
 	public void QualitySliderChanged(GameObject slide) {
@@ -178,10 +185,10 @@ public class MainMenu : MonoBehaviour {
 	}
 
 	public void PlayMouseOverFX() {
-		FMOD_StudioSystem.instance.PlayOneShot("event:/UISounds/UI03", Camera.main.transform.position);
+		FMOD_StudioSystem.instance.PlayOneShot("event:/UISounds/UI03", Camera.main.transform.position, PlayerPrefs.GetFloat("MasterVolume"));
 	}
 
 	public void PlayClickFX() {
-		FMOD_StudioSystem.instance.PlayOneShot("event:/UISounds/UI02", Camera.main.transform.position);
+		FMOD_StudioSystem.instance.PlayOneShot("event:/UISounds/UI02", Camera.main.transform.position, PlayerPrefs.GetFloat("MasterVolume"));
 	}
 }
