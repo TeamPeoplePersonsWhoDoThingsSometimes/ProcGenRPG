@@ -47,7 +47,10 @@ public class LoadResources : MonoBehaviour {
 
 		//Runtime load operations
 		//Note: Quests are loaded in the questListener constructor
-		loadConversations ();
+		//if boss level, these should already be loaded
+		if (!MasterDriver.bossLevel) {
+			loadConversations ();
+		}
     }
 
 	private void loadConversations() {
@@ -67,6 +70,28 @@ public class LoadResources : MonoBehaviour {
 
 		foreach (Conversation c in conversationProtocols) {
 			Conversations.Add(new uConversation(c));
+		}
+	}
+
+	public List<ConversationSave> getConversationSaveData() {
+		List<ConversationSave> saveData = new List<ConversationSave> ();
+
+		foreach (uConversation c in Conversations) {
+			saveData.Add(c.getSaveData());
+		}
+
+		return saveData;
+	}
+
+	public void setConversationData(List<ConversationSave> saveData) {
+
+		//O(n^2) because its quick to code and we only have 5ish conversations anyway
+		foreach (ConversationSave save in saveData) {
+			foreach (uConversation c in Conversations) {
+				if (c.getName().Equals(save.Name)) {
+					c.setFromSave(save);
+				}
+			}
 		}
 	}
 	

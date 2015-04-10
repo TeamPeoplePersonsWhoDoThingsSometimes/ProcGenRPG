@@ -265,7 +265,7 @@ public class PlayerCanvas : MonoBehaviour {
 		}
 
 		/*** Quest UI ***/
-		if(updateQuestUI && MasterDriver.Instance != null) {
+		if(updateQuestUI && MasterDriver.Instance != null && MasterDriver.bossLevel != true) {
 			int tempCounter = 0;
 			int i = 0;
 			List<Quest> activeQuests = MasterDriver.Instance.MasterQuestListener().getActiveQuests();

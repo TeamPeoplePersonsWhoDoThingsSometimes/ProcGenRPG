@@ -25,6 +25,10 @@ public class WorldMap : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		if (MasterDriver.bossLevel) {
+			return;
+		}
+
 		genAreas = new List<Area>();
 		if(MasterDriver.Instance != null) {
 			genAreas.Add(MasterDriver.Instance.CurrentArea);
@@ -100,6 +104,10 @@ public class WorldMap : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (MasterDriver.bossLevel) {
+			return;
+		}
+
 		if(MasterDriver.Instance != null) {
 			Vector3 mapPos = new Vector3(worldMapCam.transform.localPosition.x + (-(MasterDriver.Instance.CurrentArea.position.x - 4)*5), -50f, worldMapCam.transform.localPosition.z + 10.5f + (-(MasterDriver.Instance.CurrentArea.position.y - 4)*5));
 			this.transform.localPosition = Vector3.MoveTowards(this.transform.localPosition, mapPos, Time.deltaTime*10f);

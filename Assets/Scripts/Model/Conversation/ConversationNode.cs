@@ -28,6 +28,32 @@ public class uConversationNode {
 			text = t;
 			alternativeRequirment = reqs;
 		}
+
+		public AlternativeSave getAlternativeSave() {
+			AlternativeSave.Builder builder = AlternativeSave.CreateBuilder ();
+			builder.SetUid (uid);
+
+			foreach (List<StatusCheckable> l in alternativeRequirment) {
+				StatusBlockSave.Builder bBuilder = StatusBlockSave.CreateBuilder();
+				foreach (StatusCheckable s in l) {
+					StatusSave.Builder sBuilder = StatusSave.CreateBuilder();
+					sBuilder.SetAlreadyMet(s.isStatusMet());
+					s.setBuilderWithData(ref sBuilder);
+					bBuilder.AddStats(sBuilder.Build ());
+				}
+				builder.AddStats(bBuilder.Build ());
+			}
+
+			return builder.Build ();
+		}
+
+		public void setAlternativeFromSave(AlternativeSave saveData) {
+			for (int i = 0; i < alternativeRequirment.Count; i++) {
+				for (int j = 0; j < alternativeRequirment[i].Count; j++) {
+					alternativeRequirment[i][j].setFromData(((StatusBlockSave)saveData.StatsList[i]).StatsList[j]);
+				}
+			}
+		}
 		
 		public string getText() {
 			return text;
@@ -256,6 +282,32 @@ public class uConversationNode {
 		}
 		
 		strIdMap.Add (ID, this);
+	}
+
+	public ConversationNodeSave getConversationNodeSave() {
+		ConversationNodeSave.Builder builder = ConversationNodeSave.CreateBuilder ();
+
+		builder.SetUid (uid);
+
+		foreach (StatusBlock block in blocks) {
+			builder.AddBlocks(block.getStatusBlockSave());
+		}
+
+		foreach (Alternative a in alternatives.Values) {
+			builder.AddAlts (a.getAlternativeSave());
+		}
+
+		return builder.Build ();
+	}
+
+	public void setConversationNodeFromData(ConversationNodeSave saveData) {
+		for (int i = 0; i < blocks.Count; i++) {
+			blocks[i].setStatusBlockFromSave(saveData.BlocksList[i]);
+		}
+
+		foreach (AlternativeSave a in saveData.AltsList) {
+			alternatives[a.Uid].setAlternativeFromSave(a);
+		}
 	}
 
 	public List<string> getAlternativeStrings() {

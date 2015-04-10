@@ -35,6 +35,25 @@ public class StatusBlock {
 		}
 	}
 
+	public StatusBlockSave getStatusBlockSave() {
+		StatusBlockSave.Builder builder = StatusBlockSave.CreateBuilder ();
+
+		foreach (StatusCheckable s in statuses) {
+			StatusSave.Builder sBuilder = StatusSave.CreateBuilder();
+			sBuilder.SetAlreadyMet (s.isStatusMet());
+			s.setBuilderWithData(ref sBuilder);
+			builder.AddStats(sBuilder.Build ());
+		}
+
+		return builder.Build ();
+	}
+
+	public void setStatusBlockFromSave(StatusBlockSave saveData) {
+		for (int i = 0; i < statuses.Count; i++) {
+			statuses[i].setFromData(saveData.StatsList[i]);
+		}
+	}
+
 	public bool StatusesMet() {
 		bool forreturn = true;
 		foreach(StatusCheckable sc in getStatuses()) {

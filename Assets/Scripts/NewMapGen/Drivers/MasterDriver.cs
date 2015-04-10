@@ -9,6 +9,11 @@ public class MasterDriver : MonoBehaviour {
 	/*********************************
 	 * Public static fields
 	*********************************/
+
+	//only set to true when moving between scenes
+	public static bool loadPlayerObjectData = false;
+	public static bool bossLevel = false;
+
 	/*public static Map CurrentMap;
 	public static Area CurrentArea;
 
@@ -23,6 +28,8 @@ public class MasterDriver : MonoBehaviour {
 	public const string saveGameFile1 = "./save1.sav";
 	public const string saveGameFile2 = "./save2.sav";
 	public const string saveGameFile3 = "./save3.sav";
+	public const string tmpSaveGameFile = "./tmp.sav";
+	
 
 	/*********************************
 	 * Public instance data, should be used for settings only
@@ -174,6 +181,10 @@ public class MasterDriver : MonoBehaviour {
 	void Start ()
     {
 
+		if (bossLevel) {
+			return;
+		}
+
 		if (generateBuilderDataOnLaunch) {
 			generateBuilderData();
 		}
@@ -229,6 +240,12 @@ public class MasterDriver : MonoBehaviour {
 		if (saveGame && PersistentInfo.saveFile != 0) {
 			saveGame = false;
 			save(PersistentInfo.saveFile);
+		}
+
+		if (loadPlayerObjectData) {
+			Debug.Log ("Load player data");
+			loadPlayerObjectData = false;
+			loadPlayerObject(4);
 		}
 	}
 
@@ -362,6 +379,7 @@ public class MasterDriver : MonoBehaviour {
 
 		List<QuestSave> questData = questListener.getQuestData ();
 		List<SpawnedObject> spawnedObjects = currentMap.getAllSpawnedObjects ();
+		List<ConversationSave> conversationData = LoadResources.Instance.getConversationSaveData ();
 		int seed = currentMap.getSeed ();
 
 		SavePackage.Builder packageBuilder = SavePackage.CreateBuilder ();
@@ -369,6 +387,7 @@ public class MasterDriver : MonoBehaviour {
 		packageBuilder.AddRangeQuestData (questData);
 		packageBuilder.AddRangeSpawnedObjects (spawnedObjects);
 		packageBuilder.SetSeed (seed);
+		packageBuilder.AddRangeConversationData (conversationData);
 
 		SavePackage package = packageBuilder.Build ();
 
@@ -380,6 +399,9 @@ public class MasterDriver : MonoBehaviour {
 			} else if(file == 2) {
 				PlayerPrefs.SetString("Load2",player.GetComponentInChildren<Player>().name);
 				fs = new FileStream (saveGameFile2, FileMode.Create);
+			} else if (file == 4) {
+				PlayerPrefs.SetString("tmpSave",player.GetComponentInChildren<Player>().name);
+				fs = new FileStream (tmpSaveGameFile, FileMode.Create);
 			} else {
 				PlayerPrefs.SetString("Load3",player.GetComponentInChildren<Player>().name);
 				fs = new FileStream (saveGameFile3, FileMode.Create);
@@ -393,6 +415,32 @@ public class MasterDriver : MonoBehaviour {
 		Debug.Log("FINISHED SAVING");
 	}
 
+	public void loadPlayerObject(int file) {
+		SavePackage package;
+		
+		try {
+			FileStream fs;
+			if(file == 1) {
+				fs = new FileStream (saveGameFile1, FileMode.Open);
+			} else if(file == 2) {
+				fs = new FileStream (saveGameFile2, FileMode.Open);
+			} else if (file == 4) {
+				fs = new FileStream (tmpSaveGameFile, FileMode.Open);
+			} else {
+				fs = new FileStream (saveGameFile3, FileMode.Open);
+			}
+			package = SavePackage.ParseFrom(fs);
+			fs.Flush();
+			fs.Close();
+		} catch (IOException excep) {
+			IOException dummy = excep;
+			log("IO ERROR: COULD NOT LOAD GAME DATA");
+			return;
+		}
+
+		player.GetComponent<Player> ().setPlayerStatus (package.Player);
+	}
+
 	public void load(int file) {
 		Debug.Log("LOADING : " + file);
 		SavePackage package;
@@ -403,6 +451,8 @@ public class MasterDriver : MonoBehaviour {
 				fs = new FileStream (saveGameFile1, FileMode.Open);
 			} else if(file == 2) {
 				fs = new FileStream (saveGameFile2, FileMode.Open);
+			} else if (file == 4) {
+				fs = new FileStream (tmpSaveGameFile, FileMode.Open);
 			} else {
 				fs = new FileStream (saveGameFile3, FileMode.Open);
 			}
@@ -422,6 +472,11 @@ public class MasterDriver : MonoBehaviour {
 		List<QuestSave> questSaves = new List<QuestSave> ();
 		questSaves.AddRange(package.QuestDataList);
 		questListener = new QuestListener (questSaves);
+
+		//CONVERSATIONS
+		List<ConversationSave> conversationSaves = new List<ConversationSave> ();
+		conversationSaves.AddRange (package.ConversationDataList);
+		LoadResources.Instance.setConversationData (conversationSaves);
 
 		//PLAYER STATUS
 		player.transform.position = new Vector3 (0.0f, player.transform.position.y, 0.0f);//global shift
