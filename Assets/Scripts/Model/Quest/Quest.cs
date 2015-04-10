@@ -86,7 +86,7 @@ public class Quest : ActionEventListener {
 				else {
 					if(s[i].GetType().Equals(typeof(ActionCheckable))) {
 						ActionCheckable ac = ((ActionCheckable)s[i]);
-						if(spawnLocations.Count == commands.Count && ac.getRequiredAction().getActionType() == ActionType.KILL || ac.getRequiredAction().getActionType() == ActionType.PICKED_UP_OBJECT) {
+						if(spawnLocations.Count == commands.Count && commands.Count > 0 && (ac.getRequiredAction().getActionType() == ActionType.KILL || ac.getRequiredAction().getActionType() == ActionType.PICKED_UP_OBJECT)) {
 							WorldMap.RemoveStarAt(spawnLocations[i].x,spawnLocations[i].y);
 						}
 					}

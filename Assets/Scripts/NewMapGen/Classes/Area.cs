@@ -225,7 +225,7 @@ public class Area
         {
             portals = new List<Tile>();
             //TODO: Add the portals to the portal List here!
-            GameObject temp = (GameObject) GameObject.Instantiate(LoadResources.Instance.city, new Vector3(0,0,0), Quaternion.Euler(new Vector3(0,180,0)));
+            GameObject temp = (GameObject) GameObject.Instantiate(LoadResources.Instance.city, new Vector3(0,0,0), Quaternion.identity);
             city = temp;
             GameObject portalParent = temp.transform.GetChild(0).gameObject;
             if (portalParent.name == "portals")

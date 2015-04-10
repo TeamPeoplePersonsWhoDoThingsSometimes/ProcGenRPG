@@ -224,7 +224,7 @@ public class Player : MonoBehaviour {
 
 	//Called whenever the player presses a number to quick select
 	public void SetActiveItem (int val) {
-		FMOD_StudioSystem.instance.PlayOneShot("event:/player/weaponEquip02",transform.position,PlayerPrefs.GetFloat("MasterVolume")/2f);
+		FMOD_StudioSystem.instance.PlayOneShot("event:/player/weaponEquip02",transform.position,PlayerPrefs.GetFloat("MasterVolume")/4f);
 		if(inventory.Count >= val + 1) {
 			DirectObject equiped = null;
 
@@ -332,7 +332,7 @@ public class Player : MonoBehaviour {
 		PlayerControl.immobile = true;
 		levelUpParticles.startColor = Color.red;
 		levelUpParticles.Emit(1000000);
-		FMOD_StudioSystem.instance.PlayOneShot("event:/boss/bossAttackB", transform.position,PlayerPrefs.GetFloat("MasterVolume"));
+		FMOD_StudioSystem.instance.PlayOneShot("event:/boss/bossAttackB", transform.position,PlayerPrefs.GetFloat("MasterVolume")/2f);
 		deathTimer = 0.0001f;
 		transform.GetChild(0).gameObject.SetActive(false);
 		transform.GetChild(1).gameObject.SetActive(false);
@@ -373,7 +373,7 @@ public class Player : MonoBehaviour {
 
 	//Called by any attack that hits the player
 	public void GetDamaged(float damage, bool crit) {
-		FMOD_StudioSystem.instance.PlayOneShot("event:/player/playerDamage", transform.position,PlayerPrefs.GetFloat("MasterVolume"));
+		FMOD_StudioSystem.instance.PlayOneShot("event:/player/playerDamage", transform.position,PlayerPrefs.GetFloat("MasterVolume")/2f);
 		GameObject temp = (GameObject)Instantiate(hitInfo,this.transform.position + new Vector3(0,1,0), hitInfo.transform.rotation);
 		temp.GetComponent<TextMesh>().GetComponent<Renderer>().material.color = Color.red;
 		if (crit) {
@@ -406,7 +406,7 @@ public class Player : MonoBehaviour {
 	}
 
 	public void PickUpItem(GameObject item) {
-		FMOD_StudioSystem.instance.PlayOneShot("event:/player/weaponEquip02",transform.position,PlayerPrefs.GetFloat("MasterVolume")/2f);
+		FMOD_StudioSystem.instance.PlayOneShot("event:/player/weaponEquip02",transform.position,PlayerPrefs.GetFloat("MasterVolume")/6f);
 		GameObject temp = (GameObject) Instantiate(item, Vector3.zero, Quaternion.identity);
 		temp.transform.parent = playerInventoryRef.transform;
 		if(inventory.Count < 10 && (temp.GetComponent<Weapon>() != null || temp.GetComponent<Hack>() != null)) {

@@ -23,7 +23,7 @@ public class EmberFox : Enemy {
 	}
 
 	public void Attack() {
-		FMOD_StudioSystem.instance.PlayOneShot("event:/enemy/enemySpinAttack",transform.position, PlayerPrefs.GetFloat("MasterVolume"));
+		FMOD_StudioSystem.instance.PlayOneShot("event:/enemy/enemySpinAttack",transform.position, PlayerPrefs.GetFloat("MasterVolume")/2f);
 		GameObject temp = (GameObject)Instantiate(enemyAttack, transform.position + new Vector3(0,1f,0), transform.localRotation);
 		temp.GetComponent<Attack>().SetDamage(baseAttackDamage);
 		temp.GetComponent<Attack>().SetCrit(0.1f);

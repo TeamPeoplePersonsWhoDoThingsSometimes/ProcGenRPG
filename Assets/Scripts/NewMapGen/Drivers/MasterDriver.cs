@@ -257,7 +257,7 @@ public class MasterDriver : MonoBehaviour {
 		player.transform.position = new Vector3(currentPortal.transform.position.x, player.transform.position.y, currentPortal.transform.position.z - 8);
 		
 		
-		FMOD_StudioSystem.instance.PlayOneShot("event:/environment/portal",Player.playerPos.position, PlayerPrefs.GetFloat("MasterVolume"));
+		FMOD_StudioSystem.instance.PlayOneShot("event:/environment/portal",Player.playerPos.position, PlayerPrefs.GetFloat("MasterVolume")/2f);
 		
 		//Fire Movement Event
 		DirectObject obj = new DirectObject ("Area", currentArea.position.x + " " + currentArea.position.y);
@@ -334,7 +334,7 @@ public class MasterDriver : MonoBehaviour {
 				break;
         }
 
-		FMOD_StudioSystem.instance.PlayOneShot("event:/environment/portal",Player.playerPos.position, PlayerPrefs.GetFloat("MasterVolume"));
+		FMOD_StudioSystem.instance.PlayOneShot("event:/environment/portal",Player.playerPos.position, PlayerPrefs.GetFloat("MasterVolume")/2f);
 
 		//Fire Movement Event
 		DirectObject obj = new DirectObject ("Area", currentArea.position.x + " " + currentArea.position.y);

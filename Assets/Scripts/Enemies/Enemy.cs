@@ -398,7 +398,7 @@ public class Enemy : MonoBehaviour {
 	}
 
 	public void GetDamaged(float damage, bool crit) {
-		FMOD_StudioSystem.instance.PlayOneShot("event:/enemy/enemyCombatState",transform.position, PlayerPrefs.GetFloat("MasterVolume"));
+		FMOD_StudioSystem.instance.PlayOneShot("event:/enemy/enemyCombatState",transform.position, PlayerPrefs.GetFloat("MasterVolume")/2f);
 		healthBarTime = 2f;
 		if(GetComponent<Animator>() != null) {
 			GetComponent<Animator>().SetTrigger("Hurt");

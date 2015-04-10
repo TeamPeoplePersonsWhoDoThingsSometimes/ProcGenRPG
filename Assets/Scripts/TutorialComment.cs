@@ -17,6 +17,7 @@ public class TutorialComment : MonoBehaviour {
 	private float ERRORTIME;
 
 	public AudioMixer mixer;
+	private static AudioMixer mixx;
 
 	private static GameObject playerCanvas, minimapCam, worldMap, worldMapCam;
 
@@ -51,6 +52,9 @@ public class TutorialComment : MonoBehaviour {
 		}
 
 		ReplaceKeyStrings();
+		if(mixx == null && mixer != null) {
+			mixx = mixer;
+		}
 	}
 	
 	// Update is called once per frame
@@ -61,7 +65,7 @@ public class TutorialComment : MonoBehaviour {
 			Camera.main.GetComponent<NoiseAndScratches>().scratchIntensityMax = Mathf.MoveTowards(Camera.main.GetComponent<NoiseAndScratches>().scratchIntensityMax, 0.5f, Time.deltaTime*5f);
 			float curFreq = 0f;
 			mixer.GetFloat("CutoffFreq", out curFreq);
-			mixer.SetFloat("CutoffFreq",Mathf.MoveTowards(curFreq,1000,Time.deltaTime*10000f));
+			mixer.SetFloat("CutoffFreq",Mathf.MoveTowards(curFreq,600,Time.deltaTime*1000f));
 		} else if (Vector3.Distance(this.transform.position, Player.playerPos.position) < 10 && !isPlayerTouching) {
 			Camera.main.GetComponent<ColorCorrectionCurves>().saturation = Mathf.MoveTowards(Camera.main.GetComponent<ColorCorrectionCurves>().saturation, 1f, Time.deltaTime*2f);
 			Camera.main.GetComponent<NoiseAndScratches>().grainIntensityMax = Mathf.MoveTowards(Camera.main.GetComponent<NoiseAndScratches>().grainIntensityMax, 0f, Time.deltaTime*2f);
@@ -94,6 +98,10 @@ public class TutorialComment : MonoBehaviour {
 //		}
 
 		
+	}
+
+	public static void FixCutoffFreq() {
+		mixx.SetFloat("CutoffFreq",22000);
 	}
 
 	void OnTriggerEnter(Collider other) {

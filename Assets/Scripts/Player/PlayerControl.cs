@@ -50,14 +50,22 @@ public class PlayerControl : MonoBehaviour {
 		swordAttack3 = playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Base.Slash3");
 
 		if(!rolling && playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Base.Roll")) {
-			FMOD_StudioSystem.instance.PlayOneShot("event:/player/playerRoll", transform.position,PlayerPrefs.GetFloat("MasterVolume"));
+			FMOD_StudioSystem.instance.PlayOneShot("event:/player/playerRoll", transform.position,PlayerPrefs.GetFloat("MasterVolume")/2f);
 		}
 
 		rolling = playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Base.Roll");
 
 		/****** Set movement variables *****/
 		if(!immobile) {
-			playerAnim.SetFloat("Speed",(Input.GetKey(PersistentInfo.forwardKey) ? 1 : 0));
+			if(Input.GetKey(PersistentInfo.forwardKey)) {
+				playerAnim.SetFloat("Speed",Mathf.MoveTowards(playerAnim.GetFloat("Speed"),1,Time.deltaTime*10f));
+			} else if(Input.GetKey(PersistentInfo.backKey)) {
+				playerAnim.SetFloat("Speed",Mathf.MoveTowards(playerAnim.GetFloat("Speed"),-1,Time.deltaTime*10f));
+			} else {
+				playerAnim.SetFloat("Speed",Mathf.MoveTowards(playerAnim.GetFloat("Speed"),0,Time.deltaTime*10f));
+			}
+//			playerAnim.SetFloat("Speed",(Input.GetKey(PersistentInfo.forwardKey) ? 1 : 0));
+//			playerAnim.SetFloat("Speed",(Input.GetKey(PersistentInfo.backKey) ? -1 : playerAnim.GetFloat("Speed")));
 		} else {
 			playerAnim.SetFloat("Speed",0);
 		}
@@ -272,7 +280,7 @@ public class PlayerControl : MonoBehaviour {
 	}
 
 	public void PlaySwordSlashSound() {
-		FMOD_StudioSystem.instance.PlayOneShot("event:/weapons/lightsaber",transform.position,PlayerPrefs.GetFloat("MasterVolume"));
+		FMOD_StudioSystem.instance.PlayOneShot("event:/weapons/lightsaber",transform.position,PlayerPrefs.GetFloat("MasterVolume")/4f);
 	}
 
 	void OnCollisionEnter(Collision other) {

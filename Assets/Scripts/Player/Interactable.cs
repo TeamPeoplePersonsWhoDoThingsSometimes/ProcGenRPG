@@ -15,6 +15,8 @@ public abstract class Interactable : MonoBehaviour {
 	 */
 	private bool canInteract;
 
+	protected bool preventInteraction = false;
+
 	/**
 	 * Calls the interact method when the player hits the use key within range
 	 */
@@ -25,7 +27,9 @@ public abstract class Interactable : MonoBehaviour {
 				Debug.LogError("Player use key is not set");
 			} else if (Input.GetKeyDown(PersistentInfo.useKey)) {
 				if(Time.frameCount - lastFrame > frameOffset) {
-					Interact();
+					if(!preventInteraction) {
+						Interact();
+					}
 					lastFrame = Time.frameCount;
 				}
 			}

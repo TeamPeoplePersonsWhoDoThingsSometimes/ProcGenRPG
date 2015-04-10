@@ -27,6 +27,7 @@ public class Portal : MonoBehaviour {
 			Camera.main.GetComponent<ColorCorrectionCurves>().blueChannel.MoveKey(0,new Keyframe(0,loadAmount*1.1f));
 			Camera.main.GetComponent<ColorCorrectionCurves>().UpdateParameters();
 			if(loadAmount >= 0.9f) {
+				TutorialComment.FixCutoffFreq();
 				loadScene.allowSceneActivation = true;
 			}
 		}

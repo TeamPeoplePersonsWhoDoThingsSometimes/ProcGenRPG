@@ -14,9 +14,9 @@ public class NullBeam : Hack {
 		tempAttack.GetComponent<Attack>().SetCrit(critChance);
 
 		if(name.Equals("NullBolt")) {
-			FMOD_StudioSystem.instance.PlayOneShot("event:/weapons/nullBolt", Player.playerPos.position,PlayerPrefs.GetFloat("MasterVolume"));
+			FMOD_StudioSystem.instance.PlayOneShot("event:/weapons/nullBolt", Player.playerPos.position,PlayerPrefs.GetFloat("MasterVolume")/2f);
 		} else {
-			FMOD_StudioSystem.instance.PlayOneShot("event:/weapons/nullBeam", Player.playerPos.position,PlayerPrefs.GetFloat("MasterVolume"));
+			FMOD_StudioSystem.instance.PlayOneShot("event:/weapons/nullBeam", Player.playerPos.position,PlayerPrefs.GetFloat("MasterVolume")/2f);
 		}
 	}
 }

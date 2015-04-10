@@ -22,6 +22,8 @@ public class MainMenu : MonoBehaviour {
 	private Button curButtonForRemap;
 	public Slider volumeSlider,qualitySlider;
 
+	GameObject newChar = null;
+
 	public AudioMixer mixer;
 
 	public Text load1,load2,load3;
@@ -186,6 +188,26 @@ public class MainMenu : MonoBehaviour {
 				curButtonForRemap = null;
 			}
 		}
+
+		if(Input.GetMouseButton(1) && newChar != null) {
+			Color temp = newChar.GetComponent<Image>().color;
+			temp = new Color(temp.r+Time.deltaTime*2f,temp.g-Time.deltaTime*2f, temp.b-Time.deltaTime*2f);
+			newChar.GetComponent<Image>().color = temp;
+			if(newChar.GetComponent<Image>().color.g <= 0) {
+				if(newChar.gameObject.name.Equals("NewCharacter1")) {
+					File.Delete(MasterDriver.saveGameFile1);
+				} else if (newChar.gameObject.Equals("NewCharacter2")) {
+					File.Delete(MasterDriver.saveGameFile2);
+				} else {
+					File.Delete(MasterDriver.saveGameFile3);
+				}
+				newChar.GetComponent<Image>().color = Color.white;
+				newChar.transform.GetChild(0).GetComponent<Text>().text = "EMPTY";
+				newChar = null;
+			}
+		} else if (newChar != null) {
+			newChar.GetComponent<Image>().color = Color.white;
+		}
 	}
 
 	void TransitionToMain() {
@@ -272,5 +294,9 @@ public class MainMenu : MonoBehaviour {
 
 	public void PlayClickFX() {
 		FMOD_StudioSystem.instance.PlayOneShot("event:/UISounds/UI02", Camera.main.transform.position, PlayerPrefs.GetFloat("MasterVolume"));
+	}
+
+	public void RightClickHeld(GameObject g) {
+		newChar = g;
 	}
 }

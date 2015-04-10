@@ -6,6 +6,8 @@ public class UnityNPC : Interactable {
 
 	public bool talking = false;
 
+	private static bool talkingToAnyone = false;
+
 	public string name = "Nobody";
 	public string startConvID;
 
@@ -60,7 +62,7 @@ public class UnityNPC : Interactable {
 		if(responseChosen.transform.GetChild(0).GetComponent<Text>().text.Equals("Goodbye")) {
 			curNode = uConversationNode.getNodeByStringID(startConvID);
 			UpdateUI();
-			talking = false;
+			this.Interact();
 		} else {
 			curNode = curNode.GoToAlternative(curNode.getAlternativeStrings()[responseChosen.transform.GetSiblingIndex()]);
 			ActionEventInvoker.primaryInvoker.invokeAction(new PlayerAction(curNode.getDirectObject(), ActionType.CONVERSATION_NODE_HIT));
@@ -110,7 +112,8 @@ public class UnityNPC : Interactable {
 			nameUI2.enabled = false;
 		}
 
-		PlayerControl.immobile = talking;
+		PlayerControl.immobile = talkingToAnyone;
+		PlayerCanvas.cinematicMode = talkingToAnyone;
 
 		if(talking) {
 			if(transform.GetChild(0).GetComponent<Camera>() != null) {
@@ -120,7 +123,6 @@ public class UnityNPC : Interactable {
 				transform.GetChild(2).eulerAngles = new Vector3(0,180f,0f);
 			}
 			nameUI2.enabled = false;
-			PlayerCanvas.cinematicMode = true;
 		} else {
 			if(transform.GetChild(0).GetComponent<Camera>() != null) {
 				transform.GetChild(0).GetComponent<Camera>().enabled = false;
@@ -128,13 +130,18 @@ public class UnityNPC : Interactable {
 			}
 			transform.GetChild(2).GetChild(0).GetChild(0).gameObject.SetActive(false);
 			transform.GetChild(2).rotation = Quaternion.RotateTowards(transform.GetChild(2).rotation, Quaternion.Euler(new Vector3(transform.GetChild(2).eulerAngles.x, FollowPlayer.rotate, transform.GetChild(2).eulerAngles.z)), Time.deltaTime*50f);
-			PlayerCanvas.cinematicMode = false;
 		}
 
 	}
 
 	protected override void Interact ()
 	{
+		preventInteraction = !preventInteraction;
+		if(!talking && !talkingToAnyone) {
+			talkingToAnyone = true;
+		} else if (talking && talkingToAnyone) {
+			talkingToAnyone = false;
+		}
 		talking = !talking;
 //		curNode = conv.
 		return;

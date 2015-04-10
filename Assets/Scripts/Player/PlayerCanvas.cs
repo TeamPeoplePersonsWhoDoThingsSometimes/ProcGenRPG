@@ -555,7 +555,7 @@ public class PlayerCanvas : MonoBehaviour {
 		inventoryItemContainer.transform.GetChild(index).GetComponent<CanvasGroup>().blocksRaycasts = true;
 		dragDelta = Vector2.zero;
 		dragStart = Vector2.zero;
-		FMOD_StudioSystem.instance.PlayOneShot("event:/player/weaponEquip01",Player.playerPos.position,PlayerPrefs.GetFloat("MasterVolume")/0.5f);
+		FMOD_StudioSystem.instance.PlayOneShot("event:/player/weaponEquip01",Player.playerPos.position,PlayerPrefs.GetFloat("MasterVolume")/2f);
 	}
 
 	private float rightMouseButtonHeld = 0f;
