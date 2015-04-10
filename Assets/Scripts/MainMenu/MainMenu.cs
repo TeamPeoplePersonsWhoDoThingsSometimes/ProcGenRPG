@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.Audio;
 using UnityStandardAssets.ImageEffects;
@@ -84,21 +85,29 @@ public class MainMenu : MonoBehaviour {
 				}
 			}
 
-			// Sanity check
-			if (PersistentInfo.dict == null) {
-				//Debug.LogError ("Key dictionary has not been initialized");
-			}
+			// Initialize dictionary of key mappings
+			// Was done inside PersistentInfo at first, but kept giving null reference exceptions when trying to reference it here
+			// The string values were originally intended to initialize the label for the keys to display the mapping, but since it
+			// does not act as a member variable anymore, this does not matter
+			Dictionary<KeyCode, string> dict = new Dictionary<KeyCode, string> ();
+			dict.Add (PersistentInfo.forwardKey, "Forward");
+			dict.Add (PersistentInfo.backKey, "Back");
+			dict.Add (PersistentInfo.useKey, "Use");
+			dict.Add (PersistentInfo.rollKey, "Roll");
+			dict.Add (PersistentInfo.consoleOpenKey, "Console");
+			dict.Add (PersistentInfo.rightKey, "Right");
+			dict.Add (PersistentInfo.leftKey, "Left");
+			dict.Add (PersistentInfo.sprintKey, "Spring");
+			dict.Add (PersistentInfo.attackKey, "Attack");
+			dict.Add (PersistentInfo.hackKey, "Hack");
 
 			// Check if the requested key is already mapped
-			// Commented out, because somehow the dictionary isn't being initialized properly, or is being destroyed after initialization
-			/*
-			if (temp != KeyCode.None && PersistentInfo.dict.ContainsKey(temp)) {
+			if (temp != KeyCode.None && dict.ContainsKey(temp)) {
 				Debug.Log ("That key is already mapped!");
 				curButtonForRemap = null;
 			}
-			*/
-			//else if (temp != KeyCode.None) {
-			if (temp != KeyCode.None) {
+			else if (temp != KeyCode.None) {
+				// Movement keys
 				if(curButtonForRemap.gameObject.name.Equals("UpButton")) {
 					PersistentInfo.forwardKey = temp;
 					curButtonForRemap.transform.GetChild(0).GetComponent<Text>().text = temp.ToString();
@@ -115,6 +124,34 @@ public class MainMenu : MonoBehaviour {
 					PersistentInfo.rightKey = temp;
 					curButtonForRemap.transform.GetChild(0).GetComponent<Text>().text = temp.ToString();
 				}
+				else if (curButtonForRemap.gameObject.name.Equals("Sprint")) {
+					PersistentInfo.sprintKey = temp;
+					curButtonForRemap.transform.GetChild(0).GetComponent<Text>().text = temp.ToString();
+				}
+				else if (curButtonForRemap.gameObject.name.Equals("Roll")) {
+					PersistentInfo.rollKey = temp;
+					curButtonForRemap.transform.GetChild(0).GetComponent<Text>().text = temp.ToString();
+				}
+				// Combat keys
+				else if (curButtonForRemap.gameObject.name.Equals("Primary")) {
+					PersistentInfo.attackKey = temp;
+					curButtonForRemap.transform.GetChild(0).GetComponent<Text>().text = temp.ToString();
+				}
+				else if (curButtonForRemap.gameObject.name.Equals("Secondary")) {
+					PersistentInfo.hackKey = temp;
+					curButtonForRemap.transform.GetChild(0).GetComponent<Text>().text = temp.ToString();
+				}
+				// Etc keys
+				else if (curButtonForRemap.gameObject.name.Equals("Console")) {
+					PersistentInfo.consoleOpenKey = temp;
+					curButtonForRemap.transform.GetChild(0).GetComponent<Text>().text = temp.ToString();
+				}
+				// Didn't see a key for map??
+				//else if (curButtonForRemap.gameObject.name.Equals("Map")) {
+				//	PersistentInfo.Key = temp;
+				//	curButtonForRemap.transform.GetChild(0).GetComponent<Text>().text = temp.ToString();
+				//}
+
 				reMapping = false;
 				curButtonForRemap = null;
 			}
