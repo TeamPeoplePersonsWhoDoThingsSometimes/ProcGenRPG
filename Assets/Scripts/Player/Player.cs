@@ -134,6 +134,8 @@ public class Player : MonoBehaviour {
 		inventory.Clear ();
 		foreach (DirectObjectProtocol item in inv.ObjectList) {
 			GameObject obj = (GameObject)MasterDriver.Instance.getItemFromProtobuf(item);
+			obj = GameObject.Instantiate(obj);
+			obj.SetActive(false);
 			obj.GetComponent<Item>().name = item.Type;
 
 			if (item.HasItemInformation && item.ItemInformation.HasSaveVersion && obj.GetComponent<Weapon>() != null) {
