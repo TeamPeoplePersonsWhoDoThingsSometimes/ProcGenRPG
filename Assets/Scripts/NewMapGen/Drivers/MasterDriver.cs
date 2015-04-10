@@ -44,6 +44,7 @@ public class MasterDriver : MonoBehaviour {
 	public GameObject player;
 
 	private QuestListener questListener;
+	private QuestStarClearer clearer;
 
 	/*********************************
 	 * Static methods
@@ -200,6 +201,8 @@ public class MasterDriver : MonoBehaviour {
 		}
 
     	currentArea.showArea();
+
+		clearer = new QuestStarClearer ();
 
         Debug.Log("Startup time: " + Time.realtimeSinceStartup);
 	}

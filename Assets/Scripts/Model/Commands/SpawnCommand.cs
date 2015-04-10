@@ -97,7 +97,7 @@ public class SpawnCommand {
 				if (!version.Equals(string.Empty) && newObject.GetComponent<Weapon>() != null) {
 					newObject.GetComponent<Weapon>().version = version;
 				}
-				drop.item = newObject;
+				newDrop.GetComponent<ItemDropObject>().item = newObject;
 				obj = newDrop;
 			}
 
