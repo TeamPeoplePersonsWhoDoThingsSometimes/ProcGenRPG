@@ -173,6 +173,7 @@ public class MasterDriver : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
+
 		if (generateBuilderDataOnLaunch) {
 			generateBuilderData();
 		}
@@ -220,6 +221,7 @@ public class MasterDriver : MonoBehaviour {
 		}
 
 		clearer = new QuestStarClearer ();
+		new BossStarter ();
 
         Debug.Log("Startup time: " + Time.realtimeSinceStartup);
 	}
