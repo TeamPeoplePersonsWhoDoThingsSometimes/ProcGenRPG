@@ -14,6 +14,9 @@ public class Player : MonoBehaviour {
 	private int xpBytes;
 	private int bytesToNextVersion;
 
+	public AudioClip levelUp;
+	private ParticleSystem levelUpParticles;
+
 	private int levelUpSpeedScale = 10000;
 
 	public static string version = "1.0.0";
@@ -55,6 +58,8 @@ public class Player : MonoBehaviour {
 		positionBuilder.SetLocalY ((int)gameObject.transform.position.z);
 		builder.SetPlayerPosition (positionBuilder.Build ());
 
+		builder.SetRotation ((int)MasterDriver.Instance.getCamera ().rotation.eulerAngles.y);
+
 		InventoryData.Builder inventoryBuilder = InventoryData.CreateBuilder ();
 		foreach (Item i in inventory) {
 			inventoryBuilder.AddObject(i.getDirectObject().getDirectObjectAsProtobuf());
@@ -63,17 +68,34 @@ public class Player : MonoBehaviour {
 
 		builder.SetVersion (version);
 
+		List<Point> visitedAreas = Status.playerStatus.getVisitedAreas ();
+		foreach (Point p in visitedAreas) {
+			PointProto.Builder pBuilder = PointProto.CreateBuilder();
+			pBuilder.SetX(p.x);
+			pBuilder.SetY(p.y);
+			builder.AddVisitedAreas(pBuilder.Build());
+		}
+
 		return builder.Build ();
 	}
 
 	public void setPlayerStatus(PlayerStatus status) {
+		List<Point> visitedAreas = new List<Point> ();
+		IList<PointProto> storedAreas = status.VisitedAreasList;
+		foreach (PointProto p in storedAreas) {
+			visitedAreas.Add(new Point(p.X, p.Y));
+		}
+
+		Status.playerStatus.setVisitedAreas (visitedAreas);
+
 		gameObject.transform.position = new Vector3 (status.PlayerPosition.LocalX, gameObject.transform.position.y, status.PlayerPosition.LocalY);
 
 		InventoryData inv = status.Inventory;
 		inventory.Clear ();
 		foreach (DirectObjectProtocol item in inv.ObjectList) {
 			GameObject obj = (GameObject)MasterDriver.Instance.getItemFromProtobuf(item);
-			inventory.Add(obj.GetComponent<Item>());
+			obj.GetComponent<Item>().name = item.Type;
+			PickUpItem(obj);
 		}
 
 		version = status.Version;
@@ -83,6 +105,8 @@ public class Player : MonoBehaviour {
 		if(PersistentInfo.playerName != null && !PersistentInfo.playerName.Equals("")) {
 			this.name = PersistentInfo.playerName;
 		}
+
+		levelUpParticles = GameObject.Find("LevelUpParticles").GetComponent<ParticleSystem>();
 
 		//Need to figure out a better way to load the hitinfo prefab
 		hitInfo = Resources.Load<GameObject>("Info/HitInfo");
@@ -171,7 +195,7 @@ public class Player : MonoBehaviour {
 
 	//Called whenever the player presses a number to quick select
 	public void SetActiveItem (int val) {
-		FMOD_StudioSystem.instance.PlayOneShot("event:/player/weaponEquip02",transform.position + Vector3.up*15f);
+		FMOD_StudioSystem.instance.PlayOneShot("event:/player/weaponEquip02",transform.position,PlayerPrefs.GetFloat("MasterVolume"));
 		if(inventory.Count >= val + 1) {
 			DirectObject equiped = null;
 
@@ -238,7 +262,7 @@ public class Player : MonoBehaviour {
 
 	//Called any time the player gets bytes
 	public void AddBytes(int val) {
-		FMOD_StudioSystem.instance.PlayOneShot("event:/player/XPParticle", transform.position);
+		FMOD_StudioSystem.instance.PlayOneShot("event:/player/XPParticle", transform.position,PlayerPrefs.GetFloat("MasterVolume"));
 		bytes += val;
 		xpBytes += val;
 		if (activeWeapon != null) {
@@ -284,6 +308,8 @@ public class Player : MonoBehaviour {
 //		}
 		bytesToNextVersion = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*levelUpSpeedScale;
 		ActionEventInvoker.primaryInvoker.invokeAction (new PlayerAction (this.getDirectObject(), ActionType.LEVEL_UP));
+		GetComponent<AudioSource>().PlayOneShot(levelUp);
+		levelUpParticles.Emit(1000000);
 	}
 
 	public int GetBytes() {
@@ -304,7 +330,7 @@ public class Player : MonoBehaviour {
 
 	//Called by any attack that hits the player
 	public void GetDamaged(float damage, bool crit) {
-		FMOD_StudioSystem.instance.PlayOneShot("event:/player/playerDamage", transform.position);
+		FMOD_StudioSystem.instance.PlayOneShot("event:/player/playerDamage", transform.position,PlayerPrefs.GetFloat("MasterVolume"));
 		GameObject temp = (GameObject)Instantiate(hitInfo,this.transform.position + new Vector3(0,1,0), hitInfo.transform.rotation);
 		temp.GetComponent<TextMesh>().GetComponent<Renderer>().material.color = Color.red;
 		if (crit) {

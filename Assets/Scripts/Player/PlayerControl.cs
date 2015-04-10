@@ -50,7 +50,7 @@ public class PlayerControl : MonoBehaviour {
 		swordAttack3 = playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Base.Slash3");
 
 		if(!rolling && playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Base.Roll")) {
-			FMOD_StudioSystem.instance.PlayOneShot("event:/player/playerRoll", transform.position);
+			FMOD_StudioSystem.instance.PlayOneShot("event:/player/playerRoll", transform.position,PlayerPrefs.GetFloat("MasterVolume"));
 		}
 
 		rolling = playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Base.Roll");
@@ -267,11 +267,11 @@ public class PlayerControl : MonoBehaviour {
 	}
 
 	public void PlayFootStepSound() {
-		FMOD_StudioSystem.instance.PlayOneShot("event:/player/playerFootsteps",transform.position);
+		FMOD_StudioSystem.instance.PlayOneShot("event:/player/playerFootsteps",transform.position,PlayerPrefs.GetFloat("MasterVolume"));
 	}
 
 	public void PlaySwordSlashSound() {
-		FMOD_StudioSystem.instance.PlayOneShot("event:/weapons/lightsaber",transform.position);
+		FMOD_StudioSystem.instance.PlayOneShot("event:/weapons/lightsaber",transform.position,PlayerPrefs.GetFloat("MasterVolume"));
 	}
 
 	void OnCollisionEnter(Collision other) {

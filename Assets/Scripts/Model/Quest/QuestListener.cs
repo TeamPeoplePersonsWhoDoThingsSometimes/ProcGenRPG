@@ -80,13 +80,10 @@ public class QuestListener : ActionEventListener {
 	public override void onAction (IAction action) {
 		List<Quest> started = new List<Quest> ();
 		foreach (Quest q in quests.Values) {
-			if (q.startQuestIfMetByAction(action)) {
+			if (!q.isQuestStarted() && q.startQuestIfMetByAction(action)) {
 				started.Add (q);
 				activeQuests.Add (q);
 			}
-		}
-		foreach (Quest q in started) {
-			quests.Remove (q.getName());
 		}
 	}
 
@@ -99,4 +96,10 @@ public class QuestListener : ActionEventListener {
 
 		return questData;
 	}
+
+	public bool getIsQuestFinished(string questName) {
+		Quest q = quests [questName];
+		return q.isQuestFinished ();
+	}
+
 }

@@ -90,6 +90,11 @@ public class SpawnCommand {
 				drop.item = newObject;
 				obj = newDrop;
 			}
+
+			//Byte is a special name reserved for spawning experience bytes
+			if (objectName == "Byte") {
+				obj = (GameObject)GameObject.Instantiate (objectToSpawn, position, Quaternion.identity);
+			}
 		} else {
 			Debug.LogError("Object to spawn was null!");
 		}

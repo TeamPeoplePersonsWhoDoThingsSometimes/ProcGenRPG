@@ -68,7 +68,11 @@ public class MasterDriver : MonoBehaviour {
 
 	public Object getItemFromProtobuf(DirectObjectProtocol proto) {
 		string name = proto.Name;
-		
+
+		if (name == "Byte") {
+			return Utility.GetByteObject();
+		}
+
 		foreach (GameObject o in weapons) {
 			Item i = o.GetComponent<Item>();
 			if (i.gameObject.name.Equals(name)) {
@@ -121,11 +125,13 @@ public class MasterDriver : MonoBehaviour {
 		foreach (GameObject o in weapons) {
 			builder.AddWeapons(new DirectObject(o.name, o.GetComponent<Item>().name).getDirectObjectAsProtobuf());
 		}
-		
+
 		foreach (GameObject o in hacks) {
 			builder.AddHacks(new DirectObject(o.name, o.GetComponent<Item>().name).getDirectObjectAsProtobuf());
 		}
-		
+
+		builder.AddWeapons (new DirectObject ("Byte", "Byte").getDirectObjectAsProtobuf ());
+
 		FileStream fs = new FileStream (builderDataStore, FileMode.OpenOrCreate);
 		BuilderPackage pack = builder.Build();
 		pack.WriteTo(fs);
@@ -268,7 +274,7 @@ public class MasterDriver : MonoBehaviour {
                 break;
         }
 
-		FMOD_StudioSystem.instance.PlayOneShot("event:/environment/portal",Player.playerPos.position);
+		FMOD_StudioSystem.instance.PlayOneShot("event:/environment/portal",Player.playerPos.position, PlayerPrefs.GetFloat("MasterVolume"));
 
 		//Fire Movement Event
 		DirectObject obj = new DirectObject ("Area", currentArea.position.x + " " + currentArea.position.y);
@@ -281,6 +287,7 @@ public class MasterDriver : MonoBehaviour {
 
 	public void save() {
 		PlayerStatus playerData = player.GetComponentInChildren<Player> ().getPlayerStatus ();
+
 		List<QuestSave> questData = questListener.getQuestData ();
 		List<SpawnedObject> spawnedObjects = currentMap.getAllSpawnedObjects ();
 		int seed = currentMap.getSeed ();
@@ -326,22 +333,17 @@ public class MasterDriver : MonoBehaviour {
 		questListener = new QuestListener (questSaves);
 
 		//PLAYER STATUS
+		player.transform.position = new Vector3 (0.0f, player.transform.position.y, 0.0f);//global shift
 		currentArea = currentMap.getArea (package.Player.PlayerPosition.AreaX, package.Player.PlayerPosition.AreaY);
 		player.GetComponentInChildren<Player> ().setPlayerStatus (package.Player);
 		currentArea.getGroup ().generateAreas ();
-		player.transform.position = new Vector3 (0.0f, player.transform.position.y, 0.0f);//global shift
 
-		//best way I could find to get children in unity?
-		Transform[] playerChildren = player.GetComponentsInChildren<Transform> ();
-		Transform camera = null;
-		foreach (Transform t in playerChildren) {
-			if (t.gameObject.name.Equals("CamRotate")) {
-				camera = t;
-			}
-		}
+		Transform camera = getCamera ();
 
 		camera.position = new Vector3 (package.Player.PlayerPosition.LocalX, camera.position.y, package.Player.PlayerPosition.LocalY);
-		
+		Quaternion rotation = camera.rotation;
+		rotation.eulerAngles = new Vector3 (0.0f, package.Player.Rotation, 0.0f);
+		camera.rotation = rotation;
 
 		//SPAWNED OBJECTS
 		List<SpawnedObject> spawnedObjects = new List<SpawnedObject> ();
@@ -353,19 +355,40 @@ public class MasterDriver : MonoBehaviour {
 
 			if (o.HasEnemyAttributes) {
 				obj = (GameObject)getEnemyFromProtobuf(o.ObjectData);
+				obj = (GameObject)GameObject.Instantiate(obj);
+				obj.GetComponent<Enemy>().name = o.ObjectData.Name;
 				//TODO set enemy health
 			} else {
 				obj = (GameObject)getItemFromProtobuf(o.ObjectData);
+				ItemDropObject drop = LoadResources.Instance.CommonItemDrop.GetComponent<ItemDropObject>();
+				GameObject newDrop = (GameObject)GameObject.Instantiate (drop.gameObject);
+				GameObject newObject = (GameObject)GameObject.Instantiate (obj);
+				newObject.SetActive(false);
+				newObject.GetComponent<Item>().name = o.ObjectData.Type;
+				newDrop.GetComponent<ItemDropObject>().item = newObject;
+				obj = newDrop;
 			}
 
-			obj = GameObject.Instantiate(obj);
+			obj.transform.position = new Vector3 (pos.LocalX, obj.transform.position.y, pos.LocalY);
 
-			obj.transform.position.Set(pos.LocalX, obj.transform.position.y, pos.LocalY);
+			area.basicRoom.addSpawnedObject(obj);
 
 			if (area != currentArea) {
 				obj.SetActive(false);
 			}
 		}
 
+	}
+
+	public Transform getCamera() {
+		//best way I could find to get children in unity?
+		Transform[] playerChildren = player.GetComponentsInChildren<Transform> ();
+		Transform camera = null;
+		foreach (Transform t in playerChildren) {
+			if (t.gameObject.name.Equals("CamRotate")) {
+				camera = t;
+			}
+		}
+		return camera;
 	}
 }

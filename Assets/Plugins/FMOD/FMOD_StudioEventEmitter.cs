@@ -34,6 +34,14 @@ public class FMOD_StudioEventEmitter : MonoBehaviour
 			return;			
 		}
 	}
+
+	public FMOD.Studio.EventInstance GetEvent()
+	{
+		if(evt == null) {
+			evt = FMOD_StudioSystem.instance.GetEvent(path);
+		}
+		return evt;
+	}
 	
 	public void Stop()
 	{
