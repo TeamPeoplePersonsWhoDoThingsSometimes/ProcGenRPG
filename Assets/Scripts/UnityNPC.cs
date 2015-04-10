@@ -41,7 +41,7 @@ public class UnityNPC : Interactable {
 		curText.text = curNode.getText();
 		int numResponses = 0;
 		foreach(string s in curNode.getAlternativeStrings()) {
-			Debug.Log("Alternatives: " + s);
+//			Debug.Log("Alternatives: " + s);
 			if(numResponses > 0) {
 				GameObject newButton = (GameObject)Instantiate(buttonPrefab);
 				newButton.GetComponent<RectTransform>().SetParent(buttonHolder.transform,false);
@@ -101,6 +101,9 @@ public class UnityNPC : Interactable {
 	// Update is called once per frame
 	void Update () {
 
+		transform.LookAt(Player.playerPos);
+		transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y, 0f);
+
 //		if(cityNotbuiltyet && !Player.playerPos.position.Equals(Vector3.zero)) {
 //			transform.position = Player.playerPos.position + Vector3.forward*2f;
 //			cityNotbuiltyet = false;
@@ -120,7 +123,7 @@ public class UnityNPC : Interactable {
 				transform.GetChild(0).GetComponent<Camera>().enabled = true;
 				transform.GetChild(1).GetComponent<Camera>().enabled = true;
 				transform.GetChild(2).GetChild(0).GetChild(0).gameObject.SetActive(true);
-				transform.GetChild(2).eulerAngles = new Vector3(0,180f,0f);
+				transform.GetChild(2).localEulerAngles = new Vector3(0,180f,0f);
 			}
 			nameUI2.enabled = false;
 		} else {

@@ -190,7 +190,7 @@ public class WorldMap : MonoBehaviour {
 	}
 
 	public static void RemoveStarAt(int x, int z) {
-		Debug.Log("Remove star from: " + x + "," + z);
+//		Debug.Log("Remove star from: " + x + "," + z);
 
 		if(questStars == null) {
 			questStars = new Dictionary<GameObject, string>();

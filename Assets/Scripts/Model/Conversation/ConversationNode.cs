@@ -59,7 +59,7 @@ public class uConversationNode {
 		}
 
 		public bool isValidAlternative() {
-			Debug.Log("Checking Alternative: " + this.text + " " + alternativeRequirment.Count);
+//			Debug.Log("Checking Alternative: " + this.text + " " + alternativeRequirment.Count);
 			if(alternativeRequirment.Count == 0) {
 				return true;
 			}
@@ -78,7 +78,7 @@ public class uConversationNode {
 				}
 			}
 
-			Debug.Log("Checking Alternative: " + this.text + " is FALSE");
+//			Debug.Log("Checking Alternative: " + this.text + " is FALSE");
 
 			return false;
 

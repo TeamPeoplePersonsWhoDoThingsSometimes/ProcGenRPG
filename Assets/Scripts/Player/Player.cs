@@ -68,7 +68,12 @@ public class Player : MonoBehaviour {
 
 		InventoryData.Builder inventoryBuilder = InventoryData.CreateBuilder ();
 		foreach (Item i in inventory) {
-			inventoryBuilder.AddObject(i.getDirectObject().getDirectObjectAsProtobuf());
+			if(i.gameObject.GetComponent<Weapon>() == null) {
+				inventoryBuilder.AddObject(i.getDirectObject().getDirectObjectAsProtobuf());
+			} else {
+				Debug.Log("SAVING WEAPON");
+				inventoryBuilder.AddObject(i.getDirectObject().getDirectObjectAsProtobuf((Weapon)i));
+			}
 		}
 		builder.SetInventory (inventoryBuilder.Build ());
 
@@ -180,8 +185,8 @@ public class Player : MonoBehaviour {
 
 	void Update () {
 		playerPos = transform;
-		rma += Time.deltaTime/2f * (encryption + 1);
-		integrity += Time.deltaTime/2f * (security + 1);
+		rma += Time.deltaTime/2f * (efficiency + 1);
+		integrity += Time.deltaTime/2f * (efficiency + 1);
 		if (rma > maxrma) {
 			rma = maxrma;
 		} else if (rma < 0) {
@@ -213,7 +218,7 @@ public class Player : MonoBehaviour {
 	}
 
 	public void Attack (int combo) {
-		activeWeapon.Attack(strength + (activeWeapon.GetDamage() * combo));
+		activeWeapon.Attack(Mathf.Max(0,Random.Range(strength-2, strength)) + (activeWeapon.GetDamage() * combo));
 		ActionEventInvoker.primaryInvoker.invokeAction (new PlayerAction (activeWeapon.getDirectObject(), ActionType.USE_ITEM));
 	}
 
@@ -377,7 +382,7 @@ public class Player : MonoBehaviour {
 		GameObject temp = (GameObject)Instantiate(hitInfo,this.transform.position + new Vector3(0,1,0), hitInfo.transform.rotation);
 		temp.GetComponent<TextMesh>().GetComponent<Renderer>().material.color = Color.red;
 		if (crit) {
-			integrity -= damage*2;
+			integrity -= damage*2 - Mathf.Max(0,Random.Range(defense - 2, defense + 1));
 			temp.GetComponent<TextMesh>().GetComponent<Renderer>().material.color = Color.black;
 			temp.GetComponent<TextMesh>().text = "" + damage*2 + "!";
 		} else {

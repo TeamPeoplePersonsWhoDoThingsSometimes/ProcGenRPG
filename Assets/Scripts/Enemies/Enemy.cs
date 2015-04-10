@@ -408,9 +408,9 @@ public class Enemy : MonoBehaviour {
 			damage = damage * 1.5f;
 		}
 		if (!detectedPlayer) {
-			hp -= damage*4;
+			hp -= damage*2;
 			temp.GetComponent<TextMesh>().GetComponent<Renderer>().material.color = Color.blue;
-			temp.GetComponent<TextMesh>().text = "*" + damage*4 + "*";
+			temp.GetComponent<TextMesh>().text = "*" + damage*2 + "*";
 		} else if (crit) {
 			hp -= damage*2;
 			temp.GetComponent<TextMesh>().GetComponent<Renderer>().material.color = Color.yellow;

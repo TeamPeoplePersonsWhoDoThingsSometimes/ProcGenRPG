@@ -198,13 +198,11 @@ public class MasterDriver : MonoBehaviour {
             {
                 //nah...
 				atCity = true;
-				Debug.Log("IM AT THE CITY");
             }
-			Debug.Log("IM AT " + player.transform.position);
 			currentMap.debugDisplayMap();
 			questListener.initializeQuests ();
 		}
-
+		FollowPlayer.Travel();
     	currentArea.showArea();
 
 		if(atCity) {
@@ -341,7 +339,14 @@ public class MasterDriver : MonoBehaviour {
 		PlayerAction action = new PlayerAction (obj, ActionType.MOVE_AREA);
 		ActionEventInvoker.primaryInvoker.invokeAction (action);
 
-		if(PersistentInfo.saveFile == 0) {
+		if(currentArea.isCity) {
+			Enemy[] enemies = GameObject.FindObjectsOfType<Enemy>();
+			for(int j = 0; j < enemies.Length; j++) {
+				Destroy(enemies[j].gameObject);
+			}
+		}
+
+		if(PersistentInfo.saveFile != 0) {
 			save(PersistentInfo.saveFile);
 		}
     }
@@ -385,6 +390,7 @@ public class MasterDriver : MonoBehaviour {
 		} catch (IOException excep) {
 			log("IO ERROR: COULD NOT SAVE GAME DATA");
 		}
+		Debug.Log("FINISHED SAVING");
 	}
 
 	public void load(int file) {

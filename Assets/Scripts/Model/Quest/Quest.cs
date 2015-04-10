@@ -125,7 +125,7 @@ public class Quest : ActionEventListener {
 				//so return
 				if (!done) {
 					if (a.isStatusMet (action)) {
-						Debug.Log ("Action Met");
+//						Debug.Log ("Action Met");
 						statuses.Remove (a);
 						statuses.Add (a, true);
 					}
@@ -326,7 +326,7 @@ public class Quest : ActionEventListener {
 	 */
 	public override void onAction (IAction action)
 	{
-		Debug.Log ("Action registered");
+//		Debug.Log ("Action registered");
 
 		steps[currentStep].updateStatusChecks(action);
 

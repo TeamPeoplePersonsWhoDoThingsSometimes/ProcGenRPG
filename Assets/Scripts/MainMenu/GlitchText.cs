@@ -46,7 +46,7 @@ public class GlitchText : MonoBehaviour {
 			}
 			if(Time.frameCount % 10 == 0) {
 				glitchMusic.volume = 0;
-				organicMusic.volume = 1;
+				organicMusic.volume = 0.5f;
 			}
 		}
 		if(Time.frameCount%(randTime*2) == 0) {
@@ -83,7 +83,7 @@ public class GlitchText : MonoBehaviour {
 			glitchMusic.pitch = 1f;
 		}
 		if(organicMusic.volume == 1) {
-			glitchMusic.volume = 1;
+			glitchMusic.volume = 0.5f;
 			organicMusic.volume = 0;
 		}
 	}
