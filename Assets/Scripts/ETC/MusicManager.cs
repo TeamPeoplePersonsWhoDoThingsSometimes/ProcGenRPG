@@ -7,6 +7,9 @@ public class MusicManager : MonoBehaviour {
 
 	private static AudioSource normal, combat;
 
+
+	private static bool fadeOut = false;
+
 	// Use this for initialization
 	void Start () {
 		DontDestroyOnLoad(this.gameObject);
@@ -31,16 +34,32 @@ public class MusicManager : MonoBehaviour {
 					}
 				}
 			}
-			normal.volume = Mathf.MoveTowards(normal.volume, Mathf.Min(1, Mathf.Max(0.1f,tempDist/35f)), 0.01f);
-			combat.volume = Mathf.MoveTowards(combat.volume, Mathf.Min(1, Mathf.Max(0f,1 - tempDist/35f)), 0.01f);
+			if(!fadeOut) {
+				normal.volume = Mathf.MoveTowards(normal.volume, Mathf.Min(0.4f, Mathf.Max(0.1f,tempDist/35f)), 0.01f);
+				combat.volume = Mathf.MoveTowards(combat.volume, Mathf.Min(0.7f, Mathf.Max(0f,1 - tempDist/35f)), 0.01f);
+			} else {
+				if(normal.volume > 0) {
+					normal.volume -= Time.deltaTime;
+				}
+				if(combat.volume > 0) {
+						combat.volume -= Time.deltaTime;
+				}
+			}
 
 			if(Time.frameCount % 500 == 0) {
 				FindEnemies();
 			}
 		}
+		if(fadeOut && normal.volume > 0) {
+			normal.volume -= Time.deltaTime;
+		}
 	}
 
 	public static void FindEnemies() {
 		enemies = GameObject.FindGameObjectsWithTag("Enemy");
+	}
+
+	public static void FadeOutAudio() {
+		fadeOut = true;
 	}
 }

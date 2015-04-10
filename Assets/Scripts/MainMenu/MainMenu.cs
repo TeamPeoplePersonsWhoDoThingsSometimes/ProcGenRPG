@@ -144,4 +144,12 @@ public class MainMenu : MonoBehaviour {
 		curButtonForRemap = button;
 		reMapping = true;
 	}
+
+	public void PlayMouseOverFX() {
+		FMOD_StudioSystem.instance.PlayOneShot("event:/UISounds/UI03", Camera.main.transform.position);
+	}
+
+	public void PlayClickFX() {
+		FMOD_StudioSystem.instance.PlayOneShot("event:/UISounds/UI02", Camera.main.transform.position);
+	}
 }

@@ -262,6 +262,8 @@ public class MasterDriver : MonoBehaviour {
                 break;
         }
 
+		FMOD_StudioSystem.instance.PlayOneShot("event:/environment/portal",Player.playerPos.position);
+
 		//Fire Movement Event
 		DirectObject obj = new DirectObject ("Area", currentArea.position.x + " " + currentArea.position.y);
 		PlayerAction action = new PlayerAction (obj, ActionType.MOVE_AREA);

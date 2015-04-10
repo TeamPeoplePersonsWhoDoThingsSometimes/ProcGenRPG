@@ -16,7 +16,7 @@ public class EnemyHealthBar : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(trackingEnemy != null) {
+		if(trackingEnemy != null && trackingEnemy.GetComponent<Enemy>() != null) {
 			/*** Setting color of version number ***/
 			if(Utility.VersionToInt(trackingEnemy.GetComponent<Enemy>().GetVersion()) < Utility.VersionToInt(Player.version)) {
 				this.transform.GetChild(1).GetChild(0).GetComponent<Text>().color = Color.green;

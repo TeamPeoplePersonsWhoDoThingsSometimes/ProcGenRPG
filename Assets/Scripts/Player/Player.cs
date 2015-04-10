@@ -174,6 +174,7 @@ public class Player : MonoBehaviour {
 
 	//Called whenever the player presses a number to quick select
 	public void SetActiveItem (int val) {
+		FMOD_StudioSystem.instance.PlayOneShot("event:/player/weaponEquip02",transform.position + Vector3.up*15f);
 		if(inventory.Count >= val + 1) {
 			DirectObject equiped = null;
 
@@ -240,6 +241,7 @@ public class Player : MonoBehaviour {
 
 	//Called any time the player gets bytes
 	public void AddBytes(int val) {
+		FMOD_StudioSystem.instance.PlayOneShot("event:/player/XPParticle", transform.position);
 		bytes += val;
 		xpBytes += val;
 		if (activeWeapon != null) {
@@ -284,6 +286,7 @@ public class Player : MonoBehaviour {
 
 	//Called by any attack that hits the player
 	public void GetDamaged(float damage, bool crit) {
+		FMOD_StudioSystem.instance.PlayOneShot("event:/player/playerDamage", transform.position);
 		GameObject temp = (GameObject)Instantiate(hitInfo,this.transform.position + new Vector3(0,1,0), hitInfo.transform.rotation);
 		temp.GetComponent<TextMesh>().GetComponent<Renderer>().material.color = Color.red;
 		if (crit) {

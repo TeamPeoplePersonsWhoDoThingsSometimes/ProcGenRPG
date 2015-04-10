@@ -1,10 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using UnityStandardAssets.ImageEffects;
 
 public class FinalBoss : Boss {
 
 	float audioTime = 0f;
 	AudioSource audioRef;
+	GameObject bossCam;
+
+	float dyingTime = 0f;
+
+	bool readyToFall = false, fallen = false;
+	float fallentime = 0f;
+	List<Enemy> spawnedMemLeaks;
 
 	// Use this for initialization
 	void Start () {
@@ -14,16 +23,18 @@ public class FinalBoss : Boss {
 		audioRef = GameObject.Find("Base").GetComponent<AudioSource>();
 		PlayerControl.immobile = true;
 		detectedPlayer = true;
+		bossCam = GameObject.Find("BOSSCAM");
+		spawnedMemLeaks = new List<Enemy>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetKey(KeyCode.N) && Time.frameCount % 5 == 0) {
-			audioRef.time++;
-		}
 		if (audioRef.time < 59) {
 			transform.GetChild(0).GetChild(2).Rotate(new Vector3(0,Time.deltaTime*10f,0), Space.World);
 			transform.GetChild(0).GetChild(3).Rotate(new Vector3(0,-Time.deltaTime*10f,0), Space.World);
+			if(Input.GetKey(KeyCode.N) && Time.frameCount % 5 == 0) {
+				audioRef.time++;
+			}
 		} else if(audioRef.time < 73) {
 			transform.GetChild(0).GetChild(2).Rotate(new Vector3(0,Time.deltaTime*(10f+((audioRef.time - 59)*50f)),0), Space.World);
 			transform.GetChild(0).GetChild(3).Rotate(new Vector3(0,-Time.deltaTime*(10f+((audioRef.time - 59)*50f)),0), Space.World);
@@ -35,11 +46,41 @@ public class FinalBoss : Boss {
 			}
 
 		} else {
+			Destroy(bossCam);
 			transform.GetChild(0).GetChild(2).Rotate(new Vector3(0,Time.deltaTime*200,0), Space.World);
 			transform.GetChild(0).GetChild(3).Rotate(new Vector3(0,-Time.deltaTime*200,0), Space.World);
-			transform.GetChild(0).GetChild(4).RotateAround(transform.GetChild(0).position, Vector3.up, Time.deltaTime*20f);
-			transform.GetChild(0).GetChild(5).RotateAround(transform.GetChild(0).position, Vector3.up, Time.deltaTime*20f);
-			transform.GetChild(0).GetChild(6).RotateAround(transform.GetChild(0).position, Vector3.up, Time.deltaTime*20f);
+			if(fallen) {
+				if(transform.GetChild(0).GetChild(4).position.y > -0.3f) {
+					transform.GetChild(0).GetChild(4).position -= Vector3.up*Time.deltaTime*10f;
+					transform.GetChild(0).GetChild(4).GetComponent<BoxCollider>().enabled = true;
+
+					transform.GetChild(0).GetChild(5).position -= Vector3.up*Time.deltaTime*10f;
+					transform.GetChild(0).GetChild(5).GetComponent<BoxCollider>().enabled = true;
+
+					transform.GetChild(0).GetChild(6).position -= Vector3.up*Time.deltaTime*10f;
+					transform.GetChild(0).GetChild(6).GetComponent<BoxCollider>().enabled = true;
+				}
+				fallentime += Time.deltaTime;
+			} else {
+				if(transform.GetChild(0).GetChild(4) != null && transform.GetChild(0).GetChild(4).localPosition.y < 0f) {
+					transform.GetChild(0).GetChild(4).position += Vector3.up*Time.deltaTime*10f;
+					transform.GetChild(0).GetChild(4).GetComponent<BoxCollider>().enabled = true;
+
+					transform.GetChild(0).GetChild(5).position += Vector3.up*Time.deltaTime*10f;
+					transform.GetChild(0).GetChild(5).GetComponent<BoxCollider>().enabled = true;
+
+					transform.GetChild(0).GetChild(6).position += Vector3.up*Time.deltaTime*10f;
+					transform.GetChild(0).GetChild(6).GetComponent<BoxCollider>().enabled = true;
+				}
+				transform.GetChild(0).GetChild(4).RotateAround(transform.GetChild(0).position, Vector3.up, Time.deltaTime*20f);
+				transform.GetChild(0).GetChild(5).RotateAround(transform.GetChild(0).position, Vector3.up, Time.deltaTime*20f);
+				transform.GetChild(0).GetChild(6).RotateAround(transform.GetChild(0).position, Vector3.up, Time.deltaTime*20f);
+			}
+
+			if(fallentime > 10f) {
+				fallen = false;
+				fallentime = 0f;
+			}
 
 //			Quaternion lookRot = Quaternion.LookRotation(Player.playerPos.position - this.transform.position, Vector3.up);
 //			transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRot, Time.deltaTime*2f);
@@ -56,10 +97,34 @@ public class FinalBoss : Boss {
 				audioRef.time = 73.846f;
 			}
 
+			if(readyToFall) {
+				bool gonnaFall = true;
+				for(int i = 0; i < spawnedMemLeaks.Count; i++) {
+					if(spawnedMemLeaks[i] != null) {
+						gonnaFall = false;
+					}
+				}
+				if(gonnaFall) {
+					readyToFall = false;
+					fallen = true;
+				}
+			}
+
+			if(dyingTime > 0f) {
+				MusicManager.FadeOutAudio();
+				dyingTime -= Time.deltaTime;
+				if(dyingTime <= 0) {
+					transform.GetChild(0).gameObject.SetActive(false);
+				}
+
+			}
+
 			base.Update();
 		}
 
-		transform.GetChild(0).LookAt(Player.playerPos);
+		if(!fallen) {
+			transform.GetChild(0).LookAt(Player.playerPos);
+		}
 		transform.GetChild(0).eulerAngles = new Vector3(0f, transform.GetChild(0).eulerAngles.y, 0f);
 	}
 
@@ -70,7 +135,11 @@ public class FinalBoss : Boss {
 
 	protected override void HandleDeath ()
 	{
-
+		if(dyingTime == 0f) {
+			transform.GetChild(1).gameObject.SetActive(true);
+			dyingTime = 8.5f;
+			FollowPlayer.FinalBossDying();
+		}
 	}
 
 	protected override void HandleDetectedPlayer ()
@@ -95,10 +164,11 @@ public class FinalBoss : Boss {
 
 	public override void PhaseAttack (string phaseName, GameObject phaseObject)
 	{
-		if(phaseName.Equals("SpawnMemLeaks")) {
+		if(phaseName.Equals("SpawnMemLeaks") && !fallen && dyingTime == 0f) {
+			readyToFall = true;
 			int numToSpawn = (int)(Random.value*4f) + 5;
 			for(int i = 0; i < numToSpawn; i++) {
-				Instantiate(phaseObject, transform.GetChild(0).position + new Vector3(Random.value*30f - 15,-4f,Random.value*30f - 15), Quaternion.identity);
+				spawnedMemLeaks.Add(((GameObject)GameObject.Instantiate(phaseObject, new Vector3(transform.GetChild(0).position.x + Random.value*30f - 15,-3f,transform.GetChild(0).position.z + Random.value*30f - 15), Quaternion.identity)).GetComponent<Enemy>());
             }
 		}
 	}

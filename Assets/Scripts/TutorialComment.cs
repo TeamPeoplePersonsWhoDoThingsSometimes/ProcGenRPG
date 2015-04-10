@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Audio;
 using UnityStandardAssets.ImageEffects;
 
 public class TutorialComment : MonoBehaviour {
@@ -10,6 +11,8 @@ public class TutorialComment : MonoBehaviour {
 	private bool isTouchingThis = false;
 	public string text;
 	public Texture textBG;
+
+	public AudioMixer mixer;
 
 	private static GameObject playerCanvas, minimapCam, worldMap, worldMapCam;
 
@@ -36,10 +39,16 @@ public class TutorialComment : MonoBehaviour {
 			Camera.main.GetComponent<ColorCorrectionCurves>().saturation = Mathf.MoveTowards(Camera.main.GetComponent<ColorCorrectionCurves>().saturation, 0f, Time.deltaTime*2f);
 			Camera.main.GetComponent<NoiseAndScratches>().grainIntensityMax = Mathf.MoveTowards(Camera.main.GetComponent<NoiseAndScratches>().grainIntensityMax, 0.5f, Time.deltaTime*2f);
 			Camera.main.GetComponent<NoiseAndScratches>().scratchIntensityMax = Mathf.MoveTowards(Camera.main.GetComponent<NoiseAndScratches>().scratchIntensityMax, 0.5f, Time.deltaTime*2f);
+			float curFreq = 0f;
+			mixer.GetFloat("CutoffFreq", out curFreq);
+			mixer.SetFloat("CutoffFreq",Mathf.MoveTowards(curFreq,300,Time.deltaTime*10000f));
 		} else if (!isPlayerTouching) {
 			Camera.main.GetComponent<ColorCorrectionCurves>().saturation = Mathf.MoveTowards(Camera.main.GetComponent<ColorCorrectionCurves>().saturation, 1f, Time.deltaTime*2f);
 			Camera.main.GetComponent<NoiseAndScratches>().grainIntensityMax = Mathf.MoveTowards(Camera.main.GetComponent<NoiseAndScratches>().grainIntensityMax, 0f, Time.deltaTime*2f);
 			Camera.main.GetComponent<NoiseAndScratches>().scratchIntensityMax = Mathf.MoveTowards(Camera.main.GetComponent<NoiseAndScratches>().scratchIntensityMax, 0f, Time.deltaTime*2f);
+			float curFreq = 0f;
+			mixer.GetFloat("CutoffFreq", out curFreq);
+			mixer.SetFloat("CutoffFreq",Mathf.MoveTowards(curFreq,22000, Time.deltaTime*10000f));
 		}
 
 		if(enableUI) {

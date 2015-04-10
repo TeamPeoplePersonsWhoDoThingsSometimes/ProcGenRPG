@@ -337,6 +337,7 @@ public class PlayerCanvas : MonoBehaviour {
 
 		/*** Opens Console and sets animator control ***/
 		if(Input.GetKeyDown(KeyCode.BackQuote)) {
+			FMOD_StudioSystem.instance.PlayOneShot("event:/UISounds/UI01",Player.playerPos.position);
 			inConsole = !inConsole;
 		}
 		GetComponent<Animator>().SetBool("ShowingConsole", inConsole);
@@ -530,6 +531,15 @@ public class PlayerCanvas : MonoBehaviour {
 		inventoryItemContainer.transform.GetChild(index).GetComponent<CanvasGroup>().blocksRaycasts = true;
 		dragDelta = Vector2.zero;
 		dragStart = Vector2.zero;
+		FMOD_StudioSystem.instance.PlayOneShot("event:/player/weaponEquip01",Player.playerPos.position);
+	}
+
+	public void PlayMouseOverSound() {
+		FMOD_StudioSystem.instance.PlayOneShot("event:/UISounds/UI03",Player.playerPos.position);
+	}
+
+	public void PlayMouseClickSound() {
+		FMOD_StudioSystem.instance.PlayOneShot("event:/UISounds/UI02",Player.playerPos.position);
 	}
 
 }

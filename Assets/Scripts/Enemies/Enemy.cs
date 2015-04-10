@@ -101,7 +101,6 @@ public class Enemy : MonoBehaviour {
 		this.baseAttackSpeed /= (versionInt/100f)*(attackSpeedScale+1);
 		this.version = Utility.IntToVersion(versionInt);
 		hp = maxHP;
-
 		if(possibleItemDrops.Count != possibleItemDropsChance.Count) {
 			Debug.LogWarning("Hey dummy! You need to have equal number of item drops and item drop chances!");
 		} else {
@@ -172,8 +171,10 @@ public class Enemy : MonoBehaviour {
 
 		HandleEffect();
 
-		/*** Updates speed value in Mecanim ***/
-		GetComponent<Animator>().SetFloat("Speed", Vector3.Distance(transform.position, lastPos));
+		if(GetComponent<Animator>() != null) {
+			/*** Updates speed value in Mecanim ***/
+			GetComponent<Animator>().SetFloat("Speed", Vector3.Distance(transform.position, lastPos));
+		}
 
 		/*** Handles manual speed calculation since rigidbody.velocity doesn't work ***/
 		lastPos = transform.position;
@@ -368,6 +369,9 @@ public class Enemy : MonoBehaviour {
 		if(GetComponent<Rigidbody>().IsSleeping()) {
 			GetComponent<Rigidbody>().WakeUp();
 		}
+		if(transform.position.y > Player.playerPos.position.y) {
+			transform.position = transform.position - (Vector3.up*Time.deltaTime);
+		}
 	}
 
 	protected virtual void DoIdle() {
@@ -381,8 +385,11 @@ public class Enemy : MonoBehaviour {
 	}
 
 	public void GetDamaged(float damage, bool crit) {
+		FMOD_StudioSystem.instance.PlayOneShot("event:/enemy/enemyCombatState",transform.position);
 		healthBarTime = 2f;
-		GetComponent<Animator>().SetTrigger("Hurt");
+		if(GetComponent<Animator>() != null) {
+			GetComponent<Animator>().SetTrigger("Hurt");
+		}
 		GameObject temp = (GameObject)Instantiate(hitInfo,this.transform.position, hitInfo.transform.rotation);
 		if (currentEffect == Effect.Weakened) {
 			damage = damage * 1.5f;
@@ -400,7 +407,6 @@ public class Enemy : MonoBehaviour {
 			temp.GetComponent<TextMesh>().text = "" + damage;
 		}
 		detectedPlayer = true;
-
 		ActionEventInvoker.primaryInvoker.invokeAction (new PlayerAction (this.getDirectObject (), ActionType.ATTACK));
 	}
 
@@ -426,5 +432,5 @@ public class Enemy : MonoBehaviour {
 	public bool ShowHealthbar() {
 		return healthBarTime > 0;
 	}
-	
+
 }
