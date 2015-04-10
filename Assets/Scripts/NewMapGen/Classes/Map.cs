@@ -680,7 +680,10 @@ public class Map
         a.isCity = true;
         //Area temp = getArea(a.position.down);
         //disconnectArea(temp);
-        //connectArea(temp, Direction.UP);
+        connectArea(a, Direction.UP);
+        connectArea(a, Direction.LEFT);
+        connectArea(a, Direction.RIGHT);
+        connectArea(a, Direction.DOWN);
         a.getGroup().removeArea(a);
     }
 
