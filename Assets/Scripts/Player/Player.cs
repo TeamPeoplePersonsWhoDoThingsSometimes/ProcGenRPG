@@ -15,6 +15,7 @@ public class Player : MonoBehaviour {
 	private int bytesToNextVersion;
 
 	public AudioClip levelUp;
+	private ParticleSystem levelUpParticles;
 
 	private int levelUpSpeedScale = 10000;
 
@@ -104,6 +105,8 @@ public class Player : MonoBehaviour {
 		if(PersistentInfo.playerName != null && !PersistentInfo.playerName.Equals("")) {
 			this.name = PersistentInfo.playerName;
 		}
+
+		levelUpParticles = GameObject.Find("LevelUpParticles").GetComponent<ParticleSystem>();
 
 		//Need to figure out a better way to load the hitinfo prefab
 		hitInfo = Resources.Load<GameObject>("Info/HitInfo");
@@ -306,6 +309,7 @@ public class Player : MonoBehaviour {
 		bytesToNextVersion = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*levelUpSpeedScale;
 		ActionEventInvoker.primaryInvoker.invokeAction (new PlayerAction (this.getDirectObject(), ActionType.LEVEL_UP));
 		GetComponent<AudioSource>().PlayOneShot(levelUp);
+		levelUpParticles.Emit(1000000);
 	}
 
 	public int GetBytes() {
