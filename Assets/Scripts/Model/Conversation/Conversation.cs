@@ -36,6 +36,29 @@ public class uConversation {
 		}
 	}
 
+	public ConversationSave getSaveData() {
+		ConversationSave.Builder builder = ConversationSave.CreateBuilder ();
+		builder.SetName (name);
+
+		foreach (uConversationNode node in nodeList) {
+			builder.AddNodes(node.getConversationNodeSave());
+		}
+
+		return builder.Build ();
+	}
+
+	public void setFromSave(ConversationSave saveData) {
+
+		//O(n^2) because its quick to code and we don't have a lot of nodes to deal with
+		foreach (ConversationNodeSave s in saveData.NodesList) {
+			foreach (uConversationNode n in nodeList) {
+				if (n.getUID() == s.Uid) {
+					n.setConversationNodeFromData(s);
+				}
+			}
+		}
+	}
+
 	public List<uConversationNode> getNodeList() {
 		return nodeList;
 	}

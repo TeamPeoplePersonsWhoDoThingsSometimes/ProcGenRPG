@@ -379,6 +379,7 @@ public class MasterDriver : MonoBehaviour {
 
 		List<QuestSave> questData = questListener.getQuestData ();
 		List<SpawnedObject> spawnedObjects = currentMap.getAllSpawnedObjects ();
+		List<ConversationSave> conversationData = LoadResources.Instance.getConversationSaveData ();
 		int seed = currentMap.getSeed ();
 
 		SavePackage.Builder packageBuilder = SavePackage.CreateBuilder ();
@@ -386,6 +387,7 @@ public class MasterDriver : MonoBehaviour {
 		packageBuilder.AddRangeQuestData (questData);
 		packageBuilder.AddRangeSpawnedObjects (spawnedObjects);
 		packageBuilder.SetSeed (seed);
+		packageBuilder.AddRangeConversationData (conversationData);
 
 		SavePackage package = packageBuilder.Build ();
 
@@ -470,6 +472,11 @@ public class MasterDriver : MonoBehaviour {
 		List<QuestSave> questSaves = new List<QuestSave> ();
 		questSaves.AddRange(package.QuestDataList);
 		questListener = new QuestListener (questSaves);
+
+		//CONVERSATIONS
+		List<ConversationSave> conversationSaves = new List<ConversationSave> ();
+		conversationSaves.AddRange (package.ConversationDataList);
+		LoadResources.Instance.setConversationData (conversationSaves);
 
 		//PLAYER STATUS
 		player.transform.position = new Vector3 (0.0f, player.transform.position.y, 0.0f);//global shift
