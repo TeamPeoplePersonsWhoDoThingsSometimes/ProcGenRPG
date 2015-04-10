@@ -170,6 +170,19 @@ public class WorldMap : MonoBehaviour {
 		}
 	}*/
 
+	public static string getDescriptionForStarAt(int x, int z) {
+		GameObject[] tempList = new GameObject[questStars.Keys.Count];
+		questStars.Keys.CopyTo(tempList,0);
+		
+		for (int i = 0; i < tempList.Length; i++) {
+			if(tempList[i].transform.localPosition.Equals(new Vector3((x - 5)*5,3f,-(z - 5)*5))) {
+				return questStars[tempList[i]];
+			}
+		}
+
+		return "";
+	}
+
 	public static void RemoveStarAt(int x, int z) {
 		GameObject[] tempList = new GameObject[questStars.Keys.Count];
 		questStars.Keys.CopyTo(tempList,0);

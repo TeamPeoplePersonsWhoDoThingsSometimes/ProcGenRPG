@@ -19,6 +19,8 @@ public class Item : MonoBehaviour {
 	public SpawnedObject getSpawnedObjectInformation(Area area, Transform location) {
 		SpawnedObject.Builder builder = SpawnedObject.CreateBuilder ();
 
+		string description = WorldMap.getDescriptionForStarAt (area.position.x, area.position.y);
+
 		GlobalPosition.Builder pBuilder = GlobalPosition.CreateBuilder ();
 		pBuilder.SetAreaX (area.position.x);
 		pBuilder.SetAreaY (area.position.y);
@@ -27,6 +29,8 @@ public class Item : MonoBehaviour {
 		builder.SetObjectPosition (pBuilder.Build ());
 
 		builder.SetObjectData (getDirectObject().getDirectObjectAsProtobuf());
+
+		builder.SetDescription (description);
 
 		return builder.Build ();
 	}

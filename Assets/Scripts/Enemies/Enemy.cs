@@ -52,6 +52,8 @@ public class Enemy : MonoBehaviour {
 
 	public SpawnedObject getSpawnedObjectInformation(Area area) {
 		SpawnedObject.Builder builder = SpawnedObject.CreateBuilder ();
+
+		string description = WorldMap.getDescriptionForStarAt (area.position.x, area.position.y);
 		
 		GlobalPosition.Builder pBuilder = GlobalPosition.CreateBuilder ();
 		pBuilder.SetAreaX (area.position.x);
@@ -61,6 +63,8 @@ public class Enemy : MonoBehaviour {
 		builder.SetObjectPosition (pBuilder.Build ());
 		
 		builder.SetObjectData (getDirectObject().getDirectObjectAsProtobuf());
+
+		builder.SetDescription (description);
 
 		EnemyData.Builder eBuilder = EnemyData.CreateBuilder ();
 		eBuilder.SetHealthRemaining ((int)hp);

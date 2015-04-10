@@ -134,25 +134,25 @@ public static partial class QuestProtobuf {
         "bWUYASACKAkSDAoEc3RlcBgCIAIoBRIuChljdXJyZW50U3RlcFNwYXduTG9j" + 
         "YXRpb25zGAMgAygLMgsuUG9pbnRQcm90bxIkCg9jdXJyZW50U3RlcERhdGEY" + 
         "BCADKAsyCy5TdGF0dXNTYXZlIi8KClN0YXR1c1NhdmUSEgoKYWxyZWFkeU1l" + 
-        "dBgBIAIoCBINCgVjb3VudBgCIAIoBSKIAQoNU3Bhd25lZE9iamVjdBInCg5v" + 
+        "dBgBIAIoCBINCgVjb3VudBgCIAIoBSKdAQoNU3Bhd25lZE9iamVjdBInCg5v" + 
         "YmplY3RQb3NpdGlvbhgBIAIoCzIPLkdsb2JhbFBvc2l0aW9uEikKCm9iamVj" + 
         "dERhdGEYAiACKAsyFS5EaXJlY3RPYmplY3RQcm90b2NvbBIjCg9lbmVteUF0" + 
-        "dHJpYnV0ZXMYAyABKAsyCi5FbmVteURhdGEiJAoJRW5lbXlEYXRhEhcKD2hl" + 
-        "YWx0aFJlbWFpbmluZxgBIAIoBSKgAQoMUGxheWVyU3RhdHVzEicKDnBsYXll" + 
-        "clBvc2l0aW9uGAEgAigLMg8uR2xvYmFsUG9zaXRpb24SIQoJaW52ZW50b3J5" + 
-        "GAIgAigLMg4uSW52ZW50b3J5RGF0YRIPCgd2ZXJzaW9uGAMgAigJEhAKCHJv" + 
-        "dGF0aW9uGAQgAigFEiEKDHZpc2l0ZWRBcmVhcxgFIAMoCzILLlBvaW50UHJv" + 
-        "dG8iNgoNSW52ZW50b3J5RGF0YRIlCgZvYmplY3QYASADKAsyFS5EaXJlY3RP" + 
-        "YmplY3RQcm90b2NvbCqlAQoKQWN0aW9uVHlwZRIICgRLSUxMEAASDQoJTU9W" + 
-        "RV9BUkVBEAESFQoRQVBQUk9BQ0hFRF9PQkpFQ1QQAhIUChBQSUNLRURfVVBf" + 
-        "T0JKRUNUEAMSDAoITEVWRUxfVVAQBRIOCgpFUVVJUF9JVEVNEAYSDAoIVVNF" + 
-        "X0lURU0QBxIKCgZBVFRBQ0sQCBIZChVDT05WRVJTQVRJT05fTk9ERV9ISVQQ" + 
-        "CSo2CgVCaW9tZRIQCgxOT1RfQVNTSUdORUQQABIKCgZQWVRIT04QARIFCgFD" + 
-        "EAISCAoESFRNTBADKioKB01hcFR5cGUSCAoEQ0lUWRAAEggKBFBBVEgQARIL" + 
-        "CgdEVU5HRU9OEAIqNQoaU3Bhd25BcmVhVHlwZVNwZWNpZmljYXRpb24SCQoF" + 
-        "TE9DQUwQABIMCghESVNUQU5DRRABKiwKEkxldmVsU3BlY2lmaWNhdGlvbhIL" + 
-        "CgdNSU5JTVVNEAESCQoFRVhBQ1QQAkIhCh9zdHNxdWVzdGJ1aWxkZXIucHJv" + 
-        "dG9jb2xidWZmZXJz");
+        "dHJpYnV0ZXMYAyABKAsyCi5FbmVteURhdGESEwoLZGVzY3JpcHRpb24YBCAB" + 
+        "KAkiJAoJRW5lbXlEYXRhEhcKD2hlYWx0aFJlbWFpbmluZxgBIAIoBSKgAQoM" + 
+        "UGxheWVyU3RhdHVzEicKDnBsYXllclBvc2l0aW9uGAEgAigLMg8uR2xvYmFs" + 
+        "UG9zaXRpb24SIQoJaW52ZW50b3J5GAIgAigLMg4uSW52ZW50b3J5RGF0YRIP" + 
+        "Cgd2ZXJzaW9uGAMgAigJEhAKCHJvdGF0aW9uGAQgAigFEiEKDHZpc2l0ZWRB" + 
+        "cmVhcxgFIAMoCzILLlBvaW50UHJvdG8iNgoNSW52ZW50b3J5RGF0YRIlCgZv" + 
+        "YmplY3QYASADKAsyFS5EaXJlY3RPYmplY3RQcm90b2NvbCqlAQoKQWN0aW9u" + 
+        "VHlwZRIICgRLSUxMEAASDQoJTU9WRV9BUkVBEAESFQoRQVBQUk9BQ0hFRF9P" + 
+        "QkpFQ1QQAhIUChBQSUNLRURfVVBfT0JKRUNUEAMSDAoITEVWRUxfVVAQBRIO" + 
+        "CgpFUVVJUF9JVEVNEAYSDAoIVVNFX0lURU0QBxIKCgZBVFRBQ0sQCBIZChVD" + 
+        "T05WRVJTQVRJT05fTk9ERV9ISVQQCSo2CgVCaW9tZRIQCgxOT1RfQVNTSUdO" + 
+        "RUQQABIKCgZQWVRIT04QARIFCgFDEAISCAoESFRNTBADKioKB01hcFR5cGUS" + 
+        "CAoEQ0lUWRAAEggKBFBBVEgQARILCgdEVU5HRU9OEAIqNQoaU3Bhd25BcmVh" + 
+        "VHlwZVNwZWNpZmljYXRpb24SCQoFTE9DQUwQABIMCghESVNUQU5DRRABKiwK" + 
+        "EkxldmVsU3BlY2lmaWNhdGlvbhILCgdNSU5JTVVNEAESCQoFRVhBQ1QQAkIh" + 
+        "Ch9zdHNxdWVzdGJ1aWxkZXIucHJvdG9jb2xidWZmZXJz");
     pbd::FileDescriptor.InternalDescriptorAssigner assigner = delegate(pbd::FileDescriptor root) {
       descriptor = root;
       internal__static_QuestPackage__Descriptor = Descriptor.MessageTypes[0];
@@ -258,7 +258,7 @@ public static partial class QuestProtobuf {
       internal__static_SpawnedObject__Descriptor = Descriptor.MessageTypes[25];
       internal__static_SpawnedObject__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::SpawnedObject, global::SpawnedObject.Builder>(internal__static_SpawnedObject__Descriptor,
-              new string[] { "ObjectPosition", "ObjectData", "EnemyAttributes", });
+              new string[] { "ObjectPosition", "ObjectData", "EnemyAttributes", "Description", });
       internal__static_EnemyData__Descriptor = Descriptor.MessageTypes[26];
       internal__static_EnemyData__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::EnemyData, global::EnemyData.Builder>(internal__static_EnemyData__Descriptor,
@@ -10190,8 +10190,8 @@ public sealed partial class StatusSave : pb::GeneratedMessage<StatusSave, Status
 public sealed partial class SpawnedObject : pb::GeneratedMessage<SpawnedObject, SpawnedObject.Builder> {
   private SpawnedObject() { }
   private static readonly SpawnedObject defaultInstance = new SpawnedObject().MakeReadOnly();
-  private static readonly string[] _spawnedObjectFieldNames = new string[] { "enemyAttributes", "objectData", "objectPosition" };
-  private static readonly uint[] _spawnedObjectFieldTags = new uint[] { 26, 18, 10 };
+  private static readonly string[] _spawnedObjectFieldNames = new string[] { "description", "enemyAttributes", "objectData", "objectPosition" };
+  private static readonly uint[] _spawnedObjectFieldTags = new uint[] { 34, 26, 18, 10 };
   public static SpawnedObject DefaultInstance {
     get { return defaultInstance; }
   }
@@ -10242,6 +10242,16 @@ public sealed partial class SpawnedObject : pb::GeneratedMessage<SpawnedObject, 
     get { return enemyAttributes_ ?? global::EnemyData.DefaultInstance; }
   }
   
+  public const int DescriptionFieldNumber = 4;
+  private bool hasDescription;
+  private string description_ = "";
+  public bool HasDescription {
+    get { return hasDescription; }
+  }
+  public string Description {
+    get { return description_; }
+  }
+  
   public override bool IsInitialized {
     get {
       if (!hasObjectPosition) return false;
@@ -10259,13 +10269,16 @@ public sealed partial class SpawnedObject : pb::GeneratedMessage<SpawnedObject, 
     int size = SerializedSize;
     string[] field_names = _spawnedObjectFieldNames;
     if (hasObjectPosition) {
-      output.WriteMessage(1, field_names[2], ObjectPosition);
+      output.WriteMessage(1, field_names[3], ObjectPosition);
     }
     if (hasObjectData) {
-      output.WriteMessage(2, field_names[1], ObjectData);
+      output.WriteMessage(2, field_names[2], ObjectData);
     }
     if (hasEnemyAttributes) {
-      output.WriteMessage(3, field_names[0], EnemyAttributes);
+      output.WriteMessage(3, field_names[1], EnemyAttributes);
+    }
+    if (hasDescription) {
+      output.WriteString(4, field_names[0], Description);
     }
     UnknownFields.WriteTo(output);
   }
@@ -10285,6 +10298,9 @@ public sealed partial class SpawnedObject : pb::GeneratedMessage<SpawnedObject, 
       }
       if (hasEnemyAttributes) {
         size += pb::CodedOutputStream.ComputeMessageSize(3, EnemyAttributes);
+      }
+      if (hasDescription) {
+        size += pb::CodedOutputStream.ComputeStringSize(4, Description);
       }
       size += UnknownFields.SerializedSize;
       memoizedSerializedSize = size;
@@ -10419,6 +10435,9 @@ public sealed partial class SpawnedObject : pb::GeneratedMessage<SpawnedObject, 
       if (other.HasEnemyAttributes) {
         MergeEnemyAttributes(other.EnemyAttributes);
       }
+      if (other.HasDescription) {
+        Description = other.Description;
+      }
       this.MergeUnknownFields(other.UnknownFields);
       return this;
     }
@@ -10487,6 +10506,10 @@ public sealed partial class SpawnedObject : pb::GeneratedMessage<SpawnedObject, 
             }
             input.ReadMessage(subBuilder, extensionRegistry);
             EnemyAttributes = subBuilder.BuildPartial();
+            break;
+          }
+          case 34: {
+            result.hasDescription = input.ReadString(ref result.description_);
             break;
           }
         }
@@ -10616,6 +10639,27 @@ public sealed partial class SpawnedObject : pb::GeneratedMessage<SpawnedObject, 
       PrepareBuilder();
       result.hasEnemyAttributes = false;
       result.enemyAttributes_ = null;
+      return this;
+    }
+    
+    public bool HasDescription {
+      get { return result.hasDescription; }
+    }
+    public string Description {
+      get { return result.Description; }
+      set { SetDescription(value); }
+    }
+    public Builder SetDescription(string value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      result.hasDescription = true;
+      result.description_ = value;
+      return this;
+    }
+    public Builder ClearDescription() {
+      PrepareBuilder();
+      result.hasDescription = false;
+      result.description_ = "";
       return this;
     }
   }

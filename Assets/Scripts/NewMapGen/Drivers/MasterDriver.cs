@@ -265,16 +265,16 @@ public class MasterDriver : MonoBehaviour {
         {
             case (Direction.UP):
                 player.transform.position = new Vector3(currentPortal.transform.position.x, player.transform.position.y, currentPortal.transform.position.z - 8);
-                break;
+				break;
             case (Direction.LEFT):
                 player.transform.position = new Vector3(currentPortal.transform.position.x + 8, player.transform.position.y, currentPortal.transform.position.z);
-                break;
+				break;
             case (Direction.DOWN):
                 player.transform.position = new Vector3(currentPortal.transform.position.x, player.transform.position.y, currentPortal.transform.position.z + 8);
-                break;
+				break;
             case (Direction.RIGHT):
                 player.transform.position = new Vector3(currentPortal.transform.position.x - 8, player.transform.position.y, currentPortal.transform.position.z);
-                break;
+				break;
         }
 
 		FMOD_StudioSystem.instance.PlayOneShot("event:/environment/portal",Player.playerPos.position, PlayerPrefs.GetFloat("MasterVolume"));
@@ -369,6 +369,8 @@ public class MasterDriver : MonoBehaviour {
 			GlobalPosition pos = o.ObjectPosition;
 			Area area = currentMap.getArea(pos.AreaX, pos.AreaY);
 			GameObject obj;
+
+			WorldMap.AddStarAt(pos.AreaX, pos.AreaY, o.Description);
 
 			if (o.HasEnemyAttributes) {
 				obj = (GameObject)getEnemyFromProtobuf(o.ObjectData);
