@@ -8,8 +8,8 @@ public class SpawnCommand {
 	private int range;
 	private int quantity;//when area spawns were a thing, this needed to be dependant on direct objects, which is why this is initialized wierdly
 	private GameObject objectToSpawn;
-	private string objectName;
-	private string version;
+	public string objectName;
+	public string version;
 	private bool badass;
 
 	private Point spawnedLocation;

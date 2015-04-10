@@ -394,7 +394,28 @@ public class Area
 		questArea = true;
 
         System.Random rand = new System.Random();
-        rooms[rand.Next(rooms.Count)].generateQuestMaterial(sc);
+		if(!isCity) {
+        	rooms[rand.Next(rooms.Count)].generateQuestMaterial(sc);
+		} else {
+			if (sc.objectName == "Byte") {
+				GameObject temp = (GameObject)GameObject.Instantiate (Utility.GetByteObject(), Player.playerPos.position, Quaternion.identity);
+			} else {
+				GameObject objectToSpawn = (GameObject)sc.getObjectToSpawn();
+				Item newItem = objectToSpawn.GetComponent<Item> ();
+				if (newItem != null) {
+					ItemDropObject drop = LoadResources.Instance.CommonItemDrop.GetComponent<ItemDropObject>();
+					GameObject newDrop = (GameObject)GameObject.Instantiate (drop.gameObject, Player.playerPos.position + Vector3.up*3f, Quaternion.identity);
+					GameObject newObject = (GameObject)GameObject.Instantiate (objectToSpawn, Player.playerPos.position + Vector3.up*3f, Quaternion.identity);
+					newObject.SetActive(false);
+					newItem = newObject.GetComponent<Item>();
+					newItem.name = sc.objectName;
+					if (!sc.version.Equals(string.Empty) && newObject.GetComponent<Weapon>() != null) {
+						newObject.GetComponent<Weapon>().version = sc.version;
+					}
+					newDrop.GetComponent<ItemDropObject>().item = newObject;
+				}
+			}
+		}
     }
 
 	public List<SpawnedObject> getSpawnedObjects() {

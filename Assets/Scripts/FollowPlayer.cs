@@ -100,6 +100,15 @@ public class FollowPlayer : MonoBehaviour {
 				Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration = Mathf.MoveTowards(Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration, 2f, Time.deltaTime);
 			}
 		}
+
+		if(p.GetIntegrityPercentage() == 1) {
+			damaged.localScale = Vector3.one * 4f;
+			if(QualitySettings.GetQualityLevel() > (int)QualityLevel.Good) {
+				Camera.main.GetComponent<VignetteAndChromaticAberration>().blur = 0f;
+				Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration = 2f;
+			}
+		}
+
 		prevHealth = p.GetIntegrityPercentage();
 
 		if(traveling > 0f) {

@@ -14,6 +14,8 @@ public class Player : MonoBehaviour {
 	private int xpBytes;
 	private int bytesToNextVersion;
 
+	private int deaths = 0;
+
 	public AudioClip levelUp;
 	private ParticleSystem levelUpParticles;
 
@@ -188,7 +190,8 @@ public class Player : MonoBehaviour {
 
 		if(integrity > maxIntegrity) {
 			integrity = maxIntegrity;
-		} else if (integrity < 0) {
+		} else if (integrity < 0 && deathTimer == 0) {
+			Die();
 			integrity = 0;
 		}
 
@@ -200,6 +203,9 @@ public class Player : MonoBehaviour {
 			if(deathTimer > 2f) {
 				transform.GetChild(0).gameObject.SetActive(true);
 				transform.GetChild(1).gameObject.SetActive(true);
+				deathTimer = 0;
+				integrity = maxIntegrity;
+				rma = maxrma;
 				xpBytes = 0;
 				MasterDriver.Instance.goToCity();
 			}
@@ -270,7 +276,11 @@ public class Player : MonoBehaviour {
 	}
 
 	public string GetName() {
-		return name + "_" + version;
+		if(deaths == 0) {
+			return name + "_" + version;
+		} else {
+			return name + "_" + version + "R" + deaths;
+		}
 	}
 
 	public float XPPercentage() {
@@ -319,6 +329,7 @@ public class Player : MonoBehaviour {
 	}
 
 	private void Die() {
+		PlayerControl.immobile = true;
 		levelUpParticles.startColor = Color.red;
 		levelUpParticles.Emit(1000000);
 		FMOD_StudioSystem.instance.PlayOneShot("event:/boss/bossAttackB", transform.position,PlayerPrefs.GetFloat("MasterVolume"));
