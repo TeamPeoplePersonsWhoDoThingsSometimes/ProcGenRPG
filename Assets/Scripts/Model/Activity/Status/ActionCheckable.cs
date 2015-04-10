@@ -43,12 +43,14 @@ public class ActionCheckable : StatusCheckable {
 			string newVersion = action.getDirectObject().getTypeIdentifier();
 			int level = Player.getMiddle(newVersion) * 10 + Player.getMinor(newVersion);
 			if (level >= int.Parse(checkAction.getDirectObject().getTypeIdentifier())) {
+				currentAmount+=1;
 				return true;
 			}
 		}
 
 		if(checkAction.getActionType().Equals(ActionType.CONVERSATION_NODE_HIT) && action.getActionType().Equals(ActionType.CONVERSATION_NODE_HIT)) {
 			if(checkAction.getDirectObject().getTypeIdentifier().Equals(action.getDirectObject().getTypeIdentifier())) {
+				currentAmount+=1;
 				return true;
 			}
 		}

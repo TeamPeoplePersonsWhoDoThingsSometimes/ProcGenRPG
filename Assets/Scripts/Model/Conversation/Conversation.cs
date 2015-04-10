@@ -31,7 +31,8 @@ public class uConversation {
 
 		IList<ConversationNode> nodeProtos = proto.AllNodesList;
 		foreach (ConversationNode p in nodeProtos) {
-			nodeList.Add(new uConversationNode(p));
+			uConversationNode.getNodeByID(p.Uid).initFromProto(p);
+			nodeList.Add(uConversationNode.getNodeByID(p.Uid));
 		}
 	}
 

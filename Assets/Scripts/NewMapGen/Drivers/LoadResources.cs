@@ -58,6 +58,13 @@ public class LoadResources : MonoBehaviour {
 		List<Conversation> conversationProtocols = new List<Conversation>();
 		conversationProtocols.AddRange(package.ConversationsList);
 		Conversations = new List<uConversation> ();
+
+		foreach (Conversation c in conversationProtocols) {
+			foreach (ConversationNode n in c.AllNodesList) {
+				new uConversationNode(n.Uid);
+			}
+		}
+
 		foreach (Conversation c in conversationProtocols) {
 			Conversations.Add(new uConversation(c));
 		}

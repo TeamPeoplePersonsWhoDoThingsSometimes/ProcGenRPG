@@ -155,6 +155,11 @@ public class uConversationNode {
 		cacheIds ();
 	}
 
+	public uConversationNode(long _uid) {
+		idMap.Add (_uid, this);
+		uid = _uid;
+	}
+
 	public uConversationNode(ConversationNode proto) {
 		alternatives = new Dictionary<long, Alternative>();
 		blocks = new List<StatusBlock>();
@@ -198,6 +203,50 @@ public class uConversationNode {
 		}
 
 		cacheIds ();
+	}
+
+	public void initFromProto(ConversationNode proto) {
+		alternatives = new Dictionary<long, Alternative>();
+		blocks = new List<StatusBlock>();
+		if (proto.Name != "null") {
+			ID = proto.Name;
+		} else {
+			ID = "" + uid;
+		}
+		
+		if (proto.Text != "null") {
+			text = proto.Text;
+		} else {
+			text = "";
+		}
+		
+		foreach (Connection c in proto.ConnectionsList) {
+			List<List<StatusCheckable>> reqs = new List<List<StatusCheckable>>();
+			
+			foreach (RequirementSet block in c.RequirementSetsList) {
+				StatusCheckableFactory factory = new StatusCheckableFactory();
+				List<StatusCheckable> checks = new List<StatusCheckable>();
+				foreach (StatusCheckableProtocol p in block.RequirementsList) {
+					checks.Add(factory.getStatusCheckableFromProtocol(p));
+				}
+				reqs.Add(checks);
+			}
+			
+			Alternative alt = new Alternative(c.NodeId, c.Text, reqs);
+			
+			if (c.HasPriority) {
+				alt.setPriority(c.Priority);
+			} else {
+				alt.setPriority(0);
+			}
+			alternatives.Add(alt.getUID(), alt);
+		}
+		
+		foreach (StatusBlockProtocol s in proto.BlocksList) {
+			blocks.Add(new StatusBlock(s));
+		}
+		
+		strIdMap.Add (ID, this);
 	}
 
 	public List<string> getAlternativeStrings() {
