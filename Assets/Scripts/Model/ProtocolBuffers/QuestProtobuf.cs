@@ -32,6 +32,8 @@ public static partial class QuestProtobuf {
   internal static pb::FieldAccess.FieldAccessorTable<global::TierProtocol, global::TierProtocol.Builder> internal__static_TierProtocol__FieldAccessorTable;
   internal static pbd::MessageDescriptor internal__static_LevelProtocol__Descriptor;
   internal static pb::FieldAccess.FieldAccessorTable<global::LevelProtocol, global::LevelProtocol.Builder> internal__static_LevelProtocol__FieldAccessorTable;
+  internal static pbd::MessageDescriptor internal__static_QuestFinishedProtocol__Descriptor;
+  internal static pb::FieldAccess.FieldAccessorTable<global::QuestFinishedProtocol, global::QuestFinishedProtocol.Builder> internal__static_QuestFinishedProtocol__FieldAccessorTable;
   internal static pbd::MessageDescriptor internal__static_ActionProtocol__Descriptor;
   internal static pb::FieldAccess.FieldAccessorTable<global::ActionProtocol, global::ActionProtocol.Builder> internal__static_ActionProtocol__FieldAccessorTable;
   internal static pbd::MessageDescriptor internal__static_DirectObjectProtocol__Descriptor;
@@ -94,57 +96,58 @@ public static partial class QuestProtobuf {
         "b3RvY29sIpIBChJTdGF0dXNTdGVwUHJvdG9jb2wSDAoEbmFtZRgBIAIoCRIT" + 
         "CgtkZXNjcmlwdGlvbhgCIAIoCRIwCg5zdGF0dXNlc0luU3RlcBgDIAMoCzIY" + 
         "LlN0YXR1c0NoZWNrYWJsZVByb3RvY29sEicKCGNvbW1hbmRzGAQgAygLMhUu" + 
-        "U3Bhd25Db21tYW5kUHJvdG9jb2wikwEKF1N0YXR1c0NoZWNrYWJsZVByb3Rv" + 
+        "U3Bhd25Db21tYW5kUHJvdG9jb2wiugEKF1N0YXR1c0NoZWNrYWJsZVByb3Rv" + 
         "Y29sEh8KBmFjdGlvbhgBIAEoCzIPLkFjdGlvblByb3RvY29sEhsKBHRpZXIY" + 
         "AiABKAsyDS5UaWVyUHJvdG9jb2wSDgoGYW1vdW50GAMgASgFEh0KBWxldmVs" + 
-        "GAQgASgLMg4uTGV2ZWxQcm90b2NvbBILCgNub3QYBSABKAgiHAoMVGllclBy" + 
-        "b3RvY29sEgwKBHRpZXIYASACKAUiHgoNTGV2ZWxQcm90b2NvbBINCgVsZXZl" + 
-        "bBgBIAIoBSJSCg5BY3Rpb25Qcm90b2NvbBIZCgR0eXBlGAEgAigOMgsuQWN0" + 
-        "aW9uVHlwZRIlCgZ0YXJnZXQYAiABKAsyFS5EaXJlY3RPYmplY3RQcm90b2Nv" + 
-        "bCKFAQoURGlyZWN0T2JqZWN0UHJvdG9jb2wSDAoEdHlwZRgBIAEoCRIMCgRu" + 
-        "YW1lGAIgAigJEhkKA21hcBgDIAEoCzIMLk1hcFByb3RvY29sEg4KBmFtb3Vu" + 
-        "dBgEIAEoBRImCg9pdGVtSW5mb3JtYXRpb24YBSABKAsyDS5JdGVtUHJvdG9j" + 
-        "b2wiQwoLTWFwUHJvdG9jb2wSCwoDdWlkGAEgAigDEhgKEGdlbmVyYXRlSWZO" + 
-        "ZWVkZWQYAiACKAgSDQoFcmFuZ2UYAyACKAEiRwoMSXRlbVByb3RvY29sEg8K" + 
-        "B3ZlcnNpb24YASACKAUSJgoJbGV2ZWxTcGVjGAIgAigOMhMuTGV2ZWxTcGVj" + 
-        "aWZpY2F0aW9uIjsKE0NvbnZlcnNhdGlvblBhY2thZ2USJAoNY29udmVyc2F0" + 
-        "aW9ucxgBIAMoCzINLkNvbnZlcnNhdGlvbiJSCgxDb252ZXJzYXRpb24SIwoI" + 
-        "YWxsTm9kZXMYASADKAsyES5Db252ZXJzYXRpb25Ob2RlEgwKBG5hbWUYAiAB" + 
-        "KAkSDwoHY3JlYXRvchgDIAEoCSKZAQoQQ29udmVyc2F0aW9uTm9kZRIMCgR0" + 
-        "ZXh0GAEgAigJEgwKBG5hbWUYAiACKAkSCwoDdWlkGAMgAigDEgkKAVgYBCAC" + 
-        "KAUSCQoBWRgFIAIoBRIgCgtjb25uZWN0aW9ucxgGIAMoCzILLkNvbm5lY3Rp" + 
-        "b24SJAoGYmxvY2tzGAcgAygLMhQuU3RhdHVzQmxvY2tQcm90b2NvbCJmCgpD" + 
-        "b25uZWN0aW9uEg4KBm5vZGVJZBgBIAIoAxIMCgR0ZXh0GAIgAigJEigKD3Jl" + 
-        "cXVpcmVtZW50U2V0cxgDIAMoCzIPLlJlcXVpcmVtZW50U2V0EhAKCHByaW9y" + 
-        "aXR5GAQgASgFIkAKDlJlcXVpcmVtZW50U2V0Ei4KDHJlcXVpcmVtZW50cxgB" + 
-        "IAMoCzIYLlN0YXR1c0NoZWNrYWJsZVByb3RvY29sIoEBCgtTYXZlUGFja2Fn" + 
-        "ZRIdCgZwbGF5ZXIYASACKAsyDS5QbGF5ZXJTdGF0dXMSDAoEc2VlZBgCIAIo" + 
-        "BRIdCglxdWVzdERhdGEYAyADKAsyCi5RdWVzdFNhdmUSJgoOc3Bhd25lZE9i" + 
-        "amVjdHMYBCADKAsyDi5TcGF3bmVkT2JqZWN0Ik4KDkdsb2JhbFBvc2l0aW9u" + 
-        "Eg0KBWFyZWFYGAIgAigFEg0KBWFyZWFZGAMgAigFEg4KBmxvY2FsWBgEIAIo" + 
-        "BRIOCgZsb2NhbFkYBSACKAUiIgoKUG9pbnRQcm90bxIJCgF4GAEgAigFEgkK" + 
-        "AXkYAiACKAUifQoJUXVlc3RTYXZlEgwKBG5hbWUYASACKAkSDAoEc3RlcBgC" + 
-        "IAIoBRIuChljdXJyZW50U3RlcFNwYXduTG9jYXRpb25zGAMgAygLMgsuUG9p" + 
-        "bnRQcm90bxIkCg9jdXJyZW50U3RlcERhdGEYBCADKAsyCy5TdGF0dXNTYXZl" + 
-        "Ii8KClN0YXR1c1NhdmUSEgoKYWxyZWFkeU1ldBgBIAIoCBINCgVjb3VudBgC" + 
-        "IAIoBSKIAQoNU3Bhd25lZE9iamVjdBInCg5vYmplY3RQb3NpdGlvbhgBIAIo" + 
-        "CzIPLkdsb2JhbFBvc2l0aW9uEikKCm9iamVjdERhdGEYAiACKAsyFS5EaXJl" + 
-        "Y3RPYmplY3RQcm90b2NvbBIjCg9lbmVteUF0dHJpYnV0ZXMYAyABKAsyCi5F" + 
-        "bmVteURhdGEiJAoJRW5lbXlEYXRhEhcKD2hlYWx0aFJlbWFpbmluZxgBIAIo" + 
-        "BSJ9CgxQbGF5ZXJTdGF0dXMSJwoOcGxheWVyUG9zaXRpb24YASACKAsyDy5H" + 
-        "bG9iYWxQb3NpdGlvbhIhCglpbnZlbnRvcnkYAiACKAsyDi5JbnZlbnRvcnlE" + 
-        "YXRhEg8KB3ZlcnNpb24YAyACKAkSEAoIcm90YXRpb24YBCACKAUiNgoNSW52" + 
-        "ZW50b3J5RGF0YRIlCgZvYmplY3QYASADKAsyFS5EaXJlY3RPYmplY3RQcm90" + 
-        "b2NvbCqlAQoKQWN0aW9uVHlwZRIICgRLSUxMEAASDQoJTU9WRV9BUkVBEAES" + 
-        "FQoRQVBQUk9BQ0hFRF9PQkpFQ1QQAhIUChBQSUNLRURfVVBfT0JKRUNUEAMS" + 
-        "DAoITEVWRUxfVVAQBRIOCgpFUVVJUF9JVEVNEAYSDAoIVVNFX0lURU0QBxIK" + 
-        "CgZBVFRBQ0sQCBIZChVDT05WRVJTQVRJT05fTk9ERV9ISVQQCSo2CgVCaW9t" + 
-        "ZRIQCgxOT1RfQVNTSUdORUQQABIKCgZQWVRIT04QARIFCgFDEAISCAoESFRN" + 
-        "TBADKioKB01hcFR5cGUSCAoEQ0lUWRAAEggKBFBBVEgQARILCgdEVU5HRU9O" + 
-        "EAIqNQoaU3Bhd25BcmVhVHlwZVNwZWNpZmljYXRpb24SCQoFTE9DQUwQABIM" + 
-        "CghESVNUQU5DRRABKiwKEkxldmVsU3BlY2lmaWNhdGlvbhILCgdNSU5JTVVN" + 
-        "EAESCQoFRVhBQ1QQAkIhCh9zdHNxdWVzdGJ1aWxkZXIucHJvdG9jb2xidWZm" + 
-        "ZXJz");
+        "GAQgASgLMg4uTGV2ZWxQcm90b2NvbBILCgNub3QYBSABKAgSJQoFcXVlc3QY" + 
+        "BiABKAsyFi5RdWVzdEZpbmlzaGVkUHJvdG9jb2wiHAoMVGllclByb3RvY29s" + 
+        "EgwKBHRpZXIYASACKAUiHgoNTGV2ZWxQcm90b2NvbBINCgVsZXZlbBgBIAIo" + 
+        "BSIlChVRdWVzdEZpbmlzaGVkUHJvdG9jb2wSDAoEbmFtZRgBIAIoCSJSCg5B" + 
+        "Y3Rpb25Qcm90b2NvbBIZCgR0eXBlGAEgAigOMgsuQWN0aW9uVHlwZRIlCgZ0" + 
+        "YXJnZXQYAiABKAsyFS5EaXJlY3RPYmplY3RQcm90b2NvbCKFAQoURGlyZWN0" + 
+        "T2JqZWN0UHJvdG9jb2wSDAoEdHlwZRgBIAEoCRIMCgRuYW1lGAIgAigJEhkK" + 
+        "A21hcBgDIAEoCzIMLk1hcFByb3RvY29sEg4KBmFtb3VudBgEIAEoBRImCg9p" + 
+        "dGVtSW5mb3JtYXRpb24YBSABKAsyDS5JdGVtUHJvdG9jb2wiQwoLTWFwUHJv" + 
+        "dG9jb2wSCwoDdWlkGAEgAigDEhgKEGdlbmVyYXRlSWZOZWVkZWQYAiACKAgS" + 
+        "DQoFcmFuZ2UYAyACKAEiRwoMSXRlbVByb3RvY29sEg8KB3ZlcnNpb24YASAC" + 
+        "KAUSJgoJbGV2ZWxTcGVjGAIgAigOMhMuTGV2ZWxTcGVjaWZpY2F0aW9uIjsK" + 
+        "E0NvbnZlcnNhdGlvblBhY2thZ2USJAoNY29udmVyc2F0aW9ucxgBIAMoCzIN" + 
+        "LkNvbnZlcnNhdGlvbiJSCgxDb252ZXJzYXRpb24SIwoIYWxsTm9kZXMYASAD" + 
+        "KAsyES5Db252ZXJzYXRpb25Ob2RlEgwKBG5hbWUYAiABKAkSDwoHY3JlYXRv" + 
+        "chgDIAEoCSKZAQoQQ29udmVyc2F0aW9uTm9kZRIMCgR0ZXh0GAEgAigJEgwK" + 
+        "BG5hbWUYAiACKAkSCwoDdWlkGAMgAigDEgkKAVgYBCACKAUSCQoBWRgFIAIo" + 
+        "BRIgCgtjb25uZWN0aW9ucxgGIAMoCzILLkNvbm5lY3Rpb24SJAoGYmxvY2tz" + 
+        "GAcgAygLMhQuU3RhdHVzQmxvY2tQcm90b2NvbCJmCgpDb25uZWN0aW9uEg4K" + 
+        "Bm5vZGVJZBgBIAIoAxIMCgR0ZXh0GAIgAigJEigKD3JlcXVpcmVtZW50U2V0" + 
+        "cxgDIAMoCzIPLlJlcXVpcmVtZW50U2V0EhAKCHByaW9yaXR5GAQgASgFIkAK" + 
+        "DlJlcXVpcmVtZW50U2V0Ei4KDHJlcXVpcmVtZW50cxgBIAMoCzIYLlN0YXR1" + 
+        "c0NoZWNrYWJsZVByb3RvY29sIoEBCgtTYXZlUGFja2FnZRIdCgZwbGF5ZXIY" + 
+        "ASACKAsyDS5QbGF5ZXJTdGF0dXMSDAoEc2VlZBgCIAIoBRIdCglxdWVzdERh" + 
+        "dGEYAyADKAsyCi5RdWVzdFNhdmUSJgoOc3Bhd25lZE9iamVjdHMYBCADKAsy" + 
+        "Di5TcGF3bmVkT2JqZWN0Ik4KDkdsb2JhbFBvc2l0aW9uEg0KBWFyZWFYGAIg" + 
+        "AigFEg0KBWFyZWFZGAMgAigFEg4KBmxvY2FsWBgEIAIoBRIOCgZsb2NhbFkY" + 
+        "BSACKAUiIgoKUG9pbnRQcm90bxIJCgF4GAEgAigFEgkKAXkYAiACKAUifQoJ" + 
+        "UXVlc3RTYXZlEgwKBG5hbWUYASACKAkSDAoEc3RlcBgCIAIoBRIuChljdXJy" + 
+        "ZW50U3RlcFNwYXduTG9jYXRpb25zGAMgAygLMgsuUG9pbnRQcm90bxIkCg9j" + 
+        "dXJyZW50U3RlcERhdGEYBCADKAsyCy5TdGF0dXNTYXZlIi8KClN0YXR1c1Nh" + 
+        "dmUSEgoKYWxyZWFkeU1ldBgBIAIoCBINCgVjb3VudBgCIAIoBSKIAQoNU3Bh" + 
+        "d25lZE9iamVjdBInCg5vYmplY3RQb3NpdGlvbhgBIAIoCzIPLkdsb2JhbFBv" + 
+        "c2l0aW9uEikKCm9iamVjdERhdGEYAiACKAsyFS5EaXJlY3RPYmplY3RQcm90" + 
+        "b2NvbBIjCg9lbmVteUF0dHJpYnV0ZXMYAyABKAsyCi5FbmVteURhdGEiJAoJ" + 
+        "RW5lbXlEYXRhEhcKD2hlYWx0aFJlbWFpbmluZxgBIAIoBSJ9CgxQbGF5ZXJT" + 
+        "dGF0dXMSJwoOcGxheWVyUG9zaXRpb24YASACKAsyDy5HbG9iYWxQb3NpdGlv" + 
+        "bhIhCglpbnZlbnRvcnkYAiACKAsyDi5JbnZlbnRvcnlEYXRhEg8KB3ZlcnNp" + 
+        "b24YAyACKAkSEAoIcm90YXRpb24YBCACKAUiNgoNSW52ZW50b3J5RGF0YRIl" + 
+        "CgZvYmplY3QYASADKAsyFS5EaXJlY3RPYmplY3RQcm90b2NvbCqlAQoKQWN0" + 
+        "aW9uVHlwZRIICgRLSUxMEAASDQoJTU9WRV9BUkVBEAESFQoRQVBQUk9BQ0hF" + 
+        "RF9PQkpFQ1QQAhIUChBQSUNLRURfVVBfT0JKRUNUEAMSDAoITEVWRUxfVVAQ" + 
+        "BRIOCgpFUVVJUF9JVEVNEAYSDAoIVVNFX0lURU0QBxIKCgZBVFRBQ0sQCBIZ" + 
+        "ChVDT05WRVJTQVRJT05fTk9ERV9ISVQQCSo2CgVCaW9tZRIQCgxOT1RfQVNT" + 
+        "SUdORUQQABIKCgZQWVRIT04QARIFCgFDEAISCAoESFRNTBADKioKB01hcFR5" + 
+        "cGUSCAoEQ0lUWRAAEggKBFBBVEgQARILCgdEVU5HRU9OEAIqNQoaU3Bhd25B" + 
+        "cmVhVHlwZVNwZWNpZmljYXRpb24SCQoFTE9DQUwQABIMCghESVNUQU5DRRAB" + 
+        "KiwKEkxldmVsU3BlY2lmaWNhdGlvbhILCgdNSU5JTVVNEAESCQoFRVhBQ1QQ" + 
+        "AkIhCh9zdHNxdWVzdGJ1aWxkZXIucHJvdG9jb2xidWZmZXJz");
     pbd::FileDescriptor.InternalDescriptorAssigner assigner = delegate(pbd::FileDescriptor root) {
       descriptor = root;
       internal__static_QuestPackage__Descriptor = Descriptor.MessageTypes[0];
@@ -174,7 +177,7 @@ public static partial class QuestProtobuf {
       internal__static_StatusCheckableProtocol__Descriptor = Descriptor.MessageTypes[6];
       internal__static_StatusCheckableProtocol__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::StatusCheckableProtocol, global::StatusCheckableProtocol.Builder>(internal__static_StatusCheckableProtocol__Descriptor,
-              new string[] { "Action", "Tier", "Amount", "Level", "Not", });
+              new string[] { "Action", "Tier", "Amount", "Level", "Not", "Quest", });
       internal__static_TierProtocol__Descriptor = Descriptor.MessageTypes[7];
       internal__static_TierProtocol__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::TierProtocol, global::TierProtocol.Builder>(internal__static_TierProtocol__Descriptor,
@@ -183,75 +186,79 @@ public static partial class QuestProtobuf {
       internal__static_LevelProtocol__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::LevelProtocol, global::LevelProtocol.Builder>(internal__static_LevelProtocol__Descriptor,
               new string[] { "Level", });
-      internal__static_ActionProtocol__Descriptor = Descriptor.MessageTypes[9];
+      internal__static_QuestFinishedProtocol__Descriptor = Descriptor.MessageTypes[9];
+      internal__static_QuestFinishedProtocol__FieldAccessorTable = 
+          new pb::FieldAccess.FieldAccessorTable<global::QuestFinishedProtocol, global::QuestFinishedProtocol.Builder>(internal__static_QuestFinishedProtocol__Descriptor,
+              new string[] { "Name", });
+      internal__static_ActionProtocol__Descriptor = Descriptor.MessageTypes[10];
       internal__static_ActionProtocol__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::ActionProtocol, global::ActionProtocol.Builder>(internal__static_ActionProtocol__Descriptor,
               new string[] { "Type", "Target", });
-      internal__static_DirectObjectProtocol__Descriptor = Descriptor.MessageTypes[10];
+      internal__static_DirectObjectProtocol__Descriptor = Descriptor.MessageTypes[11];
       internal__static_DirectObjectProtocol__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::DirectObjectProtocol, global::DirectObjectProtocol.Builder>(internal__static_DirectObjectProtocol__Descriptor,
               new string[] { "Type", "Name", "Map", "Amount", "ItemInformation", });
-      internal__static_MapProtocol__Descriptor = Descriptor.MessageTypes[11];
+      internal__static_MapProtocol__Descriptor = Descriptor.MessageTypes[12];
       internal__static_MapProtocol__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::MapProtocol, global::MapProtocol.Builder>(internal__static_MapProtocol__Descriptor,
               new string[] { "Uid", "GenerateIfNeeded", "Range", });
-      internal__static_ItemProtocol__Descriptor = Descriptor.MessageTypes[12];
+      internal__static_ItemProtocol__Descriptor = Descriptor.MessageTypes[13];
       internal__static_ItemProtocol__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::ItemProtocol, global::ItemProtocol.Builder>(internal__static_ItemProtocol__Descriptor,
               new string[] { "Version", "LevelSpec", });
-      internal__static_ConversationPackage__Descriptor = Descriptor.MessageTypes[13];
+      internal__static_ConversationPackage__Descriptor = Descriptor.MessageTypes[14];
       internal__static_ConversationPackage__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::ConversationPackage, global::ConversationPackage.Builder>(internal__static_ConversationPackage__Descriptor,
               new string[] { "Conversations", });
-      internal__static_Conversation__Descriptor = Descriptor.MessageTypes[14];
+      internal__static_Conversation__Descriptor = Descriptor.MessageTypes[15];
       internal__static_Conversation__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::Conversation, global::Conversation.Builder>(internal__static_Conversation__Descriptor,
               new string[] { "AllNodes", "Name", "Creator", });
-      internal__static_ConversationNode__Descriptor = Descriptor.MessageTypes[15];
+      internal__static_ConversationNode__Descriptor = Descriptor.MessageTypes[16];
       internal__static_ConversationNode__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::ConversationNode, global::ConversationNode.Builder>(internal__static_ConversationNode__Descriptor,
               new string[] { "Text", "Name", "Uid", "X", "Y", "Connections", "Blocks", });
-      internal__static_Connection__Descriptor = Descriptor.MessageTypes[16];
+      internal__static_Connection__Descriptor = Descriptor.MessageTypes[17];
       internal__static_Connection__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::Connection, global::Connection.Builder>(internal__static_Connection__Descriptor,
               new string[] { "NodeId", "Text", "RequirementSets", "Priority", });
-      internal__static_RequirementSet__Descriptor = Descriptor.MessageTypes[17];
+      internal__static_RequirementSet__Descriptor = Descriptor.MessageTypes[18];
       internal__static_RequirementSet__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::RequirementSet, global::RequirementSet.Builder>(internal__static_RequirementSet__Descriptor,
               new string[] { "Requirements", });
-      internal__static_SavePackage__Descriptor = Descriptor.MessageTypes[18];
+      internal__static_SavePackage__Descriptor = Descriptor.MessageTypes[19];
       internal__static_SavePackage__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::SavePackage, global::SavePackage.Builder>(internal__static_SavePackage__Descriptor,
               new string[] { "Player", "Seed", "QuestData", "SpawnedObjects", });
-      internal__static_GlobalPosition__Descriptor = Descriptor.MessageTypes[19];
+      internal__static_GlobalPosition__Descriptor = Descriptor.MessageTypes[20];
       internal__static_GlobalPosition__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::GlobalPosition, global::GlobalPosition.Builder>(internal__static_GlobalPosition__Descriptor,
               new string[] { "AreaX", "AreaY", "LocalX", "LocalY", });
-      internal__static_PointProto__Descriptor = Descriptor.MessageTypes[20];
+      internal__static_PointProto__Descriptor = Descriptor.MessageTypes[21];
       internal__static_PointProto__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::PointProto, global::PointProto.Builder>(internal__static_PointProto__Descriptor,
               new string[] { "X", "Y", });
-      internal__static_QuestSave__Descriptor = Descriptor.MessageTypes[21];
+      internal__static_QuestSave__Descriptor = Descriptor.MessageTypes[22];
       internal__static_QuestSave__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::QuestSave, global::QuestSave.Builder>(internal__static_QuestSave__Descriptor,
               new string[] { "Name", "Step", "CurrentStepSpawnLocations", "CurrentStepData", });
-      internal__static_StatusSave__Descriptor = Descriptor.MessageTypes[22];
+      internal__static_StatusSave__Descriptor = Descriptor.MessageTypes[23];
       internal__static_StatusSave__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::StatusSave, global::StatusSave.Builder>(internal__static_StatusSave__Descriptor,
               new string[] { "AlreadyMet", "Count", });
-      internal__static_SpawnedObject__Descriptor = Descriptor.MessageTypes[23];
+      internal__static_SpawnedObject__Descriptor = Descriptor.MessageTypes[24];
       internal__static_SpawnedObject__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::SpawnedObject, global::SpawnedObject.Builder>(internal__static_SpawnedObject__Descriptor,
               new string[] { "ObjectPosition", "ObjectData", "EnemyAttributes", });
-      internal__static_EnemyData__Descriptor = Descriptor.MessageTypes[24];
+      internal__static_EnemyData__Descriptor = Descriptor.MessageTypes[25];
       internal__static_EnemyData__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::EnemyData, global::EnemyData.Builder>(internal__static_EnemyData__Descriptor,
               new string[] { "HealthRemaining", });
-      internal__static_PlayerStatus__Descriptor = Descriptor.MessageTypes[25];
+      internal__static_PlayerStatus__Descriptor = Descriptor.MessageTypes[26];
       internal__static_PlayerStatus__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::PlayerStatus, global::PlayerStatus.Builder>(internal__static_PlayerStatus__Descriptor,
               new string[] { "PlayerPosition", "Inventory", "Version", "Rotation", });
-      internal__static_InventoryData__Descriptor = Descriptor.MessageTypes[26];
+      internal__static_InventoryData__Descriptor = Descriptor.MessageTypes[27];
       internal__static_InventoryData__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::InventoryData, global::InventoryData.Builder>(internal__static_InventoryData__Descriptor,
               new string[] { "Object", });
@@ -2891,8 +2898,8 @@ public sealed partial class StatusStepProtocol : pb::GeneratedMessage<StatusStep
 public sealed partial class StatusCheckableProtocol : pb::GeneratedMessage<StatusCheckableProtocol, StatusCheckableProtocol.Builder> {
   private StatusCheckableProtocol() { }
   private static readonly StatusCheckableProtocol defaultInstance = new StatusCheckableProtocol().MakeReadOnly();
-  private static readonly string[] _statusCheckableProtocolFieldNames = new string[] { "action", "amount", "level", "not", "tier" };
-  private static readonly uint[] _statusCheckableProtocolFieldTags = new uint[] { 10, 24, 34, 40, 18 };
+  private static readonly string[] _statusCheckableProtocolFieldNames = new string[] { "action", "amount", "level", "not", "quest", "tier" };
+  private static readonly uint[] _statusCheckableProtocolFieldTags = new uint[] { 10, 24, 34, 40, 50, 18 };
   public static StatusCheckableProtocol DefaultInstance {
     get { return defaultInstance; }
   }
@@ -2963,6 +2970,16 @@ public sealed partial class StatusCheckableProtocol : pb::GeneratedMessage<Statu
     get { return not_; }
   }
   
+  public const int QuestFieldNumber = 6;
+  private bool hasQuest;
+  private global::QuestFinishedProtocol quest_;
+  public bool HasQuest {
+    get { return hasQuest; }
+  }
+  public global::QuestFinishedProtocol Quest {
+    get { return quest_ ?? global::QuestFinishedProtocol.DefaultInstance; }
+  }
+  
   public override bool IsInitialized {
     get {
       if (HasAction) {
@@ -2973,6 +2990,9 @@ public sealed partial class StatusCheckableProtocol : pb::GeneratedMessage<Statu
       }
       if (HasLevel) {
         if (!Level.IsInitialized) return false;
+      }
+      if (HasQuest) {
+        if (!Quest.IsInitialized) return false;
       }
       return true;
     }
@@ -2985,7 +3005,7 @@ public sealed partial class StatusCheckableProtocol : pb::GeneratedMessage<Statu
       output.WriteMessage(1, field_names[0], Action);
     }
     if (hasTier) {
-      output.WriteMessage(2, field_names[4], Tier);
+      output.WriteMessage(2, field_names[5], Tier);
     }
     if (hasAmount) {
       output.WriteInt32(3, field_names[1], Amount);
@@ -2995,6 +3015,9 @@ public sealed partial class StatusCheckableProtocol : pb::GeneratedMessage<Statu
     }
     if (hasNot) {
       output.WriteBool(5, field_names[3], Not);
+    }
+    if (hasQuest) {
+      output.WriteMessage(6, field_names[4], Quest);
     }
     UnknownFields.WriteTo(output);
   }
@@ -3020,6 +3043,9 @@ public sealed partial class StatusCheckableProtocol : pb::GeneratedMessage<Statu
       }
       if (hasNot) {
         size += pb::CodedOutputStream.ComputeBoolSize(5, Not);
+      }
+      if (hasQuest) {
+        size += pb::CodedOutputStream.ComputeMessageSize(6, Quest);
       }
       size += UnknownFields.SerializedSize;
       memoizedSerializedSize = size;
@@ -3160,6 +3186,9 @@ public sealed partial class StatusCheckableProtocol : pb::GeneratedMessage<Statu
       if (other.HasNot) {
         Not = other.Not;
       }
+      if (other.HasQuest) {
+        MergeQuest(other.Quest);
+      }
       this.MergeUnknownFields(other.UnknownFields);
       return this;
     }
@@ -3236,6 +3265,15 @@ public sealed partial class StatusCheckableProtocol : pb::GeneratedMessage<Statu
           }
           case 40: {
             result.hasNot = input.ReadBool(ref result.not_);
+            break;
+          }
+          case 50: {
+            global::QuestFinishedProtocol.Builder subBuilder = global::QuestFinishedProtocol.CreateBuilder();
+            if (result.hasQuest) {
+              subBuilder.MergeFrom(Quest);
+            }
+            input.ReadMessage(subBuilder, extensionRegistry);
+            Quest = subBuilder.BuildPartial();
             break;
           }
         }
@@ -3405,6 +3443,46 @@ public sealed partial class StatusCheckableProtocol : pb::GeneratedMessage<Statu
       PrepareBuilder();
       result.hasNot = false;
       result.not_ = false;
+      return this;
+    }
+    
+    public bool HasQuest {
+     get { return result.hasQuest; }
+    }
+    public global::QuestFinishedProtocol Quest {
+      get { return result.Quest; }
+      set { SetQuest(value); }
+    }
+    public Builder SetQuest(global::QuestFinishedProtocol value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      result.hasQuest = true;
+      result.quest_ = value;
+      return this;
+    }
+    public Builder SetQuest(global::QuestFinishedProtocol.Builder builderForValue) {
+      pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+      PrepareBuilder();
+      result.hasQuest = true;
+      result.quest_ = builderForValue.Build();
+      return this;
+    }
+    public Builder MergeQuest(global::QuestFinishedProtocol value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      if (result.hasQuest &&
+          result.quest_ != global::QuestFinishedProtocol.DefaultInstance) {
+          result.quest_ = global::QuestFinishedProtocol.CreateBuilder(result.quest_).MergeFrom(value).BuildPartial();
+      } else {
+        result.quest_ = value;
+      }
+      result.hasQuest = true;
+      return this;
+    }
+    public Builder ClearQuest() {
+      PrepareBuilder();
+      result.hasQuest = false;
+      result.quest_ = null;
       return this;
     }
   }
@@ -3951,6 +4029,278 @@ public sealed partial class LevelProtocol : pb::GeneratedMessage<LevelProtocol, 
     }
   }
   static LevelProtocol() {
+    object.ReferenceEquals(global::QuestProtobuf.Descriptor, null);
+  }
+}
+
+[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+public sealed partial class QuestFinishedProtocol : pb::GeneratedMessage<QuestFinishedProtocol, QuestFinishedProtocol.Builder> {
+  private QuestFinishedProtocol() { }
+  private static readonly QuestFinishedProtocol defaultInstance = new QuestFinishedProtocol().MakeReadOnly();
+  private static readonly string[] _questFinishedProtocolFieldNames = new string[] { "name" };
+  private static readonly uint[] _questFinishedProtocolFieldTags = new uint[] { 10 };
+  public static QuestFinishedProtocol DefaultInstance {
+    get { return defaultInstance; }
+  }
+  
+  public override QuestFinishedProtocol DefaultInstanceForType {
+    get { return DefaultInstance; }
+  }
+  
+  protected override QuestFinishedProtocol ThisMessage {
+    get { return this; }
+  }
+  
+  public static pbd::MessageDescriptor Descriptor {
+    get { return global::QuestProtobuf.internal__static_QuestFinishedProtocol__Descriptor; }
+  }
+  
+  protected override pb::FieldAccess.FieldAccessorTable<QuestFinishedProtocol, QuestFinishedProtocol.Builder> InternalFieldAccessors {
+    get { return global::QuestProtobuf.internal__static_QuestFinishedProtocol__FieldAccessorTable; }
+  }
+  
+  public const int NameFieldNumber = 1;
+  private bool hasName;
+  private string name_ = "";
+  public bool HasName {
+    get { return hasName; }
+  }
+  public string Name {
+    get { return name_; }
+  }
+  
+  public override bool IsInitialized {
+    get {
+      if (!hasName) return false;
+      return true;
+    }
+  }
+  
+  public override void WriteTo(pb::ICodedOutputStream output) {
+    int size = SerializedSize;
+    string[] field_names = _questFinishedProtocolFieldNames;
+    if (hasName) {
+      output.WriteString(1, field_names[0], Name);
+    }
+    UnknownFields.WriteTo(output);
+  }
+  
+  private int memoizedSerializedSize = -1;
+  public override int SerializedSize {
+    get {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+      
+      size = 0;
+      if (hasName) {
+        size += pb::CodedOutputStream.ComputeStringSize(1, Name);
+      }
+      size += UnknownFields.SerializedSize;
+      memoizedSerializedSize = size;
+      return size;
+    }
+  }
+  
+  public static QuestFinishedProtocol ParseFrom(pb::ByteString data) {
+    return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+  }
+  public static QuestFinishedProtocol ParseFrom(pb::ByteString data, pb::ExtensionRegistry extensionRegistry) {
+    return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+  }
+  public static QuestFinishedProtocol ParseFrom(byte[] data) {
+    return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+  }
+  public static QuestFinishedProtocol ParseFrom(byte[] data, pb::ExtensionRegistry extensionRegistry) {
+    return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+  }
+  public static QuestFinishedProtocol ParseFrom(global::System.IO.Stream input) {
+    return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+  }
+  public static QuestFinishedProtocol ParseFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+    return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+  }
+  public static QuestFinishedProtocol ParseDelimitedFrom(global::System.IO.Stream input) {
+    return CreateBuilder().MergeDelimitedFrom(input).BuildParsed();
+  }
+  public static QuestFinishedProtocol ParseDelimitedFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+    return CreateBuilder().MergeDelimitedFrom(input, extensionRegistry).BuildParsed();
+  }
+  public static QuestFinishedProtocol ParseFrom(pb::ICodedInputStream input) {
+    return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+  }
+  public static QuestFinishedProtocol ParseFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+    return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+  }
+  private QuestFinishedProtocol MakeReadOnly() {
+    return this;
+  }
+  
+  public static Builder CreateBuilder() { return new Builder(); }
+  public override Builder ToBuilder() { return CreateBuilder(this); }
+  public override Builder CreateBuilderForType() { return new Builder(); }
+  public static Builder CreateBuilder(QuestFinishedProtocol prototype) {
+    return new Builder(prototype);
+  }
+  
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+  public sealed partial class Builder : pb::GeneratedBuilder<QuestFinishedProtocol, Builder> {
+    protected override Builder ThisBuilder {
+      get { return this; }
+    }
+    public Builder() {
+      result = DefaultInstance;
+      resultIsReadOnly = true;
+    }
+    internal Builder(QuestFinishedProtocol cloneFrom) {
+      result = cloneFrom;
+      resultIsReadOnly = true;
+    }
+    
+    private bool resultIsReadOnly;
+    private QuestFinishedProtocol result;
+    
+    private QuestFinishedProtocol PrepareBuilder() {
+      if (resultIsReadOnly) {
+        QuestFinishedProtocol original = result;
+        result = new QuestFinishedProtocol();
+        resultIsReadOnly = false;
+        MergeFrom(original);
+      }
+      return result;
+    }
+    
+    public override bool IsInitialized {
+      get { return result.IsInitialized; }
+    }
+    
+    protected override QuestFinishedProtocol MessageBeingBuilt {
+      get { return PrepareBuilder(); }
+    }
+    
+    public override Builder Clear() {
+      result = DefaultInstance;
+      resultIsReadOnly = true;
+      return this;
+    }
+    
+    public override Builder Clone() {
+      if (resultIsReadOnly) {
+        return new Builder(result);
+      } else {
+        return new Builder().MergeFrom(result);
+      }
+    }
+    
+    public override pbd::MessageDescriptor DescriptorForType {
+      get { return global::QuestFinishedProtocol.Descriptor; }
+    }
+    
+    public override QuestFinishedProtocol DefaultInstanceForType {
+      get { return global::QuestFinishedProtocol.DefaultInstance; }
+    }
+    
+    public override QuestFinishedProtocol BuildPartial() {
+      if (resultIsReadOnly) {
+        return result;
+      }
+      resultIsReadOnly = true;
+      return result.MakeReadOnly();
+    }
+    
+    public override Builder MergeFrom(pb::IMessage other) {
+      if (other is QuestFinishedProtocol) {
+        return MergeFrom((QuestFinishedProtocol) other);
+      } else {
+        base.MergeFrom(other);
+        return this;
+      }
+    }
+    
+    public override Builder MergeFrom(QuestFinishedProtocol other) {
+      if (other == global::QuestFinishedProtocol.DefaultInstance) return this;
+      PrepareBuilder();
+      if (other.HasName) {
+        Name = other.Name;
+      }
+      this.MergeUnknownFields(other.UnknownFields);
+      return this;
+    }
+    
+    public override Builder MergeFrom(pb::ICodedInputStream input) {
+      return MergeFrom(input, pb::ExtensionRegistry.Empty);
+    }
+    
+    public override Builder MergeFrom(pb::ICodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+      PrepareBuilder();
+      pb::UnknownFieldSet.Builder unknownFields = null;
+      uint tag;
+      string field_name;
+      while (input.ReadTag(out tag, out field_name)) {
+        if(tag == 0 && field_name != null) {
+          int field_ordinal = global::System.Array.BinarySearch(_questFinishedProtocolFieldNames, field_name, global::System.StringComparer.Ordinal);
+          if(field_ordinal >= 0)
+            tag = _questFinishedProtocolFieldTags[field_ordinal];
+          else {
+            if (unknownFields == null) {
+              unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+            }
+            ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+            continue;
+          }
+        }
+        switch (tag) {
+          case 0: {
+            throw pb::InvalidProtocolBufferException.InvalidTag();
+          }
+          default: {
+            if (pb::WireFormat.IsEndGroupTag(tag)) {
+              if (unknownFields != null) {
+                this.UnknownFields = unknownFields.Build();
+              }
+              return this;
+            }
+            if (unknownFields == null) {
+              unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+            }
+            ParseUnknownField(input, unknownFields, extensionRegistry, tag, field_name);
+            break;
+          }
+          case 10: {
+            result.hasName = input.ReadString(ref result.name_);
+            break;
+          }
+        }
+      }
+      
+      if (unknownFields != null) {
+        this.UnknownFields = unknownFields.Build();
+      }
+      return this;
+    }
+    
+    
+    public bool HasName {
+      get { return result.hasName; }
+    }
+    public string Name {
+      get { return result.Name; }
+      set { SetName(value); }
+    }
+    public Builder SetName(string value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      result.hasName = true;
+      result.name_ = value;
+      return this;
+    }
+    public Builder ClearName() {
+      PrepareBuilder();
+      result.hasName = false;
+      result.name_ = "";
+      return this;
+    }
+  }
+  static QuestFinishedProtocol() {
     object.ReferenceEquals(global::QuestProtobuf.Descriptor, null);
   }
 }

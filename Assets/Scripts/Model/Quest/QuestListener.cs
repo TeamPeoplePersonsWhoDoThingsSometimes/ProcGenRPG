@@ -96,4 +96,10 @@ public class QuestListener : ActionEventListener {
 
 		return questData;
 	}
+
+	public bool getIsQuestFinished(string questName) {
+		Quest q = quests [questName];
+		return q.isQuestFinished ();
+	}
+
 }

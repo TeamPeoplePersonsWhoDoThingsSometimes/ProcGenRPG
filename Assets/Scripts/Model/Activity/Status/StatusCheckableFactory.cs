@@ -26,6 +26,10 @@ public class StatusCheckableFactory
 			TierCheckable tier = new TierCheckable ();
 			tier.setFromProtocol (protocol);
 			return tier;
+		} else if (protocol.HasQuest) {
+			QuestFinishedCheckable quest = new QuestFinishedCheckable();
+			quest.setFromProtocol (protocol);
+			return quest;
 		}
 
 		MasterDriver.Instance.log ("Could not load Status Checkable from protobuf, status type may not be implemented yet.");
