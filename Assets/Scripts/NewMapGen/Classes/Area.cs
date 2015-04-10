@@ -49,7 +49,11 @@ public class Area
 	{
 		get
 		{
-			return rooms[0];
+			if(rooms != null && rooms.Count > 0) {
+				return rooms[0];
+			} else {
+				return null;
+			}
 		}
 	}
     
@@ -396,8 +400,11 @@ public class Area
 	public List<SpawnedObject> getSpawnedObjects() {
 		List<SpawnedObject> spawnedObjectData = new List<SpawnedObject> ();
 
-		foreach (Room r in rooms) {
-			spawnedObjectData.AddRange (r.getSpawnedObjects(this));
+		//Have to check if it's null to avoid NullRef
+		if(rooms != null) {
+			foreach (Room r in rooms) {
+				spawnedObjectData.AddRange (r.getSpawnedObjects(this));
+			}
 		}
 
 		return spawnedObjectData;

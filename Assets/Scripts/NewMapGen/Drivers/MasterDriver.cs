@@ -396,7 +396,9 @@ public class MasterDriver : MonoBehaviour {
 
 			obj.transform.position = new Vector3 (pos.LocalX, obj.transform.position.y, pos.LocalY);
 
-			area.basicRoom.addSpawnedObject(obj);
+			if(area.basicRoom != null) {
+				area.basicRoom.addSpawnedObject(obj);
+			}
 
 			if (area != currentArea) {
 				obj.SetActive(false);
