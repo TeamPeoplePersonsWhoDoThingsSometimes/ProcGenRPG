@@ -99,10 +99,10 @@ public class UnityNPC : Interactable {
 	// Update is called once per frame
 	void Update () {
 
-		if(cityNotbuiltyet && !Player.playerPos.position.Equals(Vector3.zero)) {
-			transform.position = Player.playerPos.position + Vector3.forward*2f;
-			cityNotbuiltyet = false;
-		}
+//		if(cityNotbuiltyet && !Player.playerPos.position.Equals(Vector3.zero)) {
+//			transform.position = Player.playerPos.position + Vector3.forward*2f;
+//			cityNotbuiltyet = false;
+//		}
 
 		if (this.CanInteract()) {
 			nameUI2.enabled = true;
