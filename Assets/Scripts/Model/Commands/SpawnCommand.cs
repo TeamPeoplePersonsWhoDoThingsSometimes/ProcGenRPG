@@ -19,15 +19,22 @@ public class SpawnCommand {
 		spawnArea = MapType.CITY;
 		range = 1;
 		quantity = 1;
+		version = "";
 	}
 	
 	public SpawnCommand(SpawnCommandProtocol proto) {
+		version = "";
 		spawnArea = proto.SpawnArea;
 		range = proto.Range;
 		specification = proto.SpawnSpecification;
 
 		if (proto.HasItem) {
 			objectToSpawn = (GameObject)MasterDriver.Instance.getItemFromProtobuf(proto.Item);
+
+			if (proto.Item.HasItemInformation && proto.Item.ItemInformation.HasSaveVersion) {
+				version = proto.Item.ItemInformation.SaveVersion;
+			}
+
 			objectName = proto.Item.Type;
 			quantity = proto.Item.Amount;
         }
@@ -87,6 +94,9 @@ public class SpawnCommand {
 				newObject.SetActive(false);
 				newItem = newObject.GetComponent<Item>();
 				newItem.name = objectName;
+				if (!version.Equals(string.Empty) && newObject.GetComponent<Weapon>() != null) {
+					newObject.GetComponent<Weapon>().version = version;
+				}
 				drop.item = newObject;
 				obj = newDrop;
 			}

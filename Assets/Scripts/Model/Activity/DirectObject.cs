@@ -29,6 +29,27 @@ public class DirectObject {
 		return builder.Build ();
 		
 	}
+
+	/**
+	 * Builds a direct object protobuf out of the information in this object
+	 * 
+	 * saves item information as well
+	 */
+	public DirectObjectProtocol getDirectObjectAsProtobuf(Weapon item) {
+		DirectObjectProtocol.Builder builder = DirectObjectProtocol.CreateBuilder ();
+		builder.SetName (name);
+		builder.SetType (type);
+
+		//yay scrambled crap-code!!!
+		ItemProtocol.Builder iBuilder = ItemProtocol.CreateBuilder ();
+		iBuilder.SetVersion (0);
+		iBuilder.SetLevelSpec (LevelSpecification.EXACT);
+		iBuilder.SetSaveVersion (item.version);
+		builder.SetItemInformation (iBuilder.Build ());
+
+		return builder.Build ();
+		
+	}
 	
 	/**
 	 * Returns a string identifier corresponding to this particular

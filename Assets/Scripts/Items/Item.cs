@@ -28,7 +28,12 @@ public class Item : MonoBehaviour {
 		pBuilder.SetLocalY ((int)location.position.z);
 		builder.SetObjectPosition (pBuilder.Build ());
 
-		builder.SetObjectData (getDirectObject().getDirectObjectAsProtobuf());
+		Weapon weaponAssociated = gameObject.GetComponent<Weapon> ();
+		if (weaponAssociated != null) {
+			builder.SetObjectData (getDirectObject ().getDirectObjectAsProtobuf (weaponAssociated));
+		} else {
+			builder.SetObjectData (getDirectObject ().getDirectObjectAsProtobuf ());
+		}
 
 		builder.SetDescription (description);
 

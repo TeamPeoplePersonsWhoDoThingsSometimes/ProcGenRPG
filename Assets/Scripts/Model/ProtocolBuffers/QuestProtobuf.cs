@@ -113,47 +113,47 @@ public static partial class QuestProtobuf {
         "cFByb3RvY29sEg4KBmFtb3VudBgEIAEoBRImCg9pdGVtSW5mb3JtYXRpb24Y" + 
         "BSABKAsyDS5JdGVtUHJvdG9jb2wiQwoLTWFwUHJvdG9jb2wSCwoDdWlkGAEg" + 
         "AigDEhgKEGdlbmVyYXRlSWZOZWVkZWQYAiACKAgSDQoFcmFuZ2UYAyACKAEi" + 
-        "RwoMSXRlbVByb3RvY29sEg8KB3ZlcnNpb24YASACKAUSJgoJbGV2ZWxTcGVj" + 
-        "GAIgAigOMhMuTGV2ZWxTcGVjaWZpY2F0aW9uIjsKE0NvbnZlcnNhdGlvblBh" + 
-        "Y2thZ2USJAoNY29udmVyc2F0aW9ucxgBIAMoCzINLkNvbnZlcnNhdGlvbiJS" + 
-        "CgxDb252ZXJzYXRpb24SIwoIYWxsTm9kZXMYASADKAsyES5Db252ZXJzYXRp" + 
-        "b25Ob2RlEgwKBG5hbWUYAiABKAkSDwoHY3JlYXRvchgDIAEoCSKZAQoQQ29u" + 
-        "dmVyc2F0aW9uTm9kZRIMCgR0ZXh0GAEgAigJEgwKBG5hbWUYAiACKAkSCwoD" + 
-        "dWlkGAMgAigDEgkKAVgYBCACKAUSCQoBWRgFIAIoBRIgCgtjb25uZWN0aW9u" + 
-        "cxgGIAMoCzILLkNvbm5lY3Rpb24SJAoGYmxvY2tzGAcgAygLMhQuU3RhdHVz" + 
-        "QmxvY2tQcm90b2NvbCJmCgpDb25uZWN0aW9uEg4KBm5vZGVJZBgBIAIoAxIM" + 
-        "CgR0ZXh0GAIgAigJEigKD3JlcXVpcmVtZW50U2V0cxgDIAMoCzIPLlJlcXVp" + 
-        "cmVtZW50U2V0EhAKCHByaW9yaXR5GAQgASgFIkAKDlJlcXVpcmVtZW50U2V0" + 
-        "Ei4KDHJlcXVpcmVtZW50cxgBIAMoCzIYLlN0YXR1c0NoZWNrYWJsZVByb3Rv" + 
-        "Y29sIoEBCgtTYXZlUGFja2FnZRIdCgZwbGF5ZXIYASACKAsyDS5QbGF5ZXJT" + 
-        "dGF0dXMSDAoEc2VlZBgCIAIoBRIdCglxdWVzdERhdGEYAyADKAsyCi5RdWVz" + 
-        "dFNhdmUSJgoOc3Bhd25lZE9iamVjdHMYBCADKAsyDi5TcGF3bmVkT2JqZWN0" + 
-        "Ik4KDkdsb2JhbFBvc2l0aW9uEg0KBWFyZWFYGAIgAigFEg0KBWFyZWFZGAMg" + 
-        "AigFEg4KBmxvY2FsWBgEIAIoBRIOCgZsb2NhbFkYBSACKAUiIgoKUG9pbnRQ" + 
-        "cm90bxIJCgF4GAEgAigFEgkKAXkYAiACKAUifQoJUXVlc3RTYXZlEgwKBG5h" + 
-        "bWUYASACKAkSDAoEc3RlcBgCIAIoBRIuChljdXJyZW50U3RlcFNwYXduTG9j" + 
-        "YXRpb25zGAMgAygLMgsuUG9pbnRQcm90bxIkCg9jdXJyZW50U3RlcERhdGEY" + 
-        "BCADKAsyCy5TdGF0dXNTYXZlIi8KClN0YXR1c1NhdmUSEgoKYWxyZWFkeU1l" + 
-        "dBgBIAIoCBINCgVjb3VudBgCIAIoBSKdAQoNU3Bhd25lZE9iamVjdBInCg5v" + 
-        "YmplY3RQb3NpdGlvbhgBIAIoCzIPLkdsb2JhbFBvc2l0aW9uEikKCm9iamVj" + 
-        "dERhdGEYAiACKAsyFS5EaXJlY3RPYmplY3RQcm90b2NvbBIjCg9lbmVteUF0" + 
-        "dHJpYnV0ZXMYAyABKAsyCi5FbmVteURhdGESEwoLZGVzY3JpcHRpb24YBCAB" + 
-        "KAkiJAoJRW5lbXlEYXRhEhcKD2hlYWx0aFJlbWFpbmluZxgBIAIoBSKuAQoM" + 
-        "UGxheWVyU3RhdHVzEicKDnBsYXllclBvc2l0aW9uGAEgAigLMg8uR2xvYmFs" + 
-        "UG9zaXRpb24SIQoJaW52ZW50b3J5GAIgAigLMg4uSW52ZW50b3J5RGF0YRIP" + 
-        "Cgd2ZXJzaW9uGAMgAigJEhAKCHJvdGF0aW9uGAQgAigFEgwKBG5hbWUYBSAC" + 
-        "KAkSIQoMdmlzaXRlZEFyZWFzGAYgAygLMgsuUG9pbnRQcm90byI2Cg1JbnZl" + 
-        "bnRvcnlEYXRhEiUKBm9iamVjdBgBIAMoCzIVLkRpcmVjdE9iamVjdFByb3Rv" + 
-        "Y29sKqUBCgpBY3Rpb25UeXBlEggKBEtJTEwQABINCglNT1ZFX0FSRUEQARIV" + 
-        "ChFBUFBST0FDSEVEX09CSkVDVBACEhQKEFBJQ0tFRF9VUF9PQkpFQ1QQAxIM" + 
-        "CghMRVZFTF9VUBAFEg4KCkVRVUlQX0lURU0QBhIMCghVU0VfSVRFTRAHEgoK" + 
-        "BkFUVEFDSxAIEhkKFUNPTlZFUlNBVElPTl9OT0RFX0hJVBAJKjYKBUJpb21l" + 
-        "EhAKDE5PVF9BU1NJR05FRBAAEgoKBlBZVEhPThABEgUKAUMQAhIICgRIVE1M" + 
-        "EAMqKgoHTWFwVHlwZRIICgRDSVRZEAASCAoEUEFUSBABEgsKB0RVTkdFT04Q" + 
-        "Aio1ChpTcGF3bkFyZWFUeXBlU3BlY2lmaWNhdGlvbhIJCgVMT0NBTBAAEgwK" + 
-        "CERJU1RBTkNFEAEqLAoSTGV2ZWxTcGVjaWZpY2F0aW9uEgsKB01JTklNVU0Q" + 
-        "ARIJCgVFWEFDVBACQiEKH3N0c3F1ZXN0YnVpbGRlci5wcm90b2NvbGJ1ZmZl" + 
-        "cnM=");
+        "XAoMSXRlbVByb3RvY29sEg8KB3ZlcnNpb24YASACKAUSJgoJbGV2ZWxTcGVj" + 
+        "GAIgAigOMhMuTGV2ZWxTcGVjaWZpY2F0aW9uEhMKC3NhdmVWZXJzaW9uGAMg" + 
+        "ASgJIjsKE0NvbnZlcnNhdGlvblBhY2thZ2USJAoNY29udmVyc2F0aW9ucxgB" + 
+        "IAMoCzINLkNvbnZlcnNhdGlvbiJSCgxDb252ZXJzYXRpb24SIwoIYWxsTm9k" + 
+        "ZXMYASADKAsyES5Db252ZXJzYXRpb25Ob2RlEgwKBG5hbWUYAiABKAkSDwoH" + 
+        "Y3JlYXRvchgDIAEoCSKZAQoQQ29udmVyc2F0aW9uTm9kZRIMCgR0ZXh0GAEg" + 
+        "AigJEgwKBG5hbWUYAiACKAkSCwoDdWlkGAMgAigDEgkKAVgYBCACKAUSCQoB" + 
+        "WRgFIAIoBRIgCgtjb25uZWN0aW9ucxgGIAMoCzILLkNvbm5lY3Rpb24SJAoG" + 
+        "YmxvY2tzGAcgAygLMhQuU3RhdHVzQmxvY2tQcm90b2NvbCJmCgpDb25uZWN0" + 
+        "aW9uEg4KBm5vZGVJZBgBIAIoAxIMCgR0ZXh0GAIgAigJEigKD3JlcXVpcmVt" + 
+        "ZW50U2V0cxgDIAMoCzIPLlJlcXVpcmVtZW50U2V0EhAKCHByaW9yaXR5GAQg" + 
+        "ASgFIkAKDlJlcXVpcmVtZW50U2V0Ei4KDHJlcXVpcmVtZW50cxgBIAMoCzIY" + 
+        "LlN0YXR1c0NoZWNrYWJsZVByb3RvY29sIoEBCgtTYXZlUGFja2FnZRIdCgZw" + 
+        "bGF5ZXIYASACKAsyDS5QbGF5ZXJTdGF0dXMSDAoEc2VlZBgCIAIoBRIdCglx" + 
+        "dWVzdERhdGEYAyADKAsyCi5RdWVzdFNhdmUSJgoOc3Bhd25lZE9iamVjdHMY" + 
+        "BCADKAsyDi5TcGF3bmVkT2JqZWN0Ik4KDkdsb2JhbFBvc2l0aW9uEg0KBWFy" + 
+        "ZWFYGAIgAigFEg0KBWFyZWFZGAMgAigFEg4KBmxvY2FsWBgEIAIoBRIOCgZs" + 
+        "b2NhbFkYBSACKAUiIgoKUG9pbnRQcm90bxIJCgF4GAEgAigFEgkKAXkYAiAC" + 
+        "KAUifQoJUXVlc3RTYXZlEgwKBG5hbWUYASACKAkSDAoEc3RlcBgCIAIoBRIu" + 
+        "ChljdXJyZW50U3RlcFNwYXduTG9jYXRpb25zGAMgAygLMgsuUG9pbnRQcm90" + 
+        "bxIkCg9jdXJyZW50U3RlcERhdGEYBCADKAsyCy5TdGF0dXNTYXZlIi8KClN0" + 
+        "YXR1c1NhdmUSEgoKYWxyZWFkeU1ldBgBIAIoCBINCgVjb3VudBgCIAIoBSKd" + 
+        "AQoNU3Bhd25lZE9iamVjdBInCg5vYmplY3RQb3NpdGlvbhgBIAIoCzIPLkds" + 
+        "b2JhbFBvc2l0aW9uEikKCm9iamVjdERhdGEYAiACKAsyFS5EaXJlY3RPYmpl" + 
+        "Y3RQcm90b2NvbBIjCg9lbmVteUF0dHJpYnV0ZXMYAyABKAsyCi5FbmVteURh" + 
+        "dGESEwoLZGVzY3JpcHRpb24YBCABKAkiJAoJRW5lbXlEYXRhEhcKD2hlYWx0" + 
+        "aFJlbWFpbmluZxgBIAIoBSKuAQoMUGxheWVyU3RhdHVzEicKDnBsYXllclBv" + 
+        "c2l0aW9uGAEgAigLMg8uR2xvYmFsUG9zaXRpb24SIQoJaW52ZW50b3J5GAIg" + 
+        "AigLMg4uSW52ZW50b3J5RGF0YRIPCgd2ZXJzaW9uGAMgAigJEhAKCHJvdGF0" + 
+        "aW9uGAQgAigFEgwKBG5hbWUYBSACKAkSIQoMdmlzaXRlZEFyZWFzGAYgAygL" + 
+        "MgsuUG9pbnRQcm90byI2Cg1JbnZlbnRvcnlEYXRhEiUKBm9iamVjdBgBIAMo" + 
+        "CzIVLkRpcmVjdE9iamVjdFByb3RvY29sKqUBCgpBY3Rpb25UeXBlEggKBEtJ" + 
+        "TEwQABINCglNT1ZFX0FSRUEQARIVChFBUFBST0FDSEVEX09CSkVDVBACEhQK" + 
+        "EFBJQ0tFRF9VUF9PQkpFQ1QQAxIMCghMRVZFTF9VUBAFEg4KCkVRVUlQX0lU" + 
+        "RU0QBhIMCghVU0VfSVRFTRAHEgoKBkFUVEFDSxAIEhkKFUNPTlZFUlNBVElP" + 
+        "Tl9OT0RFX0hJVBAJKjYKBUJpb21lEhAKDE5PVF9BU1NJR05FRBAAEgoKBlBZ" + 
+        "VEhPThABEgUKAUMQAhIICgRIVE1MEAMqKgoHTWFwVHlwZRIICgRDSVRZEAAS" + 
+        "CAoEUEFUSBABEgsKB0RVTkdFT04QAio1ChpTcGF3bkFyZWFUeXBlU3BlY2lm" + 
+        "aWNhdGlvbhIJCgVMT0NBTBAAEgwKCERJU1RBTkNFEAEqLAoSTGV2ZWxTcGVj" + 
+        "aWZpY2F0aW9uEgsKB01JTklNVU0QARIJCgVFWEFDVBACQiEKH3N0c3F1ZXN0" + 
+        "YnVpbGRlci5wcm90b2NvbGJ1ZmZlcnM=");
     pbd::FileDescriptor.InternalDescriptorAssigner assigner = delegate(pbd::FileDescriptor root) {
       descriptor = root;
       internal__static_QuestPackage__Descriptor = Descriptor.MessageTypes[0];
@@ -215,7 +215,7 @@ public static partial class QuestProtobuf {
       internal__static_ItemProtocol__Descriptor = Descriptor.MessageTypes[14];
       internal__static_ItemProtocol__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::ItemProtocol, global::ItemProtocol.Builder>(internal__static_ItemProtocol__Descriptor,
-              new string[] { "Version", "LevelSpec", });
+              new string[] { "Version", "LevelSpec", "SaveVersion", });
       internal__static_ConversationPackage__Descriptor = Descriptor.MessageTypes[15];
       internal__static_ConversationPackage__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::ConversationPackage, global::ConversationPackage.Builder>(internal__static_ConversationPackage__Descriptor,
@@ -5871,8 +5871,8 @@ public sealed partial class MapProtocol : pb::GeneratedMessage<MapProtocol, MapP
 public sealed partial class ItemProtocol : pb::GeneratedMessage<ItemProtocol, ItemProtocol.Builder> {
   private ItemProtocol() { }
   private static readonly ItemProtocol defaultInstance = new ItemProtocol().MakeReadOnly();
-  private static readonly string[] _itemProtocolFieldNames = new string[] { "levelSpec", "version" };
-  private static readonly uint[] _itemProtocolFieldTags = new uint[] { 16, 8 };
+  private static readonly string[] _itemProtocolFieldNames = new string[] { "levelSpec", "saveVersion", "version" };
+  private static readonly uint[] _itemProtocolFieldTags = new uint[] { 16, 26, 8 };
   public static ItemProtocol DefaultInstance {
     get { return defaultInstance; }
   }
@@ -5913,6 +5913,16 @@ public sealed partial class ItemProtocol : pb::GeneratedMessage<ItemProtocol, It
     get { return levelSpec_; }
   }
   
+  public const int SaveVersionFieldNumber = 3;
+  private bool hasSaveVersion;
+  private string saveVersion_ = "";
+  public bool HasSaveVersion {
+    get { return hasSaveVersion; }
+  }
+  public string SaveVersion {
+    get { return saveVersion_; }
+  }
+  
   public override bool IsInitialized {
     get {
       if (!hasVersion) return false;
@@ -5925,10 +5935,13 @@ public sealed partial class ItemProtocol : pb::GeneratedMessage<ItemProtocol, It
     int size = SerializedSize;
     string[] field_names = _itemProtocolFieldNames;
     if (hasVersion) {
-      output.WriteInt32(1, field_names[1], Version);
+      output.WriteInt32(1, field_names[2], Version);
     }
     if (hasLevelSpec) {
       output.WriteEnum(2, field_names[0], (int) LevelSpec, LevelSpec);
+    }
+    if (hasSaveVersion) {
+      output.WriteString(3, field_names[1], SaveVersion);
     }
     UnknownFields.WriteTo(output);
   }
@@ -5945,6 +5958,9 @@ public sealed partial class ItemProtocol : pb::GeneratedMessage<ItemProtocol, It
       }
       if (hasLevelSpec) {
         size += pb::CodedOutputStream.ComputeEnumSize(2, (int) LevelSpec);
+      }
+      if (hasSaveVersion) {
+        size += pb::CodedOutputStream.ComputeStringSize(3, SaveVersion);
       }
       size += UnknownFields.SerializedSize;
       memoizedSerializedSize = size;
@@ -6076,6 +6092,9 @@ public sealed partial class ItemProtocol : pb::GeneratedMessage<ItemProtocol, It
       if (other.HasLevelSpec) {
         LevelSpec = other.LevelSpec;
       }
+      if (other.HasSaveVersion) {
+        SaveVersion = other.SaveVersion;
+      }
       this.MergeUnknownFields(other.UnknownFields);
       return this;
     }
@@ -6135,6 +6154,10 @@ public sealed partial class ItemProtocol : pb::GeneratedMessage<ItemProtocol, It
             }
             break;
           }
+          case 26: {
+            result.hasSaveVersion = input.ReadString(ref result.saveVersion_);
+            break;
+          }
         }
       }
       
@@ -6182,6 +6205,27 @@ public sealed partial class ItemProtocol : pb::GeneratedMessage<ItemProtocol, It
       PrepareBuilder();
       result.hasLevelSpec = false;
       result.levelSpec_ = global::LevelSpecification.MINIMUM;
+      return this;
+    }
+    
+    public bool HasSaveVersion {
+      get { return result.hasSaveVersion; }
+    }
+    public string SaveVersion {
+      get { return result.SaveVersion; }
+      set { SetSaveVersion(value); }
+    }
+    public Builder SetSaveVersion(string value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      result.hasSaveVersion = true;
+      result.saveVersion_ = value;
+      return this;
+    }
+    public Builder ClearSaveVersion() {
+      PrepareBuilder();
+      result.hasSaveVersion = false;
+      result.saveVersion_ = "";
       return this;
     }
   }

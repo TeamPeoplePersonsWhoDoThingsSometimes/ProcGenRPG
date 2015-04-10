@@ -99,6 +99,11 @@ public class Player : MonoBehaviour {
 		foreach (DirectObjectProtocol item in inv.ObjectList) {
 			GameObject obj = (GameObject)MasterDriver.Instance.getItemFromProtobuf(item);
 			obj.GetComponent<Item>().name = item.Type;
+
+			if (item.HasItemInformation && item.ItemInformation.HasSaveVersion && obj.GetComponent<Weapon>() != null) {
+				obj.GetComponent<Weapon>().version = item.ItemInformation.SaveVersion;
+			}
+
 			PickUpItem(obj);
 		}
 

@@ -150,6 +150,8 @@ public class WorldMap : MonoBehaviour {
 	}
 
 	public static void AddStarAt(int x, int z, string text) {
+		Debug.Log ("Place Star at: " + x + "," + z);
+		
 		GameObject temp = (GameObject)GameObject.Instantiate(instance.starPrefab);
 		temp.transform.localPosition = new Vector3((x - 5)*5,3f,-(z - 5)*5);
 		if(questStars == null) {

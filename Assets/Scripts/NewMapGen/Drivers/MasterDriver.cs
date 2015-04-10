@@ -390,6 +390,11 @@ public class MasterDriver : MonoBehaviour {
 				GameObject newObject = (GameObject)GameObject.Instantiate (obj);
 				newObject.SetActive(false);
 				newObject.GetComponent<Item>().name = o.ObjectData.Type;
+
+				if (o.ObjectData.HasItemInformation && o.ObjectData.ItemInformation.HasSaveVersion && newObject.GetComponent<Weapon>() != null) {
+					newObject.GetComponent<Weapon>().version = o.ObjectData.ItemInformation.SaveVersion;
+				}
+
 				newDrop.GetComponent<ItemDropObject>().item = newObject;
 				obj = newDrop;
 			}
