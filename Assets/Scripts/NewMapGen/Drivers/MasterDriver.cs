@@ -326,6 +326,7 @@ public class MasterDriver : MonoBehaviour {
 	}
 
 	public void load(int file) {
+		Debug.Log("LOADING : " + file);
 		SavePackage package;
 
 		try {

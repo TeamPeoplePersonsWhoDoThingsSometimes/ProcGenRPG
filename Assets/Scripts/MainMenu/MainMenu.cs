@@ -35,9 +35,32 @@ public class MainMenu : MonoBehaviour {
 		volumeSlider.value = PlayerPrefs.GetFloat("MasterVolume");
 		qualitySlider.value = QualitySettings.GetQualityLevel();
 
-		load1.text = PlayerPrefs.GetString("Load1","EMPTY");
-		load2.text = PlayerPrefs.GetString("Load2","EMPTY");
-		load3.text = PlayerPrefs.GetString("Load3","EMPTY");
+		FileStream fs;
+		try {
+			fs = new FileStream (MasterDriver.saveGameFile1, FileMode.Open);
+			load1.text = PlayerPrefs.GetString("Load1","EMPTY");
+			fs.Flush();
+			fs.Close();
+		} catch (IOException excep) {
+			load1.text = "EMPTY";
+		}
+		try {
+			fs = new FileStream (MasterDriver.saveGameFile2, FileMode.Open);
+			load2.text = PlayerPrefs.GetString("Load2","EMPTY");
+			fs.Flush();
+			fs.Close();
+		} catch (IOException excep) {
+			load2.text = "EMPTY";
+		}
+		try {
+			fs = new FileStream (MasterDriver.saveGameFile3, FileMode.Open);
+			load3.text = PlayerPrefs.GetString("Load3","EMPTY");
+			fs.Flush();
+			fs.Close();
+		} catch (IOException excep) {
+			load3.text = "EMPTY";
+		}
+
 	}
 	
 	// Update is called once per frame

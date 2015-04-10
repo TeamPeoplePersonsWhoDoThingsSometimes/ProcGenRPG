@@ -108,7 +108,7 @@ public class Player : MonoBehaviour {
 	void Start () {
 		if(PersistentInfo.playerName != null && !PersistentInfo.playerName.Equals("")) {
 			this.name = PersistentInfo.playerName;
-		} else {
+		} else if(PersistentInfo.saveFile > 0) {
 			MasterDriver.Instance.loadGame = true;
 		}
 
