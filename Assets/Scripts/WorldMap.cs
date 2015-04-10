@@ -154,7 +154,7 @@ public class WorldMap : MonoBehaviour {
 		Debug.Log ("Place Star at: " + x + "," + z);
 		
 		GameObject temp = (GameObject)GameObject.Instantiate(instance.starPrefab);
-		temp.transform.localPosition = new Vector3((x - 4)*5,3f,-(z - 4)*5);
+		temp.transform.localPosition = new Vector3((x - 4)*5,3f,(z - 4)*5);
 //		temp.transform.localPosition = new Vector3(0,3f,0);
 		Debug.Log("Placing star at: " + x + " " + z + "\nAKA: " + temp.transform.localPosition);
 		if(questStars == null) {
