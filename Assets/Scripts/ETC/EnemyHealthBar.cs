@@ -53,6 +53,9 @@ public class EnemyHealthBar : MonoBehaviour {
 						this.GetComponent<CanvasGroup>().alpha = 0.1f;
 					}
 				}
+				if(!trackingEnemy.activeSelf) {
+					this.GetComponent<CanvasGroup>().alpha = 0f;
+				}
 			} else {
 				this.GetComponent<RectTransform>().anchoredPosition = new Vector2(4f,-0.4f);
 				this.GetComponent<RectTransform>().localScale = new Vector3(3.5f,3f,2f);

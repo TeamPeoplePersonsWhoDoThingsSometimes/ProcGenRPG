@@ -12,6 +12,10 @@ public class TutorialComment : MonoBehaviour {
 	public string text;
 	public Texture textBG;
 
+	public bool spawnERROR;
+	private GameObject ERROR;
+	private float ERRORTIME;
+
 	public AudioMixer mixer;
 
 	private static GameObject playerCanvas, minimapCam, worldMap, worldMapCam;
@@ -40,6 +44,11 @@ public class TutorialComment : MonoBehaviour {
 		GetComponent<FMOD_StudioEventEmitter>().path = "event:/environment/tutorialWindow";
 		GetComponent<FMOD_StudioEventEmitter>().GetEvent().setVolume(PlayerPrefs.GetFloat("MasterVolume"));
 		GetComponent<FMOD_StudioEventEmitter>().startEventOnAwake = true;
+
+		if(spawnERROR) {
+			ERROR = GameObject.Find("STACKOVERFLOW");
+			ERROR.SetActive(false);
+		}
 	}
 	
 	// Update is called once per frame
@@ -67,6 +76,15 @@ public class TutorialComment : MonoBehaviour {
 			worldMapCam.SetActive(true);
 		}
 
+		if(ERRORTIME > 0) {
+			ERRORTIME += Time.deltaTime;
+			if(ERRORTIME > 0.5f) {
+				ERROR.SetActive(true);
+				text = "/* PRESS %SPRINTKEY% TO RUN */";
+				ERRORTIME = 0f;
+			}
+		}
+
 //		FMOD.Studio.EventDescription desc = null;
 //		desc = FMODEditorExtension.GetEventDescription(GetComponent<FMOD_StudioEventEmitter>().asset.id);
 //		if(desc != null) {
@@ -82,6 +100,9 @@ public class TutorialComment : MonoBehaviour {
 			isTouchingThis = true;
 			if(enableUIAfterTouching) {
 				enableUI = true;
+			}
+			if(spawnERROR) {
+				ERRORTIME = 0.001f;
 			}
 		}
 	}

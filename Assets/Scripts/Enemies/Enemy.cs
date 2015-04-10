@@ -18,6 +18,8 @@ public class Enemy : MonoBehaviour {
 	public float attackSpeedScale = 1f;
 	public float healthRegenScale = 1f;
 	public float byteDropScale = 1f;
+	public float speedOverride;
+	public float attackRange = 3f;
 
 	public Effect currentEffect;
 	private float effectTime;
@@ -262,20 +264,25 @@ public class Enemy : MonoBehaviour {
 		/*** Handle retreating ***/
 		if(GetHealthPercentage() < 0.25f) {
 			retreating = true;
-			transform.LookAt(Player.playerPos.position + new Vector3(0,1,0));
+			transform.LookAt(Player.playerPos.position);
 			transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y + 180f, 0f);
-			transform.Translate(new Vector3(transform.forward.x, 0f, transform.forward.z)*Time.deltaTime*(2f + speedRandomness), Space.World);
+			transform.Translate(new Vector3(transform.forward.x, 0f, transform.forward.z)*Time.deltaTime*(2f + speedRandomness + speedOverride), Space.World);
 		} else {
 			retreating = false;
 		}
 
 		/*** Handle Moving towards player and attacking ***/
-		if (Vector3.Distance(Player.playerPos.position, transform.position) > 3f && !retreating) {
+		if(gameObject.name.Equals("STACKOVERFLOW")) {
+			Debug.Log(Vector3.Distance(Player.playerPos.position, transform.position));
+		}
+		if (Vector3.Distance(Player.playerPos.position, transform.position) > attackRange && !retreating) {
 			GetComponent<Animator>().SetTrigger("PlayerSpotted");
 			transform.LookAt(Player.playerPos.position + new Vector3(0,1,0));
-			transform.Translate(new Vector3(transform.forward.x, 0f, transform.forward.z)*Time.deltaTime*(2f + speedRandomness), Space.World);
-		} else if (Vector3.Distance(Player.playerPos.position, transform.position) <= 3f && !retreating) {
+			transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y, 0f);
+			transform.Translate(new Vector3(transform.forward.x, 0f, transform.forward.z)*Time.deltaTime*(2f + speedRandomness + speedOverride), Space.World);
+		} else if (Vector3.Distance(Player.playerPos.position, transform.position) <= attackRange && !retreating) {
 			transform.LookAt(Player.playerPos.position + new Vector3(0,1,0));
+			transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y, 0f);
 			tempAttackSpeed -= Time.deltaTime;
 			if(tempAttackSpeed <= 0) {
 				GetComponent<Animator>().SetTrigger("Attack");

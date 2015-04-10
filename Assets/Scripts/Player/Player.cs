@@ -195,7 +195,7 @@ public class Player : MonoBehaviour {
 
 	//Called whenever the player presses a number to quick select
 	public void SetActiveItem (int val) {
-		FMOD_StudioSystem.instance.PlayOneShot("event:/player/weaponEquip02",transform.position,PlayerPrefs.GetFloat("MasterVolume"));
+		FMOD_StudioSystem.instance.PlayOneShot("event:/player/weaponEquip02",transform.position,PlayerPrefs.GetFloat("MasterVolume")/2f);
 		if(inventory.Count >= val + 1) {
 			DirectObject equiped = null;
 
@@ -363,6 +363,7 @@ public class Player : MonoBehaviour {
 	}
 
 	public void PickUpItem(GameObject item) {
+		FMOD_StudioSystem.instance.PlayOneShot("event:/player/weaponEquip02",transform.position,PlayerPrefs.GetFloat("MasterVolume")/2f);
 		GameObject temp = (GameObject) Instantiate(item, Vector3.zero, Quaternion.identity);
 		temp.transform.parent = playerInventoryRef.transform;
 		if(inventory.Count < 10 && (temp.GetComponent<Weapon>() != null || temp.GetComponent<Hack>() != null)) {
