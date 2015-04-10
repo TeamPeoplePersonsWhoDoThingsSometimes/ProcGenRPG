@@ -149,16 +149,16 @@ public class WorldMap : MonoBehaviour {
 		
 	}
 
-	public static void AddStarAt(int x, int z) {
+	public static void AddStarAt(int x, int z, string text) {
 		GameObject temp = (GameObject)GameObject.Instantiate(instance.starPrefab);
 		temp.transform.localPosition = new Vector3((x - 5)*5,3f,-(z - 5)*5);
 		if(questStars == null) {
 			questStars = new Dictionary<GameObject, string>();
 		}
-		questStars.Add(temp,null);
+		questStars.Add(temp,text);
 	}
 
-	public static void AddQuest(string s) {
+	/*public static void AddQuest(string s) {
 		Debug.Log("ADDING: " + s);
 		GameObject[] tempList = new GameObject[questStars.Keys.Count];
 		questStars.Keys.CopyTo(tempList,0);
@@ -168,7 +168,7 @@ public class WorldMap : MonoBehaviour {
 				break;
 			}
 		}
-	}
+	}*/
 
 	public static void RemoveStarAt(int x, int z) {
 		GameObject[] tempList = new GameObject[questStars.Keys.Count];

@@ -389,9 +389,6 @@ public class Area
     {
 		questArea = true;
 
-		//TODO: Find a better place for this!!!!!!
-		WorldMap.AddStarAt(position.x, position.y);
-
         System.Random rand = new System.Random();
         rooms[rand.Next(rooms.Count)].generateQuestMaterial(sc);
     }
