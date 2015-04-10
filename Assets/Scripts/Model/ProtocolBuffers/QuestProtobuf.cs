@@ -138,21 +138,22 @@ public static partial class QuestProtobuf {
         "YmplY3RQb3NpdGlvbhgBIAIoCzIPLkdsb2JhbFBvc2l0aW9uEikKCm9iamVj" + 
         "dERhdGEYAiACKAsyFS5EaXJlY3RPYmplY3RQcm90b2NvbBIjCg9lbmVteUF0" + 
         "dHJpYnV0ZXMYAyABKAsyCi5FbmVteURhdGESEwoLZGVzY3JpcHRpb24YBCAB" + 
-        "KAkiJAoJRW5lbXlEYXRhEhcKD2hlYWx0aFJlbWFpbmluZxgBIAIoBSKgAQoM" + 
+        "KAkiJAoJRW5lbXlEYXRhEhcKD2hlYWx0aFJlbWFpbmluZxgBIAIoBSKuAQoM" + 
         "UGxheWVyU3RhdHVzEicKDnBsYXllclBvc2l0aW9uGAEgAigLMg8uR2xvYmFs" + 
         "UG9zaXRpb24SIQoJaW52ZW50b3J5GAIgAigLMg4uSW52ZW50b3J5RGF0YRIP" + 
-        "Cgd2ZXJzaW9uGAMgAigJEhAKCHJvdGF0aW9uGAQgAigFEiEKDHZpc2l0ZWRB" + 
-        "cmVhcxgFIAMoCzILLlBvaW50UHJvdG8iNgoNSW52ZW50b3J5RGF0YRIlCgZv" + 
-        "YmplY3QYASADKAsyFS5EaXJlY3RPYmplY3RQcm90b2NvbCqlAQoKQWN0aW9u" + 
-        "VHlwZRIICgRLSUxMEAASDQoJTU9WRV9BUkVBEAESFQoRQVBQUk9BQ0hFRF9P" + 
-        "QkpFQ1QQAhIUChBQSUNLRURfVVBfT0JKRUNUEAMSDAoITEVWRUxfVVAQBRIO" + 
-        "CgpFUVVJUF9JVEVNEAYSDAoIVVNFX0lURU0QBxIKCgZBVFRBQ0sQCBIZChVD" + 
-        "T05WRVJTQVRJT05fTk9ERV9ISVQQCSo2CgVCaW9tZRIQCgxOT1RfQVNTSUdO" + 
-        "RUQQABIKCgZQWVRIT04QARIFCgFDEAISCAoESFRNTBADKioKB01hcFR5cGUS" + 
-        "CAoEQ0lUWRAAEggKBFBBVEgQARILCgdEVU5HRU9OEAIqNQoaU3Bhd25BcmVh" + 
-        "VHlwZVNwZWNpZmljYXRpb24SCQoFTE9DQUwQABIMCghESVNUQU5DRRABKiwK" + 
-        "EkxldmVsU3BlY2lmaWNhdGlvbhILCgdNSU5JTVVNEAESCQoFRVhBQ1QQAkIh" + 
-        "Ch9zdHNxdWVzdGJ1aWxkZXIucHJvdG9jb2xidWZmZXJz");
+        "Cgd2ZXJzaW9uGAMgAigJEhAKCHJvdGF0aW9uGAQgAigFEgwKBG5hbWUYBSAC" + 
+        "KAkSIQoMdmlzaXRlZEFyZWFzGAYgAygLMgsuUG9pbnRQcm90byI2Cg1JbnZl" + 
+        "bnRvcnlEYXRhEiUKBm9iamVjdBgBIAMoCzIVLkRpcmVjdE9iamVjdFByb3Rv" + 
+        "Y29sKqUBCgpBY3Rpb25UeXBlEggKBEtJTEwQABINCglNT1ZFX0FSRUEQARIV" + 
+        "ChFBUFBST0FDSEVEX09CSkVDVBACEhQKEFBJQ0tFRF9VUF9PQkpFQ1QQAxIM" + 
+        "CghMRVZFTF9VUBAFEg4KCkVRVUlQX0lURU0QBhIMCghVU0VfSVRFTRAHEgoK" + 
+        "BkFUVEFDSxAIEhkKFUNPTlZFUlNBVElPTl9OT0RFX0hJVBAJKjYKBUJpb21l" + 
+        "EhAKDE5PVF9BU1NJR05FRBAAEgoKBlBZVEhPThABEgUKAUMQAhIICgRIVE1M" + 
+        "EAMqKgoHTWFwVHlwZRIICgRDSVRZEAASCAoEUEFUSBABEgsKB0RVTkdFT04Q" + 
+        "Aio1ChpTcGF3bkFyZWFUeXBlU3BlY2lmaWNhdGlvbhIJCgVMT0NBTBAAEgwK" + 
+        "CERJU1RBTkNFEAEqLAoSTGV2ZWxTcGVjaWZpY2F0aW9uEgsKB01JTklNVU0Q" + 
+        "ARIJCgVFWEFDVBACQiEKH3N0c3F1ZXN0YnVpbGRlci5wcm90b2NvbGJ1ZmZl" + 
+        "cnM=");
     pbd::FileDescriptor.InternalDescriptorAssigner assigner = delegate(pbd::FileDescriptor root) {
       descriptor = root;
       internal__static_QuestPackage__Descriptor = Descriptor.MessageTypes[0];
@@ -266,7 +267,7 @@ public static partial class QuestProtobuf {
       internal__static_PlayerStatus__Descriptor = Descriptor.MessageTypes[27];
       internal__static_PlayerStatus__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::PlayerStatus, global::PlayerStatus.Builder>(internal__static_PlayerStatus__Descriptor,
-              new string[] { "PlayerPosition", "Inventory", "Version", "Rotation", "VisitedAreas", });
+              new string[] { "PlayerPosition", "Inventory", "Version", "Rotation", "Name", "VisitedAreas", });
       internal__static_InventoryData__Descriptor = Descriptor.MessageTypes[28];
       internal__static_InventoryData__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::InventoryData, global::InventoryData.Builder>(internal__static_InventoryData__Descriptor,
@@ -10943,8 +10944,8 @@ public sealed partial class EnemyData : pb::GeneratedMessage<EnemyData, EnemyDat
 public sealed partial class PlayerStatus : pb::GeneratedMessage<PlayerStatus, PlayerStatus.Builder> {
   private PlayerStatus() { }
   private static readonly PlayerStatus defaultInstance = new PlayerStatus().MakeReadOnly();
-  private static readonly string[] _playerStatusFieldNames = new string[] { "inventory", "playerPosition", "rotation", "version", "visitedAreas" };
-  private static readonly uint[] _playerStatusFieldTags = new uint[] { 18, 10, 32, 26, 42 };
+  private static readonly string[] _playerStatusFieldNames = new string[] { "inventory", "name", "playerPosition", "rotation", "version", "visitedAreas" };
+  private static readonly uint[] _playerStatusFieldTags = new uint[] { 18, 42, 10, 32, 26, 50 };
   public static PlayerStatus DefaultInstance {
     get { return defaultInstance; }
   }
@@ -11005,7 +11006,17 @@ public sealed partial class PlayerStatus : pb::GeneratedMessage<PlayerStatus, Pl
     get { return rotation_; }
   }
   
-  public const int VisitedAreasFieldNumber = 5;
+  public const int NameFieldNumber = 5;
+  private bool hasName;
+  private string name_ = "";
+  public bool HasName {
+    get { return hasName; }
+  }
+  public string Name {
+    get { return name_; }
+  }
+  
+  public const int VisitedAreasFieldNumber = 6;
   private pbc::PopsicleList<global::PointProto> visitedAreas_ = new pbc::PopsicleList<global::PointProto>();
   public scg::IList<global::PointProto> VisitedAreasList {
     get { return visitedAreas_; }
@@ -11023,6 +11034,7 @@ public sealed partial class PlayerStatus : pb::GeneratedMessage<PlayerStatus, Pl
       if (!hasInventory) return false;
       if (!hasVersion) return false;
       if (!hasRotation) return false;
+      if (!hasName) return false;
       if (!PlayerPosition.IsInitialized) return false;
       if (!Inventory.IsInitialized) return false;
       foreach (global::PointProto element in VisitedAreasList) {
@@ -11036,19 +11048,22 @@ public sealed partial class PlayerStatus : pb::GeneratedMessage<PlayerStatus, Pl
     int size = SerializedSize;
     string[] field_names = _playerStatusFieldNames;
     if (hasPlayerPosition) {
-      output.WriteMessage(1, field_names[1], PlayerPosition);
+      output.WriteMessage(1, field_names[2], PlayerPosition);
     }
     if (hasInventory) {
       output.WriteMessage(2, field_names[0], Inventory);
     }
     if (hasVersion) {
-      output.WriteString(3, field_names[3], Version);
+      output.WriteString(3, field_names[4], Version);
     }
     if (hasRotation) {
-      output.WriteInt32(4, field_names[2], Rotation);
+      output.WriteInt32(4, field_names[3], Rotation);
+    }
+    if (hasName) {
+      output.WriteString(5, field_names[1], Name);
     }
     if (visitedAreas_.Count > 0) {
-      output.WriteMessageArray(5, field_names[4], visitedAreas_);
+      output.WriteMessageArray(6, field_names[5], visitedAreas_);
     }
     UnknownFields.WriteTo(output);
   }
@@ -11072,8 +11087,11 @@ public sealed partial class PlayerStatus : pb::GeneratedMessage<PlayerStatus, Pl
       if (hasRotation) {
         size += pb::CodedOutputStream.ComputeInt32Size(4, Rotation);
       }
+      if (hasName) {
+        size += pb::CodedOutputStream.ComputeStringSize(5, Name);
+      }
       foreach (global::PointProto element in VisitedAreasList) {
-        size += pb::CodedOutputStream.ComputeMessageSize(5, element);
+        size += pb::CodedOutputStream.ComputeMessageSize(6, element);
       }
       size += UnknownFields.SerializedSize;
       memoizedSerializedSize = size;
@@ -11212,6 +11230,9 @@ public sealed partial class PlayerStatus : pb::GeneratedMessage<PlayerStatus, Pl
       if (other.HasRotation) {
         Rotation = other.Rotation;
       }
+      if (other.HasName) {
+        Name = other.Name;
+      }
       if (other.visitedAreas_.Count != 0) {
         result.visitedAreas_.Add(other.visitedAreas_);
       }
@@ -11285,6 +11306,10 @@ public sealed partial class PlayerStatus : pb::GeneratedMessage<PlayerStatus, Pl
             break;
           }
           case 42: {
+            result.hasName = input.ReadString(ref result.name_);
+            break;
+          }
+          case 50: {
             input.ReadMessageArray(tag, field_name, result.visitedAreas_, global::PointProto.DefaultInstance, extensionRegistry);
             break;
           }
@@ -11416,6 +11441,27 @@ public sealed partial class PlayerStatus : pb::GeneratedMessage<PlayerStatus, Pl
       PrepareBuilder();
       result.hasRotation = false;
       result.rotation_ = 0;
+      return this;
+    }
+    
+    public bool HasName {
+      get { return result.hasName; }
+    }
+    public string Name {
+      get { return result.Name; }
+      set { SetName(value); }
+    }
+    public Builder SetName(string value) {
+      pb::ThrowHelper.ThrowIfNull(value, "value");
+      PrepareBuilder();
+      result.hasName = true;
+      result.name_ = value;
+      return this;
+    }
+    public Builder ClearName() {
+      PrepareBuilder();
+      result.hasName = false;
+      result.name_ = "";
       return this;
     }
     

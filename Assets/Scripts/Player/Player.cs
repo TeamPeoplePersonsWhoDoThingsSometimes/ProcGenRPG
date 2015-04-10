@@ -51,6 +51,8 @@ public class Player : MonoBehaviour {
 	public PlayerStatus getPlayerStatus() {
 		PlayerStatus.Builder builder = PlayerStatus.CreateBuilder ();
 
+		builder.SetName (name);
+
 		GlobalPosition.Builder positionBuilder = GlobalPosition.CreateBuilder ();
 		positionBuilder.SetAreaX (MasterDriver.Instance.CurrentArea.position.x);
 		positionBuilder.SetAreaY (MasterDriver.Instance.CurrentArea.position.y);
@@ -80,6 +82,8 @@ public class Player : MonoBehaviour {
 	}
 
 	public void setPlayerStatus(PlayerStatus status) {
+		name = status.Name;
+
 		List<Point> visitedAreas = new List<Point> ();
 		IList<PointProto> storedAreas = status.VisitedAreasList;
 		foreach (PointProto p in storedAreas) {
