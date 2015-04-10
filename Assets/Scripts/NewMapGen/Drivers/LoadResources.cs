@@ -47,7 +47,10 @@ public class LoadResources : MonoBehaviour {
 
 		//Runtime load operations
 		//Note: Quests are loaded in the questListener constructor
-		loadConversations ();
+		//if boss level, these should already be loaded
+		if (!MasterDriver.bossLevel) {
+			loadConversations ();
+		}
     }
 
 	private void loadConversations() {

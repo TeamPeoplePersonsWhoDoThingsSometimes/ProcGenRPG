@@ -90,6 +90,33 @@ public class Player : MonoBehaviour {
 		return builder.Build ();
 	}
 
+	public void setPlayerStatusWithoutPosition(PlayerStatus status) {
+		name = status.Name;
+		
+		List<Point> visitedAreas = new List<Point> ();
+		IList<PointProto> storedAreas = status.VisitedAreasList;
+		foreach (PointProto p in storedAreas) {
+			visitedAreas.Add(new Point(p.X, p.Y));
+		}
+		
+		Status.playerStatus.setVisitedAreas (visitedAreas);
+		
+		InventoryData inv = status.Inventory;
+		inventory.Clear ();
+		foreach (DirectObjectProtocol item in inv.ObjectList) {
+			GameObject obj = (GameObject)MasterDriver.Instance.getItemFromProtobuf(item);
+			obj.GetComponent<Item>().name = item.Type;
+			
+			if (item.HasItemInformation && item.ItemInformation.HasSaveVersion && obj.GetComponent<Weapon>() != null) {
+				obj.GetComponent<Weapon>().version = item.ItemInformation.SaveVersion;
+			}
+			
+			PickUpItem(obj);
+		}
+		
+		version = status.Version;
+	}
+
 	public void setPlayerStatus(PlayerStatus status) {
 		name = status.Name;
 
