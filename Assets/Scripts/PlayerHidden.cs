@@ -16,7 +16,9 @@ public class PlayerHidden : MonoBehaviour {
 //			Debug.Log(inf.collider.gameObject.name);
 			if(!inf.collider.tag.Equals("Player")) {
 				this.transform.GetChild(0).GetComponent<Camera>().enabled = true;
-				this.transform.GetChild(0).GetComponent<ColorCorrectionCurves>().saturation = this.GetComponent<ColorCorrectionCurves>().saturation;
+				if(this.GetComponent<ColorCorrectionCurves>() != null) {
+					this.transform.GetChild(0).GetComponent<ColorCorrectionCurves>().saturation = this.GetComponent<ColorCorrectionCurves>().saturation;
+				}
 			} else {
 				this.transform.GetChild(0).GetComponent<Camera>().enabled = false;
 			}

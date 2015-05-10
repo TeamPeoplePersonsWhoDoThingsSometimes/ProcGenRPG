@@ -14,12 +14,18 @@ public class Player : MonoBehaviour {
 	private int xpBytes;
 	private int bytesToNextVersion;
 
+	public static bool inCity;
+
 	private int deaths = 0;
+
+	private Vector3 respawnLoc;
+
+	public bool rolling = false;
 
 	public AudioClip levelUp;
 	private ParticleSystem levelUpParticles;
 
-	private int levelUpSpeedScale = 10000;
+	public int levelUpSpeedScale = 30000;
 
 	public static string version = "1.0.0";
 	private string name = "TheKiniMan";
@@ -53,7 +59,6 @@ public class Player : MonoBehaviour {
 	}
 
 	public PlayerStatus getPlayerStatus() {
-		addActiveWeaponToInventoryToFront();
 		PlayerStatus.Builder builder = PlayerStatus.CreateBuilder ();
 
 		builder.SetName (name);
@@ -118,15 +123,9 @@ public class Player : MonoBehaviour {
 		version = status.Version;
 	}
 
-	private void addActiveWeaponToInventoryToFront() {
-		inventory.Insert(0,weaponRef.transform.GetChild(0).GetComponent<Item>());
-		Debug.Log(inventory[0]);
-//		PickUpItem(weaponRef.transform.GetChild(0).gameObject);
-	}
-
 	public void setPlayerStatus(PlayerStatus status) {
 		name = status.Name;
-
+//		Debug.LogError(this.GetName());
 		List<Point> visitedAreas = new List<Point> ();
 		IList<PointProto> storedAreas = status.VisitedAreasList;
 		foreach (PointProto p in storedAreas) {
@@ -157,13 +156,15 @@ public class Player : MonoBehaviour {
 
 	void Start () {
 		weaponRef = GameObject.Find("PlayerWeaponObj");
-		Debug.Log("FJWELJF" + weaponRef.transform.childCount);
 		if(PersistentInfo.playerName != null && !PersistentInfo.playerName.Equals("")) {
+			if(PersistentInfo.playerName.Contains("\n")) {
+				PersistentInfo.playerName = PersistentInfo.playerName.Substring(0,PersistentInfo.playerName.Length-1);
+			}
 			this.name = PersistentInfo.playerName;
 		} else if(PersistentInfo.saveFile > 0 && !MasterDriver.bossLevel) {
 			MasterDriver.Instance.loadGame = true;
 		}
-
+		
 		levelUpParticles = GameObject.Find("LevelUpParticles").GetComponent<ParticleSystem>();
 
 		//Need to figure out a better way to load the hitinfo prefab
@@ -176,11 +177,10 @@ public class Player : MonoBehaviour {
 		//initializing the references to the player inventory, armor points, and weaponhand
 		playerInventoryRef = GameObject.Find("PlayerInventory");
 		playerPos = transform;
-		bytesToNextVersion = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*levelUpSpeedScale;
+		bytesToNextVersion = ((int.Parse(version.Split('.')[0]))*10 + (int.Parse(version.Split('.')[1]))*50)*levelUpSpeedScale;
 
 		//setting up inventory
 		inventory = new List<Item>();
-		Debug.Log("FJWELJF" + weaponRef.transform.childCount);
 		if(weaponRef.transform.childCount != 0) {
 			inventory.Add(weaponRef.transform.GetChild(0).GetComponent<Item>());
 		}
@@ -217,16 +217,23 @@ public class Player : MonoBehaviour {
 			SetActiveItem(1);
 		}
 
+		if(!Application.loadedLevel.Equals("KartikTesting")) {
+			respawnLoc = transform.position;
+		}
+
 		//sets up quickaccessitems and makes the canvas update the inventory ui
 		PlayerCanvas.UpdateInventory();
-
-		Debug.Log("WENTTOSTART");
+		Debug.LogError(GetName());
 	}
 
 	void Update () {
 		playerPos = transform;
-		rma += Time.deltaTime/2f * (efficiency + 1);
-		integrity += Time.deltaTime/2f * (efficiency + 1);
+		rma += Time.deltaTime/4f * (efficiency + 1);
+		integrity += Time.deltaTime/10f * (efficiency + 1);
+		if(inCity) {
+			integrity += Time.deltaTime*2f;
+			rma += Time.deltaTime*2f;
+		}
 		if (rma > maxrma) {
 			rma = maxrma;
 		} else if (rma < 0) {
@@ -241,18 +248,23 @@ public class Player : MonoBehaviour {
 		}
 
 		maxrma = (encryption/2f + 1)*20f;
-		maxIntegrity = (security/5f + 1)*100f;	
+		maxIntegrity = (security/10f + 1)*100f;	
 
 		if(deathTimer > 0) {
 			deathTimer += Time.deltaTime;
 			if(deathTimer > 2f) {
+				PlayerControl.immobile = false;
 				transform.GetChild(0).gameObject.SetActive(true);
 				transform.GetChild(1).gameObject.SetActive(true);
 				deathTimer = 0;
 				integrity = maxIntegrity;
 				rma = maxrma;
-				xpBytes = 0;
-				MasterDriver.Instance.goToCity();
+				if(Application.loadedLevelName.Equals("KartikTesting")) {
+					xpBytes = 0;
+					MasterDriver.Instance.goToCity();
+				} else {
+					transform.position = respawnLoc;
+				}
 			}
 		}
 	}
@@ -315,6 +327,22 @@ public class Player : MonoBehaviour {
 		return integrity/maxIntegrity;
 	}
 
+	public string GetIntegrityRegen() {
+		return "+" + ((efficiency+1)/5f).ToString("F2") + "/s";
+	}
+
+	public string GetRMARegen() {
+		return "+" + ((efficiency+1)/7f).ToString("F2") + "/s";
+	}
+
+	public string GetRMAValueText() {
+		return ((int)rma) + "/" + ((int)maxrma);
+	}
+
+	public string GetIntegrityValueText() {
+		return ((int)integrity) + "/" + ((int)maxIntegrity);
+	}
+
 	//used to start weaponfx (the green trail on the lightstick)
 	public void StartAttack() {
 		activeWeapon.StartAttack();
@@ -326,6 +354,10 @@ public class Player : MonoBehaviour {
 		} else {
 			return name + "_" + version + "R" + deaths;
 		}
+	}
+
+	public string GetBlocking() {
+		return "(" + Mathf.Max(0,defense-5) + "/" + defense + ")";
 	}
 
 	public float XPPercentage() {
@@ -358,7 +390,29 @@ public class Player : MonoBehaviour {
 			Weapon tempWeapon = (Weapon)inventory[index];
 			for(int i = 0; i < (Utility.ComparableVersionInt(tempWeapon.version)/10); i++) {
 				GameObject tempbyte = (GameObject) GameObject.Instantiate(Utility.GetByteObject(), transform.position + Vector3.up, Quaternion.identity);
-				tempbyte.GetComponent<Byte>().val = 10000;
+				if(tempWeapon.RarityVal.Equals(Rarity.Common)) {
+					tempbyte.GetComponent<Byte>().val = 10000;
+				} else if(tempWeapon.RarityVal.Equals(Rarity.Uncommon)) {
+					tempbyte.GetComponent<Byte>().val = 25000;
+				} else if(tempWeapon.RarityVal.Equals(Rarity.Rare)) {
+					tempbyte.GetComponent<Byte>().val = 50000;
+				} else if(tempWeapon.RarityVal.Equals(Rarity.Anomaly)) {
+					tempbyte.GetComponent<Byte>().val = 100000;
+				}
+			}
+		} else if(inventory[index].GetType().IsSubclassOf(typeof(Hack))) {
+			Hack tempHack = (Hack)inventory[index];
+			for(int i = 0; i < 20; i++) {
+				GameObject tempbyte = (GameObject) GameObject.Instantiate(Utility.GetByteObject(), transform.position + Vector3.up, Quaternion.identity);
+				if(tempHack.RarityVal.Equals(Rarity.Common)) {
+					tempbyte.GetComponent<Byte>().val = 10000;
+				} else if(tempHack.RarityVal.Equals(Rarity.Uncommon)) {
+					tempbyte.GetComponent<Byte>().val = 25000;
+				} else if(tempHack.RarityVal.Equals(Rarity.Rare)) {
+					tempbyte.GetComponent<Byte>().val = 50000;
+				} else if(tempHack.RarityVal.Equals(Rarity.Anomaly)) {
+					tempbyte.GetComponent<Byte>().val = 100000;
+				}
 			}
 		}
 
@@ -374,13 +428,19 @@ public class Player : MonoBehaviour {
 	}
 
 	private void Die() {
+		if(Application.loadedLevelName.Contains("Tutorial")) {
+			CityHelp.helpMode = -2;
+		}
+		deaths++;
 		PlayerControl.immobile = true;
 		levelUpParticles.startColor = Color.red;
 		levelUpParticles.Emit(1000000);
+		levelUpParticles.startColor = Color.yellow;
 		FMOD_StudioSystem.instance.PlayOneShot("event:/boss/bossAttackB", transform.position,PlayerPrefs.GetFloat("MasterVolume")/2f);
 		deathTimer = 0.0001f;
 		transform.GetChild(0).gameObject.SetActive(false);
 		transform.GetChild(1).gameObject.SetActive(false);
+		FollowPlayer.MoveCamFast();
 	}
 
 	private void LevelUp() {
@@ -396,7 +456,7 @@ public class Player : MonoBehaviour {
 //		}
 		bytesToNextVersion = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*levelUpSpeedScale;
 		ActionEventInvoker.primaryInvoker.invokeAction (new PlayerAction (this.getDirectObject(), ActionType.LEVEL_UP));
-		GetComponent<AudioSource>().PlayOneShot(levelUp);
+		FMOD_StudioSystem.instance.PlayOneShot("event:/player/playerLevelUp", transform.position,PlayerPrefs.GetFloat("MasterVolume"));
 		levelUpParticles.Emit(1000000);
 	}
 
@@ -418,17 +478,47 @@ public class Player : MonoBehaviour {
 
 	//Called by any attack that hits the player
 	public void GetDamaged(float damage, bool crit) {
+		if(!rolling) {
+			FMOD_StudioSystem.instance.PlayOneShot("event:/player/playerDamage", transform.position,PlayerPrefs.GetFloat("MasterVolume")/2f);
+			GameObject temp = (GameObject)Instantiate(hitInfo,this.transform.position + new Vector3(0,1,0), hitInfo.transform.rotation);
+			temp.GetComponent<TextMesh>().GetComponent<Renderer>().material.color = Color.red;
+			if (crit) {
+				int blocking = Mathf.Min(Mathf.Max(0,Random.Range(defense - 5, defense + 1)),(int)damage*2);
+				integrity -= damage*2 - blocking;
+				temp.GetComponent<TextMesh>().GetComponent<Renderer>().material.color = Color.black;
+				temp.GetComponent<TextMesh>().text = "" + damage*2 + "!";
+				if(blocking > 0) {
+					GameObject tempblock = (GameObject)Instantiate(hitInfo,this.transform.position + new Vector3(0,1,0), hitInfo.transform.rotation);
+					tempblock.GetComponent<TextMesh>().text = "-" + blocking;
+					tempblock.GetComponent<TextMesh>().GetComponent<Renderer>().material.color = Color.green;
+					tempblock.GetComponent<HitInfoScript>().isBlockingText = true;
+					tempblock.GetComponent<Transform>().parent = temp.transform;
+					tempblock.GetComponent<Transform>().localPosition = Vector3.zero - (Vector3.up*2.5f);
+					tempblock.GetComponent<Rigidbody>().isKinematic = true;
+				}
+			} else {
+				int blocking = Mathf.Min(Mathf.Max(0,Random.Range(defense - 5, defense + 1)),(int)damage);
+				integrity -= damage  - blocking;
+				temp.GetComponent<TextMesh>().text = "" + damage;
+				if(blocking > 0) {
+					GameObject tempblock = (GameObject)Instantiate(hitInfo,this.transform.position + new Vector3(0,1,0), hitInfo.transform.rotation);
+					tempblock.GetComponent<TextMesh>().text = "-" + blocking;
+					tempblock.GetComponent<TextMesh>().GetComponent<Renderer>().material.color = Color.green;
+					tempblock.GetComponent<HitInfoScript>().isBlockingText = true;
+					tempblock.GetComponent<Transform>().parent = temp.transform;
+					tempblock.GetComponent<Transform>().localPosition = Vector3.zero - (Vector3.up*2.5f);
+					tempblock.GetComponent<Rigidbody>().isKinematic = true;
+				}
+			}
+		}
+	}
+
+	public void GetDamaged(float damage) {
 		FMOD_StudioSystem.instance.PlayOneShot("event:/player/playerDamage", transform.position,PlayerPrefs.GetFloat("MasterVolume")/2f);
 		GameObject temp = (GameObject)Instantiate(hitInfo,this.transform.position + new Vector3(0,1,0), hitInfo.transform.rotation);
 		temp.GetComponent<TextMesh>().GetComponent<Renderer>().material.color = Color.red;
-		if (crit) {
-			integrity -= damage*2 - Mathf.Max(0,Random.Range(defense - 2, defense + 1));
-			temp.GetComponent<TextMesh>().GetComponent<Renderer>().material.color = Color.black;
-			temp.GetComponent<TextMesh>().text = "" + damage*2 + "!";
-		} else {
-			integrity -= damage;
-			temp.GetComponent<TextMesh>().text = "" + damage;
-		}
+		integrity -= damage;
+		temp.GetComponent<TextMesh>().text = "" + damage;
 	}
 
 	public string ToString() {
@@ -445,7 +535,9 @@ public class Player : MonoBehaviour {
 			rma -= amount;
 			return true;
 		} else {
-			GetDamaged(1,false);
+			if(Time.frameCount%3==0) {
+				GetDamaged(1);
+			}
 			return false;
 		}
 	}
@@ -454,6 +546,7 @@ public class Player : MonoBehaviour {
 		FMOD_StudioSystem.instance.PlayOneShot("event:/player/weaponEquip02",transform.position,PlayerPrefs.GetFloat("MasterVolume")/6f);
 		GameObject temp = (GameObject) Instantiate(item, Vector3.zero, Quaternion.identity);
 		temp.transform.parent = playerInventoryRef.transform;
+		temp.transform.localPosition = Vector3.zero;
 		if(inventory.Count < 10 && (temp.GetComponent<Weapon>() != null || temp.GetComponent<Hack>() != null)) {
 			inventory.Add(temp.GetComponent<Item>());
 		} else if (inventory.Capacity < 11) {
@@ -582,6 +675,7 @@ public class Player : MonoBehaviour {
 			for(int i = 0; i < 10 && i < inventory.Count; i++) {
 				temp.Add(inventory[i]);
 			}
+//			Debug.Log(temp.Count);
 //			Debug.Log(temp);
 			return temp;
 		}

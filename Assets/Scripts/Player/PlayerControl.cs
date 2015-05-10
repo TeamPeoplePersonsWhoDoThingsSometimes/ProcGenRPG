@@ -7,6 +7,8 @@ public class PlayerControl : MonoBehaviour {
 
 	private static Animator playerAnim;
 
+	public static float speedBoost;
+
 	public static bool immobile = false;
 
 	public static bool rolling = false;
@@ -54,6 +56,7 @@ public class PlayerControl : MonoBehaviour {
 		}
 
 		rolling = playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Base.Roll");
+		playerref.rolling = rolling;
 
 		/****** Set movement variables *****/
 		if(!immobile) {
@@ -84,11 +87,11 @@ public class PlayerControl : MonoBehaviour {
 
 		/***** Running functionality ****/
 		if (playerAnim.GetFloat("Speed") > 0.5f && Input.GetKey(PersistentInfo.sprintKey)) {
-			if(playerAnim.speed < 1.5f) {
+			if(playerAnim.speed < 1.5f + speedBoost) {
 				playerAnim.speed += Time.deltaTime/2f;
 			}
 		} else {
-			playerAnim.speed = 1;
+			playerAnim.speed = 1 + speedBoost;
 		}
 		//We don't want people rolling under buildings, so no collider shrinking on roll
 		//GetComponent<CapsuleCollider>().height = 0.1787377f - 0.1f*playerAnim.GetFloat("ColliderHeight");
@@ -161,10 +164,14 @@ public class PlayerControl : MonoBehaviour {
 				if ((Input.GetMouseButtonDown(0) || Input.GetKeyDown(PersistentInfo.attackKey))) {
 					if(playerAnim.GetFloat("Speed") < 0.2f) {
 						rangedIndicator.enabled = true;
+						FMOD_StudioSystem.instance.PlayOneShot("event:/weapons/bowDraw",transform.position,PlayerPrefs.GetFloat("MasterVolume"));
 					}
 					playerAnim.SetBool("DrawArrow", true);
 				} else if ((Input.GetMouseButtonUp(0) || Input.GetKeyUp(PersistentInfo.attackKey))) {
 					rangedIndicator.enabled = false;
+					if(playerAnim.GetFloat("Speed") < 0.2f) {
+						FMOD_StudioSystem.instance.PlayOneShot("event:/weapons/arrowFire",transform.position,PlayerPrefs.GetFloat("MasterVolume"));
+					}
 					playerAnim.SetBool("DrawArrow", false);
 					playerAnim.SetBool("ShootBow", true);
 				}

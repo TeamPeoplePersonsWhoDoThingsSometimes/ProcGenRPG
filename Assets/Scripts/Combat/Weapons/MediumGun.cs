@@ -5,6 +5,9 @@ public class MediumGun : Weapon {
 
 	public GameObject bulletParticles;
 
+	private bool soundPlaying;
+	private float soundTime = 0f;
+
 	public override void Attack (float damage)
 	{
 		//GameObject.Instantiate(bulletParticles, transform.position + new Vector3(0,0,3), Player.playerPos.rotation);
@@ -14,7 +17,7 @@ public class MediumGun : Weapon {
 		if(Physics.Raycast(new Ray(Player.playerPos.position + Player.playerPos.forward + new Vector3(0,1,0),Player.playerPos.forward), out hitInfo)) {
 			if(hitInfo.collider.gameObject.GetComponent<Enemy>() != null) {
 				Enemy temp = hitInfo.collider.gameObject.GetComponent<Enemy>();
-				temp.GetDamaged(damage, Random.value < critChance);
+				temp.GetDamaged(damage + (Player.strength), Random.value < critChance);
 				temp.DoKnockback(hitInfo.point, knockback);
 
 				if(attackOBJ != null) {
@@ -26,7 +29,32 @@ public class MediumGun : Weapon {
 				}
 			}
 		}
+		soundTime = 0.5f;
+		if(this.GetName().Contains("Shotgun")) {
+			FMOD_StudioSystem.instance.PlayOneShot("event:/weapons/nullBolt",transform.position,PlayerPrefs.GetFloat("MasterVolume"));
+		}
 
+	}
+
+	protected override void Update ()
+	{
+		base.Update ();
+		if(this.GetName().Contains("Mini")) {
+			bool prevtempVal = soundPlaying;
+			soundTime -= Time.deltaTime;
+			
+			if(soundTime > 0) {
+				soundPlaying = true;
+			} else {
+				soundPlaying = false;
+			}
+			
+			if(soundPlaying && !prevtempVal) {
+				GetComponent<FMOD_StudioEventEmitter>().Play();
+			} else if(!soundPlaying) {
+				GetComponent<FMOD_StudioEventEmitter>().Stop();
+			}
+		}
 	}
 
 }

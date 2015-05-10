@@ -18,6 +18,8 @@ public class IntroScript : MonoBehaviour {
 	private int speed = 1;
 	private float animSpeed = 1;
 
+	private float soundTimer;
+
 	AsyncOperation loadNextLevel;
 
 	private string classTextString = @"
@@ -410,6 +412,7 @@ public class IntroScript : MonoBehaviour {
 			typeIndex++;
 			if(typeIndex > 50) {
 				typeIndex++;
+				typeIndex++;
 				speed = 2;
 			}
 
@@ -453,14 +456,13 @@ public class IntroScript : MonoBehaviour {
 				typeIndex++;
 				typeIndex++;
 				typeIndex++;
-				typeIndex++;
 			}
 			speed = 300;
 			classText.text = classTextString.Substring(0,typeIndex);
 		}
-		animSpeed = Mathf.MoveTowards(animSpeed, speed, Time.deltaTime*(typeIndex/500f));
+		animSpeed = Mathf.MoveTowards(animSpeed, speed, Time.deltaTime*(typeIndex/200f));
 		if(animating) {
-			classText.GetComponent<RectTransform>().parent.Translate(Vector3.up/7f*animSpeed);
+			classText.GetComponent<RectTransform>().parent.Translate(Vector3.up*10f*animSpeed*Time.deltaTime);
 			if(QualitySettings.GetQualityLevel() > (int)QualityLevel.Good) {
 				if(Time.frameCount % 142 == 0 || Time.frameCount % 144 == 0 || Time.frameCount % 177 == 0) {
 					Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration = 40f;
@@ -471,7 +473,7 @@ public class IntroScript : MonoBehaviour {
 			}
 		}
 
-		if(animating && classText.text.Length > 8000) {
+		if(animating && soundTimer <= 0) {
 			animating = false;
 			classText.text = "";
 			classText.GetComponent<RectTransform>().parent.GetComponent<CanvasGroup>().alpha = 0;
@@ -479,6 +481,12 @@ public class IntroScript : MonoBehaviour {
 			if(QualitySettings.GetQualityLevel() > (int)QualityLevel.Good) {
 				Camera.main.GetComponent<MotionBlur>().blurAmount = 0.5f;
 			}
+			GetComponent<AudioSource>().Play();
+			GetComponent<AudioSource>().time = GetComponent<AudioSource>().clip.length / 2f;
+		}
+
+		if(soundTimer > 0) {
+			soundTimer -= Time.deltaTime;
 		}
 
 		if(!animating && classText.GetComponent<RectTransform>().parent.parent.GetChild(1).GetComponent<CanvasGroup>().alpha == 1) {
@@ -502,11 +510,18 @@ public class IntroScript : MonoBehaviour {
 
 	public void PressedEnter() {
 		if(input.text.Length > 2) {
+			FMOD_StudioSystem.instance.PlayOneShot("event:/UISounds/keyboardTyping01",transform.position,PlayerPrefs.GetFloat("MasterVolume"));
+			FMOD_StudioSystem.instance.PlayOneShot("event:/UISounds/codeCompiling",transform.position,PlayerPrefs.GetFloat("MasterVolume")/2f);
+			soundTimer = 8.5f;
 			animating = true;
 			PersistentInfo.playerName = input.text;
 		} else {
 //			EventSystem.current.SetSelectedGameObject(input.gameObject);
 			input.OnPointerClick(new PointerEventData(EventSystem.current));
 		}
+	}
+
+	public void PlayClickSound() {
+		FMOD_StudioSystem.instance.PlayOneShot("event:/UISounds/UI03",transform.position,PlayerPrefs.GetFloat("MasterVolume")/2f);
 	}
 }

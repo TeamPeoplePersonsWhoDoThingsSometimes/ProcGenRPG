@@ -69,20 +69,21 @@ public class GlitchText : MonoBehaviour {
 		float randVal2 = Random.Range(0.1f,1.1f);
 		float randVal3 = Random.Range(0.95f, 1.05f);
 		if(tempTime > 2) {
-			organicMusic.time += randVal1;
-			glitchMusic.time += randVal1;
+//			organicMusic.time += randVal1;
+//			glitchMusic.time += randVal1;
 		} else {
-			organicMusic.time += randVal2;
-			glitchMusic.time += randVal2;
+//			organicMusic.time += randVal2;
+//			glitchMusic.time += randVal2;
 		}
 		if(tempPitch == 1 && Time.frameCount % 50 == 0) {
-			organicMusic.pitch = randVal3;
-			glitchMusic.pitch = randVal3;
+//			organicMusic.pitch = randVal3;
+//			glitchMusic.pitch = randVal3;
 		} else {
-			organicMusic.pitch = 1f;
-			glitchMusic.pitch = 1f;
+//			organicMusic.pitch = 1f;
+//			glitchMusic.pitch = 1f;
 		}
-		if(organicMusic.volume == 1) {
+		Debug.Log("HERE: " + organicMusic.volume);
+		if(organicMusic.volume == 0.5f) {
 			glitchMusic.volume = 0.5f;
 			organicMusic.volume = 0;
 		}

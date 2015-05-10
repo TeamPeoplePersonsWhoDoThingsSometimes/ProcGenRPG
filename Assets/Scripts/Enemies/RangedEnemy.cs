@@ -62,76 +62,74 @@ public class RangedEnemy : Enemy {
 		}
 		
 		/*** Handle retreating ***/
-		if(GetHealthPercentage() < 0.25f) {
-			retreating = true;
-			transform.LookAt(Player.playerPos.position + new Vector3(0,1,0));
-			transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y + 180f, 0f);
-			transform.Translate(new Vector3(transform.forward.x, 0f, transform.forward.z)*Time.deltaTime*2f, Space.World);
-			Debug.Log("HERE");
-		} else {
-			retreating = false;
-		}
+//		if(GetHealthPercentage() < 0.25f) {
+//			retreating = true;
+//			transform.LookAt(Player.playerPos.position + new Vector3(0,1,0));
+//			transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y + 180f, 0f);
+//			transform.Translate(new Vector3(transform.forward.x, 0f, transform.forward.z)*Time.deltaTime*2f, Space.World);
+//		} else {
+//			retreating = false;
+//		}
 		
-		/*** Handle Moving towards player and attacking ***/
-		if (!retreating) {
-			if (Vector3.Distance(Player.playerPos.position, transform.position) > maxDistanceFromPlayer) {
-				GetComponent<Animator>().SetTrigger("PlayerSpotted");
-				// Get direction to move enemy in, as the direction towards the player
-				Vector3 dir = (Player.playerPos.position - transform.position).normalized;
-				// Get the value of the separation b/w player & enemy
-				float dist = (Player.playerPos.position - transform.position).magnitude;
-				// Move enemy towards player, but keep at a distance
-				dest = dir * (dist - (maxDistanceFromPlayer - minDistanceFromPlayer) / 2) + transform.position;
-				movingToDest = true;
-				speed = 0.1f;
-				//rigidbody.MovePosition(Vector3.MoveTowards(transform.position, dir * (dist - (maxDistanceFromPlayer - minDistanceFromPlayer) / 2), 0.1f));
-				transform.LookAt(dir * (dist - (maxDistanceFromPlayer - minDistanceFromPlayer)));
-			} else if (Vector3.Distance(Player.playerPos.position, transform.position) > minDistanceFromPlayer) {
-				/*
-				if (!circling) {
-					movingToDest = false;
-					circleTimer += Time.deltaTime;
-					if (circleTimer >= circlePeriod) {
-						circling = true;
-						circleTimer = 0f;
-						dest = transform.position + (Random.value < 0.5 ? Vector3.right : Vector3.left) * 4;
-						movingToDest = true;
-					}
-				}
-				else {
-					circleTimer += Time.deltaTime;
-					if (circleTimer >= 2f) {
-						movingToDest = false;
-						circleTimer = 0f;
-						circling = false;
-					}
-				}
-				*/
-				dest = transform.position;
-				transform.LookAt(Player.playerPos.position);
-				tempAttackSpeed -= Time.deltaTime;
-				if(tempAttackSpeed <= 0) {
-					GetComponent<Animator>().SetTrigger("Attack");
-					tempAttackSpeed = baseAttackSpeed;
-				}
-			} else {
-				// Get direction to move enemy in, as the direction away from the player
-				Vector3 dir = (transform.position - Player.playerPos.position).normalized;
-				// Get the value of the separation b/w player & enemy
-				float dist = (transform.position - Player.playerPos.position).magnitude;
-				// Move enemy away from player, until within acceptable range
-				//rigidbody.MovePosition(Vector3.MoveTowards(transform.position, dir * ((maxDistanceFromPlayer - minDistanceFromPlayer) - dist), 0.2f));
-				dest = dir * ((maxDistanceFromPlayer) - dist) + transform.position;
-				speed = 0.2f;
-				movingToDest = true;
-				transform.LookAt(Player.playerPos.position);
-				if(tempAttackSpeed <= 0) {
-					GetComponent<Animator>().SetTrigger("Attack");
-					tempAttackSpeed = baseAttackSpeed;
-				}
+
+		if (Vector3.Distance(Player.playerPos.position, transform.position) > maxDistanceFromPlayer) {
+			GetComponent<Animator>().SetTrigger("PlayerSpotted");
+			// Get direction to move enemy in, as the direction towards the player
+			Vector3 dir = (Player.playerPos.position - transform.position).normalized;
+			// Get the value of the separation b/w player & enemy
+			float dist = (Player.playerPos.position - transform.position).magnitude;
+			// Move enemy towards player, but keep at a distance
+			dest = dir * (dist - (maxDistanceFromPlayer - minDistanceFromPlayer) / 2) + transform.position;
+			movingToDest = true;
+			speed = 0.1f;
+			//rigidbody.MovePosition(Vector3.MoveTowards(transform.position, dir * (dist - (maxDistanceFromPlayer - minDistanceFromPlayer) / 2), 0.1f));
+			transform.LookAt(dir * (dist - (maxDistanceFromPlayer - minDistanceFromPlayer)));
+		}
+//			else if (Vector3.Distance(Player.playerPos.position, transform.position) > minDistanceFromPlayer) {
+//				/*
+//				if (!circling) {
+//					movingToDest = false;
+//					circleTimer += Time.deltaTime;
+//					if (circleTimer >= circlePeriod) {
+//						circling = true;
+//						circleTimer = 0f;
+//						dest = transform.position + (Random.value < 0.5 ? Vector3.right : Vector3.left) * 4;
+//						movingToDest = true;
+//					}
+//				}
+//				else {
+//					circleTimer += Time.deltaTime;
+//					if (circleTimer >= 2f) {
+//						movingToDest = false;
+//						circleTimer = 0f;
+//						circling = false;
+//					}
+//				}
+//				*/
+//				dest = transform.position;
+//				transform.LookAt(Player.playerPos.position);
+//				tempAttackSpeed -= Time.deltaTime;
+//				if(tempAttackSpeed <= 0) {
+//					GetComponent<Animator>().SetTrigger("Attack");
+//					tempAttackSpeed = baseAttackSpeed;
+//				}
+//			} 
+		else {
+			// Get direction to move enemy in, as the direction away from the player
+			Vector3 dir = (transform.position - Player.playerPos.position).normalized;
+			// Get the value of the separation b/w player & enemy
+			float dist = (transform.position - Player.playerPos.position).magnitude;
+			// Move enemy away from player, until within acceptable range
+			//rigidbody.MovePosition(Vector3.MoveTowards(transform.position, dir * ((maxDistanceFromPlayer - minDistanceFromPlayer) - dist), 0.2f));
+//				dest = dir * ((maxDistanceFromPlayer) - dist) + transform.position;
+			speed = 0.2f;
+			movingToDest = true;
+			transform.LookAt(Player.playerPos.position);
+			tempAttackSpeed -= Time.deltaTime;
+			if(tempAttackSpeed <= 0) {
+				GetComponent<Animator>().SetTrigger("Attack");
+				tempAttackSpeed = baseAttackSpeed;
 			}
-		} else {
-			tempAttackSpeed = baseAttackSpeed;
 		}
 	}
 

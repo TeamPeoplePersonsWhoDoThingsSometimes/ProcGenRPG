@@ -61,7 +61,7 @@ public class MasterDriver : MonoBehaviour {
 	
 	//public log
 	public void log(string log) {
-		print(log);
+//		print(log);
 	}
 	
 	//yaaay, we have a name generator :D
@@ -113,7 +113,7 @@ public class MasterDriver : MonoBehaviour {
 	
 	public Object getEnemyFromProtobuf(DirectObjectProtocol proto) {
 		string name = proto.Name;
-		Debug.Log("Finding enemy: " + name);
+//		Debug.Log("Finding enemy: " + name);
 		foreach (TileSet t in tileSets) {
 			foreach (Enemy o in t.enemyTypes) {
 				if (o.gameObject.name.Equals(name)) {
@@ -238,12 +238,13 @@ public class MasterDriver : MonoBehaviour {
 			player.transform.GetChild(0).transform.localPosition = Vector3.zero;
 			player.transform.GetChild(1).transform.localPosition = Vector3.zero;
 			player.transform.position = new Vector3(currentPortal.transform.position.x, player.transform.position.y, currentPortal.transform.position.z - 8);
+			Player.inCity = true;
 		}
 
 		clearer = new QuestStarClearer ();
 		new BossStarter ();
 
-        Debug.Log("Startup time: " + Time.realtimeSinceStartup);
+//        Debug.Log("Startup time: " + Time.realtimeSinceStartup);
 	}
 
 	void Update()
@@ -254,13 +255,14 @@ public class MasterDriver : MonoBehaviour {
 		}
 
 		if (loadPlayerObjectData) {
-			Debug.Log ("Load player data");
+//			Debug.Log ("Load player data");
 			loadPlayerObjectData = false;
 			loadPlayerObject(4);
 		}
 	}
 
 	public void goToCity() {
+		Player.inCity = true;
 		currentArea.releaseData();
 		FollowPlayer.Travel();
 		currentArea = currentMap.getArea(4,4);
@@ -276,11 +278,11 @@ public class MasterDriver : MonoBehaviour {
 			i++;
 		} while (currentPortal.gameObject.GetComponent<Portal>().dir != Direction.DOWN);
 		
-		player.transform.GetChild(0).transform.localPosition = Vector3.zero;
-		player.transform.GetChild(1).transform.localPosition = Vector3.zero;
+//		player.transform.GetChild(0).transform.localPosition = Vector3.zero;
+//		player.transform.GetChild(1).transform.localPosition = Vector3.zero;
 		
 
-		player.transform.position = new Vector3(currentPortal.transform.position.x, player.transform.position.y, currentPortal.transform.position.z - 8);
+		player.transform.GetChild(0).position = new Vector3(currentPortal.transform.position.x, player.transform.position.y, currentPortal.transform.position.z - 8);
 		
 		
 		FMOD_StudioSystem.instance.PlayOneShot("event:/environment/portal",Player.playerPos.position, PlayerPrefs.GetFloat("MasterVolume")/2f);
@@ -298,6 +300,7 @@ public class MasterDriver : MonoBehaviour {
     //Changes the current Area to the Area in the input Direction.
     public void moveArea(Direction dir)
     {
+		Player.inCity = false;
         currentArea.releaseData();
         Point temp;
 
@@ -368,6 +371,10 @@ public class MasterDriver : MonoBehaviour {
 		ActionEventInvoker.primaryInvoker.invokeAction (action);
 
 		if(currentArea.isCity) {
+			Player.inCity = true;
+			if(CityHelp.helpMode == 4) {
+				CityHelp.helpMode = 5;
+			}
 			Enemy[] enemies = GameObject.FindObjectsOfType<Enemy>();
 			for(int j = 0; j < enemies.Length; j++) {
 				Destroy(enemies[j].gameObject);
@@ -408,13 +415,13 @@ public class MasterDriver : MonoBehaviour {
 				PlayerPrefs.SetString("Load1",player.GetComponentInChildren<Player>().GetName());
 				fs = new FileStream (saveGameFile1, FileMode.Create);
 			} else if(file == 2) {
-				PlayerPrefs.SetString("Load2",player.GetComponentInChildren<Player>().name);
+				PlayerPrefs.SetString("Load2",player.GetComponentInChildren<Player>().GetName());
 				fs = new FileStream (saveGameFile2, FileMode.Create);
 			} else if (file == 4) {
-				PlayerPrefs.SetString("tmpSave",player.GetComponentInChildren<Player>().name);
+				PlayerPrefs.SetString("tmpSave",player.GetComponentInChildren<Player>().GetName());
 				fs = new FileStream (tmpSaveGameFile, FileMode.Create);
 			} else {
-				PlayerPrefs.SetString("Load3",player.GetComponentInChildren<Player>().name);
+				PlayerPrefs.SetString("Load3",player.GetComponentInChildren<Player>().GetName());
 				fs = new FileStream (saveGameFile3, FileMode.Create);
 			}
 			package.WriteTo(fs);

@@ -14,50 +14,32 @@
 
 BasicMipMapQuest.bat
 
-Basic	FINALBOSS.
-
-Lightsaber Double-Bladed Lightsaber (Black)-
-
-LightsaberDouble-Bladed Lightsaber (Blue)-
-
-LightsaberDouble-Bladed Lightsaber (Cyan).
-
-Lightsaber Double-Bladed Lightsaber (Green)/
-
-Lightsaber!Double-Bladed Lightsaber (Orange)/
-
-Lightsaber!Double-Bladed Lightsaber (Purple),
-
-LightsaberDouble-Bladed Lightsaber (Red)/
-
-Lightsaber!Double-Bladed Lightsaber (Yellow).
-
-Lightsaber Double-Bladed Lightsaber (White) 
-
-LightsaberLightsaber (Black)
-
-LightsaberLightsaber (Blue)
-
-LightsaberLightsaber (Cyan) 
-
-LightsaberLightsaber (Green)!
-
-LightsaberLightsaber (Orange)!
-
-LightsaberLightsaber (Purple)
-
-LightsaberLightsaber (Red) 
-
-LightsaberLightsaber (White)!
-
-LightsaberLightsaber (Yellow)(
+Basic	FINALBOSSB
+Black Double-Bladed Lightsaber Double-Bladed Lightsaber (Black)@
+Blue Double-Bladed LightsaberDouble-Bladed Lightsaber (Blue)@
+Cyan Double-Bladed LightsaberDouble-Bladed Lightsaber (Cyan)B
+Green Double-Bladed Lightsaber Double-Bladed Lightsaber (Green)D
+Orange Double-Bladed Lightsaber!Double-Bladed Lightsaber (Orange)D
+Purple Double-Bladed Lightsaber!Double-Bladed Lightsaber (Purple)>
+Red Double-Bladed LightsaberDouble-Bladed Lightsaber (Red)D
+Yellow Double-Bladed Lightsaber!Double-Bladed Lightsaber (Yellow)B
+White Double-Bladed Lightsaber Double-Bladed Lightsaber (White)&
+Black LightsaberLightsaber (Black)$
+Blue LightsaberLightsaber (Blue)$
+Cyan LightsaberLightsaber (Cyan)&
+Green LightsaberLightsaber (Green)(
+Orange LightsaberLightsaber (Orange)(
+Purple LightsaberLightsaber (Purple)"
+Red LightsaberLightsaber (Red)&
+White LightsaberLightsaber (White)(
+Yellow LightsaberLightsaber (Yellow)(
 Diamond SwordMinecraft Diamond Sword"
 
 Gold SwordMinecraft Gold Sword$
 Stone SwordMinecraft Stone Sword&
 Wooden SwordMinecraft Wooden Sword"
-Assault CarbineAssault Carbine
-CrossbowCrossbow
+Assault CarbineAssault Carbine
+Common CrossbowCrossbow
 Cryo-FreezerCryo-Freezer
 Energy SwordEnergy Sword
 FlamethrowerFlamethrower
@@ -74,21 +56,19 @@ Vibroblade
 Vibroblade
 TestRakthar!
 The KeyrossumVanTossumSyntAxe
-	Light BowLightBow
-	Light BowLightBowExplosion
-
-Light Mace	LightMace
-Stick
-LightStick#
-Generic HandgunGenericMediumgun!
-Generic HandgunGenericHandgun
-ByteByte
-
-Force Push
-Force Push
+	Light BowLightBow
+ByteByte
+Orbital BombOrbitalBomb
 	Null BeamNullBeam
 NullBoltNullBolt
 
 Hexplosion
-Hexplosion
-Orbital BombOrbitalBomb
+Hexplosionn!
+Generic HandgunGenericHandgun
+ByteByte
+Orbital BombOrbitalBomb
+	Null BeamNullBeam
+NullBoltNullBolt
+
+Hexplosion
+Hexplosion

@@ -5,11 +5,13 @@ public class GenericHandgun : Weapon {
 
 	public override void Attack (float damage)
 	{
+
+		FMOD_StudioSystem.instance.PlayOneShot("event:/weapons/pistol",transform.position,PlayerPrefs.GetFloat("MasterVolume"));
 		RaycastHit hitInfo;
 		if(Physics.Raycast(new Ray(Player.playerPos.position + Player.playerPos.forward + new Vector3(0,1,0),Player.playerPos.forward), out hitInfo)) {
 			if(hitInfo.collider.gameObject.GetComponent<Enemy>() != null) {
 				Enemy temp = hitInfo.collider.gameObject.GetComponent<Enemy>();
-				temp.GetDamaged(damage, Random.value < critChance);
+				temp.GetDamaged(damage + (Player.strength), Random.value < critChance);
 				temp.DoKnockback(hitInfo.point, knockback);
 
 				if(attackOBJ != null) {
@@ -21,6 +23,7 @@ public class GenericHandgun : Weapon {
 				}
 			}
 		}
+		Instantiate(attackOBJ,transform.position,transform.rotation);
 
 	}
 

@@ -24,7 +24,7 @@ public class Byte : MonoBehaviour {
 		timeOffset += Time.deltaTime;
 
 		if(timeOffset < 0.1f) {
-			GetComponent<Rigidbody>().AddForce(new Vector3(Random.value*8f - 4, Random.value*2f, Random.value*8f - 4), ForceMode.VelocityChange);
+			GetComponent<Rigidbody>().AddForce(new Vector3(Random.value*8f - 4, Random.value*10f, Random.value*8f - 4), ForceMode.VelocityChange);
 		}
 
 		if ((timeOffset > 1 && Vector3.Distance(Player.playerPos.position, this.transform.position) < 10f) || timeOffset > 2) {

@@ -30,4 +30,10 @@ public class OutsideGrass : MonoBehaviour {
 		this.GetComponent<MeshFilter>().mesh.RecalculateBounds();
 		this.GetComponent<MeshFilter>().mesh.RecalculateNormals();
 	}
+
+	void OnCollisionEnter(Collision other) {
+		if(other.gameObject.GetComponent<Enemy>() != null) {
+			Destroy(other.gameObject);
+		}
+	}
 }

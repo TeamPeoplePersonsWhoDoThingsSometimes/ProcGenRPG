@@ -70,7 +70,7 @@ public class QuestFinishedCheckable : StatusCheckable {
 		
 		checkQuest = protocol.Quest.Name;
 		
-		Debug.Log ("Built quest finished checkable: " + checkQuest);
+//		Debug.Log ("Built quest finished checkable: " + checkQuest);
 	}
 	
 	public void setFromData (StatusSave saveData) {}

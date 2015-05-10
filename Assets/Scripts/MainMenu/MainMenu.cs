@@ -28,9 +28,18 @@ public class MainMenu : MonoBehaviour {
 
 	public Text load1,load2,load3;
 
+	void OnEnable() {
+//		float scaleFactor = Screen.height/576f;
+//		Screen.SetResolution((int)(Screen.width*scaleFactor),Screen.height,true);
+//		Debug.LogError(Screen.resolutions[Screen.resolutions.Length-1].width + " " + Screen.resolutions[Screen.resolutions.Length-1].height);
+		if(QualitySettings.names[QualitySettings.GetQualityLevel()].Equals("INSANE")) {
+			Screen.SetResolution(Screen.resolutions[Screen.resolutions.Length-1].width,Screen.resolutions[Screen.resolutions.Length-1].height,true);
+			Debug.LogError(Screen.width + " " + Screen.height);
+		}
+	}
+
 	// Use this for initialization
 	void Start () {
-		Screen.SetResolution(1024,576,false);
 		dotBG = GameObject.Find("DOTBGPREFAB").GetComponent<Image>();
 		splashContainer = GameObject.Find("SplashContainer");
 		mainContainer = GameObject.Find("MainContainer");

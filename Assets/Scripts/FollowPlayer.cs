@@ -24,14 +24,19 @@ public class FollowPlayer : MonoBehaviour {
 	private bool finalBoss = false;
 	private static bool finalBossDying = false;
 
+	private static float fastMoveTime = 0f;
+
 	// Use this for initialization
 	void Start () {
+		traveling = 5f;
+		FMOD_StudioSystem.instance.PlayOneShot("event:/environment/portal",Player.playerPos.position, PlayerPrefs.GetFloat("MasterVolume")/2f);
 		offset = this.transform.position - Player.playerPos.position;
 		p = GameObject.Find("PlayerObj").GetComponent<Player>();
 
 		if(GameObject.Find("FINALBOSS") != null) {
 			finalBoss = true;
 		}
+		zoom = 20f;
 	}
 	
 	// Update is called once per frame
@@ -63,7 +68,7 @@ public class FollowPlayer : MonoBehaviour {
 		}
 
 		if (!locked) {
-			transform.parent.position = Vector3.MoveTowards(transform.parent.position, Player.playerPos.position, 50*Time.deltaTime);
+			transform.parent.position = Vector3.MoveTowards(transform.parent.position, Player.playerPos.position, 50*Time.deltaTime * (fastMoveTime > 0 ? 4 : 1));
 		}
 
 		if(!PlayerCanvas.inConsole) {
@@ -81,7 +86,7 @@ public class FollowPlayer : MonoBehaviour {
 			Quaternion lookRotation1 = Quaternion.LookRotation(lookDirection1);
 			Quaternion lookRotation2 = Quaternion.LookRotation(lookDirection2);
 			if(Input.GetAxis("Mouse ScrollWheel") == 0) {
-				transform.GetChild(0).transform.rotation = Quaternion.RotateTowards(transform.GetChild(0).transform.rotation, lookRotation1, 0.1f);
+				transform.GetChild(0).transform.rotation = Quaternion.RotateTowards(transform.GetChild(0).transform.rotation, lookRotation1, 0.1f * (fastMoveTime > 0 ? 10 : 1));
 			} else {
 				transform.GetChild(0).transform.rotation = Quaternion.RotateTowards(transform.GetChild(0).transform.rotation, lookRotation1, 1f);
 			}
@@ -122,6 +127,8 @@ public class FollowPlayer : MonoBehaviour {
 			Camera.main.GetComponent<VignetteAndChromaticAberration>().chromaticAberration = Random.value*10;
 		}
 
+		fastMoveTime -= Time.deltaTime;
+
 	}
 
 	/**
@@ -132,11 +139,18 @@ public class FollowPlayer : MonoBehaviour {
 	}
 
 	public static void Travel() {
+		if(CityHelp.helpMode == 3) {
+			CityHelp.helpMode = -1;
+		}
 		traveling = 5f;
 	}
 
 	public static void FinalBossDying() {
 		finalBossDying = true;
+	}
+
+	public static void MoveCamFast() {
+		fastMoveTime = 10f;
 	}
 
 }

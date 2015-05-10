@@ -18,6 +18,7 @@ public class EmberFoxGenerator : Enemy {
 
 	public void Attack() {
 		GameObject temp = (GameObject)Instantiate(emberfoxprefab, transform.position + transform.forward*2f, transform.localRotation);
+		temp.GetComponent<Enemy>().spawnedFromGenerator = true;
 	}
 
 	protected override void HandleDeath ()

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Utility : MonoBehaviour {
 
-	private static GameObject hitInfo, byteObject, commonItemDrop, uncommonItemDrop, rareItemDrop;
+	private static GameObject hitInfo, byteObject, commonItemDrop, uncommonItemDrop, rareItemDrop, anomalyItemDrop;
 
 	public static string ByteToString(int bytes) {
 		if(bytes > (1000*1000*500)) {
@@ -23,17 +23,7 @@ public class Utility : MonoBehaviour {
 	}
 
 	public static int ComparableVersionInt(string version) {
-		return int.Parse(version.Split('.')[0] + version.Split('.')[1]);
-	}
-
-	public static string ComparableVersionString(int version) {
-		int temp = version;
-		int temp2 = 1;
-		while(temp >= 10) {
-			temp /= 10;
-			temp2 *= 10;
-		}
-		return temp + "." + (version - temp2) + "." + Random.Range(0,9);
+		return int.Parse(version.Split('.')[0])*100 + int.Parse(version.Split('.')[1]);
 	}
 
 	public static string ModVersionBy(string version, int value) {
@@ -59,6 +49,40 @@ public class Utility : MonoBehaviour {
 			uncommonItemDrop = (GameObject) Resources.Load("ItemDrops/UncommonItemDrop");
 		}
 		return uncommonItemDrop;
+	}
+
+	public static GameObject GetRareItemDrop() {
+		if(rareItemDrop == null) {
+			rareItemDrop = (GameObject) Resources.Load("ItemDrops/RareItemDrop");
+		}
+		return rareItemDrop;
+	}
+
+	public static GameObject GetAnomalyItemDrop() {
+		if(anomalyItemDrop == null) {
+			anomalyItemDrop = (GameObject) Resources.Load("ItemDrops/AnomalyItemDrop");
+		}
+		return anomalyItemDrop;
+	}
+
+	public static GameObject GetItemDrop(GameObject item) {
+		GameObject temp = null;
+		switch(item.GetComponent<Item>().RarityVal) {
+			case Rarity.Common:
+				temp = GetCommonItemDrop();
+				break;
+			case Rarity.Uncommon:
+				temp = GetUncommonItemDrop();
+				break;
+			case Rarity.Rare:
+				temp = GetRareItemDrop();
+				break;
+			case Rarity.Anomaly:
+				temp = GetAnomalyItemDrop();
+				break;
+		}
+		temp.GetComponent<ItemDropObject>().item = item;
+		return temp;
 	}
 
 }

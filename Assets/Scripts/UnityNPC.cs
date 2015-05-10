@@ -114,12 +114,14 @@ public class UnityNPC : Interactable {
 
 		if (this.CanInteract()) {
 			nameUI2.enabled = true;
+			nameUI2.transform.GetChild(1).GetComponent<Text>().enabled = true;
 		} else {
 			nameUI2.enabled = false;
+			nameUI2.transform.GetChild(1).GetComponent<Text>().enabled = false;
 		}
 
-		PlayerControl.immobile = talkingToAnyone;
-		PlayerCanvas.cinematicMode = talkingToAnyone;
+//		PlayerControl.immobile = talkingToAnyone;
+//		PlayerCanvas.cinematicMode = talkingToAnyone;
 
 		if(talking) {
 			if(transform.GetChild(0).GetComponent<Camera>() != null) {
@@ -148,7 +150,25 @@ public class UnityNPC : Interactable {
 		} else if (talking && talkingToAnyone) {
 			talkingToAnyone = false;
 		}
+
+		if(talking) {
+			PlayerControl.immobile = false;
+			PlayerCanvas.cinematicMode = false;
+		} else {
+			PlayerControl.immobile = true;
+			PlayerCanvas.cinematicMode = true;
+		}
 		talking = !talking;
+
+		if(this.name.Equals("NetExplorer") && CityHelp.helpMode == 0) {
+			CityHelp.helpMode = 1;
+		}
+		if(this.name.Equals("NetExplorer") && CityHelp.helpMode == 5) {
+			CityHelp.helpMode = 6;
+		}
+		if(this.name.Contains("Norton") && CityHelp.helpMode == 8) {
+			CityHelp.helpMode = -1;
+		}
 //		curNode = conv.
 		return;
 	}

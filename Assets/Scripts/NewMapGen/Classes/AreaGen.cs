@@ -32,7 +32,7 @@ public static class AreaGen {
         corridors = defaultConnect(seed, ref tiles, ref rooms);
 
         watch.Stop();
-        Debug.Log("Area Generation time: " + watch.Elapsed);
+//        Debug.Log("Area Generation time: " + watch.Elapsed);
 
     }
 

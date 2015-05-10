@@ -25,7 +25,7 @@ public class MouseTracker : MonoBehaviour {
 					groundFound = true;
 	//				float tempDist = Vector3.Distance(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, inf.distance)), Player.playerPos.position);
 					transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, rH.distance));
-					transform.position = new Vector3(transform.position.x, 0.1f, transform.position.z);
+					transform.position = new Vector3(transform.position.x, groundFound ? (rH.point.y + 0.1f) : 0.1f, transform.position.z);
 	//				transform.position = Player.playerPos.position + Player.playerPos.forward*tempDist + Vector3.up/20f;
 		//			Debug.DrawRay(Player.playerPos.position + Vector3.up, Player.playerPos.forward*10f);
 	//				Debug.Log(tempDist);

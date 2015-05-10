@@ -8,12 +8,13 @@ public class Railgun : Weapon {
 	public override void Attack (float damage)
 	{
 		GameObject.Instantiate(laserObject, Player.playerPos.position + new Vector3(0,3,0), Player.playerPos.rotation);
+		FMOD_StudioSystem.instance.PlayOneShot("event:/weapons/hexplosion",transform.position,PlayerPrefs.GetFloat("MasterVolume"));
 
 		RaycastHit hitInfo;
 		if(Physics.Raycast(new Ray(Player.playerPos.position + Player.playerPos.forward + new Vector3(0,1,0),Player.playerPos.forward), out hitInfo)) {
 			if(hitInfo.collider.gameObject.GetComponent<Enemy>() != null) {
 				Enemy temp = hitInfo.collider.gameObject.GetComponent<Enemy>();
-				temp.GetDamaged(damage, Random.value < critChance);
+				temp.GetDamaged(damage + (Player.strength), Random.value < critChance);
 				temp.DoKnockback(hitInfo.point, knockback);
 
 				if(attackOBJ != null) {

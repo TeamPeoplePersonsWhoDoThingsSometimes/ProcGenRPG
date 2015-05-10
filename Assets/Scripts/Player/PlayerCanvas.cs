@@ -35,9 +35,12 @@ public class PlayerCanvas : MonoBehaviour {
 	private int tempWeaponXPVal;
 
 	private Button strengthButton, defenseButton, efficiencyButton, securityButton, encryptionButton;
-	private Text playerStrengthText, playerDefenseText, playerEfficiencyText, playerSecurityText, playerEncryptionText, algorithmPointsText, weaponStatsInfo, hackStatsInfo;
+	private Text playerStrengthText, playerDefenseText, playerEfficiencyText, playerSecurityText, playerEncryptionText, algorithmPointsText, weaponStatsInfo, hackStatsInfo, weaponName, hackName;
 
-	private Text integrityPercentage, RMAPercentage;
+	private Image weaponRarityBar, hackRarityBar;
+	private Text weaponRarityText, hackRarityText;
+
+	private Text integrityPercentage, RMAPercentage, integrityValue, RMAValue, blockingValue;
 	private Image integrityBar, RMABar;
 
 	public static bool inConsole = false;
@@ -84,8 +87,8 @@ public class PlayerCanvas : MonoBehaviour {
 		playerAnim = GameObject.Find("PlayerObj").GetComponent<Animator>();
 		playerRef = GameObject.Find("PlayerObj").GetComponent<Player>();
 
-		inGameGUI = transform.GetChild(0).GetComponent<CanvasGroup>();
-		consoleGUI = transform.GetChild(1).GetComponent<CanvasGroup>();
+		inGameGUI = transform.GetChild(1).GetComponent<CanvasGroup>();
+		consoleGUI = transform.GetChild(2).GetComponent<CanvasGroup>();
 	
 		a1 = GameObject.Find("Attack1").GetComponent<Image>();
 		a2 = GameObject.Find("Attack2").GetComponent<Image>();
@@ -120,12 +123,23 @@ public class PlayerCanvas : MonoBehaviour {
 		playerEncryptionText = GameObject.Find("PlayerEncryptionText").GetComponent<Text>();
 		algorithmPointsText = GameObject.Find("AlgorithmPointsText").GetComponent<Text>();
 		weaponStatsInfo = GameObject.Find("WeaponStatInfo").GetComponent<Text>();
+		weaponName = GameObject.Find("WeaponStats").GetComponent<Text>();
+		hackName = GameObject.Find("HackStats").GetComponent<Text>();
 		hackStatsInfo = GameObject.Find("HackStatInfo").GetComponent<Text>();
+		
+		hackRarityBar = GameObject.Find("HackRarityBar").GetComponent<Image>();
+		weaponRarityBar = GameObject.Find("WeaponRarityBar").GetComponent<Image>();
+		weaponRarityText = GameObject.Find("WeaponRarityText").GetComponent<Text>();
+		hackRarityText = GameObject.Find("HackRarityText").GetComponent<Text>();
 
 		integrityBar = GameObject.Find("IntegrityBar").GetComponent<Image>();
 		integrityPercentage = GameObject.Find("IntegrityPercentText").GetComponent<Text>();
+		integrityValue = GameObject.Find("IntegrityValueText").GetComponent<Text>();
 		RMABar = GameObject.Find("RMABar").GetComponent<Image>();
+
 		RMAPercentage = GameObject.Find("RMAPercentText").GetComponent<Text>();
+		RMAValue = GameObject.Find("RMAValueText").GetComponent<Text>();
+		blockingValue = GameObject.Find("BlockingValueText").GetComponent<Text>();
 
 		quickAccessBar = GameObject.Find("QuickAccessBar").GetComponent<RectTransform>();
 		activeWeaponIcon = GameObject.Find("ActiveWeaponIcon").GetComponent<RectTransform>();
@@ -202,24 +216,28 @@ public class PlayerCanvas : MonoBehaviour {
 		}
 
 		/*** Updates QuickAccessItems ***/
-		for(int i = 0; i < playerRef.quickAccessItems.Count; i++) {
-			if(playerRef.quickAccessItems[i] != null) {
-				quickAccessBar.transform.GetChild(i).GetComponent<Image>().sprite = GetSprite(playerRef.quickAccessItems[i].RarityVal);
-				if(playerRef.GetWeapon() != null && playerRef.GetWeapon().Equals(playerRef.quickAccessItems[i])) {
+		List<Item> tempPlayerQuickAccess = playerRef.quickAccessItems;
+		for(int i = 0; i < 10; i++) {
+			if(i < tempPlayerQuickAccess.Count && tempPlayerQuickAccess[i] != null) {
+				quickAccessBar.transform.GetChild(i).GetComponent<Image>().sprite = GetSprite(tempPlayerQuickAccess[i].RarityVal);
+				if(tempPlayerQuickAccess[i].RarityVal.Equals(Rarity.Anomaly)) {
+					quickAccessBar.transform.GetChild(i).GetComponent<Image>().color = new Color(Random.value*0.5f+0.5f,Random.value*0.5f+0.5f,Random.value*0.5f+0.5f);
+				}
+				if(playerRef.GetWeapon() != null && playerRef.GetWeapon().Equals(tempPlayerQuickAccess[i])) {
 					activeWeaponIcon.SetParent(quickAccessBar.GetChild(i), false);
 				}
-				if(playerRef.GetHack() != null && playerRef.GetHack().Equals(playerRef.quickAccessItems[i])) {
+				if(playerRef.GetHack() != null && playerRef.GetHack().Equals(tempPlayerQuickAccess[i])) {
 					activeHackIcon.SetParent(quickAccessBar.GetChild(i), false);
 				}
 
-				if(playerRef.quickAccessItems[i].GetComponent<Hack>() != null) {
-					quickAccessBar.transform.GetChild(i).FindChild("HackReload").GetComponent<RectTransform>().localScale = new Vector3(1, playerRef.quickAccessItems[i].GetComponent<Hack>().GetPercentReload(),1f);
+				if(tempPlayerQuickAccess[i].GetComponent<Hack>() != null) {
+					quickAccessBar.transform.GetChild(i).FindChild("HackReload").GetComponent<RectTransform>().localScale = new Vector3(1, tempPlayerQuickAccess[i].GetComponent<Hack>().GetPercentReload(),1f);
 				} else {
 					quickAccessBar.transform.GetChild(i).FindChild("HackReload").GetComponent<RectTransform>().localScale = new Vector3(1f,0f,1f);
 				}
-				quickAccessBar.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = playerRef.quickAccessItems[i].icon;
+				quickAccessBar.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = tempPlayerQuickAccess[i].icon;
 			} else {
-				quickAccessBar.transform.GetChild(i).GetComponent<Image>().sprite = null;
+				quickAccessBar.transform.GetChild(i).GetComponent<Image>().sprite = new Sprite();
 				quickAccessBar.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = null;
 				quickAccessBar.transform.GetChild(i).FindChild("HackReload").GetComponent<RectTransform>().localScale = new Vector3(1f,0f,1f);
 			}
@@ -326,9 +344,14 @@ public class PlayerCanvas : MonoBehaviour {
 
 		/*** draws and updates RMA and Integrity bar and bytes accumulated ***/
 		RMABar.rectTransform.localScale = new Vector3(playerRef.GetRMAPercentage(), 1f);
-		RMAPercentage.text = (playerRef.GetRMAPercentage()*100).ToString("F2") + "%";
+//		RMAPercentage.text = (playerRef.GetRMAPercentage()*100).ToString("F2") + "%";
+		RMAPercentage.text = playerRef.GetRMARegen();
+		RMAValue.text = playerRef.GetRMAValueText();
+		blockingValue.text = playerRef.GetBlocking();
+		integrityValue.text = playerRef.GetIntegrityValueText();
 		integrityBar.rectTransform.localScale = new Vector3(playerRef.GetIntegrityPercentage(),1f);
-		integrityPercentage.text = (playerRef.GetIntegrityPercentage()*100).ToString("F2") + "%";
+//		integrityPercentage.text = (playerRef.GetIntegrityPercentage()*100).ToString("F2") + "%";
+		integrityPercentage.text = playerRef.GetIntegrityRegen();
 		byteText.text = "Bytes: " + Utility.ByteToString(playerRef.GetBytes());
 
 		/*** Updates xp bar and draws background yellow xp scale ***/
@@ -341,9 +364,16 @@ public class PlayerCanvas : MonoBehaviour {
 		}
 
 		/*** Opens Console and sets animator control ***/
-		if(Input.GetKeyDown(KeyCode.BackQuote)) {
+		if(!PlayerControl.immobile && (Input.GetKeyDown(KeyCode.BackQuote) || Input.GetKeyDown(KeyCode.P))) {
 			FMOD_StudioSystem.instance.PlayOneShot("event:/UISounds/UI01",Player.playerPos.position,PlayerPrefs.GetFloat("MasterVolume"));
 			inConsole = !inConsole;
+			if(CityHelp.helpMode == 1) {
+				CityHelp.helpMode = 2;
+			}
+			if(CityHelp.helpMode == 7) {
+				CityHelp.helpMode = 8;
+			}
+
 		}
 		GetComponent<Animator>().SetBool("ShowingConsole", inConsole);
 
@@ -380,9 +410,51 @@ public class PlayerCanvas : MonoBehaviour {
 			/*** Gets info string for current weapon and hack ***/
 			if(playerRef.GetWeapon() != null) {
 				weaponStatsInfo.text = playerRef.GetWeapon().InfoString();
+				weaponName.text = playerRef.GetWeapon().GetName();
+				switch(playerRef.GetWeapon().RarityVal) {
+					case Rarity.Common:
+						weaponRarityBar.color = new Color(0f,118f/255f,1f,100f/255f);
+						break;
+					case Rarity.Uncommon:
+						weaponRarityBar.color = new Color(1f,1f,0f,100f/255f);
+						break;
+					case Rarity.Rare:
+						weaponRarityBar.color = new Color(1f,0f,1f,100f/255f);
+						break;
+					case Rarity.Anomaly:
+						weaponRarityBar.color = new Color(Random.value*0.5f+0.5f,Random.value*0.5f+0.5f,Random.value*0.5f+0.5f);
+						break;
+				}
+				weaponRarityText.text = playerRef.GetWeapon().RarityVal.ToString();
+			} else {
+				weaponStatsInfo.text = "";
+				weaponName.text = "";
+				weaponRarityBar.color = new Color(1f,1f,1f,100f/255f);
+				weaponRarityText.text = "";
 			}
 			if(playerRef.GetHack() != null) {
 				hackStatsInfo.text = playerRef.GetHack().InfoString();
+				hackName.text = playerRef.GetHack().name;
+				switch(playerRef.GetHack().RarityVal) {
+					case Rarity.Common:
+						hackRarityBar.color = new Color(0f,118f/255f,1f,100f/255f);
+						break;
+					case Rarity.Uncommon:
+						hackRarityBar.color = new Color(1f,1f,0f,100f/255f);
+						break;
+					case Rarity.Rare:
+						hackRarityBar.color = new Color(1f,0f,1f,100f/255f);
+						break;
+					case Rarity.Anomaly:
+						hackRarityBar.color = new Color(Random.value*0.5f+0.5f,Random.value*0.5f+0.5f,Random.value*0.5f+0.5f);
+						break;
+				}
+				hackRarityText.text = playerRef.GetHack().RarityVal.ToString();
+			} else {
+				hackStatsInfo.text = "";
+				hackName.text = "";
+				hackRarityBar.color = new Color(1f,1f,1f,100f/255f);
+				hackRarityText.text = "";
 			}
 
 			/*** Handles Blur effect ***/
@@ -496,6 +568,9 @@ public class PlayerCanvas : MonoBehaviour {
 		GetComponent<Animator>().SetBool("ShowingInventory", true);
 		GetComponent<Animator>().SetBool("ShowingStats", false);
 		GetComponent<Animator>().SetBool("ShowingQuests", false);
+		if(CityHelp.helpMode == 6) {
+			CityHelp.helpMode = 7;
+		}
 	}
 
 	public void StatsClicked() {
@@ -508,13 +583,16 @@ public class PlayerCanvas : MonoBehaviour {
 		GetComponent<Animator>().SetBool("ShowingInventory", false);
 		GetComponent<Animator>().SetBool("ShowingStats", false);
 		GetComponent<Animator>().SetBool("ShowingQuests", true);
+		if(CityHelp.helpMode == 2) {
+			CityHelp.helpMode = 3;
+		}
 	}
 
 	public void HandleInventoryMouseOver(int index) {
 		if(index != -1 && dragDelta == Vector2.zero) {
 			GetComponent<Animator>().SetBool("MouseOver", true);
 			mouseOverInfo.transform.parent.GetComponent<RectTransform>().anchoredPosition = inventoryItemContainer.transform.GetChild(index).GetComponent<RectTransform>().anchoredPosition
-				+ new Vector2(-3.7f, 0.19f);
+				+ new Vector2(1.1f, -1.35f);
 			mouseOverInfo.transform.GetChild(1).GetChild(0).GetComponent<Text>().text = playerRef.inventory[index].name;
 			mouseOverInfo.transform.GetChild(0).GetComponent<Text>().text = playerRef.inventory[index].InfoString();
 			inventoryItemContainer.transform.GetChild(index).GetComponent<Image>().color = Color.white;
@@ -530,10 +608,8 @@ public class PlayerCanvas : MonoBehaviour {
 
 	public void HandleInventoryMouseDrag(int index) {
 		mouseDragInventoryItem = index;
-		if(dragStart == Vector2.zero && index != 0) {
+		if(dragStart == Vector2.zero) {
 			dragStart = inventoryItemContainer.transform.GetChild(index).GetComponent<RectTransform>().anchoredPosition;
-		} else if(index == 0) {
-			dragStart = Vector2.zero;
 		}
 		inventoryItemContainer.transform.GetChild(index).GetComponent<RectTransform>().anchoredPosition = dragStart + dragDelta/Screen.width*14f;
 		inventoryItemContainer.transform.GetChild(index).GetComponent<CanvasGroup>().blocksRaycasts = false;
@@ -571,6 +647,48 @@ public class PlayerCanvas : MonoBehaviour {
 
 	public void PlayMouseClickSound() {
 		FMOD_StudioSystem.instance.PlayOneShot("event:/UISounds/UI02",Player.playerPos.position,PlayerPrefs.GetFloat("MasterVolume"));
+	}
+
+	public void HelpClicked() {
+		PlayerControl.immobile = true;
+		transform.GetChild(3).gameObject.SetActive(true);
+		transform.GetChild(3).GetChild(0).gameObject.SetActive(true);
+		transform.GetChild(3).GetChild(1).gameObject.SetActive(false);
+		transform.GetChild(3).GetChild(2).gameObject.SetActive(false);
+		transform.GetChild(3).GetChild(3).gameObject.SetActive(false);
+		transform.GetChild(3).GetChild(4).gameObject.SetActive(true);
+
+		inGameGUI.alpha = 0;
+		consoleGUI.alpha = 0;
+//		transform.GetChild(1).gameObject.SetActive(false);
+//		transform.GetChild(2).gameObject.SetActive(false);
+	}
+
+	public void HelpConfirmed() {
+		if(transform.GetChild(3).GetChild(0).gameObject.activeSelf) {
+			transform.GetChild(3).GetChild(0).gameObject.SetActive(false);
+			transform.GetChild(3).GetChild(1).gameObject.SetActive(true);
+			transform.GetChild(3).GetChild(2).gameObject.SetActive(false);
+			transform.GetChild(3).GetChild(3).gameObject.SetActive(false);
+		} else if(transform.GetChild(3).GetChild(1).gameObject.activeSelf) {
+			transform.GetChild(3).GetChild(0).gameObject.SetActive(false);
+			transform.GetChild(3).GetChild(1).gameObject.SetActive(false);
+			transform.GetChild(3).GetChild(2).gameObject.SetActive(true);
+			transform.GetChild(3).GetChild(3).gameObject.SetActive(false);
+		} else if(transform.GetChild(3).GetChild(2).gameObject.activeSelf) {
+			transform.GetChild(3).GetChild(0).gameObject.SetActive(false);
+			transform.GetChild(3).GetChild(1).gameObject.SetActive(false);
+			transform.GetChild(3).GetChild(2).gameObject.SetActive(false);
+			transform.GetChild(3).GetChild(3).gameObject.SetActive(true);
+		} else if(transform.GetChild(3).GetChild(3).gameObject.activeSelf) {
+			PlayerControl.immobile = false;
+			transform.GetChild(3).gameObject.SetActive(false);
+
+			inGameGUI.alpha = 1;
+			consoleGUI.alpha = 1;
+//			transform.GetChild(1).gameObject.SetActive(true);
+//			transform.GetChild(2).gameObject.SetActive(true);
+		}
 	}
 
 }

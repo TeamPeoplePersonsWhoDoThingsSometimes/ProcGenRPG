@@ -125,7 +125,10 @@ public class Quest : ActionEventListener {
 				//so return
 				if (!done) {
 					if (a.isStatusMet (action)) {
-//						Debug.Log ("Action Met");
+						Debug.Log ("Action Met: " + this.name);
+						if(this.name.Equals("See the World") && CityHelp.helpMode == -1) {
+							CityHelp.helpMode = 4;
+						}
 						statuses.Remove (a);
 						statuses.Add (a, true);
 					}

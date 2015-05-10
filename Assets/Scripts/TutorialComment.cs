@@ -86,7 +86,7 @@ public class TutorialComment : MonoBehaviour {
 			ERRORTIME += Time.deltaTime;
 			if(ERRORTIME > 0.5f) {
 				ERROR.SetActive(true);
-				text = "/* PRESS " + PersistentInfo.sprintKey.ToString() + " TO RUN */";
+				text = "/* DONT TRY TO FIGHT... RUN */";
 				ERRORTIME = 0f;
 			}
 		}
@@ -140,7 +140,7 @@ public class TutorialComment : MonoBehaviour {
 		text = text.Replace("%PRIMARYATTACK%","LEFT MOUSE");
 		text = text.Replace("%HACKKEY%","RIGHT MOUSE");
 		text = text.Replace("%ROLLKEY%",PersistentInfo.rollKey.ToString());
-		text = text.Replace("%CONSOLEKEY%",PersistentInfo.consoleOpenKey.ToString());
+		text = text.Replace("%CONSOLEKEY%","P or ~");
 		text = text.Replace("%MAPKEY%",PersistentInfo.mapKey.ToString());
 //		text = text.Replace("%SPRINTKEY%",PersistentInfo.mapKey.ToString());
 	}

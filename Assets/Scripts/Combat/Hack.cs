@@ -17,6 +17,7 @@ public class Hack : Item {
 
 	private Player playerref;
 
+	private float tempCounter;
 	// Use this for initialization
 	void Start () {
 		if(passive && oneShot) {
@@ -26,22 +27,24 @@ public class Hack : Item {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	protected virtual void Update () {
 		tempFiringRate -= Time.deltaTime;
 
 		if (isCalled) {
-			passiveActive = !passiveActive;
-
-			if (passiveActive && passive) {
-				playerref.ExpendRMA(RMACost);
-				PassiveActive();
-			}
+		
 			if (tempFiringRate <= 0 && oneShot) {
 				if (playerref.ExpendRMA(RMACost)) {
 					OneShotActivated();
 				}
+			} else if(passive && tempFiringRate <= 0) {
+				passiveActive = !passiveActive;
+				tempFiringRate = 1;
 			}
 			isCalled = false;
+		}
+
+		if (passiveActive && passive) {
+			PassiveActive();
 		}
 	}
 
@@ -57,7 +60,7 @@ public class Hack : Item {
 	 * What should happen when the hack is active
 	 */
 	protected virtual void PassiveActive() {
-
+		playerref.ExpendRMA(RMACost*Time.deltaTime);
 	}
 
 	/**
@@ -73,11 +76,10 @@ public class Hack : Item {
 	}
 
 	public override string InfoString() {
-		string forreturn = "Type: " + (passive ? "Passive" : "Active") +
-			"\n\nRarity: " + this.RarityVal +
-				"\n\nBase Damage: " + damage.ToString("F2") +
-				"\n\nKnockback: " + attack.GetComponent<Attack>().knockback.ToString("F2") +
-				"\n\nDescription: " + description;
+		string forreturn =
+			"RMA\n" + RMACost +
+			"\n\nDMG\n" + damage + " (+" + (Player.strength*2) + ")" +
+			"\n\nINF\n" + (passive ? "Passive: " : "Active: ") + description.Replace("DMG",(damage+(Player.strength*2)).ToString()).Replace("rma",RMACost.ToString());
 
 		return forreturn;
 	}

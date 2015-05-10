@@ -50,6 +50,10 @@ public class MusicManager : MonoBehaviour {
 			if(Time.frameCount % 500 == 0) {
 				FindEnemies();
 			}
+
+			if(normal.time < 0.05f) {
+				combat.time = normal.time;
+			}
 		}
 		if(fadeOut && normal.volume > 0) {
 			normal.volume -= Time.deltaTime;

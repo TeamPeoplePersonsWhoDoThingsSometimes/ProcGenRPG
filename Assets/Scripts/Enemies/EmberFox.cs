@@ -33,7 +33,7 @@ public class EmberFox : Enemy {
 	protected override void DoIdle ()
 	{
 //		Debug.DrawRay(transform.position, transform.forward);
-		if(!patrol) {
+		if(patrol) {
 			if (Physics.Raycast(transform.position, transform.forward, 3f) || turningLeft || turningRight) {
 				if (!turningLeft && !turningRight) {
 					patrolForward = false;

@@ -38,7 +38,7 @@ public class Weapon : Item {
 	
 	// Update is called once per frame
 	protected virtual void Update () {
-		bytesToLevelUp = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*(int)(levelUpSpeedScale*10000));
+		bytesToLevelUp = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*(int)(levelUpSpeedScale*1000000));
 		attackSpeedTime += Time.deltaTime;
 		while (bytes > bytesToLevelUp) {
 			LevelUp();
@@ -60,7 +60,7 @@ public class Weapon : Item {
 	public virtual void Attack(float damage) {
 		GameObject tempAttack = (GameObject)GameObject.Instantiate(attackOBJ, Player.playerPos.position + new Vector3(0,1,0), Player.playerPos.rotation);
 		tempAttack.GetComponent<Attack>().SetCrit(critChance);
-		tempAttack.GetComponent<Attack>().SetDamage(damage);
+		tempAttack.GetComponent<Attack>().SetDamage(damage + Player.strength);
 	}
 
 	private void LevelUp() {
@@ -125,21 +125,27 @@ public class Weapon : Item {
 
 	//used for UI
 	public override string InfoString() {
-		string forreturn = "Type: " + Type() +
-				"\n\nRarity: " + this.RarityVal +
-				"\n\nBase Damage: " + thisDamage.ToString("F2") +
-				"\n\nKnockback: " + knockback.ToString("F2") +
-				"\n\nCrit Chance: " + critChance.ToString("F2");
+		string forreturn = 
+				"DMG\n" + (int)thisDamage + "-" + ((int)thisDamage+1) + " (+" + Player.strength + ")" + 
+				"\n\nCRIT\n" + critChance.ToString("F2") +
+				"\n\nINF\n" + description;
 
 		if(GetAttack() != null) {
 			if(GetAttack().GetComponent<Attack>().attackEffect != Effect.None) {
 
-				forreturn += "\n\nEffect: " + GetAttack().GetComponent<Attack>().attackEffect;
+				forreturn += "\n\nEFX: " + GetAttack().GetComponent<Attack>().attackEffect;
 
 				if(GetAttack().GetComponent<Attack>().attackEffect == Effect.Deteriorating) {
 					forreturn += " - " + GetAttack().GetComponent<Attack>().attackEffectChance*100f + "% chance of " + 
 						GetAttack().GetComponent<Attack>().attackEffectValue + " damage for " +
 							GetAttack().GetComponent<Attack>().attackEffectTime + " secs";
+				} else if(GetAttack().GetComponent<Attack>().attackEffect == Effect.Bugged) {
+					forreturn += " - " + GetAttack().GetComponent<Attack>().attackEffectChance*100f + "% chance of confusing for " +
+							GetAttack().GetComponent<Attack>().attackEffectTime + " secs";
+				} else if(GetAttack().GetComponent<Attack>().attackEffect == Effect.Virus) {
+					forreturn += " - " + GetAttack().GetComponent<Attack>().attackEffectChance*100f + "% chance of infecting, which then spreads " +
+						"\"Deteriorating\" for " +
+						GetAttack().GetComponent<Attack>().attackEffectTime + " secs";
 				} else {
 					forreturn += " - for " + GetAttack().GetComponent<Attack>().attackEffectTime + " secs";
 				}

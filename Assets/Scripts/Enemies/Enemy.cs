@@ -21,6 +21,8 @@ public class Enemy : MonoBehaviour {
 	public float speedOverride;
 	public float attackRange = 3f;
 
+	public bool spawnedFromGenerator;
+
 	public Effect currentEffect;
 	private float effectTime;
 	private float effectValue;
@@ -97,17 +99,19 @@ public class Enemy : MonoBehaviour {
 
 		int minversionInt = Utility.ComparableVersionInt(minVersion);
 		int maxversionInt = Utility.ComparableVersionInt(maxVersion);
-		int minRange = Mathf.Min(Mathf.Max(minversionInt, Utility.ComparableVersionInt(Player.version) - 5), maxversionInt);
-		int maxRange = Mathf.Max(Mathf.Min(Utility.ComparableVersionInt(Player.version) + 5, maxversionInt), minversionInt);
+		int minRange = Mathf.Min(Mathf.Max(minversionInt, Utility.ComparableVersionInt(Player.version) - 10), maxversionInt);
+		int maxRange = Mathf.Max(Mathf.Min(Utility.ComparableVersionInt(Player.version) + 2, maxversionInt), minversionInt);
 
-		int versionInt = Random.Range(minRange,maxRange);
-//		Debug.Log("my versionint is: " + versionInt);
-		this.maxHP *= (int)((versionInt/10f)*(healthScale+1));
-//		Debug.Log("my maxhp is: " + this.maxHP);
-		this.baseAttackDamage *= (versionInt/10f)*(attackScale+1);
-		this.baseHealthRegen *= (versionInt/10f)*(healthRegenScale+1);
-		this.baseAttackSpeed /= (versionInt/10f)*(attackSpeedScale+1);
-		this.version = Utility.ComparableVersionString(versionInt);
+		int versionInt = (Random.Range(minRange,maxRange)%100) + 1;
+		Debug.Log(this.name + ": versionint = " + versionInt);
+		this.maxHP *= (int)((versionInt)*(healthScale+1));
+		Debug.Log(this.name + ": maxhp = " + this.maxHP);
+		this.baseAttackDamage += (versionInt)*(attackScale);
+		Debug.Log(this.name + ": attack = " + this.baseAttackDamage);
+		this.baseHealthRegen += (versionInt)*(healthRegenScale);
+		this.baseAttackSpeed /= (versionInt)*(attackSpeedScale+1);
+		this.version = Utility.ModVersionBy("1.0.0",versionInt);
+		Debug.Log(this.name + ": version = " + version);
 		hp = maxHP;
 		if(possibleItemDrops.Count != possibleItemDropsChance.Count) {
 			Debug.LogWarning("Hey dummy! You need to have equal number of item drops and item drop chances!");
@@ -159,6 +163,10 @@ public class Enemy : MonoBehaviour {
 	// Update is called once per frame
 	protected void Update () {
 //		transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, 0f, 1f), transform.position.z);
+
+		if(spawnedFromGenerator && FollowPlayer.traveling > 0) {
+			Destroy(this.gameObject);
+		}
 
 		healthBarTime -= Time.deltaTime;
 
@@ -276,9 +284,6 @@ public class Enemy : MonoBehaviour {
 		}
 
 		/*** Handle Moving towards player and attacking ***/
-		if(gameObject.name.Equals("STACKOVERFLOW")) {
-			Debug.Log(Vector3.Distance(Player.playerPos.position, transform.position));
-		}
 		if (Vector3.Distance(Player.playerPos.position, transform.position) > attackRange && !retreating) {
 			GetComponent<Animator>().SetTrigger("PlayerSpotted");
 			transform.LookAt(Player.playerPos.position + new Vector3(0,1,0));
@@ -299,7 +304,8 @@ public class Enemy : MonoBehaviour {
 
 	protected virtual void HandleDeath() {
 	/*** Death ****/
-		int tempByteVal = (int)(maxHP*1000*byteDropScale);
+		int tempByteVal = (int)(Utility.ComparableVersionInt(version)*100*byteDropScale);
+		Debug.Log("I'm gonna drop " + tempByteVal + " because my comparable versionint is: " + Utility.ComparableVersionInt(version));
 		int curByteVal = 0;
 		int byteVal = Mathf.Max(tempByteVal/5, 5000);
 		while (curByteVal < tempByteVal) {
