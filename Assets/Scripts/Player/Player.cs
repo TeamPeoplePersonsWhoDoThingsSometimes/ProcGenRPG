@@ -63,6 +63,16 @@ public class Player : MonoBehaviour {
 
 		builder.SetName (name);
 
+		builder.SetStrength (strength);
+		builder.SetDefence (defense);
+		builder.SetEfficiency (efficiency);
+		builder.SetEncryption (encryption);
+		builder.SetSecurity (security);
+		builder.SetAlgorithmPoints (algorithmPoints);
+		builder.SetIntegrity (integrity);
+		builder.SetRma (rma);
+		builder.SetDeaths (deaths);
+
 		GlobalPosition.Builder positionBuilder = GlobalPosition.CreateBuilder ();
 		positionBuilder.SetAreaX (MasterDriver.Instance.CurrentArea.position.x);
 		positionBuilder.SetAreaY (MasterDriver.Instance.CurrentArea.position.y);
@@ -98,7 +108,17 @@ public class Player : MonoBehaviour {
 
 	public void setPlayerStatusWithoutPosition(PlayerStatus status) {
 		name = status.Name;
-		
+
+		strength = status.Strength;
+		defense = status.Defence;
+		efficiency = status.Efficiency;
+		encryption = status.Encryption;
+		security = status.Security;
+		algorithmPoints = status.AlgorithmPoints;
+		integrity = status.Integrity;
+		rma = status.Rma;
+		deaths = status.Deaths;
+
 		List<Point> visitedAreas = new List<Point> ();
 		IList<PointProto> storedAreas = status.VisitedAreasList;
 		foreach (PointProto p in storedAreas) {
@@ -125,6 +145,17 @@ public class Player : MonoBehaviour {
 
 	public void setPlayerStatus(PlayerStatus status) {
 		name = status.Name;
+
+		strength = status.Strength;
+		defense = status.Defence;
+		efficiency = status.Efficiency;
+		encryption = status.Encryption;
+		security = status.Security;
+		algorithmPoints = status.AlgorithmPoints;
+		integrity = status.Integrity;
+		rma = status.Rma;
+		deaths = status.Deaths;
+
 //		Debug.LogError(this.GetName());
 		List<Point> visitedAreas = new List<Point> ();
 		IList<PointProto> storedAreas = status.VisitedAreasList;

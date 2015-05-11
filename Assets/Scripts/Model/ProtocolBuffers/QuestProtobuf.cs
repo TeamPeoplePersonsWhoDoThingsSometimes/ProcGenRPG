@@ -154,21 +154,25 @@ public static partial class QuestProtobuf {
         "c2l0aW9uGAEgAigLMg8uR2xvYmFsUG9zaXRpb24SKQoKb2JqZWN0RGF0YRgC" + 
         "IAIoCzIVLkRpcmVjdE9iamVjdFByb3RvY29sEiMKD2VuZW15QXR0cmlidXRl" + 
         "cxgDIAEoCzIKLkVuZW15RGF0YRITCgtkZXNjcmlwdGlvbhgEIAEoCSIkCglF" + 
-        "bmVteURhdGESFwoPaGVhbHRoUmVtYWluaW5nGAEgAigFIq4BCgxQbGF5ZXJT" + 
+        "bmVteURhdGESFwoPaGVhbHRoUmVtYWluaW5nGAEgAigFItQCCgxQbGF5ZXJT" + 
         "dGF0dXMSJwoOcGxheWVyUG9zaXRpb24YASACKAsyDy5HbG9iYWxQb3NpdGlv" + 
         "bhIhCglpbnZlbnRvcnkYAiACKAsyDi5JbnZlbnRvcnlEYXRhEg8KB3ZlcnNp" + 
         "b24YAyACKAkSEAoIcm90YXRpb24YBCACKAUSDAoEbmFtZRgFIAIoCRIhCgx2" + 
-        "aXNpdGVkQXJlYXMYBiADKAsyCy5Qb2ludFByb3RvIjYKDUludmVudG9yeURh" + 
-        "dGESJQoGb2JqZWN0GAEgAygLMhUuRGlyZWN0T2JqZWN0UHJvdG9jb2wqpQEK" + 
-        "CkFjdGlvblR5cGUSCAoES0lMTBAAEg0KCU1PVkVfQVJFQRABEhUKEUFQUFJP" + 
-        "QUNIRURfT0JKRUNUEAISFAoQUElDS0VEX1VQX09CSkVDVBADEgwKCExFVkVM" + 
-        "X1VQEAUSDgoKRVFVSVBfSVRFTRAGEgwKCFVTRV9JVEVNEAcSCgoGQVRUQUNL" + 
-        "EAgSGQoVQ09OVkVSU0FUSU9OX05PREVfSElUEAkqNgoFQmlvbWUSEAoMTk9U" + 
-        "X0FTU0lHTkVEEAASCgoGUFlUSE9OEAESBQoBQxACEggKBEhUTUwQAyoqCgdN" + 
-        "YXBUeXBlEggKBENJVFkQABIICgRQQVRIEAESCwoHRFVOR0VPThACKjUKGlNw" + 
-        "YXduQXJlYVR5cGVTcGVjaWZpY2F0aW9uEgkKBUxPQ0FMEAASDAoIRElTVEFO" + 
-        "Q0UQASosChJMZXZlbFNwZWNpZmljYXRpb24SCwoHTUlOSU1VTRABEgkKBUVY" + 
-        "QUNUEAJCIQofc3RzcXVlc3RidWlsZGVyLnByb3RvY29sYnVmZmVycw==");
+        "aXNpdGVkQXJlYXMYBiADKAsyCy5Qb2ludFByb3RvEhAKCHN0cmVuZ3RoGAcg" + 
+        "ASgFEg8KB2RlZmVuY2UYCCABKAUSEgoKZWZmaWNpZW5jeRgJIAEoBRISCgpl" + 
+        "bmNyeXB0aW9uGAogASgFEhAKCHNlY3VyaXR5GAsgASgFEhcKD2FsZ29yaXRo" + 
+        "bVBvaW50cxgMIAEoBRIOCgZkZWF0aHMYDSABKAUSEQoJaW50ZWdyaXR5GA4g" + 
+        "ASgCEgsKA3JtYRgPIAEoAiI2Cg1JbnZlbnRvcnlEYXRhEiUKBm9iamVjdBgB" + 
+        "IAMoCzIVLkRpcmVjdE9iamVjdFByb3RvY29sKqUBCgpBY3Rpb25UeXBlEggK" + 
+        "BEtJTEwQABINCglNT1ZFX0FSRUEQARIVChFBUFBST0FDSEVEX09CSkVDVBAC" + 
+        "EhQKEFBJQ0tFRF9VUF9PQkpFQ1QQAxIMCghMRVZFTF9VUBAFEg4KCkVRVUlQ" + 
+        "X0lURU0QBhIMCghVU0VfSVRFTRAHEgoKBkFUVEFDSxAIEhkKFUNPTlZFUlNB" + 
+        "VElPTl9OT0RFX0hJVBAJKjYKBUJpb21lEhAKDE5PVF9BU1NJR05FRBAAEgoK" + 
+        "BlBZVEhPThABEgUKAUMQAhIICgRIVE1MEAMqKgoHTWFwVHlwZRIICgRDSVRZ" + 
+        "EAASCAoEUEFUSBABEgsKB0RVTkdFT04QAio1ChpTcGF3bkFyZWFUeXBlU3Bl" + 
+        "Y2lmaWNhdGlvbhIJCgVMT0NBTBAAEgwKCERJU1RBTkNFEAEqLAoSTGV2ZWxT" + 
+        "cGVjaWZpY2F0aW9uEgsKB01JTklNVU0QARIJCgVFWEFDVBACQiEKH3N0c3F1" + 
+        "ZXN0YnVpbGRlci5wcm90b2NvbGJ1ZmZlcnM=");
     pbd::FileDescriptor.InternalDescriptorAssigner assigner = delegate(pbd::FileDescriptor root) {
       descriptor = root;
       internal__static_QuestPackage__Descriptor = Descriptor.MessageTypes[0];
@@ -298,7 +302,7 @@ public static partial class QuestProtobuf {
       internal__static_PlayerStatus__Descriptor = Descriptor.MessageTypes[31];
       internal__static_PlayerStatus__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::PlayerStatus, global::PlayerStatus.Builder>(internal__static_PlayerStatus__Descriptor,
-              new string[] { "PlayerPosition", "Inventory", "Version", "Rotation", "Name", "VisitedAreas", });
+              new string[] { "PlayerPosition", "Inventory", "Version", "Rotation", "Name", "VisitedAreas", "Strength", "Defence", "Efficiency", "Encryption", "Security", "AlgorithmPoints", "Deaths", "Integrity", "Rma", });
       internal__static_InventoryData__Descriptor = Descriptor.MessageTypes[32];
       internal__static_InventoryData__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::InventoryData, global::InventoryData.Builder>(internal__static_InventoryData__Descriptor,
@@ -12498,8 +12502,8 @@ public sealed partial class EnemyData : pb::GeneratedMessage<EnemyData, EnemyDat
 public sealed partial class PlayerStatus : pb::GeneratedMessage<PlayerStatus, PlayerStatus.Builder> {
   private PlayerStatus() { }
   private static readonly PlayerStatus defaultInstance = new PlayerStatus().MakeReadOnly();
-  private static readonly string[] _playerStatusFieldNames = new string[] { "inventory", "name", "playerPosition", "rotation", "version", "visitedAreas" };
-  private static readonly uint[] _playerStatusFieldTags = new uint[] { 18, 42, 10, 32, 26, 50 };
+  private static readonly string[] _playerStatusFieldNames = new string[] { "algorithmPoints", "deaths", "defence", "efficiency", "encryption", "integrity", "inventory", "name", "playerPosition", "rma", "rotation", "security", "strength", "version", "visitedAreas" };
+  private static readonly uint[] _playerStatusFieldTags = new uint[] { 96, 104, 64, 72, 80, 117, 18, 42, 10, 125, 32, 88, 56, 26, 50 };
   public static PlayerStatus DefaultInstance {
     get { return defaultInstance; }
   }
@@ -12582,6 +12586,96 @@ public sealed partial class PlayerStatus : pb::GeneratedMessage<PlayerStatus, Pl
     return visitedAreas_[index];
   }
   
+  public const int StrengthFieldNumber = 7;
+  private bool hasStrength;
+  private int strength_;
+  public bool HasStrength {
+    get { return hasStrength; }
+  }
+  public int Strength {
+    get { return strength_; }
+  }
+  
+  public const int DefenceFieldNumber = 8;
+  private bool hasDefence;
+  private int defence_;
+  public bool HasDefence {
+    get { return hasDefence; }
+  }
+  public int Defence {
+    get { return defence_; }
+  }
+  
+  public const int EfficiencyFieldNumber = 9;
+  private bool hasEfficiency;
+  private int efficiency_;
+  public bool HasEfficiency {
+    get { return hasEfficiency; }
+  }
+  public int Efficiency {
+    get { return efficiency_; }
+  }
+  
+  public const int EncryptionFieldNumber = 10;
+  private bool hasEncryption;
+  private int encryption_;
+  public bool HasEncryption {
+    get { return hasEncryption; }
+  }
+  public int Encryption {
+    get { return encryption_; }
+  }
+  
+  public const int SecurityFieldNumber = 11;
+  private bool hasSecurity;
+  private int security_;
+  public bool HasSecurity {
+    get { return hasSecurity; }
+  }
+  public int Security {
+    get { return security_; }
+  }
+  
+  public const int AlgorithmPointsFieldNumber = 12;
+  private bool hasAlgorithmPoints;
+  private int algorithmPoints_;
+  public bool HasAlgorithmPoints {
+    get { return hasAlgorithmPoints; }
+  }
+  public int AlgorithmPoints {
+    get { return algorithmPoints_; }
+  }
+  
+  public const int DeathsFieldNumber = 13;
+  private bool hasDeaths;
+  private int deaths_;
+  public bool HasDeaths {
+    get { return hasDeaths; }
+  }
+  public int Deaths {
+    get { return deaths_; }
+  }
+  
+  public const int IntegrityFieldNumber = 14;
+  private bool hasIntegrity;
+  private float integrity_;
+  public bool HasIntegrity {
+    get { return hasIntegrity; }
+  }
+  public float Integrity {
+    get { return integrity_; }
+  }
+  
+  public const int RmaFieldNumber = 15;
+  private bool hasRma;
+  private float rma_;
+  public bool HasRma {
+    get { return hasRma; }
+  }
+  public float Rma {
+    get { return rma_; }
+  }
+  
   public override bool IsInitialized {
     get {
       if (!hasPlayerPosition) return false;
@@ -12602,22 +12696,49 @@ public sealed partial class PlayerStatus : pb::GeneratedMessage<PlayerStatus, Pl
     int size = SerializedSize;
     string[] field_names = _playerStatusFieldNames;
     if (hasPlayerPosition) {
-      output.WriteMessage(1, field_names[2], PlayerPosition);
+      output.WriteMessage(1, field_names[8], PlayerPosition);
     }
     if (hasInventory) {
-      output.WriteMessage(2, field_names[0], Inventory);
+      output.WriteMessage(2, field_names[6], Inventory);
     }
     if (hasVersion) {
-      output.WriteString(3, field_names[4], Version);
+      output.WriteString(3, field_names[13], Version);
     }
     if (hasRotation) {
-      output.WriteInt32(4, field_names[3], Rotation);
+      output.WriteInt32(4, field_names[10], Rotation);
     }
     if (hasName) {
-      output.WriteString(5, field_names[1], Name);
+      output.WriteString(5, field_names[7], Name);
     }
     if (visitedAreas_.Count > 0) {
-      output.WriteMessageArray(6, field_names[5], visitedAreas_);
+      output.WriteMessageArray(6, field_names[14], visitedAreas_);
+    }
+    if (hasStrength) {
+      output.WriteInt32(7, field_names[12], Strength);
+    }
+    if (hasDefence) {
+      output.WriteInt32(8, field_names[2], Defence);
+    }
+    if (hasEfficiency) {
+      output.WriteInt32(9, field_names[3], Efficiency);
+    }
+    if (hasEncryption) {
+      output.WriteInt32(10, field_names[4], Encryption);
+    }
+    if (hasSecurity) {
+      output.WriteInt32(11, field_names[11], Security);
+    }
+    if (hasAlgorithmPoints) {
+      output.WriteInt32(12, field_names[0], AlgorithmPoints);
+    }
+    if (hasDeaths) {
+      output.WriteInt32(13, field_names[1], Deaths);
+    }
+    if (hasIntegrity) {
+      output.WriteFloat(14, field_names[5], Integrity);
+    }
+    if (hasRma) {
+      output.WriteFloat(15, field_names[9], Rma);
     }
     UnknownFields.WriteTo(output);
   }
@@ -12646,6 +12767,33 @@ public sealed partial class PlayerStatus : pb::GeneratedMessage<PlayerStatus, Pl
       }
       foreach (global::PointProto element in VisitedAreasList) {
         size += pb::CodedOutputStream.ComputeMessageSize(6, element);
+      }
+      if (hasStrength) {
+        size += pb::CodedOutputStream.ComputeInt32Size(7, Strength);
+      }
+      if (hasDefence) {
+        size += pb::CodedOutputStream.ComputeInt32Size(8, Defence);
+      }
+      if (hasEfficiency) {
+        size += pb::CodedOutputStream.ComputeInt32Size(9, Efficiency);
+      }
+      if (hasEncryption) {
+        size += pb::CodedOutputStream.ComputeInt32Size(10, Encryption);
+      }
+      if (hasSecurity) {
+        size += pb::CodedOutputStream.ComputeInt32Size(11, Security);
+      }
+      if (hasAlgorithmPoints) {
+        size += pb::CodedOutputStream.ComputeInt32Size(12, AlgorithmPoints);
+      }
+      if (hasDeaths) {
+        size += pb::CodedOutputStream.ComputeInt32Size(13, Deaths);
+      }
+      if (hasIntegrity) {
+        size += pb::CodedOutputStream.ComputeFloatSize(14, Integrity);
+      }
+      if (hasRma) {
+        size += pb::CodedOutputStream.ComputeFloatSize(15, Rma);
       }
       size += UnknownFields.SerializedSize;
       memoizedSerializedSize = size;
@@ -12790,6 +12938,33 @@ public sealed partial class PlayerStatus : pb::GeneratedMessage<PlayerStatus, Pl
       if (other.visitedAreas_.Count != 0) {
         result.visitedAreas_.Add(other.visitedAreas_);
       }
+      if (other.HasStrength) {
+        Strength = other.Strength;
+      }
+      if (other.HasDefence) {
+        Defence = other.Defence;
+      }
+      if (other.HasEfficiency) {
+        Efficiency = other.Efficiency;
+      }
+      if (other.HasEncryption) {
+        Encryption = other.Encryption;
+      }
+      if (other.HasSecurity) {
+        Security = other.Security;
+      }
+      if (other.HasAlgorithmPoints) {
+        AlgorithmPoints = other.AlgorithmPoints;
+      }
+      if (other.HasDeaths) {
+        Deaths = other.Deaths;
+      }
+      if (other.HasIntegrity) {
+        Integrity = other.Integrity;
+      }
+      if (other.HasRma) {
+        Rma = other.Rma;
+      }
       this.MergeUnknownFields(other.UnknownFields);
       return this;
     }
@@ -12865,6 +13040,42 @@ public sealed partial class PlayerStatus : pb::GeneratedMessage<PlayerStatus, Pl
           }
           case 50: {
             input.ReadMessageArray(tag, field_name, result.visitedAreas_, global::PointProto.DefaultInstance, extensionRegistry);
+            break;
+          }
+          case 56: {
+            result.hasStrength = input.ReadInt32(ref result.strength_);
+            break;
+          }
+          case 64: {
+            result.hasDefence = input.ReadInt32(ref result.defence_);
+            break;
+          }
+          case 72: {
+            result.hasEfficiency = input.ReadInt32(ref result.efficiency_);
+            break;
+          }
+          case 80: {
+            result.hasEncryption = input.ReadInt32(ref result.encryption_);
+            break;
+          }
+          case 88: {
+            result.hasSecurity = input.ReadInt32(ref result.security_);
+            break;
+          }
+          case 96: {
+            result.hasAlgorithmPoints = input.ReadInt32(ref result.algorithmPoints_);
+            break;
+          }
+          case 104: {
+            result.hasDeaths = input.ReadInt32(ref result.deaths_);
+            break;
+          }
+          case 117: {
+            result.hasIntegrity = input.ReadFloat(ref result.integrity_);
+            break;
+          }
+          case 125: {
+            result.hasRma = input.ReadFloat(ref result.rma_);
             break;
           }
         }
@@ -13060,6 +13271,186 @@ public sealed partial class PlayerStatus : pb::GeneratedMessage<PlayerStatus, Pl
     public Builder ClearVisitedAreas() {
       PrepareBuilder();
       result.visitedAreas_.Clear();
+      return this;
+    }
+    
+    public bool HasStrength {
+      get { return result.hasStrength; }
+    }
+    public int Strength {
+      get { return result.Strength; }
+      set { SetStrength(value); }
+    }
+    public Builder SetStrength(int value) {
+      PrepareBuilder();
+      result.hasStrength = true;
+      result.strength_ = value;
+      return this;
+    }
+    public Builder ClearStrength() {
+      PrepareBuilder();
+      result.hasStrength = false;
+      result.strength_ = 0;
+      return this;
+    }
+    
+    public bool HasDefence {
+      get { return result.hasDefence; }
+    }
+    public int Defence {
+      get { return result.Defence; }
+      set { SetDefence(value); }
+    }
+    public Builder SetDefence(int value) {
+      PrepareBuilder();
+      result.hasDefence = true;
+      result.defence_ = value;
+      return this;
+    }
+    public Builder ClearDefence() {
+      PrepareBuilder();
+      result.hasDefence = false;
+      result.defence_ = 0;
+      return this;
+    }
+    
+    public bool HasEfficiency {
+      get { return result.hasEfficiency; }
+    }
+    public int Efficiency {
+      get { return result.Efficiency; }
+      set { SetEfficiency(value); }
+    }
+    public Builder SetEfficiency(int value) {
+      PrepareBuilder();
+      result.hasEfficiency = true;
+      result.efficiency_ = value;
+      return this;
+    }
+    public Builder ClearEfficiency() {
+      PrepareBuilder();
+      result.hasEfficiency = false;
+      result.efficiency_ = 0;
+      return this;
+    }
+    
+    public bool HasEncryption {
+      get { return result.hasEncryption; }
+    }
+    public int Encryption {
+      get { return result.Encryption; }
+      set { SetEncryption(value); }
+    }
+    public Builder SetEncryption(int value) {
+      PrepareBuilder();
+      result.hasEncryption = true;
+      result.encryption_ = value;
+      return this;
+    }
+    public Builder ClearEncryption() {
+      PrepareBuilder();
+      result.hasEncryption = false;
+      result.encryption_ = 0;
+      return this;
+    }
+    
+    public bool HasSecurity {
+      get { return result.hasSecurity; }
+    }
+    public int Security {
+      get { return result.Security; }
+      set { SetSecurity(value); }
+    }
+    public Builder SetSecurity(int value) {
+      PrepareBuilder();
+      result.hasSecurity = true;
+      result.security_ = value;
+      return this;
+    }
+    public Builder ClearSecurity() {
+      PrepareBuilder();
+      result.hasSecurity = false;
+      result.security_ = 0;
+      return this;
+    }
+    
+    public bool HasAlgorithmPoints {
+      get { return result.hasAlgorithmPoints; }
+    }
+    public int AlgorithmPoints {
+      get { return result.AlgorithmPoints; }
+      set { SetAlgorithmPoints(value); }
+    }
+    public Builder SetAlgorithmPoints(int value) {
+      PrepareBuilder();
+      result.hasAlgorithmPoints = true;
+      result.algorithmPoints_ = value;
+      return this;
+    }
+    public Builder ClearAlgorithmPoints() {
+      PrepareBuilder();
+      result.hasAlgorithmPoints = false;
+      result.algorithmPoints_ = 0;
+      return this;
+    }
+    
+    public bool HasDeaths {
+      get { return result.hasDeaths; }
+    }
+    public int Deaths {
+      get { return result.Deaths; }
+      set { SetDeaths(value); }
+    }
+    public Builder SetDeaths(int value) {
+      PrepareBuilder();
+      result.hasDeaths = true;
+      result.deaths_ = value;
+      return this;
+    }
+    public Builder ClearDeaths() {
+      PrepareBuilder();
+      result.hasDeaths = false;
+      result.deaths_ = 0;
+      return this;
+    }
+    
+    public bool HasIntegrity {
+      get { return result.hasIntegrity; }
+    }
+    public float Integrity {
+      get { return result.Integrity; }
+      set { SetIntegrity(value); }
+    }
+    public Builder SetIntegrity(float value) {
+      PrepareBuilder();
+      result.hasIntegrity = true;
+      result.integrity_ = value;
+      return this;
+    }
+    public Builder ClearIntegrity() {
+      PrepareBuilder();
+      result.hasIntegrity = false;
+      result.integrity_ = 0F;
+      return this;
+    }
+    
+    public bool HasRma {
+      get { return result.hasRma; }
+    }
+    public float Rma {
+      get { return result.Rma; }
+      set { SetRma(value); }
+    }
+    public Builder SetRma(float value) {
+      PrepareBuilder();
+      result.hasRma = true;
+      result.rma_ = value;
+      return this;
+    }
+    public Builder ClearRma() {
+      PrepareBuilder();
+      result.hasRma = false;
+      result.rma_ = 0F;
       return this;
     }
   }
