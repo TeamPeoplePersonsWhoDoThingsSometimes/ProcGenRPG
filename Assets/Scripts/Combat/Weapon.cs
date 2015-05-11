@@ -31,14 +31,15 @@ public class Weapon : Item {
 	// Use this for initialization
 	protected void Start () {
 		thisDamage = damage;
-		if(version.Split(',').Length != 3) {
+		if(version.Split('.').Length != 3) {
 			version = "1.0.0";
 		}
+		thisDamage += levelUpScale*(int.Parse(version.Split('.')[1]));
 	}
 	
 	// Update is called once per frame
 	protected virtual void Update () {
-		bytesToLevelUp = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*(int)(levelUpSpeedScale*1000000));
+		bytesToLevelUp = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*(int)(levelUpSpeedScale*200000));
 		attackSpeedTime += Time.deltaTime;
 		while (bytes > bytesToLevelUp) {
 			LevelUp();
@@ -154,4 +155,6 @@ public class Weapon : Item {
 
 		return forreturn;
 	}
+
+
 }

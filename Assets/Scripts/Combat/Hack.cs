@@ -33,7 +33,7 @@ public class Hack : Item {
 		if (isCalled) {
 		
 			if (tempFiringRate <= 0 && oneShot) {
-				if (playerref.ExpendRMA(RMACost)) {
+				if (playerref.ExpendRMA(RMACost + (Player.strength/2f))) {
 					OneShotActivated();
 				}
 			} else if(passive && tempFiringRate <= 0) {
@@ -77,7 +77,7 @@ public class Hack : Item {
 
 	public override string InfoString() {
 		string forreturn =
-			"RMA\n" + RMACost +
+			"RMA\n" + RMACost + " (+" + (Player.strength/2f).ToString("F2") + ")" +
 			"\n\nDMG\n" + damage + " (+" + (Player.strength*2) + ")" +
 			"\n\nINF\n" + (passive ? "Passive: " : "Active: ") + description.Replace("DMG",(damage+(Player.strength*2)).ToString()).Replace("rma",RMACost.ToString());
 

@@ -7,6 +7,7 @@ public class MusicManager : MonoBehaviour {
 
 	private static AudioSource normal, combat;
 
+	private static AudioClip overworldNormal, overworldCombat;
 
 	private static bool fadeOut = false;
 
@@ -19,12 +20,14 @@ public class MusicManager : MonoBehaviour {
 			combat = transform.GetChild(1).GetComponent<AudioSource>();
 		}
 		sBossMusic = bossMusic;
-
+		if(Application.loadedLevelName.Contains("Kartik")) {
+			overworldNormal = normal.clip;
+		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if(combat != null) {
+		if(combat != null && combat.enabled) {
 			GameObject closestEnemy;
 			float tempDist = 1000000000f;
 			foreach(GameObject g in enemies) {
@@ -75,5 +78,12 @@ public class MusicManager : MonoBehaviour {
 		combat.enabled = false;
 		normal.clip = sBossMusic;
 		normal.Play();
+	}
+
+	public static void LeaveBoss() {
+		combat.enabled = true;
+		normal.clip = overworldNormal;
+		normal.Play();
+		combat.Play();
 	}
 }

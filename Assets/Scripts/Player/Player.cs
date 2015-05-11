@@ -31,7 +31,7 @@ public class Player : MonoBehaviour {
 	private string name = "TheKiniMan";
 	
 	public static int strength, defense, efficiency, encryption, security;
-	public static int algorithmPoints;
+	public static int algorithmPoints = 50;
 	private float integrity, rma, maxIntegrity = 100f, maxrma = 20f;
 
 	//Armor Refs
@@ -248,7 +248,7 @@ public class Player : MonoBehaviour {
 		}
 
 		maxrma = (encryption/2f + 1)*20f;
-		maxIntegrity = (security/10f + 1)*100f;	
+		maxIntegrity = (security/10f + 1)*50f;
 
 		if(deathTimer > 0) {
 			deathTimer += Time.deltaTime;
@@ -261,6 +261,9 @@ public class Player : MonoBehaviour {
 				rma = maxrma;
 				if(Application.loadedLevelName.Equals("KartikTesting")) {
 					xpBytes = 0;
+					if(MasterDriver.Instance.fightingFinalBoss) {
+						MasterDriver.Instance.dieInFinalBoss();	
+					}
 					MasterDriver.Instance.goToCity();
 				} else {
 					transform.position = respawnLoc;
@@ -357,7 +360,7 @@ public class Player : MonoBehaviour {
 	}
 
 	public string GetBlocking() {
-		return "(" + Mathf.Max(0,defense-5) + "/" + defense + ")";
+		return "(" + Mathf.Max(0,defense-10) + "/" + defense + ")";
 	}
 
 	public float XPPercentage() {
@@ -446,7 +449,7 @@ public class Player : MonoBehaviour {
 	private void LevelUp() {
 		xpBytes -= bytesToNextVersion;
 		//INCREASE PLAYER STATS
-		algorithmPoints += 2;
+		algorithmPoints += 4;
 //		if(int.Parse(version.Split('.')[2]) + 1 < 10) {
 //			version = ((int.Parse(version.Split('.')[0]))*1) + "." + ((int.Parse(version.Split('.')[1]))*1) + "." + ((int.Parse(version.Split('.')[2])) + 1);
 //		} else if(int.Parse(version.Split('.')[1]) + 1 < 10) {
@@ -457,6 +460,11 @@ public class Player : MonoBehaviour {
 		bytesToNextVersion = ((int.Parse(version.Split('.')[0]))*100 + (int.Parse(version.Split('.')[1]))*10 + (int.Parse(version.Split('.')[2])))*levelUpSpeedScale;
 		ActionEventInvoker.primaryInvoker.invokeAction (new PlayerAction (this.getDirectObject(), ActionType.LEVEL_UP));
 		FMOD_StudioSystem.instance.PlayOneShot("event:/player/playerLevelUp", transform.position,PlayerPrefs.GetFloat("MasterVolume"));
+//		strength++;
+//		efficiency++;
+//		encryption++;
+//		security++;
+//		defense++;
 		levelUpParticles.Emit(1000000);
 	}
 
@@ -483,7 +491,7 @@ public class Player : MonoBehaviour {
 			GameObject temp = (GameObject)Instantiate(hitInfo,this.transform.position + new Vector3(0,1,0), hitInfo.transform.rotation);
 			temp.GetComponent<TextMesh>().GetComponent<Renderer>().material.color = Color.red;
 			if (crit) {
-				int blocking = Mathf.Min(Mathf.Max(0,Random.Range(defense - 5, defense + 1)),(int)damage*2);
+				int blocking = Random.value < 0.5f ? Mathf.Min(Mathf.Max(0,Random.Range(defense - 10, defense + 1)),(int)damage*2) : 0;
 				integrity -= damage*2 - blocking;
 				temp.GetComponent<TextMesh>().GetComponent<Renderer>().material.color = Color.black;
 				temp.GetComponent<TextMesh>().text = "" + damage*2 + "!";
@@ -497,7 +505,7 @@ public class Player : MonoBehaviour {
 					tempblock.GetComponent<Rigidbody>().isKinematic = true;
 				}
 			} else {
-				int blocking = Mathf.Min(Mathf.Max(0,Random.Range(defense - 5, defense + 1)),(int)damage);
+				int blocking = Random.value < 0.5f ? Mathf.Min(Mathf.Max(0,Random.Range(defense - 10, defense + 1)),(int)damage) : 0;
 				integrity -= damage  - blocking;
 				temp.GetComponent<TextMesh>().text = "" + damage;
 				if(blocking > 0) {
@@ -558,6 +566,8 @@ public class Player : MonoBehaviour {
 
 		if(temp.GetComponent<Hack>() == null) {
 			temp.SetActive(false);
+		} else {
+			temp.SetActive(true);
 		}
 
 		PlayerCanvas.UpdateInventory();

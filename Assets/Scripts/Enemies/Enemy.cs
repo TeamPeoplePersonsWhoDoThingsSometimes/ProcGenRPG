@@ -305,6 +305,9 @@ public class Enemy : MonoBehaviour {
 	protected virtual void HandleDeath() {
 	/*** Death ****/
 		int tempByteVal = (int)(Utility.ComparableVersionInt(version)*100*byteDropScale);
+		if(spawnedFromGenerator) {
+			tempByteVal /= 10;
+		}
 		Debug.Log("I'm gonna drop " + tempByteVal + " because my comparable versionint is: " + Utility.ComparableVersionInt(version));
 		int curByteVal = 0;
 		int byteVal = Mathf.Max(tempByteVal/5, 5000);
@@ -319,18 +322,24 @@ public class Enemy : MonoBehaviour {
 			if(Random.value < kvp.Value) {
 				GameObject temp = null;
 				switch(kvp.Key.GetComponent<Item>().RarityVal) {
-				case Rarity.Common:
-					temp = (GameObject)Instantiate(Utility.GetCommonItemDrop(), this.transform.position, Quaternion.identity);
-					break;
-				case Rarity.Uncommon:
-					temp = (GameObject)Instantiate(Utility.GetUncommonItemDrop(), this.transform.position, Quaternion.identity);
-					break;
+					case Rarity.Common:
+						temp = (GameObject)Instantiate(Utility.GetCommonItemDrop(), this.transform.position, Quaternion.identity);
+						break;
+					case Rarity.Uncommon:
+						temp = (GameObject)Instantiate(Utility.GetUncommonItemDrop(), this.transform.position, Quaternion.identity);
+						break;
+					case Rarity.Rare:
+						temp = (GameObject)Instantiate(Utility.GetRareItemDrop(), this.transform.position, Quaternion.identity);
+						break;
+					case Rarity.Anomaly:
+						temp = (GameObject)Instantiate(Utility.GetAnomalyItemDrop(), this.transform.position, Quaternion.identity);
+						break;
 				}
 				if (temp != null) {
 					temp.GetComponent<ItemDropObject>().item = kvp.Key;
 					Weapon tempweapon = temp.GetComponent<ItemDropObject>().item.GetComponent<Weapon>();
 					if (tempweapon != null) {
-						tempweapon.version = version;
+						tempweapon.version = this.version;
 					}
 				}
 				break;

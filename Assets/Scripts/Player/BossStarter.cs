@@ -9,9 +9,10 @@ public class BossStarter : ActionEventListener {
 
 	public override void onAction(IAction action) {
 		if (action.getActionType().Equals(ActionType.USE_ITEM)) {
-			if (action.getDirectObject().getIdentifier() == "rossumVanTossumSyntAxe" && action.getDirectObject().getTypeIdentifier() == "The Key") {
+			if (action.getDirectObject().getIdentifier() == "rossumVanTossumSyntAxe" && action.getDirectObject().getTypeIdentifier() == "The Key" && !MasterDriver.Instance.fightingFinalBoss) {
 				MasterDriver.Instance.goToFinalBoss();
 				MusicManager.GoToBoss();
+				FollowPlayer.Travel();
 //				MasterDriver.Instance.tempInventory.Add(MasterDriver.Instance.player.GetComponent<Player>().activeWeapon.gameObject);
 //				foreach(Item e in MasterDriver.Instance.player.GetComponent<Player>().inventory) {
 //					MasterDriver.Instance.tempInventory.Add(e.gameObject);

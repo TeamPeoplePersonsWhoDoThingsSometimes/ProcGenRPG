@@ -7,8 +7,8 @@ public class LightMace : Weapon {
 
 	public override void Attack (float damage)
 	{
-		base.Attack (damage);
-		GameObject.Instantiate(spawnedLight, transform.position, Quaternion.identity);
+//		base.Attack (damage);
+//		GameObject.Instantiate(spawnedLight, transform.position, Quaternion.identity);
 	}
 
 }

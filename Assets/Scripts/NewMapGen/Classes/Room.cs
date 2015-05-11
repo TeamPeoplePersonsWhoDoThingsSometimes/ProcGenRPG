@@ -300,22 +300,21 @@ public class Room {
                 throw new System.Exception("Uninitialized Area Type!");
         }
 
-		int numEnemies = 0;
+		int numEnemies = rand.Next(2,11);
 		for(int j = 0; j < typeChances.Count; j++) {
 			if(Utility.ComparableVersionInt(types[j].maxVersion) >= Utility.ComparableVersionInt(Player.version)
 			   && Utility.ComparableVersionInt(types[j].minVersion) <= Utility.ComparableVersionInt(Player.version)) {
-//				Debug.Log(Utility.ComparableVersionInt(types[j].minVersion) + "<=" + Utility.ComparableVersionInt(Player.version) + "\n"
-//				          + Utility.ComparableVersionInt(types[j].maxVersion) + ">=" + Utility.ComparableVersionInt(Player.version));
-				for(int i = 0; i < 5; i++) {
+				for(int i = tempEnemyList.Count; i < numEnemies || i < (int)(typeChances[j]*numEnemies); i++) {
 					if(rand.NextDouble() < ((double)typeChances[j])) {
-						numEnemies++;
+//						numEnemies++;
 						tempEnemyList.Add(j);
 					}
 				}
+//				tempEnemyList.Add(j);
 			}
 		}
-		GameObject[] enemies = new GameObject[numEnemies];
-		Debug.Log("NUMENEMIES: " + numEnemies);
+		GameObject[] enemies = new GameObject[tempEnemyList.Count];
+//		Debug.Log("NUMENEMIES: " + numEnemies);
 
         for (int i = 0; i < enemies.Length; i++)
         {
@@ -323,7 +322,7 @@ public class Room {
             Vector3 pos = 10 * new Vector3(rand.Next(botLeft.x, topRight.x), 0.3f, rand.Next(botLeft.y, topRight.y));
 //            Debug.Log("Enemy position: " + pos);
             enemies[i] = ((Enemy) GameObject.Instantiate(temp, pos, Quaternion.identity)).gameObject;
-			Debug.Log("Spawning " + enemies[i].name);
+//			Debug.Log("Spawning " + enemies[i].name);
         }
 
         return enemies;

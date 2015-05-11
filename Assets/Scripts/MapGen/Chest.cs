@@ -12,8 +12,8 @@ public class Chest : Interactable {
 	 * The number of items all chests can store
 	 */
 	private static readonly int SLOTS = 10;
-	private static int minBytes = 500000;
-	private static int maxBytes = 5000000;
+	private static int minBytes = 5000000;
+	private static int maxBytes = 50000000;
 
 	private bool dropItems = false;
 	/**
@@ -28,8 +28,8 @@ public class Chest : Interactable {
 			byteObject = Resources.Load<GameObject>("Info/Byte");
 		}
 		items = new List<Item>(SLOTS);
-		minBytes = Utility.ComparableVersionInt(Player.version)*100;
-		maxBytes = Utility.ComparableVersionInt(Player.version)*1000;
+		minBytes = Utility.ComparableVersionInt(Player.version)*400;
+		maxBytes = Utility.ComparableVersionInt(Player.version)*4000;
 	}
 	
 	// Update is called once per frame
@@ -61,7 +61,7 @@ public class Chest : Interactable {
 			if (Random.value<0.1f) {
 				GameObject tmp = null;
 				GameObject drop = null;
-				if(Random.value<0.9f) {
+				if(Random.value<0.7f) {
 					if(Random.value<0.5f) {
 						int tempIdx = (int)(Random.value*MasterDriver.Instance.weapons.Length);
 						tmp = MasterDriver.Instance.weapons[tempIdx];

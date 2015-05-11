@@ -102,13 +102,26 @@ public class MasterDriver : MonoBehaviour {
 		return null;
 	}
 	public GameObject FinalBossPrefab;
+	private GameObject spawnedFinalBossPrefab;
+	public bool fightingFinalBoss;
+	private GameObject lavastuff;
 
 	public void goToFinalBoss() {
+		fightingFinalBoss = true;
 		currentArea.releaseData();
-		GameObject.Instantiate(FinalBossPrefab);
-		GameObject.Find("LavaStuff?").SetActive(false);
+		spawnedFinalBossPrefab = GameObject.Instantiate(FinalBossPrefab);
+		lavastuff = GameObject.Find("LavaStuff?");
+		lavastuff.SetActive(false);
 		player.transform.position = new Vector3(-314, 30.6f, 150f);
+		player.transform.GetChild(0).Rotate(0,180,0);
 		player.transform.GetChild(0).localPosition = Vector3.zero;
+	}
+
+	public void dieInFinalBoss() {
+		fightingFinalBoss = false;
+		Destroy(spawnedFinalBossPrefab);
+		lavastuff.SetActive(true);
+		MusicManager.LeaveBoss();
 	}
 	
 	public Object getEnemyFromProtobuf(DirectObjectProtocol proto) {
