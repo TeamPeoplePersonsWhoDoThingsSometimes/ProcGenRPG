@@ -283,13 +283,8 @@ public class MainMenu : MonoBehaviour {
 		}
 	}
 
-	public void CreditsFinished() {
-		GetComponent<Animator>().SetBool("MoveBGUp",false);
-	}
-
 	public void CreditsClicked() {
-		GetComponent<Animator>().SetTrigger("MainToCredits");
-		GetComponent<Animator>().SetBool("MoveBGUp",true);
+		Application.LoadLevel(4);
 	}
 
 	public void KeyRemapButtonPressed(Button button) {

@@ -28,7 +28,7 @@ public class Player : MonoBehaviour {
 	public int levelUpSpeedScale = 30000;
 
 	public static string version = "1.0.0";
-	private string name = "TheKiniMan";
+	public string name = "TheKiniMan";
 	
 	public static int strength, defense, efficiency, encryption, security;
 	public static int algorithmPoints = 50;
@@ -254,7 +254,7 @@ public class Player : MonoBehaviour {
 
 		//sets up quickaccessitems and makes the canvas update the inventory ui
 		PlayerCanvas.UpdateInventory();
-		Debug.LogError(GetName());
+//		Debug.LogError(GetName());
 	}
 
 	void Update () {

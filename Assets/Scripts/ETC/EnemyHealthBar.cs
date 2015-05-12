@@ -64,6 +64,8 @@ public class EnemyHealthBar : MonoBehaviour {
 
 			if (trackingEnemy.GetComponent<FinalBoss>() != null) {
 				transform.GetChild(5).GetComponent<Text>().text = "MemLeaks: " + FinalBoss.memLeaksCount;
+			} else {
+				Destroy(this.gameObject);
 			}
 
 			/*** Destroy healthbar if tracking enemy is null ***/
