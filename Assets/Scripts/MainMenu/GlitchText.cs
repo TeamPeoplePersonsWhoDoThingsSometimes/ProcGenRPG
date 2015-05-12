@@ -14,6 +14,7 @@ public class GlitchText : MonoBehaviour {
 		defaultText = transform.GetChild(0).GetComponent<Text>().text;
 		organicMusic = GameObject.Find("OrganicMusic").GetComponent<AudioSource>();
 		glitchMusic = GameObject.Find("GlitchMusic").GetComponent<AudioSource>();
+		glitchMusic.time = 10;
 	}
 	
 	// Update is called once per frame

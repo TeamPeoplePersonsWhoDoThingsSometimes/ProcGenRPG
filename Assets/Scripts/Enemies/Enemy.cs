@@ -45,6 +45,7 @@ public class Enemy : MonoBehaviour {
 	private static GameObject byteObject;
 
 	private float healthBarTime;
+	public bool hasHealthbar;
 
 	private Vector3 lastPos;
 
@@ -459,6 +460,10 @@ public class Enemy : MonoBehaviour {
 
 	public bool ShowHealthbar() {
 		return healthBarTime > 0;
+	}
+
+	public void ShowTheHealthBar() {
+		healthBarTime = 1;
 	}
 
 }

@@ -36,16 +36,13 @@ public class EnemyHealthBar : MonoBehaviour {
 			if(trackingEnemy.GetComponent<Boss>() == null) {
 				Vector3 tempPos = Camera.main.WorldToViewportPoint(trackingEnemy.transform.position);
 				float tempScale = Mathf.Clamp(15f/Vector3.Distance(Player.playerPos.position,trackingEnemy.transform.position)*(FollowPlayer.zoom/20f), 1.5f, 3f);
-				this.GetComponent<RectTransform>().anchoredPosition = new Vector2(13.62f*tempPos.x - tempScale*0.7f, 0.5f-7.4f*(1-tempPos.y));
+				this.GetComponent<RectTransform>().anchoredPosition = new Vector2(13.62f*tempPos.x - tempScale*0.7f, 0.5f-7.4f*(1-tempPos.y)/(Mathf.Max(0.9f,FollowPlayer.zoom/20f)));
 				this.GetComponent<RectTransform>().localScale = new Vector3(tempScale, tempScale, tempScale);
 				this.transform.GetChild(3).GetComponent<RectTransform>().localScale = new Vector3(trackingEnemy.GetComponent<Enemy>().GetHealthPercentage(), 1,1);
 
 				/*** Mouseover checking and opacity handling ***/
 				RaycastHit hitinfo = new RaycastHit();
-				if(trackingEnemy.GetComponent<Enemy>().ShowHealthbar()
-				   || (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitinfo, 2000000f)
-				    && hitinfo.collider != null && hitinfo.collider.gameObject != null
-				    && hitinfo.collider.gameObject.Equals(trackingEnemy))) {
+				if(trackingEnemy.GetComponent<Enemy>().ShowHealthbar()) {
 					this.GetComponent<CanvasGroup>().alpha = 1f;
 				} else {
 					this.GetComponent<CanvasGroup>().alpha -= Time.deltaTime;

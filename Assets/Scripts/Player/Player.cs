@@ -28,10 +28,10 @@ public class Player : MonoBehaviour {
 	public int levelUpSpeedScale = 30000;
 
 	public static string version = "1.0.0";
-	private string name = "TheKiniMan";
+	public string name = "TheKiniMan";
 	
 	public static int strength, defense, efficiency, encryption, security;
-	public static int algorithmPoints = 50;
+	public static int algorithmPoints = 0;
 	private float integrity, rma, maxIntegrity = 100f, maxrma = 20f;
 
 	//Armor Refs
@@ -73,6 +73,8 @@ public class Player : MonoBehaviour {
 		builder.SetRma (rma);
 		builder.SetDeaths (deaths);
 		builder.SetXpBytes (xpBytes);
+		//builder.SetBytes (bytes);
+		//builder.SetBytesRemaining (bytesToNextVersion);
 
 		GlobalPosition.Builder positionBuilder = GlobalPosition.CreateBuilder ();
 		positionBuilder.SetAreaX (MasterDriver.Instance.CurrentArea.position.x);
@@ -257,7 +259,7 @@ public class Player : MonoBehaviour {
 
 		//sets up quickaccessitems and makes the canvas update the inventory ui
 		PlayerCanvas.UpdateInventory();
-		Debug.LogError(GetName());
+//		Debug.LogError(GetName());
 	}
 
 	void Update () {
@@ -287,20 +289,26 @@ public class Player : MonoBehaviour {
 		if(deathTimer > 0) {
 			deathTimer += Time.deltaTime;
 			if(deathTimer > 2f) {
-				PlayerControl.immobile = false;
-				transform.GetChild(0).gameObject.SetActive(true);
-				transform.GetChild(1).gameObject.SetActive(true);
-				deathTimer = 0;
-				integrity = maxIntegrity;
-				rma = maxrma;
 				if(Application.loadedLevelName.Equals("KartikTesting")) {
 					xpBytes = 0;
-					if(MasterDriver.Instance.fightingFinalBoss) {
-						MasterDriver.Instance.dieInFinalBoss();	
+					if(FinalBoss.defeated) {
+
+					} else if(MasterDriver.Instance.fightingFinalBoss) {
+						MasterDriver.Instance.dieInFinalBoss();
+						MasterDriver.Instance.goToCity();
+					} else {
+						MasterDriver.Instance.goToCity();
 					}
-					MasterDriver.Instance.goToCity();
 				} else {
 					transform.position = respawnLoc;
+				}
+				if(!FinalBoss.defeated) {
+					PlayerControl.immobile = false;
+					transform.GetChild(0).gameObject.SetActive(true);
+					transform.GetChild(1).gameObject.SetActive(true);
+					deathTimer = 0;
+					integrity = maxIntegrity;
+					rma = maxrma;
 				}
 			}
 		}

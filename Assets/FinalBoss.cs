@@ -9,6 +9,7 @@ public class FinalBoss : Boss {
 	AudioSource audioRef;
 	GameObject bossCam;
 
+	float postDeath = 0f;
 	float dyingTime = 0f;
 
 	bool readyToFall = false, fallen = false;
@@ -16,10 +17,14 @@ public class FinalBoss : Boss {
 	List<Enemy> spawnedMemLeaks;
 	public static int memLeaksCount;
 
+	public static bool defeated;
+
+	Player playerref;
+
 	// Use this for initialization
 	void Start () {
-		Player p = GameObject.Find("PlayerObj").GetComponent<Player>();
-		name = "Corrupted " + p.GetName().Substring(0,p.GetName().Length-6);
+		playerref = GameObject.Find("PlayerObj").GetComponent<Player>();
+		name = "Corrupted " + playerref.name;
 		base.Start();
 		audioRef = GameObject.Find("Base").GetComponent<AudioSource>();
 		PlayerControl.immobile = true;
@@ -119,9 +124,15 @@ public class FinalBoss : Boss {
 				dyingTime -= Time.deltaTime;
 				if(dyingTime <= 0) {
 					transform.GetChild(0).gameObject.SetActive(false);
+					defeated = true;
 				}
-				if(dyingTime > 10f) {
-					Application.LoadLevel(0);
+			} else if(defeated) {
+				postDeath += Time.deltaTime;
+				if(postDeath < 2 && postDeath > 1.8f) {
+					playerref.GetDamaged(100);
+				}
+				if(postDeath > 10) {
+					Application.LoadLevel(4);
 				}
 			}
 

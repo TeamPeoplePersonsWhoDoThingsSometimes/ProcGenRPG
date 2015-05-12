@@ -154,7 +154,7 @@ public static partial class QuestProtobuf {
         "c2l0aW9uGAEgAigLMg8uR2xvYmFsUG9zaXRpb24SKQoKb2JqZWN0RGF0YRgC" + 
         "IAIoCzIVLkRpcmVjdE9iamVjdFByb3RvY29sEiMKD2VuZW15QXR0cmlidXRl" + 
         "cxgDIAEoCzIKLkVuZW15RGF0YRITCgtkZXNjcmlwdGlvbhgEIAEoCSIkCglF" + 
-        "bmVteURhdGESFwoPaGVhbHRoUmVtYWluaW5nGAEgAigFIuUCCgxQbGF5ZXJT" + 
+        "bmVteURhdGESFwoPaGVhbHRoUmVtYWluaW5nGAEgAigFIowDCgxQbGF5ZXJT" + 
         "dGF0dXMSJwoOcGxheWVyUG9zaXRpb24YASACKAsyDy5HbG9iYWxQb3NpdGlv" + 
         "bhIhCglpbnZlbnRvcnkYAiACKAsyDi5JbnZlbnRvcnlEYXRhEg8KB3ZlcnNp" + 
         "b24YAyACKAkSEAoIcm90YXRpb24YBCACKAUSDAoEbmFtZRgFIAIoCRIhCgx2" + 
@@ -162,17 +162,18 @@ public static partial class QuestProtobuf {
         "ASgFEg8KB2RlZmVuY2UYCCABKAUSEgoKZWZmaWNpZW5jeRgJIAEoBRISCgpl" + 
         "bmNyeXB0aW9uGAogASgFEhAKCHNlY3VyaXR5GAsgASgFEhcKD2FsZ29yaXRo" + 
         "bVBvaW50cxgMIAEoBRIOCgZkZWF0aHMYDSABKAUSEQoJaW50ZWdyaXR5GA4g" + 
-        "ASgCEgsKA3JtYRgPIAEoAhIPCgd4cEJ5dGVzGBAgASgFIjYKDUludmVudG9y" + 
-        "eURhdGESJQoGb2JqZWN0GAEgAygLMhUuRGlyZWN0T2JqZWN0UHJvdG9jb2wq" + 
-        "pQEKCkFjdGlvblR5cGUSCAoES0lMTBAAEg0KCU1PVkVfQVJFQRABEhUKEUFQ" + 
-        "UFJPQUNIRURfT0JKRUNUEAISFAoQUElDS0VEX1VQX09CSkVDVBADEgwKCExF" + 
-        "VkVMX1VQEAUSDgoKRVFVSVBfSVRFTRAGEgwKCFVTRV9JVEVNEAcSCgoGQVRU" + 
-        "QUNLEAgSGQoVQ09OVkVSU0FUSU9OX05PREVfSElUEAkqNgoFQmlvbWUSEAoM" + 
-        "Tk9UX0FTU0lHTkVEEAASCgoGUFlUSE9OEAESBQoBQxACEggKBEhUTUwQAyoq" + 
-        "CgdNYXBUeXBlEggKBENJVFkQABIICgRQQVRIEAESCwoHRFVOR0VPThACKjUK" + 
-        "GlNwYXduQXJlYVR5cGVTcGVjaWZpY2F0aW9uEgkKBUxPQ0FMEAASDAoIRElT" + 
-        "VEFOQ0UQASosChJMZXZlbFNwZWNpZmljYXRpb24SCwoHTUlOSU1VTRABEgkK" + 
-        "BUVYQUNUEAJCIQofc3RzcXVlc3RidWlsZGVyLnByb3RvY29sYnVmZmVycw==");
+        "ASgCEgsKA3JtYRgPIAEoAhIPCgd4cEJ5dGVzGBAgASgFEg0KBWJ5dGVzGBEg" + 
+        "ASgFEhYKDmJ5dGVzUmVtYWluaW5nGBIgASgFIjYKDUludmVudG9yeURhdGES" + 
+        "JQoGb2JqZWN0GAEgAygLMhUuRGlyZWN0T2JqZWN0UHJvdG9jb2wqpQEKCkFj" + 
+        "dGlvblR5cGUSCAoES0lMTBAAEg0KCU1PVkVfQVJFQRABEhUKEUFQUFJPQUNI" + 
+        "RURfT0JKRUNUEAISFAoQUElDS0VEX1VQX09CSkVDVBADEgwKCExFVkVMX1VQ" + 
+        "EAUSDgoKRVFVSVBfSVRFTRAGEgwKCFVTRV9JVEVNEAcSCgoGQVRUQUNLEAgS" + 
+        "GQoVQ09OVkVSU0FUSU9OX05PREVfSElUEAkqNgoFQmlvbWUSEAoMTk9UX0FT" + 
+        "U0lHTkVEEAASCgoGUFlUSE9OEAESBQoBQxACEggKBEhUTUwQAyoqCgdNYXBU" + 
+        "eXBlEggKBENJVFkQABIICgRQQVRIEAESCwoHRFVOR0VPThACKjUKGlNwYXdu" + 
+        "QXJlYVR5cGVTcGVjaWZpY2F0aW9uEgkKBUxPQ0FMEAASDAoIRElTVEFOQ0UQ" + 
+        "ASosChJMZXZlbFNwZWNpZmljYXRpb24SCwoHTUlOSU1VTRABEgkKBUVYQUNU" + 
+        "EAJCIQofc3RzcXVlc3RidWlsZGVyLnByb3RvY29sYnVmZmVycw==");
     pbd::FileDescriptor.InternalDescriptorAssigner assigner = delegate(pbd::FileDescriptor root) {
       descriptor = root;
       internal__static_QuestPackage__Descriptor = Descriptor.MessageTypes[0];
@@ -302,7 +303,7 @@ public static partial class QuestProtobuf {
       internal__static_PlayerStatus__Descriptor = Descriptor.MessageTypes[31];
       internal__static_PlayerStatus__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::PlayerStatus, global::PlayerStatus.Builder>(internal__static_PlayerStatus__Descriptor,
-              new string[] { "PlayerPosition", "Inventory", "Version", "Rotation", "Name", "VisitedAreas", "Strength", "Defence", "Efficiency", "Encryption", "Security", "AlgorithmPoints", "Deaths", "Integrity", "Rma", "XpBytes", });
+              new string[] { "PlayerPosition", "Inventory", "Version", "Rotation", "Name", "VisitedAreas", "Strength", "Defence", "Efficiency", "Encryption", "Security", "AlgorithmPoints", "Deaths", "Integrity", "Rma", "XpBytes", "Bytes", "BytesRemaining", });
       internal__static_InventoryData__Descriptor = Descriptor.MessageTypes[32];
       internal__static_InventoryData__FieldAccessorTable = 
           new pb::FieldAccess.FieldAccessorTable<global::InventoryData, global::InventoryData.Builder>(internal__static_InventoryData__Descriptor,
@@ -12502,8 +12503,8 @@ public sealed partial class EnemyData : pb::GeneratedMessage<EnemyData, EnemyDat
 public sealed partial class PlayerStatus : pb::GeneratedMessage<PlayerStatus, PlayerStatus.Builder> {
   private PlayerStatus() { }
   private static readonly PlayerStatus defaultInstance = new PlayerStatus().MakeReadOnly();
-  private static readonly string[] _playerStatusFieldNames = new string[] { "algorithmPoints", "deaths", "defence", "efficiency", "encryption", "integrity", "inventory", "name", "playerPosition", "rma", "rotation", "security", "strength", "version", "visitedAreas", "xpBytes" };
-  private static readonly uint[] _playerStatusFieldTags = new uint[] { 96, 104, 64, 72, 80, 117, 18, 42, 10, 125, 32, 88, 56, 26, 50, 128 };
+  private static readonly string[] _playerStatusFieldNames = new string[] { "algorithmPoints", "bytes", "bytesRemaining", "deaths", "defence", "efficiency", "encryption", "integrity", "inventory", "name", "playerPosition", "rma", "rotation", "security", "strength", "version", "visitedAreas", "xpBytes" };
+  private static readonly uint[] _playerStatusFieldTags = new uint[] { 96, 136, 144, 104, 64, 72, 80, 117, 18, 42, 10, 125, 32, 88, 56, 26, 50, 128 };
   public static PlayerStatus DefaultInstance {
     get { return defaultInstance; }
   }
@@ -12686,6 +12687,26 @@ public sealed partial class PlayerStatus : pb::GeneratedMessage<PlayerStatus, Pl
     get { return xpBytes_; }
   }
   
+  public const int BytesFieldNumber = 17;
+  private bool hasBytes;
+  private int bytes_;
+  public bool HasBytes {
+    get { return hasBytes; }
+  }
+  public int Bytes {
+    get { return bytes_; }
+  }
+  
+  public const int BytesRemainingFieldNumber = 18;
+  private bool hasBytesRemaining;
+  private int bytesRemaining_;
+  public bool HasBytesRemaining {
+    get { return hasBytesRemaining; }
+  }
+  public int BytesRemaining {
+    get { return bytesRemaining_; }
+  }
+  
   public override bool IsInitialized {
     get {
       if (!hasPlayerPosition) return false;
@@ -12706,52 +12727,58 @@ public sealed partial class PlayerStatus : pb::GeneratedMessage<PlayerStatus, Pl
     int size = SerializedSize;
     string[] field_names = _playerStatusFieldNames;
     if (hasPlayerPosition) {
-      output.WriteMessage(1, field_names[8], PlayerPosition);
+      output.WriteMessage(1, field_names[10], PlayerPosition);
     }
     if (hasInventory) {
-      output.WriteMessage(2, field_names[6], Inventory);
+      output.WriteMessage(2, field_names[8], Inventory);
     }
     if (hasVersion) {
-      output.WriteString(3, field_names[13], Version);
+      output.WriteString(3, field_names[15], Version);
     }
     if (hasRotation) {
-      output.WriteInt32(4, field_names[10], Rotation);
+      output.WriteInt32(4, field_names[12], Rotation);
     }
     if (hasName) {
-      output.WriteString(5, field_names[7], Name);
+      output.WriteString(5, field_names[9], Name);
     }
     if (visitedAreas_.Count > 0) {
-      output.WriteMessageArray(6, field_names[14], visitedAreas_);
+      output.WriteMessageArray(6, field_names[16], visitedAreas_);
     }
     if (hasStrength) {
-      output.WriteInt32(7, field_names[12], Strength);
+      output.WriteInt32(7, field_names[14], Strength);
     }
     if (hasDefence) {
-      output.WriteInt32(8, field_names[2], Defence);
+      output.WriteInt32(8, field_names[4], Defence);
     }
     if (hasEfficiency) {
-      output.WriteInt32(9, field_names[3], Efficiency);
+      output.WriteInt32(9, field_names[5], Efficiency);
     }
     if (hasEncryption) {
-      output.WriteInt32(10, field_names[4], Encryption);
+      output.WriteInt32(10, field_names[6], Encryption);
     }
     if (hasSecurity) {
-      output.WriteInt32(11, field_names[11], Security);
+      output.WriteInt32(11, field_names[13], Security);
     }
     if (hasAlgorithmPoints) {
       output.WriteInt32(12, field_names[0], AlgorithmPoints);
     }
     if (hasDeaths) {
-      output.WriteInt32(13, field_names[1], Deaths);
+      output.WriteInt32(13, field_names[3], Deaths);
     }
     if (hasIntegrity) {
-      output.WriteFloat(14, field_names[5], Integrity);
+      output.WriteFloat(14, field_names[7], Integrity);
     }
     if (hasRma) {
-      output.WriteFloat(15, field_names[9], Rma);
+      output.WriteFloat(15, field_names[11], Rma);
     }
     if (hasXpBytes) {
-      output.WriteInt32(16, field_names[15], XpBytes);
+      output.WriteInt32(16, field_names[17], XpBytes);
+    }
+    if (hasBytes) {
+      output.WriteInt32(17, field_names[1], Bytes);
+    }
+    if (hasBytesRemaining) {
+      output.WriteInt32(18, field_names[2], BytesRemaining);
     }
     UnknownFields.WriteTo(output);
   }
@@ -12810,6 +12837,12 @@ public sealed partial class PlayerStatus : pb::GeneratedMessage<PlayerStatus, Pl
       }
       if (hasXpBytes) {
         size += pb::CodedOutputStream.ComputeInt32Size(16, XpBytes);
+      }
+      if (hasBytes) {
+        size += pb::CodedOutputStream.ComputeInt32Size(17, Bytes);
+      }
+      if (hasBytesRemaining) {
+        size += pb::CodedOutputStream.ComputeInt32Size(18, BytesRemaining);
       }
       size += UnknownFields.SerializedSize;
       memoizedSerializedSize = size;
@@ -12984,6 +13017,12 @@ public sealed partial class PlayerStatus : pb::GeneratedMessage<PlayerStatus, Pl
       if (other.HasXpBytes) {
         XpBytes = other.XpBytes;
       }
+      if (other.HasBytes) {
+        Bytes = other.Bytes;
+      }
+      if (other.HasBytesRemaining) {
+        BytesRemaining = other.BytesRemaining;
+      }
       this.MergeUnknownFields(other.UnknownFields);
       return this;
     }
@@ -13099,6 +13138,14 @@ public sealed partial class PlayerStatus : pb::GeneratedMessage<PlayerStatus, Pl
           }
           case 128: {
             result.hasXpBytes = input.ReadInt32(ref result.xpBytes_);
+            break;
+          }
+          case 136: {
+            result.hasBytes = input.ReadInt32(ref result.bytes_);
+            break;
+          }
+          case 144: {
+            result.hasBytesRemaining = input.ReadInt32(ref result.bytesRemaining_);
             break;
           }
         }
@@ -13494,6 +13541,46 @@ public sealed partial class PlayerStatus : pb::GeneratedMessage<PlayerStatus, Pl
       PrepareBuilder();
       result.hasXpBytes = false;
       result.xpBytes_ = 0;
+      return this;
+    }
+    
+    public bool HasBytes {
+      get { return result.hasBytes; }
+    }
+    public int Bytes {
+      get { return result.Bytes; }
+      set { SetBytes(value); }
+    }
+    public Builder SetBytes(int value) {
+      PrepareBuilder();
+      result.hasBytes = true;
+      result.bytes_ = value;
+      return this;
+    }
+    public Builder ClearBytes() {
+      PrepareBuilder();
+      result.hasBytes = false;
+      result.bytes_ = 0;
+      return this;
+    }
+    
+    public bool HasBytesRemaining {
+      get { return result.hasBytesRemaining; }
+    }
+    public int BytesRemaining {
+      get { return result.BytesRemaining; }
+      set { SetBytesRemaining(value); }
+    }
+    public Builder SetBytesRemaining(int value) {
+      PrepareBuilder();
+      result.hasBytesRemaining = true;
+      result.bytesRemaining_ = value;
+      return this;
+    }
+    public Builder ClearBytesRemaining() {
+      PrepareBuilder();
+      result.hasBytesRemaining = false;
+      result.bytesRemaining_ = 0;
       return this;
     }
   }

@@ -473,6 +473,7 @@ public class MasterDriver : MonoBehaviour {
 	}
 
 	public void load(int file) {
+		CityHelp.helpMode = -3;
 		Debug.Log("LOADING : " + file);
 		SavePackage package;
 

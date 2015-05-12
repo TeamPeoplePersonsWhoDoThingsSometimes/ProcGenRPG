@@ -19,6 +19,8 @@ public class WorldMap : MonoBehaviour {
 
 	private bool mapOpen = false;
 
+	private int startx, starty;
+
 	void OnEnable() {
 		instance = this;
 	}
@@ -34,7 +36,11 @@ public class WorldMap : MonoBehaviour {
 			genAreas.Add(MasterDriver.Instance.CurrentArea);
 			GenTilesAroundArea(MasterDriver.Instance.CurrentArea, tilePrefab);
 		}
-		tilePrefab.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.yellow;
+//		Vector3 mapPos = new Vector3((-(MasterDriver.Instance.CurrentArea.position.x - 4)*5), 0f, 10.5f + (-(MasterDriver.Instance.CurrentArea.position.y - 4)*5));
+//		transform.position -= mapPos;
+//		tilePrefab.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.yellow;
+		startx = MasterDriver.Instance.CurrentArea.position.x;
+		starty = MasterDriver.Instance.CurrentArea.position.y;
 	}
 
 	void GenTilesAroundArea(Area a, GameObject g) {
@@ -100,6 +106,9 @@ public class WorldMap : MonoBehaviour {
 			tempCon.transform.localPosition = new Vector3(-0.5f,-0.5f,0f);
 			tempCon.SetActive(true);
 		}
+		if(a.isCity) {
+			g.transform.GetChild(0).GetComponent<Renderer>().material.color = Color.yellow;
+		}
 	}
 	
 	// Update is called once per frame
@@ -109,7 +118,8 @@ public class WorldMap : MonoBehaviour {
 		}
 
 		if(MasterDriver.Instance != null) {
-			Vector3 mapPos = new Vector3(worldMapCam.transform.localPosition.x + (-(MasterDriver.Instance.CurrentArea.position.x - 4)*5), -50f, worldMapCam.transform.localPosition.z + 10.5f + (-(MasterDriver.Instance.CurrentArea.position.y - 4)*5));
+			Vector3 mapPos = new Vector3(worldMapCam.transform.localPosition.x + (-(MasterDriver.Instance.CurrentArea.position.x - startx)*5), -50f, worldMapCam.transform.localPosition.z + 10.5f + (-(MasterDriver.Instance.CurrentArea.position.y - starty)*5));
+			Debug.Log(MasterDriver.Instance.CurrentArea.position.x + "," + MasterDriver.Instance.CurrentArea.position.y + ": " + mapPos);
 			this.transform.localPosition = Vector3.MoveTowards(this.transform.localPosition, mapPos, Time.deltaTime*10f);
 			if(questStars != null) {
 				foreach(KeyValuePair<GameObject, string> kvp in questStars) {
