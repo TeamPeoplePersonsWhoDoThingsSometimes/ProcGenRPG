@@ -72,6 +72,7 @@ public class Player : MonoBehaviour {
 		builder.SetIntegrity (integrity);
 		builder.SetRma (rma);
 		builder.SetDeaths (deaths);
+		builder.SetXpBytes (xpBytes);
 
 		GlobalPosition.Builder positionBuilder = GlobalPosition.CreateBuilder ();
 		positionBuilder.SetAreaX (MasterDriver.Instance.CurrentArea.position.x);
@@ -118,6 +119,7 @@ public class Player : MonoBehaviour {
 		integrity = status.Integrity;
 		rma = status.Rma;
 		deaths = status.Deaths;
+		xpBytes = status.XpBytes;
 
 		List<Point> visitedAreas = new List<Point> ();
 		IList<PointProto> storedAreas = status.VisitedAreasList;
@@ -155,6 +157,7 @@ public class Player : MonoBehaviour {
 		integrity = status.Integrity;
 		rma = status.Rma;
 		deaths = status.Deaths;
+		xpBytes = status.XpBytes;
 
 //		Debug.LogError(this.GetName());
 		List<Point> visitedAreas = new List<Point> ();

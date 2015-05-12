@@ -58,6 +58,7 @@ public class QuestListener : ActionEventListener {
 		foreach (Quest quest in quests.Values) {
 			if (quest.isQuestInProgress()) {
 				activeQuests.Add(quest);
+				quest.register();
 			}
 		}
 	}
