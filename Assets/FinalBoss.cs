@@ -17,6 +17,8 @@ public class FinalBoss : Boss {
 	List<Enemy> spawnedMemLeaks;
 	public static int memLeaksCount;
 
+	public static bool defeated;
+
 	Player playerref;
 
 	// Use this for initialization
@@ -122,11 +124,15 @@ public class FinalBoss : Boss {
 				dyingTime -= Time.deltaTime;
 				if(dyingTime <= 0) {
 					transform.GetChild(0).gameObject.SetActive(false);
+					defeated = true;
 				}
-			} else {
+			} else if(defeated) {
 				postDeath += Time.deltaTime;
-				if(postDeath < 2 && postDeath > 1) {
-					playerref.GetDamaged(20000);
+				if(postDeath < 2 && postDeath > 1.8f) {
+					playerref.GetDamaged(100);
+				}
+				if(postDeath > 10) {
+					Application.LoadLevel(4);
 				}
 			}
 

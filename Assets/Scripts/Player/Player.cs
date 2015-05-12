@@ -31,7 +31,7 @@ public class Player : MonoBehaviour {
 	public string name = "TheKiniMan";
 	
 	public static int strength, defense, efficiency, encryption, security;
-	public static int algorithmPoints = 50;
+	public static int algorithmPoints = 0;
 	private float integrity, rma, maxIntegrity = 100f, maxrma = 20f;
 
 	//Armor Refs
@@ -284,20 +284,26 @@ public class Player : MonoBehaviour {
 		if(deathTimer > 0) {
 			deathTimer += Time.deltaTime;
 			if(deathTimer > 2f) {
-				PlayerControl.immobile = false;
-				transform.GetChild(0).gameObject.SetActive(true);
-				transform.GetChild(1).gameObject.SetActive(true);
-				deathTimer = 0;
-				integrity = maxIntegrity;
-				rma = maxrma;
 				if(Application.loadedLevelName.Equals("KartikTesting")) {
 					xpBytes = 0;
-					if(MasterDriver.Instance.fightingFinalBoss) {
-						MasterDriver.Instance.dieInFinalBoss();	
+					if(FinalBoss.defeated) {
+
+					} else if(MasterDriver.Instance.fightingFinalBoss) {
+						MasterDriver.Instance.dieInFinalBoss();
+						MasterDriver.Instance.goToCity();
+					} else {
+						MasterDriver.Instance.goToCity();
 					}
-					MasterDriver.Instance.goToCity();
 				} else {
 					transform.position = respawnLoc;
+				}
+				if(!FinalBoss.defeated) {
+					PlayerControl.immobile = false;
+					transform.GetChild(0).gameObject.SetActive(true);
+					transform.GetChild(1).gameObject.SetActive(true);
+					deathTimer = 0;
+					integrity = maxIntegrity;
+					rma = maxrma;
 				}
 			}
 		}

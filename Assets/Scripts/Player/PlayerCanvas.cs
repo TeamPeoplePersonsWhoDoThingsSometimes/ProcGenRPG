@@ -245,15 +245,20 @@ public class PlayerCanvas : MonoBehaviour {
 
 		/*** Handles instantiation of enemyhealthbars ***/
 		if(enemieswithhealthbars != null) {
-			foreach (GameObject g in enemieswithhealthbars) {
-				if(g != null) {
+			for(int i = 0; i < enemieswithhealthbars.Count; i++) {
+				GameObject g = enemieswithhealthbars[i];
+				if(g == null) {
+					enemieswithhealthbars.Remove(g);
+					i--;
+				} else if(!g.GetComponent<Enemy>().hasHealthbar) {
 					GameObject temp = (GameObject) Instantiate(enemyhealthbarprefab, Vector3.zero, Quaternion.identity);
 					temp.SetActive(true);
 					temp.GetComponent<RectTransform>().SetParent(enemyHealthBars.GetComponent<RectTransform>(),false);
 					temp.GetComponent<EnemyHealthBar>().trackingEnemy = g;
+					g.GetComponent<Enemy>().hasHealthbar = true;
 				}
 			}
-			enemieswithhealthbars.Clear();
+//			enemieswithhealthbars.Clear();
 		}
 
 		/*** adds inventory icons to UI when bool is true ***/

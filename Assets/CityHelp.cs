@@ -20,6 +20,9 @@ public class CityHelp : MonoBehaviour {
 	void Update () {
 		if(this.GetComponent<Text>() != null) {
 			switch(helpMode) {
+				case -3:
+					this.GetComponent<Text>().text = "";
+					break;
 				case -2:
 					this.GetComponent<Text>().text = "If an enemy is too strong, just run!";
 					break;

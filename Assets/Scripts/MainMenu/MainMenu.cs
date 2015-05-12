@@ -34,7 +34,7 @@ public class MainMenu : MonoBehaviour {
 //		Debug.LogError(Screen.resolutions[Screen.resolutions.Length-1].width + " " + Screen.resolutions[Screen.resolutions.Length-1].height);
 		if(QualitySettings.names[QualitySettings.GetQualityLevel()].Equals("INSANE")) {
 			Screen.SetResolution(Screen.resolutions[Screen.resolutions.Length-1].width,Screen.resolutions[Screen.resolutions.Length-1].height,true);
-			Debug.LogError(Screen.width + " " + Screen.height);
+//			Debug.LogError(Screen.width + " " + Screen.height);
 		}
 	}
 
@@ -50,15 +50,21 @@ public class MainMenu : MonoBehaviour {
 		FileStream fs;
 		try {
 			fs = new FileStream (MasterDriver.saveGameFile1, FileMode.Open);
-			load1.text = PlayerPrefs.GetString("Load1","EMPTY");
+//			load1.text = PlayerPrefs.GetString("Load1","EMPTY");
+			SavePackage package = SavePackage.ParseFrom(fs);
+			load1.text = package.Player.Name + "_" + package.Player.Version;
 			fs.Flush();
 			fs.Close();
+//			Debug.LogError("Loaded save 1");
 		} catch (IOException excep) {
 			load1.text = "EMPTY";
+//			Debug.LogError("nopee");
 		}
 		try {
 			fs = new FileStream (MasterDriver.saveGameFile2, FileMode.Open);
-			load2.text = PlayerPrefs.GetString("Load2","EMPTY");
+//			load2.text = PlayerPrefs.GetString("Load2","EMPTY");
+			SavePackage package = SavePackage.ParseFrom(fs);
+			load2.text = package.Player.Name + "_" + package.Player.Version;
 			fs.Flush();
 			fs.Close();
 		} catch (IOException excep) {
@@ -66,7 +72,9 @@ public class MainMenu : MonoBehaviour {
 		}
 		try {
 			fs = new FileStream (MasterDriver.saveGameFile3, FileMode.Open);
-			load3.text = PlayerPrefs.GetString("Load3","EMPTY");
+//			load3.text = PlayerPrefs.GetString("Load3","EMPTY");
+			SavePackage package = SavePackage.ParseFrom(fs);
+			load3.text = package.Player.Name + "_" + package.Player.Version;
 			fs.Flush();
 			fs.Close();
 		} catch (IOException excep) {

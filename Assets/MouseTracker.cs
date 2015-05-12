@@ -31,6 +31,18 @@ public class MouseTracker : MonoBehaviour {
 	//				Debug.Log(tempDist);
 				}
 			}
+//			Debug.Log(PlayerCanvas.enemieswithhealthbars.Count);
+			if(PlayerCanvas.enemieswithhealthbars != null) {
+				foreach(GameObject g in PlayerCanvas.enemieswithhealthbars) {
+					if(g != null) {
+//						Debug.Log (Vector3.Distance(g.transform.position,this.transform.position));
+						if(Vector3.Distance(g.transform.position,this.transform.position) < 20) {
+							Debug.Log("Showing: " + g.GetComponent<Enemy>().name);
+							g.GetComponent<Enemy>().ShowTheHealthBar();
+						}
+					}
+				}
+			}
 		} else {
 			transform.LookAt(mouseHover.transform);
 		}
